@@ -20516,6 +20516,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "d:\\ASP.NET Core Web App\\LineWebhook\\1.PresentationLayer\\UI\\Website\\Views\\Home\\List.cshtml",
+      "TargetPath": "Views\\Home\\List.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\ASP.NET Core Web App\\LineWebhook\\1.PresentationLayer\\UI\\Website\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
       "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
       "FileKind": "mvc"

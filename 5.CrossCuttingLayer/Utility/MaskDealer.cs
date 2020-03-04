@@ -13,34 +13,20 @@ namespace Utility
             return "HI";
         }
 
-        public string GetMaskData()
+        public string GetMaskDataResponse()
         {
+            string result;
             string uri = "http://data.nhi.gov.tw/Datasets/Download.ashx?rid=A21030000I-D50001-001&l=https://data.nhi.gov.tw/resource/mask/maskdata.csv";
             var httpreq =
                 (HttpWebRequest)WebRequest.Create(new Uri(uri));
 
-            var response = httpreq.GetResponse();
-            Stream recvStream = response.GetResponseStream();
-            //recvStream.ReadTimeout = 20000;
-            byte[] buffer = new byte[819];
-
-            int size = 0;
-            int total = 0;
-            do
+            using(var response = httpreq.GetResponse())
+            using(Stream stream = response.GetResponseStream())
+            using(StreamReader streamReader = new StreamReader(stream))
             {
-                size = recvStream.Read(buffer, total, buffer.Length - total);
-                if (size > 0)
-                {
-                    total += size;
-                }
+                result = streamReader.ReadToEnd();
             }
-            while (size > 0);
-
-            string retStr = Encoding.UTF8.GetString(buffer, 0, total);
-            return retStr;
-
-            // return Enumerable.Range(1, 5).Select(index => index.ToString())
-            //     .ToArray();
+            return result;
         }
     }
 }

@@ -2,9 +2,9 @@ using System;
 
 namespace Website.Models
 {
-    public class InstitutionMaskData
+    public class MaskData
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public string Name {set; get;}
 
@@ -16,6 +16,6 @@ namespace Website.Models
 
         public int ChildMasks {set; get;}
 
-        public string UpdateTime { get; set; }
+        public DateTime UpdateTime { get; set; }
     }
 }
