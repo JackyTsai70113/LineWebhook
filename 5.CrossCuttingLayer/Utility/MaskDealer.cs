@@ -20,12 +20,21 @@ namespace Utility
             var httpreq =
                 (HttpWebRequest)WebRequest.Create(new Uri(uri));
 
-            using(var response = httpreq.GetResponse())
-            using(Stream stream = response.GetResponseStream())
-            using(StreamReader streamReader = new StreamReader(stream))
+            var response = httpreq.GetResponse();
+            Stream stream = response.GetResponseStream();
+            StreamReader streamReader = new StreamReader(stream);
+
+            byte[] buffer = new byte[168888];
+            int readSize = 0, offset = 0;
+            do
             {
-                result = streamReader.ReadToEnd();
-            }
+                readSize = stream.Read(buffer, offset, buffer.Length - offset);
+                offset += readSize;
+            }while(readSize > 0);
+            //result = streamReader.ReadToEnd();
+            
+            string retStr = Encoding.UTF8.GetString(buffer, 0, offset);
+            result = "";
             return result;
         }
     }
