@@ -32,9 +32,7 @@ namespace Utility
                 offset += readSize;
             }while(readSize > 0);
             //result = streamReader.ReadToEnd();
-            
-            string retStr = Encoding.UTF8.GetString(buffer, 0, offset);
-            result = "";
+            result = Encoding.UTF8.GetString(buffer, 0, offset);
             return result;
         }
     }

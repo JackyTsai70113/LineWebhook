@@ -64,7 +64,7 @@ namespace Website.Controllers
                 });
             }
             ViewData["result"] = "MaskDataList.Count: " + MaskDataList.Count.ToString();
-            return View();
+            return View(MaskDataList);
         }
 
         public IActionResult List()
@@ -88,8 +88,7 @@ namespace Website.Controllers
                     UpdateTime = DateTime.TryParse(maskDataArr[6], out DateTime updateTime) ? updateTime : DateTime.MinValue
                 });
             }
-            var li1 = new List<int>();
-            CheckMaskData(MaskDataList);
+            //CheckMaskData(MaskDataList);
             ViewData["maskData"] = maskDataResponse;
             return View(MaskDataList);
         }

@@ -17,51 +17,59 @@ namespace Website.Controllers
 {
     public class LineWebhookController : Controller
     {
+        private static string channelAccessToken = 
+            @"tkOO80fthaESrdEWkHn5+gsypQLHd1N3DZcNsWaJku3GeO/
+            HsFMyCSyU95KnA6p2bTLPFJS0y4joCknQyppqlwaDK34rrQgS
+            W39EcS0j5WNEZGIlkup0nJ+xlBf+mcw89H1xKAc5Ubd0xA9/Z
+            9RSIwdB04t89/1O/w1cDnyilFU=";
+        
         [HttpPost]
-        public IActionResult Index([FromBody] LineSource lineSource)
+        public IActionResult Index([FromBody] dynamic requestBody)
         {
-            string jsonString = JsonSerializer.Serialize(lineSource);
+            Console.WriteLine($"[LineWebhook called] data: {requestBody}");
+            LineSource lineSource = JsonSerializer.Deserialize<LineSource>(requestBody);
             string replyToken = lineSource.events[0].replyToken;
-            string result = PostTo(replyToken);
-            return Content(jsonString + "\n" + result);
+            string replyToken2 = lineSource.events[0].message.text;
+            string result = ReplyMessages(replyToken, new List<string>());
+            return Content(requestBody.ToString() + "\n" + result);
         }
 
-        private string PostTo(string replyToken)
+        private string ReplyMessages(string replyToken, List<string> messageTexts)
         {
             string result = "";
             try
             {
-                string channelAccessToken = "tkOO80fthaESrdEWkHn5+gsypQLHd1N3DZcNsWaJku3GeO/HsFMyCSyU95KnA6p2bTLPFJS0y4joCknQyppqlwaDK34rrQgSW39EcS0j5WNEZGIlkup0nJ+xlBf+mcw89H1xKAc5Ubd0xA9/Z9RSIwdB04t89/1O/w1cDnyilFU=";
                 string url = "https://api.line.me/v2/bot/message/reply";
                 var request = (HttpWebRequest)WebRequest.Create(url);
                 request.Method = "POST";
                 request.Headers.Add("Content-Type", "application/json");
                 request.Headers.Add("Authorization", "Bearer " + channelAccessToken);
 
+                // Set up messages to send
+                var messages = new List<Message>();
+                foreach(var text in messageTexts)
+                {
+                    messages.Add(new Message
+                    {
+                        type = "text",
+                        id = "",
+                        text = text
+                    });
+                }
+
                 var postData = new ReplyMessages{
                     replyToken = replyToken,
-                    messages = new List<Message>{
-                        new Message{
-                            type = "text",
-                            id = "",
-                            text = "Hello, user(" + replyToken + ")"
-                        },
-                        new Message{
-                            type = "text",
-                            id = "",
-                            text = "May I help you?"
-                        }
-                    }
+                    messages = messages
                 };
 
+                // Write data to requestStream
                 ASCIIEncoding encoding = new ASCIIEncoding();
                 Byte[] data = encoding.GetBytes(JsonSerializer.Serialize(postData));
                 request.ContentLength = data.Length;
-
-                Stream sendStream = request.GetRequestStream();
-                //sendStream.WriteTimeout = 20000;
-                sendStream.Write(data, 0, data.Length);
-                sendStream.Close();
+                Stream requestStream = request.GetRequestStream();
+                //requestStream.WriteTimeout = 20000;
+                requestStream.Write(data, 0, data.Length);
+                requestStream.Close();
 
                 var response = request.GetResponse();
                 Stream stream = response.GetResponseStream();
