@@ -27,14 +27,16 @@ namespace Website.Controllers
         [HttpPost]
         public IActionResult Index([FromBody] dynamic requestBody)
         {
-            LineSource lineSource = JsonConvert.DeserializeObject<LineSource>(requestBody.ToString());
-            string jsonString = JsonConvert.SerializeObject(lineSource, Formatting.Indented);
             Console.WriteLine($"==========[LineWebhook/Index]==========");
             Console.WriteLine($"From LINE SERVER");
-            Console.WriteLine($"requestBody:");
+            Console.WriteLine($"before requestBody:");
+            Console.WriteLine($"{requestBody}");
+            Console.WriteLine($"after requestBody:");
+            string jsonString = JsonConvert.SerializeObject(requestBody, Formatting.Indented);
             Console.WriteLine($"{jsonString}");
             Console.WriteLine($"====================");
             
+            LineSource lineSource = JsonConvert.DeserializeObject<LineSource>(requestBody.ToString());
             string replyToken = lineSource.events[0].replyToken;
             //string replyToken2 = lineSource.events[0].message.text;
             List<string> messageTexts = new List<string>();
@@ -55,13 +57,12 @@ namespace Website.Controllers
                 request.Headers.Add("Authorization", "Bearer " + channelAccessToken);
 
                 // Set up messages to send
-                var messages = new List<Message>();
+                var messages = new List<TextMessage>();
                 foreach(var text in messageTexts)
                 {
-                    messages.Add(new Message
+                    messages.Add(new TextMessage
                     {
                         type = "text",
-                        id = "",
                         text = text
                     });
                 }
