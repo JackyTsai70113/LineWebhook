@@ -54,21 +54,30 @@ namespace Website.Controllers
                 request.Headers.Add("Authorization", "Bearer " + channelAccessToken);
 
                 // Set up messages to send
-                var messages = new List<Message>();
-                foreach(var text in messageTexts)
-                {
-                    messages.Add(new TextMessage
-                    {
-                        type = "text",
-                        text = text
-                    });
-                }
+                var messages = new List<LocationMessage>();
+                // foreach(var text in messageTexts)
+                // {
+                //     messages.Add(new TextMessage
+                //     {
+                //         type = "text",
+                //         text = text
+                //     });
+                // }
 
-                messages.Add(new StickerMessage
+                // messages.Add(new StickerMessage
+                // {
+                //     type = "sticker",
+                //     packageId = "1",
+                //     stickerId = "1"
+                // });
+
+                messages.Add(new LocationMessage
                 {
-                    type = "sticker",
-                    packageId = "1",
-                    stickerId = "1"
+                    type = "location",
+                    title = "myLocation",
+                    address = "〒150-0002 東京都渋谷区渋谷２丁目２１−１",
+                    latitude = 35.65910807942215,
+                    longitude = 139.70372892916203
                 });
 
                 var postData = new ReplyMessages{

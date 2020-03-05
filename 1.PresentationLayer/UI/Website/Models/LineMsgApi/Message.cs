@@ -38,7 +38,7 @@ namespace Website.Models
         */
     }
 
-    public class  ImageMessage
+    public class  ImageMessage : Message
     {
         public string type { get; set; } = "image";
         public string originalContentUrl { get; set; }
@@ -53,7 +53,7 @@ namespace Website.Models
         */
     }
 
-    public class VideoMessage
+    public class VideoMessage : Message
     {
         public string type { get; set; } = "video";
         public string originalContentUrl { get; set; }
@@ -68,7 +68,7 @@ namespace Website.Models
         */
     }
 
-    public class AudioMessage
+    public class AudioMessage : Message
     {
         public string type { get; set; } = "audio";
         public string originalContentUrl { get; set; }
@@ -83,7 +83,7 @@ namespace Website.Models
         */
     }
 
-    public class LocationMessage
+    public class LocationMessage : Message
     {
         public string type { get; set; } = "location";
         public string title { get; set; }
@@ -102,7 +102,7 @@ namespace Website.Models
         */
     }
 
-    public class ImagemapMessage
+    public class ImagemapMessage : Message
     {
         public string type { get; set; } = "imagemap";
         public string baseUrl { get; set; }
