@@ -55,7 +55,7 @@ namespace Website.Controllers
                 request.Headers.Add("Authorization", "Bearer " + channelAccessToken);
 
                 // Set up messages to send
-                var messages = new List<Website.Models.Message>();
+                var messages = new List<dynamic>();
                 // foreach(var text in messageTexts)
                 // {
                 //     messages.Add(new TextMessage
@@ -106,7 +106,6 @@ namespace Website.Controllers
                 Console.WriteLine($"TO LINE SERVER: {url}");
                 Console.WriteLine($"requestBody:");
                 Console.WriteLine($"{jsonStr}");
-                
             }
             catch(Exception ex)
             {
