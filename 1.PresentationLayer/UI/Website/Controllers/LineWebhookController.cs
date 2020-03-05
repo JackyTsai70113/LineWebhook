@@ -13,6 +13,7 @@ using System.Net.Http;
 using System.Net;
 using System.Text;
 using Newtonsoft.Json;
+using Website.Models.Line;
 
 namespace Website.Controllers
 {
@@ -33,8 +34,8 @@ namespace Website.Controllers
             Console.WriteLine($"{requestBody}");
             Console.WriteLine($"====================");
             
-            LineSource lineSource = JsonConvert.DeserializeObject<LineSource>(requestBody.ToString());
-            string replyToken = lineSource.events[0].replyToken;
+            LineRequestBody body = JsonConvert.DeserializeObject<LineRequestBody>(requestBody.ToString());
+            string replyToken = body.events[0].replyToken;
             //string replyToken2 = lineSource.events[0].message.text;
             List<string> messageTexts = new List<string>();
             messageTexts.Add("修但幾勒");
