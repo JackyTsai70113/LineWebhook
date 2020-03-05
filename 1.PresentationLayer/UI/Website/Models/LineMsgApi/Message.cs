@@ -6,7 +6,7 @@ namespace Website.Models
     // resource:
     // https://developers.line.biz/zh-hant/reference/messaging-api/#message-objects
 
-    public interface Message
+    public class Message
     {
 
     }
