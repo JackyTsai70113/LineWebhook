@@ -54,7 +54,7 @@ namespace Website.Controllers
                 request.Headers.Add("Authorization", "Bearer " + channelAccessToken);
 
                 // Set up messages to send
-                var messages = new List<Message>();
+                var messages = new List<LocationMessage>();
                 // foreach(var text in messageTexts)
                 // {
                 //     messages.Add(new TextMessage
