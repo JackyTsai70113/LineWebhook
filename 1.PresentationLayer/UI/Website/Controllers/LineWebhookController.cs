@@ -12,6 +12,7 @@ using System.Text.Json;
 using System.Net.Http;
 using System.Net;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace Website.Controllers
 {
@@ -26,13 +27,16 @@ namespace Website.Controllers
         [HttpPost]
         public IActionResult Index([FromBody] dynamic requestBody)
         {
+            LineSource lineSource = JsonConvert.DeserializeObject<LineSource>(requestBody.ToString());
+            string jsonString = JsonConvert.SerializeObject(lineSource, Formatting.Indented);
             Console.WriteLine($"==========[LineWebhook/Index]==========");
             Console.WriteLine($"From LINE SERVER");
-            Console.WriteLine($"requestBody: {requestBody}");
+            Console.WriteLine($"requestBody:");
+            Console.WriteLine($"{jsonString}");
             Console.WriteLine($"====================");
-            LineSource lineSource = JsonSerializer.Deserialize<LineSource>(requestBody.ToString());
+            
             string replyToken = lineSource.events[0].replyToken;
-            string replyToken2 = lineSource.events[0].message.text;
+            //string replyToken2 = lineSource.events[0].message.text;
             List<string> messageTexts = new List<string>();
             messageTexts.Add("修但幾勒");
             string result = ReplyMessages(replyToken, messageTexts);
@@ -69,7 +73,7 @@ namespace Website.Controllers
 
                 // Write data to requestStream
                 ASCIIEncoding encoding = new ASCIIEncoding();
-                Byte[] data = encoding.GetBytes(JsonSerializer.Serialize(postData));
+                Byte[] data = encoding.GetBytes(JsonConvert.SerializeObject(postData));
                 request.ContentLength = data.Length;
                 Stream requestStream = request.GetRequestStream();
                 //requestStream.WriteTimeout = 20000;
@@ -81,22 +85,27 @@ namespace Website.Controllers
                 StreamReader streamReader = new StreamReader(stream);
                 result += streamReader.ReadToEnd();
 
+                // Add Logs
+                string jsonStr = JsonConvert.SerializeObject(postData, Formatting.Indented);
                 Console.WriteLine($"==========[LineWebhook/ReplyMessages]==========");
                 Console.WriteLine($"TO LINE SERVER: {url}");
-                Console.WriteLine($"requestBody: {JsonSerializer.Serialize(postData)}");
-                Console.WriteLine($"====================");
+                Console.WriteLine($"requestBody:");
+                Console.WriteLine($"{jsonStr}");
+                
             }
             catch(Exception ex)
             {
                 result += "Exception: " + ex.Message;
+                Console.WriteLine($"Exception: {ex.Message}");
             }
+            Console.WriteLine($"====================");
             return result;
         }
 
         [HttpPost]
         public IActionResult MessageHandler([FromBody] Event myEvent)
         {
-            string jsonString = JsonSerializer.Serialize(myEvent);
+            string jsonString = JsonConvert.SerializeObject(myEvent, Formatting.Indented);
             return Content(jsonString);
         }
     }
