@@ -27,10 +27,9 @@ namespace Website.Controllers
         public IActionResult Index([FromBody] dynamic requestBody)
         {
             Console.WriteLine($"[LineWebhook called] data: {requestBody}");
-            LineSource lineSource = JsonSerializer.Deserialize<LineSource>(requestBody.ToString());
+            LineSource lineSource = JsonSerializer.Deserialize<LineSource>(requestBody);
             string replyToken = lineSource.events[0].replyToken;
-            string messageSource = lineSource.events[0].message.text;
-            var messageTexts = new List<string>{"修但幾勒..." + messageSource, "哪尼?"};
+            string replyToken2 = lineSource.events[0].message.text;
             string result = ReplyMessages(replyToken, new List<string>());
             return Content(requestBody.ToString() + "\n" + result);
         }
