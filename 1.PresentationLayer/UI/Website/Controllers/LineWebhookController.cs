@@ -73,7 +73,7 @@ namespace Website.Controllers
 
                 // Write data to requestStream
                 ASCIIEncoding encoding = new ASCIIEncoding();
-                Byte[] data = encoding.GetBytes(JsonConvert.SerializeObject(postData));
+                Byte[] data = encoding.GetBytes(System.Text.Json.JsonSerializer.Serialize(postData));
                 request.ContentLength = data.Length;
                 Stream requestStream = request.GetRequestStream();
                 //requestStream.WriteTimeout = 20000;
