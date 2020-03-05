@@ -31,9 +31,6 @@ namespace Website.Controllers
             Console.WriteLine($"From LINE SERVER");
             Console.WriteLine($"before requestBody:");
             Console.WriteLine($"{requestBody}");
-            Console.WriteLine($"after requestBody:");
-            string jsonString = JsonConvert.SerializeObject(requestBody, Formatting.Indented);
-            Console.WriteLine($"{jsonString}");
             Console.WriteLine($"====================");
             
             LineSource lineSource = JsonConvert.DeserializeObject<LineSource>(requestBody.ToString());
@@ -57,7 +54,7 @@ namespace Website.Controllers
                 request.Headers.Add("Authorization", "Bearer " + channelAccessToken);
 
                 // Set up messages to send
-                var messages = new List<TextMessage>();
+                var messages = new List<Message>();
                 foreach(var text in messageTexts)
                 {
                     messages.Add(new TextMessage
@@ -66,6 +63,13 @@ namespace Website.Controllers
                         text = text
                     });
                 }
+
+                messages.Add(new StickerMessage
+                {
+                    type = "sticker",
+                    packageId = "1",
+                    stickerId = "1"
+                });
 
                 var postData = new ReplyMessages{
                     replyToken = replyToken,

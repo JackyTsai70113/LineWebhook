@@ -5,7 +5,12 @@ namespace Website.Models
 {
     // resource:
     // https://developers.line.biz/zh-hant/reference/messaging-api/#message-objects
-    public class TextMessage
+
+    public class Message
+    {
+
+    }
+    public class TextMessage : Message
     {
         public string type { get; set; } = "text";
         public string text { get; set; }
@@ -18,7 +23,7 @@ namespace Website.Models
         */
     }
 
-    public class StickerMessage
+    public class StickerMessage : Message
     {
         public string type { get; set; } = "sticker";
         public string packageId { get; set; }

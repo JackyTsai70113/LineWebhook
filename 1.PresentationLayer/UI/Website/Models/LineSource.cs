@@ -15,7 +15,7 @@ namespace Website.Models
         public Source source { get; set; }
         public long timestamp { get; set; }
         public string mode { get; set; }
-        public TextMessage message { get; set; }
+        public Message message { get; set; }
     }
 
     public class Source
