@@ -26,7 +26,10 @@ namespace Website.Controllers
         [HttpPost]
         public IActionResult Index([FromBody] dynamic requestBody)
         {
-            Console.WriteLine($"[LineWebhook called] data: {requestBody}");
+            Console.WriteLine($"==========[LineWebhook/Index]==========");
+            Console.WriteLine($"From LINE SERVER");
+            Console.WriteLine($"requestBody: {requestBody}");
+            Console.WriteLine($"====================");
             LineSource lineSource = JsonSerializer.Deserialize<LineSource>(requestBody.ToString());
             string replyToken = lineSource.events[0].replyToken;
             string replyToken2 = lineSource.events[0].message.text;
@@ -78,8 +81,10 @@ namespace Website.Controllers
                 StreamReader streamReader = new StreamReader(stream);
                 result += streamReader.ReadToEnd();
 
-                Console.WriteLine("Result: " + result);
-                Console.WriteLine("我在這!");
+                Console.WriteLine($"==========[LineWebhook/ReplyMessages]==========");
+                Console.WriteLine($"TO LINE SERVER: {url}");
+                Console.WriteLine($"requestBody: {JsonSerializer.Serialize(postData)}");
+                Console.WriteLine($"====================");
             }
             catch(Exception ex)
             {
