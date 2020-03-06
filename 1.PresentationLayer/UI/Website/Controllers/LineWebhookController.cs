@@ -14,6 +14,7 @@ using System.Net;
 using System.Text;
 using Newtonsoft.Json;
 using Website.Models.Line;
+using Website.Models.Line.RequestBodies.Webhook;
 
 namespace Website.Controllers
 {
@@ -30,7 +31,7 @@ namespace Website.Controllers
         {
             Console.WriteLine($"==========[LineWebhook/Index]==========");
             Console.WriteLine($"From LINE SERVER");
-            Console.WriteLine($"before requestBody:");
+            Console.WriteLine($"requestBody:");
             Console.WriteLine($"{requestBody}");
             Console.WriteLine($"====================");
             
@@ -116,11 +117,11 @@ namespace Website.Controllers
             return result;
         }
 
-        [HttpPost]
-        public IActionResult MessageHandler([FromBody] Event myEvent)
-        {
-            string jsonString = JsonConvert.SerializeObject(myEvent, Formatting.Indented);
-            return Content(jsonString);
-        }
+        // [HttpPost]
+        // public IActionResult MessageHandler([FromBody] Event myEvent)
+        // {
+        //     string jsonString = JsonConvert.SerializeObject(myEvent, Formatting.Indented);
+        //     return Content(jsonString);
+        // }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Website.Models.Line.RequestBodies.Webhook;
 
 namespace Website.Models.Line
 {
@@ -7,27 +8,5 @@ namespace Website.Models.Line
     {
         public string destination { get; set; }
         public List<Event> events { get; set; }
-    }
-
-    public class Event
-    {
-        public string type { get; set; }
-        public string replyToken { get; set; }
-        public Source source { get; set; }
-        public long timestamp { get; set; }
-        public string mode { get; set; }
-        public Website.Models.Line.Message message { get; set; }
-    }
-
-    public class Source
-    {
-        public string userId { get; set; }
-        public string type { get; set; }
-    }
-
-    public class Message
-    {
-        public string userId { get; set; }
-        public string type { get; set; }
     }
 }

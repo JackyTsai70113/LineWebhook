@@ -3,14 +3,19 @@ using System.Collections.Generic;
 
 namespace Website.Models.Line.RequestBodies.Webhook
 {
-    // public interface IEvent
-    // {
-        
-    // } 
+    public class Event
+    {
+        public string type { get; set; }
+        public string replyToken { get; set; }
+        public Source source { get; set; }
+        public long timestamp { get; set; }
+        public string mode { get; set; }
+        public dynamic message { get; set; }
+    }
 
-    // public Event
-    // {
-    //     public string destination { get; set; }
-    //     public List<Events> messages { get; set; }
-    // }
+    public class Source
+    {
+        public string userId { get; set; }
+        public string type { get; set; }
+    }
 }
