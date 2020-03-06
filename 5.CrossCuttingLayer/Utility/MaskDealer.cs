@@ -10,7 +10,7 @@ namespace Utility
     {
         public string MaskStr()
         {
-            return "HI";
+            return "HI1";
         }
 
         public string GetMaskDataResponse()
