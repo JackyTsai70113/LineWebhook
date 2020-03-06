@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\5.CrossCuttingLayer\Utility\Utility.csproj" />
+    <ProjectReference Include="..\..\..\4.ModelsLayer\Models\Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>

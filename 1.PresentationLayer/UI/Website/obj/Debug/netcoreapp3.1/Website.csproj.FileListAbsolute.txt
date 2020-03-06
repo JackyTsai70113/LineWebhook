@@ -112,3 +112,5 @@ D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\obj\Debug\net
 D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\obj\Debug\netcoreapp3.1\Website.pdb
 D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\obj\Debug\netcoreapp3.1\Website.genruntimeconfig.cache
 D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\obj\Debug\netcoreapp3.1\Razor\Views\Home\List.cshtml.g.cs
+D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\bin\Debug\netcoreapp3.1\Models.dll
+D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\bin\Debug\netcoreapp3.1\Models.pdb

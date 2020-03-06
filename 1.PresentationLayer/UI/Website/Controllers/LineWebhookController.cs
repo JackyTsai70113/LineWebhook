@@ -13,8 +13,8 @@ using System.Net.Http;
 using System.Net;
 using System.Text;
 using Newtonsoft.Json;
-using Website.Models.Line;
-using Website.Models.Line.RequestBodies.Webhook;
+using Models.Line;
+using Utility.Line;
 
 namespace Website.Controllers
 {
@@ -35,7 +35,9 @@ namespace Website.Controllers
             Console.WriteLine($"{requestBody}");
             Console.WriteLine($"====================");
             
-            LineRequestBody body = JsonConvert.DeserializeObject<LineRequestBody>(requestBody.ToString());
+            LineRequestBody body = RequestHandler.HandleBody(requestBody);
+
+            //LineRequestBody body = JsonConvert.DeserializeObject<LineRequestBody>(requestBody.ToString());
             string replyToken = body.events[0].replyToken;
             //string replyToken2 = lineSource.events[0].message.text;
             List<string> messageTexts = new List<string>();
@@ -72,7 +74,19 @@ namespace Website.Controllers
                 //     packageId = "1",
                 //     stickerId = "1"
                 // });
-
+                messages.Add(new TextMessage
+                {
+                    type = "text",
+                    text = "以下是離你最近的藥局"
+                });
+                messages.Add(new LocationMessage
+                {
+                    type = "location",
+                    title = "myLocation",
+                    address = "〒150-0002 東京都渋谷区渋谷２丁目２１−１",
+                    latitude = 35.65910807942215,
+                    longitude = 139.70372892916203
+                });
                 messages.Add(new LocationMessage
                 {
                     type = "location",
