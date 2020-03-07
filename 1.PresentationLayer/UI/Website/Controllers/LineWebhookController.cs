@@ -166,6 +166,10 @@ namespace Website.Controllers
                     builder.Append(maskData.Name + " " + maskData.Address + " " + 
                         maskData.AdultMasks + " " + maskData.ChildMasks + "\n");
                 }
+                if(topMaskDatas.Count == 0)
+                {
+                    builder.Append($"所在區域({locationSuffix})沒有相關藥局");
+                }
                 // Set up messages to send
                 var messages = new List<dynamic>();
                 // foreach(var text in messageTexts)
@@ -215,6 +219,13 @@ namespace Website.Controllers
                     messages = messages
                 };
 
+                // Add Logs
+                string jsonStr = JsonConvert.SerializeObject(postData, Formatting.Indented);
+                Console.WriteLine($"==========[LineWebhook/ReplyMessages]==========");
+                Console.WriteLine($"TO LINE SERVER: {url}");
+                Console.WriteLine($"requestBody:");
+                Console.WriteLine($"{jsonStr}");
+
                 // Write data to requestStream
                 ASCIIEncoding encoding = new ASCIIEncoding();
                 Byte[] data = encoding.GetBytes(System.Text.Json.JsonSerializer.Serialize(postData));
@@ -228,13 +239,6 @@ namespace Website.Controllers
                 Stream stream = response.GetResponseStream();
                 StreamReader streamReader = new StreamReader(stream);
                 result += streamReader.ReadToEnd();
-
-                // Add Logs
-                string jsonStr = JsonConvert.SerializeObject(postData, Formatting.Indented);
-                Console.WriteLine($"==========[LineWebhook/ReplyMessages]==========");
-                Console.WriteLine($"TO LINE SERVER: {url}");
-                Console.WriteLine($"requestBody:");
-                Console.WriteLine($"{jsonStr}");
             }
             catch(Exception ex)
             {
