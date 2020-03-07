@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Website.Models
+namespace Models.Line.API
 {
     // resource:
     // https://developers.line.biz/zh-hant/reference/messaging-api/#message-objects
@@ -10,18 +10,18 @@ namespace Website.Models
     {
 
     }
-    // public class TextMessage : Message
-    // {
-    //     public string type { get; set; } = "text";
-    //     public string text { get; set; }
+    public class TextMessage : Message
+    {
+        public string type { get; set; } = "text";
+        public string text { get; set; }
 
-    //     /*
-    //         {
-    //             "type": "text",
-    //             "text": "Hello, world"
-    //         }
-    //     */
-    // }
+        /*
+            {
+                "type": "text",
+                "text": "Hello, world"
+            }
+        */
+    }
 
     public class StickerMessage : Message
     {
@@ -83,24 +83,24 @@ namespace Website.Models
         */
     }
 
-    // public class LocationMessage : Message
-    // {
-    //     public string type { get; set; } = "location";
-    //     public string title { get; set; }
-    //     public string address { get; set; }
-    //     public double latitude { get; set; }
-    //     public double longitude { get; set; }
+    public class LocationMessage : Message
+    {
+        public string type { get; set; } = "location";
+        public string title { get; set; }
+        public string address { get; set; }
+        public double latitude { get; set; }
+        public double longitude { get; set; }
 
-    //     /*
-    //         {
-    //             "type": "location",
-    //             "title": "my location",
-    //             "address": "〒150-0002 東京都渋谷区渋谷２丁目２１−１",
-    //             "latitude": 35.65910807942215,
-    //             "longitude": 139.70372892916203
-    //         }
-    //     */
-    // }
+        /*
+            {
+                "type": "location",
+                "title": "my location",
+                "address": "〒150-0002 東京都渋谷区渋谷２丁目２１−１",
+                "latitude": 35.65910807942215,
+                "longitude": 139.70372892916203
+            }
+        */
+    }
 
     public class ImagemapMessage : Message
     {

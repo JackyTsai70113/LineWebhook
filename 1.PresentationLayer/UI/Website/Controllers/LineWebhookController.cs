@@ -17,6 +17,7 @@ using Models.Line;
 using Utility.Line;
 using Utility.MaskDataHandler;
 using Utility.StringUtil;
+using Models.Line.API;
 
 namespace Website.Controllers
 {
@@ -46,8 +47,8 @@ namespace Website.Controllers
                 case "text":
                     return Content("");
                 case "location":
-                    LocationMessage locationMsg = (LocationMessage)(body.events[0].message);
-                    string result1 = ReplyLocationMessages(replyToken, locationMsg.address);
+                    //Models.Line.API.LocationMessage locationMsg = (LocationMessage)(body.events[0].message);
+                    string result1 = ReplyLocationMessages(replyToken, body.events[0].message.address);
                     return Content(requestBody.ToString() + "\n" + result1);
             }
             //LineRequestBody body = JsonConvert.DeserializeObject<LineRequestBody>(requestBody.ToString());
@@ -157,8 +158,8 @@ namespace Website.Controllers
                 request.Method = "POST";
                 request.Headers.Add("Content-Type", "application/json");
                 request.Headers.Add("Authorization", "Bearer " + channelAccessToken);
-                var topMaskDatas = MaskDataHandler.GetTopMaskDatasFromLocationSuffix(address, 5);
                 string locationSuffix = LocationHandler.GetLocationSecondDivisionSuffix(address);
+                var topMaskDatas = MaskDataHandler.GetTopMaskDatasFromLocationSuffix(locationSuffix, 5);
                 StringBuilder builder = new StringBuilder();
                 foreach(var maskData in topMaskDatas)
                 {

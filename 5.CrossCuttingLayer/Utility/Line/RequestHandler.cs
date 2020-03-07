@@ -34,7 +34,7 @@ namespace Utility.Line
                         break;
                     case "location":
                         body.events[0].message = JsonConvert.
-                            DeserializeObject<TextMessage>(body.events[0].message.ToString());
+                            DeserializeObject<LocationMessage>(body.events[0].message.ToString());
                         break;
                     default:
                         break;
