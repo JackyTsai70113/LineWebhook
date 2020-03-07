@@ -89,7 +89,7 @@ namespace Website.Controllers
                 messages.Add(new TextMessage
                 {
                     type = "text",
-                    text = "以下是離你最近的藥局"
+                    text = "test以下是離你最近的藥局"
                 });
                 messages.Add(new LocationMessage
                 {
