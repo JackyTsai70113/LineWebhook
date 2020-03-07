@@ -5,19 +5,25 @@ namespace Models.Line.Webhook
 {
     public class Message
     {
+        public string type { get; set; }
+        public string id { get; set; }
     }
 
     public class TextMessage : Message
     {
-        public string type { get; set; } =  "text";
-        public string id { get; set; }
+        public TextMessage()
+        {
+            type = "text";
+        }
         public string text { get; set; }
     }
 
     public class LocationMessage : Message
     {
-        public string type { get; set; } = "location";
-        public string id { get; set; }
+        public LocationMessage()
+        {
+            type = "location";
+        }
         public string title { get; set; }
         public string address { get; set; }
         public double latitude { get; set; }
