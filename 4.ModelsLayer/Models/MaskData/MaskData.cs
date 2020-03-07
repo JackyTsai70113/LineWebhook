@@ -1,6 +1,6 @@
 using System;
 
-namespace Website.Models
+namespace Models.MaskData
 {
     // public class MaskData
     // {

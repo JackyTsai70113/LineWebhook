@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Website.Models;
 using Utility;
 using Newtonsoft.Json;
 using System.Net;
 using System.Text;
+using Utility.MaskDataHandler;
+using Website.Models;
+using Models.MaskDatas;
 
 namespace Website.Controllers
 {
@@ -26,78 +28,29 @@ namespace Website.Controllers
 
         public IActionResult Index()
         {
-            string result = "";
-            MaskDealer maskDealer = new MaskDealer();
-            var maskDataResponse = maskDealer.GetMaskDataResponse();
-            var maskDataStrArr = maskDataResponse.Split("\r\n");
-
             // 取得 maskData 的 List
-            var MaskDataList = new List<MaskData>();
-            result += maskDataStrArr.Count();
-            result += '\n';
-            for(int i = 1; i < maskDataStrArr.Length - 1; i++)
-            {
-                var maskDataArr = maskDataStrArr[i].Split(',');
-
-                if(!Int32.TryParse(maskDataArr[4], out int AdultMasks))
-                {
-                    var AdultMasksStr = maskDataArr[4];
-                    AdultMasks = 99999999;
-                }
-
-                if(!Int32.TryParse(maskDataArr[5], out int ChildMasks))
-                {
-                    var ChildMasksStr = maskDataArr[5];
-                    ChildMasks = 99999999;
-                }
-
-                if(!DateTime.TryParse(maskDataArr[6], out DateTime UpdateTime))
-                {
-                    var UpdateTimeStr = maskDataArr[6];
-                    UpdateTime = DateTime.MinValue;
-                }
-
-                MaskDataList.Add(new MaskData{
-                    Id = maskDataArr[0],
-                    Name = maskDataArr[1],
-                    Address = maskDataArr[2],
-                    PhoneNumber = maskDataArr[3],
-                    AdultMasks = AdultMasks,
-                    ChildMasks = ChildMasks,
-                    UpdateTime = UpdateTime
-                });
-            }
+            var MaskDataList = MaskDataSourceHandler.GetList();
             ViewData["result"] = "MaskDataList.Count: " + MaskDataList.Count.ToString();
             return View(MaskDataList);
         }
 
         public IActionResult List()
         {
-            MaskDealer maskDealer = new MaskDealer();
-            var maskDataResponse = maskDealer.GetMaskDataResponse();
-            var maskDataStrArr = maskDataResponse.Split("\r\n");
-            
             // 取得 maskData 的 List
-            var MaskDataList = new List<MaskData>();
-            for(int i = 1; i < maskDataStrArr.Length - 1; i++)
+            var MaskDataList = MaskDataSourceHandler.GetList();
+            var maskDataDict = GetMaskDataDict(MaskDataList);
+            var list = GetRightList("臺北市中正區", maskDataDict, MaskDataList);
+            StringBuilder builder = new StringBuilder();
+            foreach(var maskData in list)
             {
-                var maskDataArr = maskDataStrArr[i].Split(',');
-                MaskDataList.Add(new MaskData{
-                    Id = maskDataArr[0],
-                    Name = maskDataArr[1],
-                    Address = maskDataArr[2],
-                    PhoneNumber = maskDataArr[3],
-                    AdultMasks = Int32.TryParse(maskDataArr[4], out int AdultMasksNum) ? AdultMasksNum : 0,
-                    ChildMasks = Int32.TryParse(maskDataArr[5], out int ChildMasksNum) ? ChildMasksNum : 0,
-                    UpdateTime = DateTime.TryParse(maskDataArr[6], out DateTime updateTime) ? updateTime : DateTime.MinValue
-                });
+                builder.AppendLine($"{maskData.Name}: 成人({maskData.AdultMasks})/兒童({maskData.ChildMasks})");
             }
-            //CheckMaskData(MaskDataList);
-            ViewData["maskData"] = maskDataResponse;
+            ViewData["testMaskData"] = builder.ToString();
             return View(MaskDataList);
         }
 
-        private void CheckMaskData(List<MaskData> maskDataList)
+        // 取得區域對應的maskDataList index
+        private Dictionary<string, List<int>> GetMaskDataDict(List<MaskData> maskDataList)
         {
             /*
                 
@@ -109,13 +62,36 @@ namespace Website.Controllers
             */
             
             //Dictionary<string, int> checkFirstDict;
-            //Dictionary<string, int> checkSecondDict;
-            foreach (var maskData in maskDataList)
+            var listCount = maskDataList.Count;
+            var locationDict = new Dictionary<string, List<int>>();
+            for (int i = 0; i < maskDataList.Count; i++)
             {
-                var CityIndex = maskData.Address.IndexOf("市");
-                var CountyIndex = maskData.Address.IndexOf("縣");
-                var s = maskData.Address.Substring(6);
+                var CityIndex = maskDataList[i].Address.IndexOf("市");
+                var CountyIndex = maskDataList[i].Address.IndexOf("縣");
+                var locationSuffix = maskDataList[i].Address.Substring(0, 6);
+
+                if(!locationDict.ContainsKey(locationSuffix))
+                {
+                    locationDict.Add(locationSuffix, new List<int>());
+                    locationDict[locationSuffix].Add(i);
+                }
+                else
+                {
+                    locationDict[locationSuffix].Add(i);
+                }
             }
+
+            return locationDict;
+        }
+
+        private List<MaskData> GetRightList(string myLocationSuffix, Dictionary<string, List<int>> maskDataDict, List<MaskData> maskDataList)
+        {
+            var result = new List<MaskData>();
+            foreach(var i in maskDataDict[myLocationSuffix])
+            {
+                result.Add(maskDataList[i]);
+            }
+            return result;
         }
 
         public IActionResult Create()
