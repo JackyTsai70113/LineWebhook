@@ -159,7 +159,8 @@ namespace Website.Controllers
                 request.Headers.Add("Content-Type", "application/json");
                 request.Headers.Add("Authorization", "Bearer " + channelAccessToken);
                 string locationSuffix = LocationHandler.GetLocationSecondDivisionSuffix(address);
-                var topMaskDatas = MaskDataHandler.GetTopMaskDatasFromLocationSuffix(locationSuffix, 5);
+                //var topMaskDatas = MaskDataHandler.GetTopMaskDatasFromLocationSuffix(locationSuffix, 5);
+                var topMaskDatas = MaskDataHandler.GetTopMaskDatasByComputingDistance(address, 5);
                 StringBuilder builder = new StringBuilder();
                 foreach(var maskData in topMaskDatas)
                 {
