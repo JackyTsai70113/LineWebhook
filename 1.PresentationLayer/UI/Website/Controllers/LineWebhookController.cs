@@ -18,6 +18,8 @@ using Utility.Line;
 using Utility.MaskDataHandler;
 using Utility.StringUtil;
 using Models.Line.API;
+using Utility.Google.MapAPIs;
+using Models.Google.API;
 
 namespace Website.Controllers
 {
@@ -148,56 +150,64 @@ namespace Website.Controllers
             string result = "";
             try
             {
-                // string locationSuffix = "";
-                // if(address.IndexOf("var CityIndex = maskDataList[i].Address.IndexOf("市");
-                // var CountyIndex = maskDataList[i].Address.IndexOf("縣");"))
                 // 取得欲傳送的MaskDataList
-                //string maskDataList = MaskDataHandler.GetTopMaskDatasFromLocationSuffix(address);
+                var topMaskDatas = MaskDataHandler.GetTopMaskDatasByComputingDistance(address, 5);
+                
+                // create Request
                 string url = "https://api.line.me/v2/bot/message/reply";
                 var request = (HttpWebRequest)WebRequest.Create(url);
                 request.Method = "POST";
                 request.Headers.Add("Content-Type", "application/json");
                 request.Headers.Add("Authorization", "Bearer " + channelAccessToken);
-                //var topMaskDatas = MaskDataHandler.GetTopMaskDatasFromLocationSuffix(locationSuffix, 5);
-                var topMaskDatas = MaskDataHandler.GetTopMaskDatasByComputingDistance(address, 5);
+
+
+                // Set up messages to send
+                var messages = new List<dynamic>();
                 StringBuilder builder = new StringBuilder();
-                foreach(var maskData in topMaskDatas)
-                {
-                    builder.Append(maskData.Name + " " + maskData.Address + " " + 
-                        maskData.AdultMasks + " " + maskData.ChildMasks + "\n");
-                }
+                
+               
+                
                 if(topMaskDatas.Count == 0)
                 {
                     string locationSuffix = LocationHandler.GetLocationFirstDivisionSuffix(address);
                     builder.Append($"所在區域({locationSuffix})沒有相關藥局");
+                    messages.Add(new TextMessage
+                    {
+                        type = "text",
+                        text = builder.ToString()
+                    });
                 }
-                // Set up messages to send
-                var messages = new List<dynamic>();
-                // foreach(var text in messageTexts)
-                // {
-                //     messages.Add(new TextMessage
-                //     {
-                //         type = "text",
-                //         text = text
-                //     });
-                // }
+                else
+                {
+                    foreach (var maskData in topMaskDatas)
+                    {
+                        Location location = MapApiHandler.GetGeocoding(maskData.Address).results[0].geometry.location;
 
-                // messages.Add(new StickerMessage
-                // {
-                //     type = "sticker",
-                //     packageId = "1",
-                //     stickerId = "1"
-                // });
-                messages.Add(new TextMessage
-                {
-                    type = "text",
-                    text = "以下是離你最近的藥局"
-                });
-                messages.Add(new TextMessage
-                {
-                    type = "text",
-                    text = builder.ToString()
-                });
+                        if (!Double.TryParse(location.lat, out double lat))
+                        {
+                            Console.WriteLine($"Ex: Cannot parse {location.lat} to Int.");
+                            lat = Double.MinValue;
+                        }
+
+                        if (!Double.TryParse(location.lng, out double lng))
+                        {
+                            Console.WriteLine($"Ex: Cannot parse {location.lng} to Int.");
+                            lng = Double.MinValue;
+                        }
+
+                        messages.Add(new LocationMessage
+                        { 
+                            type = "location",
+                            title = maskData.Name,
+                            address = maskData.Address,
+                            latitude = lat,
+                            longitude = lng
+                        });
+                        // builder.Append(maskData.Name + " " + maskData.Address + " " + 
+                        //     maskData.AdultMasks + " " + maskData.ChildMasks + "\n");
+                    }
+                }
+               
                 // messages.Add(new LocationMessage
                 // {
                 //     type = "location",
@@ -206,14 +216,7 @@ namespace Website.Controllers
                 //     latitude = 35.65910807942215,
                 //     longitude = 139.70372892916203
                 // });
-                // messages.Add(new LocationMessage
-                // { 
-                //     type = "location",
-                //     title = "myLocation",
-                //     address = "〒150-0002 東京都渋谷区渋谷２丁目２１−１",
-                //     latitude = 35.65910807942215,
-                //     longitude = 139.70372892916203
-                // });
+                
 
                 var postData = new ReplyMessages{
                     replyToken = replyToken,

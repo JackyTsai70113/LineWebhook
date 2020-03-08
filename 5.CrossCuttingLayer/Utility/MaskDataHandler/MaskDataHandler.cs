@@ -105,7 +105,7 @@ namespace Utility.MaskDataHandler
 
             string locationSuffix = LocationHandler.GetLocationFirstDivisionSuffix(location);
             List<MaskData> maskDataList = GetTopMaskDatasFromLocationSuffix(locationSuffix);
-            
+
             var MaskDataDistancesList = new List<MaskDataDistances>();
             for (int i = 0; i < maskDataList.Count; i = i + 80)
             {
@@ -116,7 +116,7 @@ namespace Utility.MaskDataHandler
                     destinationAddressBuilder.Append("|");
                 }
                 var destinationAddress = destinationAddressBuilder.Remove(destinationAddressBuilder.Length - 1, 1).ToString();
-                var distanceMatrix = GeocodeHandler.GetDistanceMatrix(destinationAddress, location);
+                var distanceMatrix = MapApiHandler.GetDistanceMatrix(destinationAddress, location);
                 for (int j = 0; j < distanceMatrix.rows.Count; j++)
                 {
                     var row = distanceMatrix.rows[j];

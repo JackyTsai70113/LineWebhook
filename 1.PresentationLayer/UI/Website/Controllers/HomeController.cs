@@ -39,6 +39,7 @@ namespace Website.Controllers
 
         public IActionResult List()
         {
+            var s = MapApiHandler.GetGeocoding("110台灣台北市信義區虎林街132巷37號"); 
             // 取得 maskData 的 List
             var maskDataList = MaskDataHandler.GetTopMaskDatasByComputingDistance("110台灣台北市信義區虎林街132巷37號", 5);
             StringBuilder builder = new StringBuilder();
