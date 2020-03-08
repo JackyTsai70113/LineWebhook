@@ -158,7 +158,6 @@ namespace Website.Controllers
                 request.Method = "POST";
                 request.Headers.Add("Content-Type", "application/json");
                 request.Headers.Add("Authorization", "Bearer " + channelAccessToken);
-                string locationSuffix = LocationHandler.GetLocationSecondDivisionSuffix(address);
                 //var topMaskDatas = MaskDataHandler.GetTopMaskDatasFromLocationSuffix(locationSuffix, 5);
                 var topMaskDatas = MaskDataHandler.GetTopMaskDatasByComputingDistance(address, 5);
                 StringBuilder builder = new StringBuilder();
@@ -169,6 +168,7 @@ namespace Website.Controllers
                 }
                 if(topMaskDatas.Count == 0)
                 {
+                    string locationSuffix = LocationHandler.GetLocationFirstDivisionSuffix(address);
                     builder.Append($"所在區域({locationSuffix})沒有相關藥局");
                 }
                 // Set up messages to send

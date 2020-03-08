@@ -30,7 +30,7 @@ namespace Website.Controllers
 
         public IActionResult Index()
         {
-            var MaskDataList = MaskDataHandler.GetTopMaskDatasByComputingDistance("110台灣台北市信義區虎林街132巷37號", 5);
+            var MaskDataList = MaskDataHandler.GetTopMaskDatasByComputingDistance("110台灣台北市信義區虎林街132巷37號");
             // 取得 maskData 的 List
             //var MaskDataList = MaskDataSourceHandler.GetList();
             ViewData["result"] = "MaskDataList.Count: " + MaskDataList.Count.ToString();
@@ -40,16 +40,14 @@ namespace Website.Controllers
         public IActionResult List()
         {
             // 取得 maskData 的 List
-            var MaskDataList = MaskDataSourceHandler.GetList();
-            var maskDataDict = GetMaskDataDict(MaskDataList);
-            var list = GetRightList("臺北市中正區", maskDataDict, MaskDataList);
+            var maskDataList = MaskDataHandler.GetTopMaskDatasByComputingDistance("110台灣台北市信義區虎林街132巷37號", 5);
             StringBuilder builder = new StringBuilder();
-            foreach(var maskData in list)
+            foreach(var maskData in maskDataList)
             {
                 builder.AppendLine($"{maskData.Name}: 成人({maskData.AdultMasks})/兒童({maskData.ChildMasks})");
             }
             ViewData["testMaskData"] = builder.ToString();
-            return View(MaskDataList);
+            return View(maskDataList);
         }
 
         // 取得區域對應的maskDataList index
