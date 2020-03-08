@@ -198,7 +198,7 @@ namespace Website.Controllers
                         messages.Add(new LocationMessage
                         { 
                             type = "location",
-                            title = maskData.Name,
+                            title = maskData.Name + "(成人:" + maskData.AdultMasks + "/兒童: " + maskData.ChildMasks + ")",
                             address = maskData.Address,
                             latitude = lat,
                             longitude = lng
