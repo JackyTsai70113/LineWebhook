@@ -46,9 +46,9 @@ namespace Website.Controllers {
             Console.WriteLine($"requestBody:");
             Console.WriteLine($"{requestBody}");
             RequestHandler handler = new RequestHandler(requestBody);
-
             LineRequestBody body = handler.requestBody;
-            Console.WriteLine($"{JsonConvert.SerializeObject(requestBody, Formatting.Indented)}");
+            Console.WriteLine($"body:");
+            Console.WriteLine($"{JsonConvert.SerializeObject(body, Formatting.Indented)}");
 
             Console.WriteLine($"====================");
             string replyToken = body.events[0].replyToken;
