@@ -45,13 +45,12 @@ namespace Website.Controllers {
             Console.WriteLine($"From LINE SERVER");
             Console.WriteLine($"requestBody:");
             Console.WriteLine($"{requestBody}");
-            Console.WriteLine($"{JsonConvert.SerializeObject(requestBody, Formatting.Indented)}");
-
-            Console.WriteLine($"====================");
-
             RequestHandler handler = new RequestHandler(requestBody);
 
             LineRequestBody body = handler.requestBody;
+            Console.WriteLine($"{JsonConvert.SerializeObject(requestBody, Formatting.Indented)}");
+
+            Console.WriteLine($"====================");
             string replyToken = body.events[0].replyToken;
             switch (handler.messageType) {
                 //case "text":
