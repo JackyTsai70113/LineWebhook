@@ -37,7 +37,7 @@ namespace Website.Controllers {
         /// <summary>
         /// LINE Webhook的入口，負責解讀line的訊息。
         /// </summary>
-        /// <param name="requestBody">line</param>
+        /// <param name="requestBody"></param>
         /// <returns></returns>
         [HttpPost]
         public IActionResult Index([FromBody] dynamic requestBody) {
@@ -45,6 +45,8 @@ namespace Website.Controllers {
             Console.WriteLine($"From LINE SERVER");
             Console.WriteLine($"requestBody:");
             Console.WriteLine($"{requestBody}");
+            Console.WriteLine($"{JsonConvert.SerializeObject(requestBody, Formatting.Indented)}");
+
             Console.WriteLine($"====================");
 
             RequestHandler handler = new RequestHandler(requestBody);
