@@ -1,86 +1,9 @@
 {
   "format": 1,
   "restore": {
-    "D:\\ASP.NET Core Web App\\LineWebhook\\1.PresentationLayer\\UI\\Website\\Website.csproj": {}
+    "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL.Services\\BL.Services.csproj": {}
   },
   "projects": {
-    "D:\\ASP.NET Core Web App\\LineWebhook\\1.PresentationLayer\\UI\\Website\\Website.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "D:\\ASP.NET Core Web App\\LineWebhook\\1.PresentationLayer\\UI\\Website\\Website.csproj",
-        "projectName": "Website",
-        "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\1.PresentationLayer\\UI\\Website\\Website.csproj",
-        "packagesPath": "C:\\Users\\JackyTsai\\.nuget\\packages\\",
-        "outputPath": "D:\\ASP.NET Core Web App\\LineWebhook\\1.PresentationLayer\\UI\\Website\\obj\\",
-        "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
-        "configFilePaths": [
-          "C:\\Users\\JackyTsai\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "netcoreapp3.1"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "netcoreapp3.1": {
-            "projectReferences": {
-              "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL.Interfaces\\BL.Interfaces.csproj": {
-                "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL.Interfaces\\BL.Interfaces.csproj"
-              },
-              "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL.Services\\BL.Services.csproj": {
-                "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL.Services\\BL.Services.csproj"
-              },
-              "D:\\ASP.NET Core Web App\\LineWebhook\\4.ModelsLayer\\Models\\Models.csproj": {
-                "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\4.ModelsLayer\\Models\\Models.csproj"
-              },
-              "D:\\ASP.NET Core Web App\\LineWebhook\\5.CrossCuttingLayer\\Utility\\Utility.csproj": {
-                "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\5.CrossCuttingLayer\\Utility\\Utility.csproj"
-              }
-            }
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "netcoreapp3.1": {
-          "dependencies": {
-            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
-              "target": "Package",
-              "version": "[3.1.1, )"
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200-preview-014977\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
     "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL.Interfaces\\BL.Interfaces.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -258,76 +181,6 @@
               "target": "Package",
               "version": "[2.0.3, )",
               "autoReferenced": true
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200-preview-014977\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "D:\\ASP.NET Core Web App\\LineWebhook\\5.CrossCuttingLayer\\Utility\\Utility.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "D:\\ASP.NET Core Web App\\LineWebhook\\5.CrossCuttingLayer\\Utility\\Utility.csproj",
-        "projectName": "Utility",
-        "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\5.CrossCuttingLayer\\Utility\\Utility.csproj",
-        "packagesPath": "C:\\Users\\JackyTsai\\.nuget\\packages\\",
-        "outputPath": "D:\\ASP.NET Core Web App\\LineWebhook\\5.CrossCuttingLayer\\Utility\\obj\\",
-        "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
-        "configFilePaths": [
-          "C:\\Users\\JackyTsai\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "netstandard2.0"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "netstandard2.0": {
-            "projectReferences": {
-              "D:\\ASP.NET Core Web App\\LineWebhook\\4.ModelsLayer\\Models\\Models.csproj": {
-                "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\4.ModelsLayer\\Models\\Models.csproj"
-              }
-            }
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "netstandard2.0": {
-          "dependencies": {
-            "Microsoft.CSharp": {
-              "target": "Package",
-              "version": "[4.7.0, )"
-            },
-            "NETStandard.Library": {
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[2.0.3, )",
-              "autoReferenced": true
-            },
-            "Newtonsoft.Json": {
-              "target": "Package",
-              "version": "[12.0.3, )"
             }
           },
           "imports": [
