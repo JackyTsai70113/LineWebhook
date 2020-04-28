@@ -20,6 +20,8 @@ using Utility.StringUtil;
 using Models.Line.API;
 using Utility.Google.MapAPIs;
 using Models.Google.API;
+using BL.Interfaces;
+using BL.Services;
 
 namespace Website.Controllers {
 
@@ -27,6 +29,11 @@ namespace Website.Controllers {
     /// LineWebhook控制器，Line Server 的 I/O
     /// </summary>
     public class LineWebhookController : Controller {
+        public ILineWebhookService LineWebhookService { get; set; }
+
+        public LineWebhookController() {
+            LineWebhookService = new LineWebhookService();
+        }
 
         private static string channelAccessToken =
             @"tkOO80fthaESrdEWkHn5+gsypQLHd1N3DZcNsWaJku3GeO/
@@ -41,32 +48,27 @@ namespace Website.Controllers {
         /// <returns></returns>
         [HttpPost]
         public IActionResult Index([FromBody] dynamic requestBody) {
-            Console.WriteLine($"==========[LineWebhook/Index]==========");
-            Console.WriteLine($"From LINE SERVER");
-            Console.WriteLine($"requestBody:");
-            Console.WriteLine($"{requestBody}");
-            RequestHandler handler = new RequestHandler(requestBody);
-            LineRequestBody body = handler.requestBody;
-            Console.WriteLine($"body:");
-            Console.WriteLine($"{JsonConvert.SerializeObject(body, Formatting.Indented)}");
+            try {
+                LineRequestBody lineRequestBody = RequestHandler.GetLineRequestBody(requestBody);
 
-            Console.WriteLine($"====================");
-            string replyToken = body.events[0].replyToken;
-            switch (handler.messageType) {
-                //case "text":
-                //    return Content("");
+                //處理requestBody
+                RequestHandler handler = new RequestHandler(requestBody);
+                string replyToken = lineRequestBody.Events[0].replyToken;
+                Console.WriteLine($"==========[LineWebhook/Index]==========");
+                Console.WriteLine($"From LINE SERVER");
+                Console.WriteLine($"body:");
+                Console.WriteLine($"{JsonConvert.SerializeObject(lineRequestBody, Formatting.Indented)}");
+                Console.WriteLine($"====================");
 
-                case "location":
-                    //Models.Line.API.LocationMessage locationMsg = (LocationMessage)(body.events[0].message);
-                    string result1 = ReplyLocationMessages(replyToken, body.events[0].message.address);
-                    return Content(requestBody.ToString() + "\n" + result1);
+                //LineRequestBody body = JsonConvert.DeserializeObject<LineRequestBody>(requestBody.ToString());
+                //string replyToken2 = lineSource.events[0].message.text;
+                List<string> messageTexts = new List<string>();
+                messageTexts.Add("修但幾勒");
+                string result = LineWebhookService.Response(lineRequestBody);
+                return Content(requestBody.ToString() + "\n" + result);
+            } catch (Exception ex) {
+                return Content($"Index 發生錯誤，requestBody: {requestBody}, ex: {ex}");
             }
-            //LineRequestBody body = JsonConvert.DeserializeObject<LineRequestBody>(requestBody.ToString());
-            //string replyToken2 = lineSource.events[0].message.text;
-            List<string> messageTexts = new List<string>();
-            messageTexts.Add("修但幾勒");
-            string result = ReplyMessages(replyToken, messageTexts);
-            return Content(requestBody.ToString() + "\n" + result);
         }
 
         private string ReplyMessages(string replyToken, List<string> messageTexts) {

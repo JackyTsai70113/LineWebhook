@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace Website.Models
-{
-    public class ReplyMessages
-    {
+namespace Models.Line.API {
+
+    public class ReplyMessages {
         public string replyToken { get; set; }
         public List<dynamic> messages { get; set; }
     }

@@ -1807,6 +1807,31 @@
           "lib/netstandard1.3/System.Xml.XDocument.dll": {}
         }
       },
+      "BL.Interfaces/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "Models": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/BL.Interfaces.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BL.Interfaces.dll": {}
+        }
+      },
+      "BL.Services/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "BL.Interfaces": "1.0.0",
+          "Models": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/BL.Services.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BL.Services.dll": {}
+        }
+      },
       "Models/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
@@ -6098,6 +6123,16 @@
         "system.xml.xdocument.nuspec"
       ]
     },
+    "BL.Interfaces/1.0.0": {
+      "type": "project",
+      "path": "../../../2.BusinessLogicLayer/BL.Interfaces/BL.Interfaces.csproj",
+      "msbuildProject": "../../../2.BusinessLogicLayer/BL.Interfaces/BL.Interfaces.csproj"
+    },
+    "BL.Services/1.0.0": {
+      "type": "project",
+      "path": "../../../2.BusinessLogicLayer/BL.Services/BL.Services.csproj",
+      "msbuildProject": "../../../2.BusinessLogicLayer/BL.Services/BL.Services.csproj"
+    },
     "Models/1.0.0": {
       "type": "project",
       "path": "../../../4.ModelsLayer/Models/Models.csproj",
@@ -6111,6 +6146,8 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "BL.Interfaces >= 1.0.0",
+      "BL.Services >= 1.0.0",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.1.1",
       "Models >= 1.0.0",
       "Utility >= 1.0.0"
@@ -6146,6 +6183,12 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
+            "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL.Interfaces\\BL.Interfaces.csproj": {
+              "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL.Interfaces\\BL.Interfaces.csproj"
+            },
+            "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL.Services\\BL.Services.csproj": {
+              "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL.Services\\BL.Services.csproj"
+            },
             "D:\\ASP.NET Core Web App\\LineWebhook\\4.ModelsLayer\\Models\\Models.csproj": {
               "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\4.ModelsLayer\\Models\\Models.csproj"
             },

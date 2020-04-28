@@ -30,6 +30,12 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
+              "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL.Interfaces\\BL.Interfaces.csproj": {
+                "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL.Interfaces\\BL.Interfaces.csproj"
+              },
+              "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL.Services\\BL.Services.csproj": {
+                "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL.Services\\BL.Services.csproj"
+              },
               "D:\\ASP.NET Core Web App\\LineWebhook\\4.ModelsLayer\\Models\\Models.csproj": {
                 "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\4.ModelsLayer\\Models\\Models.csproj"
               },
@@ -73,6 +79,49 @@
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200-preview-014977\\RuntimeIdentifierGraph.json"
         }
+      }
+    },
+    "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL.Interfaces\\BL.Interfaces.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL.Interfaces\\BL.Interfaces.csproj",
+        "projectName": "BL.Interfaces",
+        "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL.Interfaces\\BL.Interfaces.csproj",
+        "frameworks": {
+          "net472": {
+            "projectReferences": {
+              "D:\\ASP.NET Core Web App\\LineWebhook\\4.ModelsLayer\\Models\\Models.csproj": {
+                "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\4.ModelsLayer\\Models\\Models.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net472": {}
+      }
+    },
+    "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL.Services\\BL.Services.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL.Services\\BL.Services.csproj",
+        "projectName": "BL.Services",
+        "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL.Services\\BL.Services.csproj",
+        "frameworks": {
+          "net472": {
+            "projectReferences": {
+              "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL.Interfaces\\BL.Interfaces.csproj": {
+                "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL.Interfaces\\BL.Interfaces.csproj"
+              },
+              "D:\\ASP.NET Core Web App\\LineWebhook\\4.ModelsLayer\\Models\\Models.csproj": {
+                "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\4.ModelsLayer\\Models\\Models.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net472": {}
       }
     },
     "D:\\ASP.NET Core Web App\\LineWebhook\\4.ModelsLayer\\Models\\Models.csproj": {
