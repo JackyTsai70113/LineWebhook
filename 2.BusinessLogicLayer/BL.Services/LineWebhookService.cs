@@ -27,7 +27,7 @@ namespace BL.Services {
                 string result;
                 LineRequestBody = lineRequestBody;
                 // 判斷訊息型態
-                switch (LineRequestBody.Events[0].message.type.Value) {
+                switch (LineRequestBody.Events[0].message.type) {
                     case "text":
                         result = ReplyTextMessages();
                         break;
