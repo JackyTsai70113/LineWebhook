@@ -89,8 +89,8 @@ namespace BL.Services {
                 };
 
                 // Write data to requestStream
-                UTF8Encoding encoding = new UTF8Encoding();
-                byte[] data = encoding.GetBytes(postData.ToString());
+                ASCIIEncoding encoding = new ASCIIEncoding();
+                byte[] data = encoding.GetBytes(System.Text.Json.JsonSerializer.Serialize(postData));
                 //byte[] data = encoding.GetBytes(JsonConvert.SerializeObject(postData));
                 request.ContentLength = data.Length;
                 Stream requestStream = request.GetRequestStream();

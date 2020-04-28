@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "8m3NRrsS2mxaGNxDyxrUc3HsaBeggroZFtOWJc+NT+QktS2uoH06QtgCbTfLeU1KIaBQQu3It3S3jxdGU23Q8w==",
+  "dgSpecHash": "Ky+Zv9bwri2g0/av0W6ecDMLRl/PcT0Ecyat5eo8bfsDvmiFC0TtQ6OsK6p/Ci8WgQJYqd+DaQZGs8XYxVkOyQ==",
   "success": true,
   "projectFilePath": "D:\\ASP.NET Core Web App\\LineWebhook\\1.PresentationLayer\\UI\\Website\\Website.csproj",
   "expectedPackageFiles": [
@@ -105,6 +105,7 @@
     "C:\\Users\\JackyTsai\\.nuget\\packages\\system.text.encoding.codepages\\4.5.1\\system.text.encoding.codepages.4.5.1.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.text.encoding.extensions\\4.3.0\\system.text.encoding.extensions.4.3.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.text.encodings.web\\4.5.0\\system.text.encodings.web.4.5.0.nupkg.sha512",
+    "C:\\Users\\JackyTsai\\.nuget\\packages\\system.text.json\\4.7.1\\system.text.json.4.7.1.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.text.regularexpressions\\4.3.0\\system.text.regularexpressions.4.3.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.threading\\4.3.0\\system.threading.4.3.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512",

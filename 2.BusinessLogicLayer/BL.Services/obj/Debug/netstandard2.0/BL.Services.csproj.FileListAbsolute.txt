@@ -4,7 +4,6 @@ D:\ASP.NET Core Web App\LineWebhook\2.BusinessLogicLayer\BL.Services\bin\Debug\n
 D:\ASP.NET Core Web App\LineWebhook\2.BusinessLogicLayer\BL.Services\obj\Debug\netstandard2.0\BL.Services.csprojAssemblyReference.cache
 D:\ASP.NET Core Web App\LineWebhook\2.BusinessLogicLayer\BL.Services\obj\Debug\netstandard2.0\BL.Services.AssemblyInfoInputs.cache
 D:\ASP.NET Core Web App\LineWebhook\2.BusinessLogicLayer\BL.Services\obj\Debug\netstandard2.0\BL.Services.AssemblyInfo.cs
-D:\ASP.NET Core Web App\LineWebhook\2.BusinessLogicLayer\BL.Services\obj\Debug\netstandard2.0\BL.Services.csproj.CoreCompileInputs.cache
 D:\ASP.NET Core Web App\LineWebhook\2.BusinessLogicLayer\BL.Services\bin\Debug\netstandard2.0\BL.Services.deps.json
 D:\ASP.NET Core Web App\LineWebhook\2.BusinessLogicLayer\BL.Services\bin\Debug\netstandard2.0\BL.Services.dll
 D:\ASP.NET Core Web App\LineWebhook\2.BusinessLogicLayer\BL.Services\bin\Debug\netstandard2.0\BL.Interfaces.pdb
@@ -12,3 +11,4 @@ D:\ASP.NET Core Web App\LineWebhook\2.BusinessLogicLayer\BL.Services\obj\Debug\n
 D:\ASP.NET Core Web App\LineWebhook\2.BusinessLogicLayer\BL.Services\bin\Debug\netstandard2.0\BL.Services.pdb
 D:\ASP.NET Core Web App\LineWebhook\2.BusinessLogicLayer\BL.Services\obj\Debug\netstandard2.0\BL.Services.dll
 D:\ASP.NET Core Web App\LineWebhook\2.BusinessLogicLayer\BL.Services\obj\Debug\netstandard2.0\BL.Services.pdb
+D:\ASP.NET Core Web App\LineWebhook\2.BusinessLogicLayer\BL.Services\obj\Debug\netstandard2.0\BL.Services.csproj.CoreCompileInputs.cache
