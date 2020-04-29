@@ -14,7 +14,8 @@
           "Models": "1.0.0",
           "NETStandard.Library": "2.0.3",
           "Newtonsoft.Json": "12.0.3",
-          "System.Text.Json": "4.7.1"
+          "System.Text.Json": "4.7.1",
+          "Utility": "1.0.0"
         },
         "runtime": {
           "BL.Services.dll": {}
@@ -141,6 +142,17 @@
         "runtime": {
           "Models.dll": {}
         }
+      },
+      "Utility/1.0.0": {
+        "dependencies": {
+          "Microsoft.CSharp": "4.7.0",
+          "Models": "1.0.0",
+          "Newtonsoft.Json": "12.0.3",
+          "System.Text.Json": "4.7.1"
+        },
+        "runtime": {
+          "Utility.dll": {}
+        }
       }
     }
   },
@@ -240,6 +252,11 @@
       "sha512": ""
     },
     "Models/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Utility/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

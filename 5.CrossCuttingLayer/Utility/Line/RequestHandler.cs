@@ -13,7 +13,7 @@ namespace Utility.Line {
     /// 處理Request
     /// </summary>
     public class RequestHandler {
-        public LineRequestBody _requestBody { get; set; }
+        public RequestBodyFromLineServer _requestBody { get; set; }
 
         /// <summary>
         /// 訊息型態
@@ -27,8 +27,8 @@ namespace Utility.Line {
 
         public RequestHandler(dynamic requestBody) {
             try {
-                LineRequestBody lineRequestBody = JsonConvert.
-                    DeserializeObject<LineRequestBody>(requestBody.ToString());
+                RequestBodyFromLineServer lineRequestBody = JsonConvert.
+                    DeserializeObject<RequestBodyFromLineServer>(requestBody.ToString());
                 Event lineEvent = JsonConvert.
                     DeserializeObject<Event>(lineRequestBody.Events[0].ToString());
                 Message message = lineEvent.message;
@@ -60,9 +60,9 @@ namespace Utility.Line {
             }
         }
 
-        public static LineRequestBody GetLineRequestBody(dynamic requestBody) {
-            LineRequestBody lineRequestBody = JsonConvert.
-                    DeserializeObject<LineRequestBody>(requestBody.ToString());
+        public static RequestBodyFromLineServer GetLineRequestBody(dynamic requestBody) {
+            RequestBodyFromLineServer lineRequestBody = JsonConvert.
+                    DeserializeObject<RequestBodyFromLineServer>(requestBody.ToString());
             foreach (Event @event in lineRequestBody.Events) {
                 switch (@event.message.type.Value) {
                     case "text":
@@ -78,10 +78,6 @@ namespace Utility.Line {
                 }
             }
             return lineRequestBody;
-        }
-
-        private Message HandleMessage(dynamic message) {
-            return new Message();
         }
     }
 }

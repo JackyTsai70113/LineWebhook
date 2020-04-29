@@ -11,7 +11,7 @@ using System.Net;
 using System.Text;
 using Models.MaskDatas;
 
-namespace Utility.MaskDataHandler
+namespace Utility.MaskData
 {
     public class MaskDataSourceHandler
     {
@@ -20,7 +20,7 @@ namespace Utility.MaskDataHandler
             
         // }
 
-        public static List<MaskData> GetList()
+        public static List<Models.MaskDatas.MaskData> GetList()
         {
             string uri = "http://data.nhi.gov.tw/Datasets/Download.ashx?rid=A21030000I-D50001-001&l=https://data.nhi.gov.tw/resource/mask/maskdata.csv"; 
             var request = (HttpWebRequest)WebRequest.Create(uri); 
@@ -33,7 +33,7 @@ namespace Utility.MaskDataHandler
 
             var maskDataStrArr = maskDataStr.Split('\n');
             
-            var maskDataList = new List<MaskData>();
+            var maskDataList = new List<Models.MaskDatas.MaskData>();
             for(int i = 1; i < maskDataStrArr.Length - 1; i++)
             {
                 var maskDataArr = maskDataStrArr[i].Split(',');
@@ -52,7 +52,7 @@ namespace Utility.MaskDataHandler
                     Console.WriteLine($"Ex: Cannot parse {maskDataArr[6]} to Int.");
                     updateTime = DateTime.MinValue;
                 }
-                maskDataList.Add(new MaskData
+                maskDataList.Add(new Models.MaskDatas.MaskData
                 {
                     Id = maskDataArr[0],
                     Name = maskDataArr[1],

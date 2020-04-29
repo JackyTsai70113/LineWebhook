@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace Models.Line.Webhook
-{
-    public class Event
-    {
+namespace Models.Line.Webhook {
+
+    public class Event {
         public string type { get; set; }
         public string replyToken { get; set; }
         public Source source { get; set; }
@@ -13,8 +12,10 @@ namespace Models.Line.Webhook
         public dynamic message { get; set; }
     }
 
-    public class Source
-    {
+    /// <summary>
+    /// EventSource, 包含user, group, room, 先以user為準
+    /// </summary>
+    public class Source {
         public string userId { get; set; }
         public string type { get; set; }
     }

@@ -161,6 +161,22 @@
         "runtime": {
           "bin/placeholder/Models.dll": {}
         }
+      },
+      "Utility/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Microsoft.CSharp": "4.7.0",
+          "Models": "1.0.0",
+          "Newtonsoft.Json": "12.0.3",
+          "System.Text.Json": "4.7.1"
+        },
+        "compile": {
+          "bin/placeholder/Utility.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Utility.dll": {}
+        }
       }
     }
   },
@@ -641,6 +657,11 @@
       "type": "project",
       "path": "../../4.ModelsLayer/Models/Models.csproj",
       "msbuildProject": "../../4.ModelsLayer/Models/Models.csproj"
+    },
+    "Utility/1.0.0": {
+      "type": "project",
+      "path": "../../5.CrossCuttingLayer/Utility/Utility.csproj",
+      "msbuildProject": "../../5.CrossCuttingLayer/Utility/Utility.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -650,7 +671,8 @@
       "Models >= 1.0.0",
       "NETStandard.Library >= 2.0.3",
       "Newtonsoft.Json >= 12.0.3",
-      "System.Text.Json >= 4.7.1"
+      "System.Text.Json >= 4.7.1",
+      "Utility >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -688,6 +710,9 @@
             },
             "D:\\ASP.NET Core Web App\\LineWebhook\\4.ModelsLayer\\Models\\Models.csproj": {
               "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\4.ModelsLayer\\Models\\Models.csproj"
+            },
+            "D:\\ASP.NET Core Web App\\LineWebhook\\5.CrossCuttingLayer\\Utility\\Utility.csproj": {
+              "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\5.CrossCuttingLayer\\Utility\\Utility.csproj"
             }
           }
         }

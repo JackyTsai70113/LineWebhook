@@ -4,7 +4,7 @@ using Models.Line.Webhook;
 
 namespace Models.Line {
 
-    public class LineRequestBody {
+    public class RequestBodyFromLineServer {
         public string Destination { get; set; }
         public List<Event> Events { get; set; }
     }
