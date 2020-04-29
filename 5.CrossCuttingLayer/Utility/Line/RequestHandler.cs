@@ -48,6 +48,16 @@ namespace Utility.Line {
                             DeserializeObject<LocationMessage>(lineEvent.message.ToString());
                         break;
 
+                    case "sticker":
+                        lineRequestBody.Events[0].message = JsonConvert.
+                            DeserializeObject<StickerMessage>(lineEvent.message.ToString());
+                        break;
+
+                    case "image":
+                        lineRequestBody.Events[0].message = JsonConvert.
+                            DeserializeObject<ImageMessage>(lineEvent.message.ToString());
+                        break;
+
                     default:
                         break;
                 }

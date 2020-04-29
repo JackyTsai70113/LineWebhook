@@ -18,47 +18,46 @@ using Utility.StringUtil;
 namespace BL.Services {
 
     public class LineWebhookService : ILineWebhookService {
-
-        private static string lineChannelAccessToken =
-            @"tkOO80fthaESrdEWkHn5+gsypQLHd1N3DZcNsWaJku3GeO/
-            HsFMyCSyU95KnA6p2bTLPFJS0y4joCknQyppqlwaDK34rrQgS
-            W39EcS0j5WNEZGIlkup0nJ+xlBf+mcw89H1xKAc5Ubd0xA9/Z
-            9RSIwdB04t89/1O/w1cDnyilFU=";
-
         private RequestBodyFromLineServer LineRequestBody { get; set; }
 
         /// <summary>
         /// 判讀LineServer來的請求物件後回應
         /// </summary>
-        /// <param name="requestBodyFromLineServer">LineServer來的請求物件</param>
+        /// <param name="requestBody">LineServer來的請求物件</param>
         /// <returns>LOG紀錄</returns>
-        public string Response(RequestBodyFromLineServer requestBodyFromLineServer) {
+        public string Response(RequestBodyFromLineServer requestBody) {
             try {
                 string result;
-                LineRequestBody = requestBodyFromLineServer;
+                LineRequestBody = requestBody;
                 // 判斷訊息型態
-                switch (LineRequestBody.Events[0].message.type) {
+                string messageType = LineRequestBody.Events[0].message.type;
+                switch (messageType) {
                     case "text":
-                        result = ReplyTestMessages("text");
+                        result = ReplyTestMessages(messageType);
                         break;
 
                     case "sticker":
-                        //string result1 = ReplyLocationMessages(replyToken, handler._requestBody.Events[0].message.address);
-                        result = ReplyTestMessages("sticker");
+                        result = ReplyTestMessages(messageType);
                         break;
 
                     case "location":
-                        //string result1 = ReplyLocationMessages(replyToken, handler._requestBody.Events[0].message.address);
                         string address = LineRequestBody.Events[0].message.address;
                         result = ReplyPharmacyInfo(address);
                         break;
 
+                    case "":
+                        result = ReplyTestMessages(messageType);
+                        break;
+
                     default:
-                        result = "";
+                        Console.WriteLine($"無相符的 messageType: {messageType}, requestBodyFromLineServer: " +
+                            $"{JsonConvert.SerializeObject(requestBody, Formatting.Indented)}");
+                        result = ReplyTestMessages(messageType);
                         break;
                 }
                 return result;
             } catch (Exception ex) {
+                Console.WriteLine($"LineWebhookService.Response 錯誤, requestBody:{requestBody}");
                 return ex.ToString();
             }
         }

@@ -35,12 +35,6 @@ namespace Website.Controllers {
             LineWebhookService = new LineWebhookService();
         }
 
-        private static string channelAccessToken =
-            @"tkOO80fthaESrdEWkHn5+gsypQLHd1N3DZcNsWaJku3GeO/
-            HsFMyCSyU95KnA6p2bTLPFJS0y4joCknQyppqlwaDK34rrQgS
-            W39EcS0j5WNEZGIlkup0nJ+xlBf+mcw89H1xKAc5Ubd0xA9/Z
-            9RSIwdB04t89/1O/w1cDnyilFU=";
-
         /// <summary>
         /// LINE Webhook的入口，負責解讀line的訊息。
         /// </summary>
