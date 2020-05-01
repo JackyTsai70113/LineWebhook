@@ -54,7 +54,7 @@ namespace BL.Services {
                         break;
 
                     case "sticker":
-                        result = ReplyStickerMessages((StickerMessage)message);
+                        result = ReplyStickerMessages();
                         break;
 
                     default:
@@ -90,8 +90,6 @@ namespace BL.Services {
                     }
                 };
 
-                messages.AddRange(GetStickerMessages());
-
                 result = ResponseHandler.PostToLineServer(new Models.Line.API.RequestBodyToLine {
                     replyToken = LineRequestBody.Events[0].replyToken,
                     messages = messages
@@ -107,39 +105,16 @@ namespace BL.Services {
             string result = "";
             try {
                 // Set up messages to send
-                List<dynamic> messages = new List<dynamic> {
-                    new StickerMessage {
-                        type = "sticker",
-                        packageId = "1",
-                        stickerId = "8"
-                    },
-                    new TextMessage {
-                        type = "text",
-                        text = "訊息類型: " + text
-                    },
-                    new LocationMessage {
-                        type = "location",
-                        title = "myLocation",
-                        address = "〒150-0002 東京都渋谷区渋谷２丁目２１−１",
-                        latitude = 35.65910807942215,
-                        longitude = 139.70372892916203
-                    },
-                    new LocationMessage {
-                        type = "location",
-                        title = "myLocation",
-                        address = "〒150-0002 東京都渋谷区渋谷２丁目２１−１",
-                        latitude = 35.65910807942215,
-                        longitude = 139.70372892916203
-                    }
-                };
-
-                result = ResponseHandler.PostToLineServer(new Models.Line.API.RequestBodyToLine {
-                    replyToken = LineRequestBody.Events[0].replyToken,
-                    messages = messages
-                });
+                if (text.StartsWith("sticker")) {
+                    string packageIdStr = text.Split(' ')[1];
+                    string stickerIdStr = text.Split(' ')[2];
+                    result = ReplyStickerMessages(packageIdStr, stickerIdStr);
+                } else {
+                    result = ReplyTestMessages(text);
+                }
             } catch (Exception ex) {
-                result += "Exception: " + ex.Message;
-                Console.WriteLine($"Exception: {ex.Message}");
+                result += "Exception: " + ex.ToString();
+                Console.WriteLine($"Exception: {ex.ToString()}");
             }
             return result;
         }
@@ -203,30 +178,45 @@ namespace BL.Services {
             return result;
         }
 
-        private string ReplyStickerMessages(StickerMessage stickerMessage) {
+        private string ReplyStickerMessages(string packageIdStr = "1", string stickerIdStr = "1") {
             string result = "";
             try {
+                if (!Int32.TryParse(packageIdStr, out int packageId)) {
+                    Console.WriteLine($"Ex: Cannot parse {packageIdStr} to Int.");
+                    packageId = 1;
+                }
+
+                if (!Int32.TryParse(stickerIdStr, out int stickerId)) {
+                    Console.WriteLine($"Ex: Cannot parse {stickerIdStr} to Int.");
+                    stickerId = 1;
+                }
+
                 // Set up messages to send
                 List<dynamic> messages = new List<dynamic> {
                     new StickerMessage {
                         type = "sticker",
-                        packageId = "1",
-                        stickerId = "8"
+                        packageId = packageId.ToString(),
+                        stickerId = (stickerId++).ToString()
                     },
                     new StickerMessage {
                         type = "sticker",
-                        packageId = "1",
-                        stickerId = "9"
+                        packageId = packageId.ToString(),
+                        stickerId = (stickerId++).ToString()
                     },
                     new StickerMessage {
                         type = "sticker",
-                        packageId = "1",
-                        stickerId = "10"
+                        packageId = packageId.ToString(),
+                        stickerId = (stickerId++).ToString()
                     },
                     new StickerMessage {
                         type = "sticker",
-                        packageId = "1",
-                        stickerId = "11"
+                        packageId = packageId.ToString(),
+                        stickerId = (stickerId++).ToString()
+                    },
+                    new StickerMessage {
+                        type = "sticker",
+                        packageId = packageId.ToString(),
+                        stickerId = (stickerId++).ToString()
                     }
                 };
 
