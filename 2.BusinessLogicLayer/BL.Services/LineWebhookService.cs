@@ -1,7 +1,10 @@
 ﻿using BL.Interfaces;
 using Models.Google.API;
 using Models.Line;
-using Models.Line.API;
+
+//using Models.Line.API;
+
+using Models.Line.Webhook;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -26,9 +29,8 @@ namespace BL.Services {
         /// <param name="requestBody">LineServer來的請求物件</param>
         /// <returns>LOG紀錄</returns>
         public string Response(dynamic requestBody) {
+            string result = "";
             try {
-                string result;
-
                 //處理requestBody
                 RequestBodyFromLineServer lineRequestBody = RequestHandler.GetLineRequestBody(requestBody);
 
@@ -58,12 +60,15 @@ namespace BL.Services {
                     default:
                         Console.WriteLine($"無相符的 message.type: {message.type}, requestBodyFromLineServer: " +
                             $"{JsonConvert.SerializeObject(requestBody, Formatting.Indented)}");
-                        result = ReplyTestMessages(message.type);
+                        result += ReplyTestMessages(message.type);
                         break;
                 }
                 return result;
             } catch (Exception ex) {
-                Console.WriteLine($"LineWebhookService.Response 錯誤, requestBody:{requestBody}");
+                Console.WriteLine(
+                    $"LineWebhookService.Response 錯誤, " +
+                    $"requestBody:{ requestBody}" +
+                    $"result: {result}");
                 return ex.ToString();
             }
         }
@@ -103,7 +108,7 @@ namespace BL.Services {
                     }
                 };
 
-                result = ResponseHandler.PostToLineServer(new RequestBodyToLine {
+                result = ResponseHandler.PostToLineServer(new Models.Line.API.RequestBodyToLine {
                     replyToken = LineRequestBody.Events[0].replyToken,
                     messages = messages
                 });
@@ -162,7 +167,7 @@ namespace BL.Services {
                     }
                 }
 
-                result = ResponseHandler.PostToLineServer(new RequestBodyToLine {
+                result = ResponseHandler.PostToLineServer(new Models.Line.API.RequestBodyToLine {
                     replyToken = LineRequestBody.Events[0].replyToken,
                     messages = messages
                 });
@@ -205,12 +210,12 @@ namespace BL.Services {
                     }
                 };
 
-                result = ResponseHandler.PostToLineServer(new RequestBodyToLine {
+                result = ResponseHandler.PostToLineServer(new Models.Line.API.RequestBodyToLine {
                     replyToken = LineRequestBody.Events[0].replyToken,
                     messages = messages
                 });
             } catch (Exception ex) {
-                result += "Exception: " + ex.Message;
+                result += "Exception: " + ex.ToString();
                 Console.WriteLine($"Exception: {ex.Message}");
             }
             return result;

@@ -45,9 +45,12 @@ namespace Utility.Line {
                 Console.WriteLine($"========== TO LINE SERVER: {httpPostRequestUri} ==========");
                 Console.WriteLine($"requestBody:");
                 Console.WriteLine($"{requestBodyStr}");
+            } catch (WebException webEx) {
+                result += "連線失敗 WebException: " + webEx.ToString();
+                Console.WriteLine($"WebException: {webEx.ToString()}");
             } catch (Exception ex) {
-                result += "Exception: " + ex.Message;
-                Console.WriteLine($"Exception: {ex.Message}");
+                result += "Exception: " + ex.ToString();
+                Console.WriteLine($"Exception: {ex.ToString()}");
             }
             Console.WriteLine($"====================");
             return result;
