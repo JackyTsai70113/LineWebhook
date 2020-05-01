@@ -43,7 +43,7 @@ namespace BL.Services {
                 LineRequestBody = lineRequestBody;
                 // 判斷訊息型態
                 dynamic message = LineRequestBody.Events[0].message;
-                switch (message.type) {
+                switch ((string)message.type) {
                     case "text":
                         result = ReplyTextMessages(message.text);
                         break;
@@ -58,9 +58,9 @@ namespace BL.Services {
                         break;
 
                     default:
-                        Console.WriteLine($"無相符的 message.type: {message.type}, requestBodyFromLineServer: " +
+                        Console.WriteLine($"無相符的 message.type: {(string)message.type}, requestBodyFromLineServer: " +
                             $"{JsonConvert.SerializeObject(requestBody, Formatting.Indented)}");
-                        result += ReplyTestMessages(message.type);
+                        result += ReplyTestMessages((string)message.type);
                         break;
                 }
                 return result;
@@ -68,7 +68,8 @@ namespace BL.Services {
                 Console.WriteLine(
                     $"LineWebhookService.Response 錯誤, " +
                     $"requestBody:{ requestBody}" +
-                    $"result: {result}");
+                    $"result: {result}" +
+                    $"ex: {ex}");
                 return ex.ToString();
             }
         }
