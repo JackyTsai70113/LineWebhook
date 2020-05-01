@@ -1,5 +1,4 @@
-﻿using Models.Line.API;
-using Models.Line.Webhook;
+﻿using Models.Line.Webhook;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
