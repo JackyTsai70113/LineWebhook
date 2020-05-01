@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Models.Line.API {
+namespace Models.Line.Webhook {
 
     /// <summary>
     /// 回覆給line的Request body

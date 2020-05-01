@@ -34,8 +34,7 @@ namespace BL.Services {
                 //處理requestBody
                 RequestBodyFromLineServer lineRequestBody = RequestHandler.GetLineRequestBody(requestBody);
 
-                Console.WriteLine($"==========[LineWebhookService/requestBody]==========");
-                Console.WriteLine($"From LINE SERVER");
+                Console.WriteLine($"========== From LINE SERVER ==========");
                 Console.WriteLine($"requestBody:");
                 Console.WriteLine($"{JsonConvert.SerializeObject(lineRequestBody, Formatting.Indented)}");
                 Console.WriteLine($"====================");
@@ -45,7 +44,7 @@ namespace BL.Services {
                 dynamic message = LineRequestBody.Events[0].message;
                 switch ((string)message.type) {
                     case "text":
-                        result = ReplyTextMessages(message.text);
+                        result = ReplyTextMessages((string)message.text);
                         break;
 
                     case "location":
@@ -90,7 +89,7 @@ namespace BL.Services {
                     }
                 };
 
-                result = ResponseHandler.PostToLineServer(new Models.Line.API.RequestBodyToLine {
+                result = ResponseHandler.PostToLineServer(new RequestBodyToLine {
                     replyToken = LineRequestBody.Events[0].replyToken,
                     messages = messages
                 });
@@ -114,7 +113,7 @@ namespace BL.Services {
                 }
             } catch (Exception ex) {
                 result += "Exception: " + ex.ToString();
-                Console.WriteLine($"Exception: {ex.ToString()}");
+                Console.WriteLine($"Exception: {ex}");
             }
             return result;
         }
@@ -167,7 +166,7 @@ namespace BL.Services {
                     }
                 }
 
-                result = ResponseHandler.PostToLineServer(new Models.Line.API.RequestBodyToLine {
+                result = ResponseHandler.PostToLineServer(new RequestBodyToLine {
                     replyToken = LineRequestBody.Events[0].replyToken,
                     messages = messages
                 });
@@ -220,7 +219,7 @@ namespace BL.Services {
                     }
                 };
 
-                result = ResponseHandler.PostToLineServer(new Models.Line.API.RequestBodyToLine {
+                result = ResponseHandler.PostToLineServer(new RequestBodyToLine {
                     replyToken = LineRequestBody.Events[0].replyToken,
                     messages = messages
                 });
@@ -259,7 +258,7 @@ namespace BL.Services {
                 };
             } catch (Exception ex) {
                 Console.WriteLine($"packageId: {packageId} stickerId: {stickerId}");
-                Console.WriteLine($"GetStickerMessages Exception: {ex.Message}");
+                Console.WriteLine($"GetStickerMessages Exception: {ex}");
             }
             return stickerMessages;
         }

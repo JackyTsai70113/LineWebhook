@@ -1,4 +1,5 @@
 ﻿using Models.Line.API;
+using Models.Line.Webhook;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -35,24 +36,24 @@ namespace Utility.Line {
                 requestStream.Write(data, 0, data.Length);
                 requestStream.Close();
 
-                WebResponse response = request.GetResponse();
-                Stream stream = response.GetResponseStream();
-                StreamReader streamReader = new StreamReader(stream);
-                result = streamReader.ReadToEnd();
-
-                // Add Logs
+                // Add 紀錄發至LineServer的requestBody
                 string requestBodyStr = JsonConvert.SerializeObject(requestBody, Formatting.Indented);
                 Console.WriteLine($"========== TO LINE SERVER: {httpPostRequestUri} ==========");
                 Console.WriteLine($"requestBody:");
                 Console.WriteLine($"{requestBodyStr}");
+                Console.WriteLine($"====================");
+
+                WebResponse response = request.GetResponse();
+                Stream stream = response.GetResponseStream();
+                StreamReader streamReader = new StreamReader(stream);
+                result = streamReader.ReadToEnd();
             } catch (WebException webEx) {
-                result += "網路連線失敗 " + webEx.ToString();
-                Console.WriteLine($"WebException: {webEx.ToString()}");
+                result += "Server未取得回應 " + webEx.ToString();
+                Console.WriteLine($"Server未取得回應 WebException: {webEx}");
             } catch (Exception ex) {
                 result += "Exception: " + ex.ToString();
-                Console.WriteLine($"Exception: {ex.ToString()}");
+                Console.WriteLine($"Exception: {ex}");
             }
-            Console.WriteLine($"====================");
             return result;
         }
     }
