@@ -45,7 +45,7 @@ namespace BL.Services {
                 dynamic message = LineRequestBody.Events[0].message;
                 switch (message.type) {
                     case "text":
-                        result = ReplyTestMessages(message.type);
+                        result = ReplyTextMessages(message.text);
                         break;
 
                     case "location":
@@ -79,6 +79,30 @@ namespace BL.Services {
         /// <param name="text">指定字串</param>
         /// <returns>LOG紀錄</returns>
         private string ReplyTestMessages(string text) {
+            string result = "";
+            try {
+                // Set up messages to send
+                List<dynamic> messages = new List<dynamic> {
+                    new TextMessage {
+                        type = "text",
+                        text = text
+                    }
+                };
+
+                messages.AddRange(GetStickerMessages());
+
+                result = ResponseHandler.PostToLineServer(new Models.Line.API.RequestBodyToLine {
+                    replyToken = LineRequestBody.Events[0].replyToken,
+                    messages = messages
+                });
+            } catch (Exception ex) {
+                result += "Exception: " + ex.Message;
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            return result;
+        }
+
+        private string ReplyTextMessages(string text) {
             string result = "";
             try {
                 // Set up messages to send
@@ -214,6 +238,39 @@ namespace BL.Services {
                 Console.WriteLine($"Exception: {ex.Message}");
             }
             return result;
+        }
+
+        private List<StickerMessage> GetStickerMessages(string packageId = "0", string stickerId = "0") {
+            List<StickerMessage> stickerMessages = new List<StickerMessage>();
+            try {
+                // Set up messages to send
+                stickerMessages = new List<StickerMessage> {
+                    new StickerMessage {
+                        type = "sticker",
+                        packageId = "1",
+                        stickerId = "8"
+                    },
+                    new StickerMessage {
+                        type = "sticker",
+                        packageId = "1",
+                        stickerId = "9"
+                    },
+                    new StickerMessage {
+                        type = "sticker",
+                        packageId = "1",
+                        stickerId = "10"
+                    },
+                    new StickerMessage {
+                        type = "sticker",
+                        packageId = "1",
+                        stickerId = "11"
+                    }
+                };
+            } catch (Exception ex) {
+                Console.WriteLine($"packageId: {packageId} stickerId: {stickerId}");
+                Console.WriteLine($"GetStickerMessages Exception: {ex.Message}");
+            }
+            return stickerMessages;
         }
     }
 }
