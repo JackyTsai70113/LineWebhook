@@ -185,28 +185,23 @@ namespace BL.Services {
                 List<dynamic> messages = new List<dynamic> {
                     new StickerMessage {
                         type = "sticker",
-                        packageId = stickerMessage.packageId,
-                        stickerId = stickerMessage.stickerId + 1
+                        packageId = "1",
+                        stickerId = "8"
                     },
                     new StickerMessage {
                         type = "sticker",
-                        packageId = stickerMessage.packageId,
-                        stickerId = stickerMessage.stickerId + 2
+                        packageId = "1",
+                        stickerId = "9"
                     },
                     new StickerMessage {
                         type = "sticker",
-                        packageId = stickerMessage.packageId,
-                        stickerId = stickerMessage.stickerId + 3
+                        packageId = "1",
+                        stickerId = "10"
                     },
                     new StickerMessage {
                         type = "sticker",
-                        packageId = stickerMessage.packageId,
-                        stickerId = stickerMessage.stickerId + 4
-                    },
-                    new StickerMessage {
-                        type = "sticker",
-                        packageId = stickerMessage.packageId,
-                        stickerId = stickerMessage.stickerId + 5
+                        packageId = "1",
+                        stickerId = "11"
                     }
                 };
 

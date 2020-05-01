@@ -46,7 +46,7 @@ namespace Utility.Line {
                 Console.WriteLine($"requestBody:");
                 Console.WriteLine($"{requestBodyStr}");
             } catch (WebException webEx) {
-                result += "連線失敗 WebException: " + webEx.ToString();
+                result += "網路連線失敗 " + webEx.ToString();
                 Console.WriteLine($"WebException: {webEx.ToString()}");
             } catch (Exception ex) {
                 result += "Exception: " + ex.ToString();
