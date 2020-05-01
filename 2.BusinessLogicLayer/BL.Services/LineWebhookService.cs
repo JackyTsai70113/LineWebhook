@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Utility.Google.MapAPIs;
 using Utility.Line;
-using Utility.MaskData;
+using Utility.MaskDatas;
 using Utility.StringUtil;
 
 namespace BL.Services {
@@ -25,34 +25,40 @@ namespace BL.Services {
         /// </summary>
         /// <param name="requestBody">LineServer來的請求物件</param>
         /// <returns>LOG紀錄</returns>
-        public string Response(RequestBodyFromLineServer requestBody) {
+        public string Response(dynamic requestBody) {
             try {
                 string result;
-                LineRequestBody = requestBody;
-                // 判斷訊息型態
-                string messageType = LineRequestBody.Events[0].message.type;
-                switch (messageType) {
-                    case "text":
-                        result = ReplyTestMessages(messageType);
-                        break;
 
-                    case "sticker":
-                        result = ReplyTestMessages(messageType);
+                //處理requestBody
+                RequestBodyFromLineServer lineRequestBody = RequestHandler.GetLineRequestBody(requestBody);
+
+                Console.WriteLine($"==========[LineWebhookService/requestBody]==========");
+                Console.WriteLine($"From LINE SERVER");
+                Console.WriteLine($"requestBody:");
+                Console.WriteLine($"{JsonConvert.SerializeObject(lineRequestBody, Formatting.Indented)}");
+                Console.WriteLine($"====================");
+
+                LineRequestBody = lineRequestBody;
+                // 判斷訊息型態
+                dynamic message = LineRequestBody.Events[0].message;
+                switch (message.type) {
+                    case "text":
+                        result = ReplyTestMessages(message.type);
                         break;
 
                     case "location":
-                        string address = LineRequestBody.Events[0].message.address;
+                        string address = message.address;
                         result = ReplyPharmacyInfo(address);
                         break;
 
-                    case "":
-                        result = ReplyTestMessages(messageType);
+                    case "sticker":
+                        result = ReplyStickerMessages((StickerMessage)message);
                         break;
 
                     default:
-                        Console.WriteLine($"無相符的 messageType: {messageType}, requestBodyFromLineServer: " +
+                        Console.WriteLine($"無相符的 message.type: {message.type}, requestBodyFromLineServer: " +
                             $"{JsonConvert.SerializeObject(requestBody, Formatting.Indented)}");
-                        result = ReplyTestMessages(messageType);
+                        result = ReplyTestMessages(message.type);
                         break;
                 }
                 return result;
@@ -147,14 +153,57 @@ namespace BL.Services {
                         messages.Add(new LocationMessage {
                             type = "location",
                             title = maskData.Name + "\n"
-                                + "(成人:" + maskData.AdultMasks
-                                + "/兒童: " + maskData.ChildMasks + ")",
+                                + "成人: " + maskData.AdultMasks + "\n"
+                                + "兒童: " + maskData.ChildMasks,
                             address = maskData.Address,
                             latitude = lat,
                             longitude = lng
                         });
                     }
                 }
+
+                result = ResponseHandler.PostToLineServer(new RequestBodyToLine {
+                    replyToken = LineRequestBody.Events[0].replyToken,
+                    messages = messages
+                });
+            } catch (Exception ex) {
+                result += "Exception: " + ex.Message;
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            return result;
+        }
+
+        private string ReplyStickerMessages(StickerMessage stickerMessage) {
+            string result = "";
+            try {
+                // Set up messages to send
+                List<dynamic> messages = new List<dynamic> {
+                    new StickerMessage {
+                        type = "sticker",
+                        packageId = stickerMessage.packageId,
+                        stickerId = stickerMessage.stickerId + 1
+                    },
+                    new StickerMessage {
+                        type = "sticker",
+                        packageId = stickerMessage.packageId,
+                        stickerId = stickerMessage.stickerId + 2
+                    },
+                    new StickerMessage {
+                        type = "sticker",
+                        packageId = stickerMessage.packageId,
+                        stickerId = stickerMessage.stickerId + 3
+                    },
+                    new StickerMessage {
+                        type = "sticker",
+                        packageId = stickerMessage.packageId,
+                        stickerId = stickerMessage.stickerId + 4
+                    },
+                    new StickerMessage {
+                        type = "sticker",
+                        packageId = stickerMessage.packageId,
+                        stickerId = stickerMessage.stickerId + 5
+                    }
+                };
 
                 result = ResponseHandler.PostToLineServer(new RequestBodyToLine {
                     replyToken = LineRequestBody.Events[0].replyToken,

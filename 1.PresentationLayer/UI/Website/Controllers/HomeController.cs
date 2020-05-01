@@ -11,7 +11,7 @@ using Utility;
 using Newtonsoft.Json;
 using System.Net;
 using System.Text;
-using Utility.MaskData;
+using Utility.MaskDatas;
 using Website.Models;
 using Models.MaskDatas;
 using Utility.StringUtil;

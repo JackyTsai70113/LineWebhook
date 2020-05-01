@@ -42,8 +42,7 @@ namespace Utility.Line {
 
                 // Add Logs
                 string requestBodyStr = JsonConvert.SerializeObject(requestBody, Formatting.Indented);
-                Console.WriteLine($"==========[LineWebhook/ReplyMessages]==========");
-                Console.WriteLine($"TO LINE SERVER: {httpPostRequestUri}");
+                Console.WriteLine($"========== TO LINE SERVER: {httpPostRequestUri} ==========");
                 Console.WriteLine($"requestBody:");
                 Console.WriteLine($"{requestBodyStr}");
             } catch (Exception ex) {

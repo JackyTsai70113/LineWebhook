@@ -12,8 +12,8 @@ namespace BL.Interfaces {
         /// <summary>
         /// 判讀LineServer來的請求物件後回應
         /// </summary>
-        /// <param name="requestBodyFromLineServer">LineServer來的請求物件</param>
+        /// <param name="requestBody">LineServer來的請求物件</param>
         /// <returns>LOG紀錄</returns>
-        string Response(RequestBodyFromLineServer requestBodyFromLineServer);
+        string Response(dynamic requestBody);
     }
 }

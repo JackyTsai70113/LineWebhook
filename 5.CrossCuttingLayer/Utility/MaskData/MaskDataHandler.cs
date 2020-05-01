@@ -14,21 +14,21 @@ using Models.Google.API;
 using Utility.Google.MapAPIs;
 using Utility.StringUtil;
 
-namespace Utility.MaskData {
+namespace Utility.MaskDatas {
 
     public class MaskDataHandler {
-        private static List<Models.MaskDatas.MaskData> maskDataList;
+        private static List<MaskData> maskDataList;
 
         public MaskDataHandler() {
             maskDataList = MaskDataSourceHandler.GetList();
         }
 
-        public static List<Models.MaskDatas.MaskData> GetMaskDatasFromLocationSuffix(string locationSuffix) {
+        public static List<MaskData> GetMaskDatasFromLocationSuffix(string locationSuffix) {
             if (maskDataList == null) {
                 maskDataList = MaskDataSourceHandler.GetList();
             }
 
-            List<Models.MaskDatas.MaskData> result = new List<Models.MaskDatas.MaskData>();
+            List<MaskData> result = new List<MaskData>();
 
             int strLength = locationSuffix.Length;
             // var maskDataList = MaskDataSourceHandler.GetList();
@@ -40,12 +40,12 @@ namespace Utility.MaskData {
             return result;
         }
 
-        public static List<Models.MaskDatas.MaskData> GetTopMaskDatasFromLocationSuffix(string locationSuffix, int count = Int32.MaxValue) {
+        public static List<MaskData> GetTopMaskDatasFromLocationSuffix(string locationSuffix, int count = Int32.MaxValue) {
             if (maskDataList == null) {
                 maskDataList = MaskDataSourceHandler.GetList();
             }
 
-            List<Models.MaskDatas.MaskData> result = new List<Models.MaskDatas.MaskData>();
+            List<MaskData> result = new List<MaskData>();
             int _count = 0;
 
             int strLength = locationSuffix.Length;
@@ -82,15 +82,15 @@ namespace Utility.MaskData {
             return result;
         }
 
-        public static List<Models.MaskDatas.MaskData> GetTopMaskDatasByComputingDistance(string location, int count = Int32.MaxValue) {
+        public static List<MaskData> GetTopMaskDatasByComputingDistance(string location, int count = Int32.MaxValue) {
             int crurrentCount = 0;
-            List<Models.MaskDatas.MaskData> result = new List<Models.MaskDatas.MaskData>();
+            List<MaskData> result = new List<MaskData>();
 
             string locationSuffix = LocationHandler.GetLocationFirstDivisionSuffix(location);
-            List<Models.MaskDatas.MaskData> maskDataList = GetTopMaskDatasFromLocationSuffix(locationSuffix);
+            List<MaskData> maskDataList = GetTopMaskDatasFromLocationSuffix(locationSuffix);
 
             var MaskDataDistancesList = new List<MaskDataDistances>();
-            for (int i = 0; i < maskDataList.Count; i = i + 80) {
+            for (int i = 0; i < maskDataList.Count; i += 80) {
                 StringBuilder destinationAddressBuilder = new StringBuilder();
                 for (int j = i; j < i + 80 && j < maskDataList.Count; j++) {
                     destinationAddressBuilder.Append(maskDataList[j].Address);
@@ -114,7 +114,7 @@ namespace Utility.MaskData {
                     });
                 }
             }
-            MaskDataDistancesList.Sort(Utility.NumberUtil.Comparer.CompareDistance);
+            MaskDataDistancesList.Sort(NumberUtil.Comparer.CompareDistance);
             foreach (var MaskDataDistances in MaskDataDistancesList) {
                 result.Add(maskDataList[MaskDataDistances.maskDataIndex]);
                 crurrentCount++;

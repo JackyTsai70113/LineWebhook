@@ -83,6 +83,10 @@ namespace Utility.Line {
                         @event.message = JsonConvert.DeserializeObject<LocationMessage>(@event.message.ToString());
                         break;
 
+                    case "sticker":
+                        @event.message = JsonConvert.DeserializeObject<StickerMessage>(@event.message.ToString());
+                        break;
+
                     default:
                         break;
                 }

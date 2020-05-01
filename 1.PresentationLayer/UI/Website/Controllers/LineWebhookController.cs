@@ -15,7 +15,7 @@ using System.Text;
 using Newtonsoft.Json;
 using Models.Line;
 using Utility.Line;
-using Utility.MaskData;
+using Utility.MaskDatas;
 using Utility.StringUtil;
 using Models.Line.API;
 using Utility.Google.MapAPIs;
@@ -43,16 +43,7 @@ namespace Website.Controllers {
         [HttpPost]
         public IActionResult Index([FromBody] dynamic requestBody) {
             try {
-                //處理requestBody
-                RequestBodyFromLineServer lineRequestBody = RequestHandler.GetLineRequestBody(requestBody);
-
-                Console.WriteLine($"==========[LineWebhook/Index]==========");
-                Console.WriteLine($"From LINE SERVER");
-                Console.WriteLine($"body:");
-                Console.WriteLine($"{JsonConvert.SerializeObject(lineRequestBody, Formatting.Indented)}");
-                Console.WriteLine($"====================");
-
-                string result = LineWebhookService.Response(lineRequestBody);
+                string result = LineWebhookService.Response(requestBody);
                 return Content(requestBody.ToString() + "\n" + result);
             } catch (Exception ex) {
                 return Content($"Index 發生錯誤，requestBody: {requestBody}, ex: {ex}");
