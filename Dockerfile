@@ -2,9 +2,12 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /src
 COPY *.sln .
+COPY 0.CoreLayer/Core.Domain/*.csproj 0.CoreLayer/Core.Domain/
 COPY 1.PresentationLayer/UI/Website/*.csproj 1.PresentationLayer/UI/Website/
 COPY 2.BusinessLogicLayer/BL.Interfaces/*.csproj 2.BusinessLogicLayer/BL.Interfaces/
 COPY 2.BusinessLogicLayer/BL.Services/*.csproj 2.BusinessLogicLayer/BL.Services/
+COPY 3.DataAccessLayer/DA/DA.Managers/*.csproj 3.DataAccessLayer/DA/DA.Managers/
+COPY 3.DataAccessLayer/DA/DA.Repositories/*.csproj 3.DataAccessLayer/DA/DA.Repositories/
 COPY 4.ModelsLayer/Models/*.csproj 4.ModelsLayer/Models/
 COPY 5.CrossCuttingLayer/Utility/*.csproj 5.CrossCuttingLayer/Utility/
 RUN dotnet restore

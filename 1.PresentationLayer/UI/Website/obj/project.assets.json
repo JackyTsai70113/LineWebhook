@@ -2728,16 +2728,6 @@
           "bin/placeholder/Core.Domain.dll": {}
         }
       },
-      "DA.Interfaces/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
-        "compile": {
-          "bin/placeholder/DA.Interfaces.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/DA.Interfaces.dll": {}
-        }
-      },
       "DA.Managers/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
@@ -8655,11 +8645,6 @@
       "path": "../../../0.CoreLayer/Core.Domain/Core.Domain.csproj",
       "msbuildProject": "../../../0.CoreLayer/Core.Domain/Core.Domain.csproj"
     },
-    "DA.Interfaces/1.0.0": {
-      "type": "project",
-      "path": "../../../3.DataAccessLayer/DA/DA.Interfaces/DA.Interfaces.csproj",
-      "msbuildProject": "../../../3.DataAccessLayer/DA/DA.Interfaces/DA.Interfaces.csproj"
-    },
     "DA.Managers/1.0.0": {
       "type": "project",
       "path": "../../../3.DataAccessLayer/DA/DA.Managers/DA.Managers.csproj",
@@ -8686,7 +8671,6 @@
       "BL.Interfaces >= 1.0.0",
       "BL.Services >= 1.0.0",
       "Core.Domain >= 1.0.0",
-      "DA.Interfaces >= 1.0.0",
       "DA.Managers >= 1.0.0",
       "DA.Repositories >= 1.0.0",
       "Dapper >= 2.0.35",
@@ -8736,9 +8720,6 @@
             },
             "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL\\BL.Services\\BL.Services.csproj": {
               "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL\\BL.Services\\BL.Services.csproj"
-            },
-            "D:\\ASP.NET Core Web App\\LineWebhook\\3.DataAccessLayer\\DA\\DA.Interfaces\\DA.Interfaces.csproj": {
-              "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\3.DataAccessLayer\\DA\\DA.Interfaces\\DA.Interfaces.csproj"
             },
             "D:\\ASP.NET Core Web App\\LineWebhook\\3.DataAccessLayer\\DA\\DA.Managers\\DA.Managers.csproj": {
               "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\3.DataAccessLayer\\DA\\DA.Managers\\DA.Managers.csproj"

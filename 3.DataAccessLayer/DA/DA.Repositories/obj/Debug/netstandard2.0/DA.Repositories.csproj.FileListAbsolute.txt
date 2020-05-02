@@ -6,4 +6,3 @@ D:\ASP.NET Core Web App\LineWebhook\3.DataAccessLayer\DA\DA.Repositories\obj\Deb
 D:\ASP.NET Core Web App\LineWebhook\3.DataAccessLayer\DA\DA.Repositories\obj\Debug\netstandard2.0\DA.Repositories.AssemblyInfo.cs
 D:\ASP.NET Core Web App\LineWebhook\3.DataAccessLayer\DA\DA.Repositories\obj\Debug\netstandard2.0\DA.Repositories.dll
 D:\ASP.NET Core Web App\LineWebhook\3.DataAccessLayer\DA\DA.Repositories\obj\Debug\netstandard2.0\DA.Repositories.pdb
-D:\ASP.NET Core Web App\LineWebhook\3.DataAccessLayer\DA\DA.Repositories\obj\Debug\netstandard2.0\DA.Repositories.csprojAssemblyReference.cache

@@ -27,7 +27,6 @@
           "BL.Interfaces": "1.0.0",
           "BL.Services": "1.0.0",
           "Core.Domain": "1.0.0",
-          "DA.Interfaces": "1.0.0",
           "DA.Managers": "1.0.0",
           "DA.Repositories": "1.0.0",
           "Dapper": "2.0.35",
@@ -2351,14 +2350,6 @@
         },
         "compile": {
           "Core.Domain.dll": {}
-        }
-      },
-      "DA.Interfaces/1.0.0": {
-        "runtime": {
-          "DA.Interfaces.dll": {}
-        },
-        "compile": {
-          "DA.Interfaces.dll": {}
         }
       },
       "DA.Managers/1.0.0": {
@@ -5194,11 +5185,6 @@
       "sha512": ""
     },
     "Core.Domain/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "DA.Interfaces/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
