@@ -30,7 +30,7 @@ namespace Website.Controllers {
             var MaskDataList = MaskDataHandler.GetTopMaskDatasByComputingDistance("110台灣台北市信義區虎林街132巷37號");
             // 取得 maskData 的 List
             //var MaskDataList = MaskDataSourceHandler.GetList();
-            ViewData["result"] = "MaskDataList.Count: " + MaskDataList.Count.ToString();
+            ViewData["result"] = "MaskDatanoyeList.Count: " + MaskDataList.Count.ToString();
             return View(MaskDataList);
         }
 

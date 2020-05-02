@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "xzlCOHiLZwANKJxKDK1MkSMk2pPq+h6C3cefoK9M79b+wdRSxXGxHuBWfth4/yT2Ch9hTmvd9y/wRuLV+B0a2Q==",
+  "success": true,
+  "projectFilePath": "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL\\BL.Interfaces\\BL.Interfaces.csproj",
+  "expectedPackageFiles": [
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
+    "C:\\Users\\JackyTsai\\.nuget\\packages\\system.componentmodel.annotations\\4.7.0\\system.componentmodel.annotations.4.7.0.nupkg.sha512"
+  ],
+  "logs": []
+}

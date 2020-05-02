@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "lku8enBhL0o4CqG5SvsYnz8WQKm+aOjByzT+0Z9JqdrExEmnQmEzUOcQbot+EdWeR/aCBYQZdv5IkxyHVetu3w==",
+  "success": true,
+  "projectFilePath": "D:\\ASP.NET Core Web App\\LineWebhook\\3.DataAccessLayer\\DA\\DA.Repositories\\DA.Repositories.csproj",
+  "expectedPackageFiles": [
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
