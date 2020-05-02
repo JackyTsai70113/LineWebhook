@@ -5,5 +5,4 @@ D:\ASP.NET Core Web App\LineWebhook\0.CoreLayer\Core.Domain\obj\Debug\netstandar
 D:\ASP.NET Core Web App\LineWebhook\0.CoreLayer\Core.Domain\obj\Debug\netstandard2.0\Core.Domain.AssemblyInfo.cs
 D:\ASP.NET Core Web App\LineWebhook\0.CoreLayer\Core.Domain\obj\Debug\netstandard2.0\Core.Domain.dll
 D:\ASP.NET Core Web App\LineWebhook\0.CoreLayer\Core.Domain\obj\Debug\netstandard2.0\Core.Domain.pdb
-D:\ASP.NET Core Web App\LineWebhook\0.CoreLayer\Core.Domain\obj\Debug\netstandard2.0\Core.Domain.csprojAssemblyReference.cache
 D:\ASP.NET Core Web App\LineWebhook\0.CoreLayer\Core.Domain\obj\Debug\netstandard2.0\Core.Domain.csproj.CoreCompileInputs.cache

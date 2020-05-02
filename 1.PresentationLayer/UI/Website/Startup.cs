@@ -29,9 +29,9 @@ namespace Website {
             services.AddControllersWithViews();
             var connectionString = Configuration.GetConnectionString("LineWebhookContext");
 
-            using (SqlConnection connection = new SqlConnection(connectionString)) {
-                var eventName = connection.QueryFirst<string>("SELECT TOP 1 Remark FROM Notes");
-            }
+            //using (SqlConnection connection = new SqlConnection(connectionString)) {
+            //    var eventName = connection.QueryFirst<string>("SELECT TOP 1 Remark FROM Notes");
+            //}
 
             services.AddDbContext<LineWebhookContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("LineWebhookContext")));
@@ -41,6 +41,7 @@ namespace Website {
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
+                //Åª¼glocalDB
             } else {
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
