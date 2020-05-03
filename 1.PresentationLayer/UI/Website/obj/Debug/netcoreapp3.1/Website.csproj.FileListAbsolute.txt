@@ -178,9 +178,10 @@ D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\obj\Debug\net
 D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\obj\Debug\netcoreapp3.1\Razor\Views\Notes\Edit.cshtml.g.cs
 D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\obj\Debug\netcoreapp3.1\Razor\Views\Notes\Index.cshtml.g.cs
 D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\bin\Debug\netcoreapp3.1\Dapper.dll
-D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\obj\Debug\netcoreapp3.1\Website.csproj.CoreCompileInputs.cache
-D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\obj\Debug\netcoreapp3.1\Website.MvcApplicationPartsAssemblyInfo.cache
 D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\bin\Debug\netcoreapp3.1\Core.Domain.dll
 D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\bin\Debug\netcoreapp3.1\DA.Managers.dll
 D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\bin\Debug\netcoreapp3.1\Core.Domain.pdb
 D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\bin\Debug\netcoreapp3.1\DA.Managers.pdb
+D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\bin\Debug\netcoreapp3.1\AngleSharp.dll
+D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\obj\Debug\netcoreapp3.1\Website.csproj.CoreCompileInputs.cache
+D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\obj\Debug\netcoreapp3.1\Website.MvcApplicationPartsAssemblyInfo.cache

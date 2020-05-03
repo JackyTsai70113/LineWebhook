@@ -38,7 +38,7 @@ namespace DA.Managers.TWSE_Stock {
             JsonElement root = doc.RootElement;
             JsonElement S2884_Array = root.GetProperty("data1")[26];
 
-            string directionStr = S2884_Array[9].ToString().StripHTML();
+            string directionStr = S2884_Array[9].ToString().StripHtmlTag();
             S2884 stock_2884 = new S2884() {
                 TradeVolume = S2884_Array[2].ToString().ThousandToInt(),
                 Transaction = S2884_Array[3].ToString().ThousandToInt(),

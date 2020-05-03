@@ -15,5 +15,13 @@ namespace Core.Domain.Utility {
         public static float ThousandToFloat(this string str) {
             return float.Parse(str, NumberStyles.AllowThousands | NumberStyles.AllowDecimalPoint);
         }
+
+        public static float ToFloat(this string str) {
+            if (string.IsNullOrEmpty(str)) {
+                return 0.0f;
+            }
+
+            return float.Parse(str, NumberStyles.AllowThousands | NumberStyles.AllowDecimalPoint);
+        }
     }
 }

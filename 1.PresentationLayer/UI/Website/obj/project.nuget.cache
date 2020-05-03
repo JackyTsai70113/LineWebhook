@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Kv5m5C20ZozYxWnD8q0VZXQQDDIkrKsWSCtI0vj43DtCAp+58siLmvFJkpulKfmhTgkwsrYbiFfu+6eMMMi0xg==",
+  "dgSpecHash": "iNhnHma2MMazooSinilO49i4kPm/iPbUGqNTQRf0y8Lb4FUs9I5dlx+zFE7oXDfFA+c0FvJAooB4W4ZPyRJCig==",
   "success": true,
   "projectFilePath": "D:\\ASP.NET Core Web App\\LineWebhook\\1.PresentationLayer\\UI\\Website\\Website.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\JackyTsai\\.nuget\\packages\\anglesharp\\0.14.0\\anglesharp.0.14.0.nupkg.sha512",
     "C:\\Users\\JackyTsai\\.nuget\\packages\\dapper\\2.0.35\\dapper.2.0.35.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",

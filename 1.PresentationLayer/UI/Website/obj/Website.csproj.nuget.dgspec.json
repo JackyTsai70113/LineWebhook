@@ -353,6 +353,10 @@
       "frameworks": {
         "netstandard2.0": {
           "dependencies": {
+            "AngleSharp": {
+              "target": "Package",
+              "version": "[0.14.0, )"
+            },
             "NETStandard.Library": {
               "suppressParent": "All",
               "target": "Package",

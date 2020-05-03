@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "DmkCzFZ+aD0JQGryiQauxG/WVi1u3J5m39CPtZukqval0uEOMYZYs97sE6OUPFr1TG8gZMMZEnDctE00Kv5GNw==",
+  "dgSpecHash": "adH1tey9WJ5LQZSZOhCgRA3sXzMGISZderlExlWM7qolr0qQzz2v1dVUoUISxhxlxjDf5wQkmC5SHP02fnLstg==",
   "success": true,
   "projectFilePath": "D:\\ASP.NET Core Web App\\LineWebhook\\3.DataAccessLayer\\DA\\DA.Managers\\DA.Managers.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\JackyTsai\\.nuget\\packages\\anglesharp\\0.14.0\\anglesharp.0.14.0.nupkg.sha512",
     "C:\\Users\\JackyTsai\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.0\\microsoft.bcl.asyncinterfaces.1.1.0.nupkg.sha512",
     "C:\\Users\\JackyTsai\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
