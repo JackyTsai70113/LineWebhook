@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Core.Domain.Entities.TWSE_Stock.Exchange;
+using Microsoft.EntityFrameworkCore;
 using Models.DB;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,11 @@ namespace Website.Data {
             : base(options) {
         }
 
-        public DbSet<Note> Note { get; set; }
+        public DbSet<DailyQuote> DailyQuotes { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
+            modelBuilder.Entity<DailyQuote>()
+                .HasAlternateKey(c => new { c.Date, c.StockCode });
+        }
     }
 }

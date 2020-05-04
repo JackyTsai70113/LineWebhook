@@ -4,6 +4,6 @@ using System.Text;
 
 namespace Core.Domain.Interafaces.Managers.TWSE_Stock {
 
-    public interface IExchangeManger {
+    public interface IDailyQuoteManger {
     }
 }

@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\0.CoreLayer\Core.Domain\Core.Domain.csproj" />
+    <ProjectReference Include="..\..\..\3.DataAccessLayer\DA\DA.Repositories\DA.Repositories.csproj" />
     <ProjectReference Include="..\..\..\4.ModelsLayer\Models\Models.csproj" />
     <ProjectReference Include="..\..\..\5.CrossCuttingLayer\Utility\Utility.csproj" />
     <ProjectReference Include="..\BL.Interfaces\BL.Interfaces.csproj" />

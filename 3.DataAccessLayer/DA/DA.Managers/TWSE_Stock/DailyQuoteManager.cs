@@ -1,11 +1,12 @@
 ﻿using Core.Domain.Entities.TWSE_Stock.Exchange;
 using Core.Domain.Enums;
 using Core.Domain.Interafaces.Managers.TWSE_Stock;
-using Core.Domain.Utility;
+using Core.Domain.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -17,47 +18,53 @@ using System.Web;
 
 namespace DA.Managers.TWSE_Stock {
 
-    public class ExchangeManager : IExchangeManger {
+    public class DailyQuoteManager : IDailyQuoteManger {
 
         /// <summary>
-        /// 取得玉山金的每日收盤情形
+        /// 取得每日收盤情形
         /// </summary>
         /// <returns></returns>
-        public static S2884 Get2884() {
+        public static DailyQuote GetDailyQuote() {
             byte[] bytes = FinancialAndInsurance_DailyQuotes(new DateTime(2020, 4, 30));
-            return GetS2884FromJson(bytes);
+            DailyQuote dailyQuote = GetDailyQuoteFromBytes(bytes);
+            return dailyQuote;
         }
 
         /// <summary>
-        /// 將byte array 轉為 S2884物件
+        /// 將byte array 轉為 DailyQuote 物件
         /// </summary>
         /// <param name="bytes">byte array</param>
-        /// <returns>S2884物件</returns>
-        private static S2884 GetS2884FromJson(byte[] bytes) {
+        /// <returns>DailyQuote 物件</returns>
+        private static DailyQuote GetDailyQuoteFromBytes(byte[] bytes) {
             JsonDocument doc = JsonDocument.Parse(bytes);
             JsonElement root = doc.RootElement;
-            JsonElement S2884_Array = root.GetProperty("data1")[26];
 
-            string directionStr = S2884_Array[9].ToString().StripHtmlTag();
-            S2884 stock_2884 = new S2884() {
-                TradeVolume = S2884_Array[2].ToString().ThousandToInt(),
-                Transaction = S2884_Array[3].ToString().ThousandToInt(),
-                TradeValue = S2884_Array[4].ToString().ThousandToInt(),
-                OpeningPrice = S2884_Array[5].ToString().ThousandToFloat(),
-                HighestPrice = S2884_Array[6].ToString().ThousandToFloat(),
-                LowestPrice = S2884_Array[7].ToString().ThousandToFloat(),
-                ClosingPrice = S2884_Array[8].ToString().ThousandToFloat(),
+            JsonElement dateElement = root.GetProperty("params").GetProperty("date");
+            DateTime date = DateTime.ParseExact(dateElement.ToString(), "yyyyMMdd", CultureInfo.InvariantCulture);
+
+            JsonElement dailyQuoteArray = root.GetProperty("data1")[26];
+            string directionStr = dailyQuoteArray[9].ToString().StripHtmlTag();
+            DailyQuote dailyQuote = new DailyQuote() {
+                Date = date,
+                StockCode = dailyQuoteArray[0].ToString(),
+                TradeVolume = dailyQuoteArray[2].ToString().ThousandToInt(),
+                Transaction = dailyQuoteArray[3].ToString().ThousandToInt(),
+                TradeValue = dailyQuoteArray[4].ToString().ThousandToInt(),
+                OpeningPrice = dailyQuoteArray[5].ToString().ThousandToFloat(),
+                HighestPrice = dailyQuoteArray[6].ToString().ThousandToFloat(),
+                LowestPrice = dailyQuoteArray[7].ToString().ThousandToFloat(),
+                ClosingPrice = dailyQuoteArray[8].ToString().ThousandToFloat(),
                 Direction = directionStr.ToStockDirectionEnum(),
-                Change = S2884_Array[10].ToString().ThousandToFloat(),
+                Change = dailyQuoteArray[10].ToString().ThousandToFloat(),
 
-                LastBestBidPrice = S2884_Array[11].ToString().ThousandToFloat(),
-                LastBestBidVolume = S2884_Array[12].ToString().ThousandToInt(),
-                LastBestAskPrice = S2884_Array[13].ToString().ThousandToFloat(),
-                LastBestAskVolume = S2884_Array[14].ToString().ThousandToInt(),
-                PriceEarningRatio = S2884_Array[15].ToString().ThousandToFloat()
+                LastBestBidPrice = dailyQuoteArray[11].ToString().ThousandToFloat(),
+                LastBestBidVolume = dailyQuoteArray[12].ToString().ThousandToInt(),
+                LastBestAskPrice = dailyQuoteArray[13].ToString().ThousandToFloat(),
+                LastBestAskVolume = dailyQuoteArray[14].ToString().ThousandToInt(),
+                PriceEarningRatio = dailyQuoteArray[15].ToString().ThousandToFloat()
             };
 
-            return stock_2884;
+            return dailyQuote;
         }
 
         /// <summary>

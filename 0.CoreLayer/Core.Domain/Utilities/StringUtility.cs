@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 
-namespace Core.Domain.Utility {
+namespace Core.Domain.Utilities {
 
     public static class StringUtility {
 

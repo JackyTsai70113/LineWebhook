@@ -2,7 +2,7 @@
 using AngleSharp.Dom;
 using Core.Domain.Entities.TWSE_Stock;
 using Core.Domain.Enums;
-using Core.Domain.Utility;
+using Core.Domain.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

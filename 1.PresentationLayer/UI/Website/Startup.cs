@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Core.Domain.Utilities;
 using Dapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -20,6 +21,9 @@ namespace Website {
 
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
+
+            // ³]©w Core.Domain.Utilities.ConfigurationUtility ªº configuration
+            ConfigurationUtility.Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -27,7 +31,6 @@ namespace Website {
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
             services.AddControllersWithViews();
-            var connectionString = Configuration.GetConnectionString("LineWebhookContext");
 
             //using (SqlConnection connection = new SqlConnection(connectionString)) {
             //    var eventName = connection.QueryFirst<string>("SELECT TOP 1 Remark FROM Notes");

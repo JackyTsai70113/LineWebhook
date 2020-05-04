@@ -11,7 +11,7 @@ namespace Core.Domain.Enums {
         /// <summary>
         /// 中華電(2412)
         /// </summary>
-        s2412 = 2412,
+        Stock_2412 = 2412,
 
         #endregion 通信網路業
 
@@ -20,32 +20,32 @@ namespace Core.Domain.Enums {
         /// <summary>
         /// 華南金(2880)
         /// </summary>
-        s2880 = 2880,
+        Stock_2880 = 2880,
 
         /// <summary>
         /// 富邦金(2881)
         /// </summary>
-        s2881 = 2881,
+        Stock_2881 = 2881,
 
         /// <summary>
         /// 國泰金(2882)
         /// </summary>
-        s2882 = 2882,
+        Stock_2882 = 2882,
 
         /// <summary>
         /// 開發金(2883)
         /// </summary>
-        s2883 = 2883,
+        Stock_2883 = 2883,
 
         /// <summary>
         /// 玉山金(2884)
         /// </summary>
-        s2884 = 2884,
+        Stock_2884 = 2884,
 
         /// <summary>
         /// 元大金(2885)
         /// </summary>
-        s2885 = 2885
+        Stock_2885 = 2885
 
         #endregion 金融保險業
     }
