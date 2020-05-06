@@ -9,6 +9,10 @@ using System.Text;
 
 namespace Core.Domain.Entities.TWSE_Stock.Exchange {
 
+    /// <summary>
+    /// 每日收盤行情
+    /// </summary>
+    /// <remarks>DailyQuote.CreateDateTime會在建構子賦值</remarks>
     public class DailyQuote {
 
         public DailyQuote() {
@@ -17,7 +21,7 @@ namespace Core.Domain.Entities.TWSE_Stock.Exchange {
 
         public DateTime CreateDateTime { get; set; }
 
-        [Key, Column(TypeName = "date")]
+        [Column(TypeName = "date")]
         public DateTime Date { get; set; }
 
         [MaxLength(8)]

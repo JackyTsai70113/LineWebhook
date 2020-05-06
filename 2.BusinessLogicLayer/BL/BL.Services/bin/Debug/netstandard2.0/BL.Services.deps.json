@@ -11,6 +11,7 @@
         "dependencies": {
           "BL.Interfaces": "1.0.0",
           "Core.Domain": "1.0.0",
+          "DA.Managers": "1.0.0",
           "DA.Repositories": "1.0.0",
           "Models": "1.0.0",
           "NETStandard.Library": "2.0.3",
@@ -18,6 +19,17 @@
         },
         "runtime": {
           "BL.Services.dll": {}
+        }
+      },
+      "AngleSharp/0.14.0": {
+        "dependencies": {
+          "System.Text.Encoding.CodePages": "4.7.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/AngleSharp.dll": {
+            "assemblyVersion": "0.14.0.0",
+            "fileVersion": "0.14.0.0"
+          }
         }
       },
       "Dapper/2.0.35": {
@@ -443,6 +455,17 @@
           "Core.Domain.dll": {}
         }
       },
+      "DA.Managers/1.0.0": {
+        "dependencies": {
+          "AngleSharp": "0.14.0",
+          "Core.Domain": "1.0.0",
+          "Newtonsoft.Json": "12.0.3",
+          "System.Text.Encoding.CodePages": "4.7.0"
+        },
+        "runtime": {
+          "DA.Managers.dll": {}
+        }
+      },
       "DA.Repositories/1.0.0": {
         "dependencies": {
           "Core.Domain": "1.0.0",
@@ -478,6 +501,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "AngleSharp/0.14.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-34w9I7nyszfEYBY8g7T3B0AtWlOivNh+QoWc3KECRwbmcNyqWmb4huihtmpH2Ds7rIRRHMMPv9yfPBxxjBn03g==",
+      "path": "anglesharp/0.14.0",
+      "hashPath": "anglesharp.0.14.0.nupkg.sha512"
     },
     "Dapper/2.0.35": {
       "type": "package",
@@ -779,6 +809,11 @@
       "sha512": ""
     },
     "Core.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "DA.Managers/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

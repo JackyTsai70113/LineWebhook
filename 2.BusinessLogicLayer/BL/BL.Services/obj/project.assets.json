@@ -2,6 +2,18 @@
   "version": 3,
   "targets": {
     ".NETStandard,Version=v2.0": {
+      "AngleSharp/0.14.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Text.Encoding.CodePages": "4.5.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/AngleSharp.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/AngleSharp.dll": {}
+        }
+      },
       "Dapper/2.0.35": {
         "type": "package",
         "dependencies": {
@@ -474,7 +486,7 @@
           "System.Runtime.CompilerServices.Unsafe": "4.7.0"
         },
         "compile": {
-          "lib/netstandard2.0/_._": {}
+          "lib/netstandard2.0/System.Text.Encoding.CodePages.dll": {}
         },
         "runtime": {
           "lib/netstandard2.0/System.Text.Encoding.CodePages.dll": {}
@@ -559,6 +571,22 @@
           "bin/placeholder/Core.Domain.dll": {}
         }
       },
+      "DA.Managers/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "AngleSharp": "0.14.0",
+          "Core.Domain": "1.0.0",
+          "Newtonsoft.Json": "12.0.3",
+          "System.Text.Encoding.CodePages": "4.7.0"
+        },
+        "compile": {
+          "bin/placeholder/DA.Managers.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DA.Managers.dll": {}
+        }
+      },
       "DA.Repositories/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
@@ -605,6 +633,27 @@
     }
   },
   "libraries": {
+    "AngleSharp/0.14.0": {
+      "sha512": "34w9I7nyszfEYBY8g7T3B0AtWlOivNh+QoWc3KECRwbmcNyqWmb4huihtmpH2Ds7rIRRHMMPv9yfPBxxjBn03g==",
+      "type": "package",
+      "path": "anglesharp/0.14.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "anglesharp.0.14.0.nupkg.sha512",
+        "anglesharp.nuspec",
+        "lib/net46/AngleSharp.dll",
+        "lib/net46/AngleSharp.xml",
+        "lib/net461/AngleSharp.dll",
+        "lib/net461/AngleSharp.xml",
+        "lib/net472/AngleSharp.dll",
+        "lib/net472/AngleSharp.xml",
+        "lib/netstandard1.3/AngleSharp.dll",
+        "lib/netstandard1.3/AngleSharp.xml",
+        "lib/netstandard2.0/AngleSharp.dll",
+        "lib/netstandard2.0/AngleSharp.xml"
+      ]
+    },
     "Dapper/2.0.35": {
       "sha512": "/xAgd8BO8EDnJ0sURWEV8LptHHvTKxoYiT63YUF2U/yWE2VyUCqR2jcrtEyNngT9Kjzppecz95UKiBla3PnR7g==",
       "type": "package",
@@ -1933,6 +1982,11 @@
       "path": "../../../0.CoreLayer/Core.Domain/Core.Domain.csproj",
       "msbuildProject": "../../../0.CoreLayer/Core.Domain/Core.Domain.csproj"
     },
+    "DA.Managers/1.0.0": {
+      "type": "project",
+      "path": "../../../3.DataAccessLayer/DA/DA.Managers/DA.Managers.csproj",
+      "msbuildProject": "../../../3.DataAccessLayer/DA/DA.Managers/DA.Managers.csproj"
+    },
     "DA.Repositories/1.0.0": {
       "type": "project",
       "path": "../../../3.DataAccessLayer/DA/DA.Repositories/DA.Repositories.csproj",
@@ -1953,6 +2007,7 @@
     ".NETStandard,Version=v2.0": [
       "BL.Interfaces >= 1.0.0",
       "Core.Domain >= 1.0.0",
+      "DA.Managers >= 1.0.0",
       "DA.Repositories >= 1.0.0",
       "Models >= 1.0.0",
       "NETStandard.Library >= 2.0.3",
@@ -1994,6 +2049,9 @@
             },
             "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL\\BL.Interfaces\\BL.Interfaces.csproj": {
               "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL\\BL.Interfaces\\BL.Interfaces.csproj"
+            },
+            "D:\\ASP.NET Core Web App\\LineWebhook\\3.DataAccessLayer\\DA\\DA.Managers\\DA.Managers.csproj": {
+              "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\3.DataAccessLayer\\DA\\DA.Managers\\DA.Managers.csproj"
             },
             "D:\\ASP.NET Core Web App\\LineWebhook\\3.DataAccessLayer\\DA\\DA.Repositories\\DA.Repositories.csproj": {
               "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\3.DataAccessLayer\\DA\\DA.Repositories\\DA.Repositories.csproj"

@@ -9,11 +9,25 @@ namespace Core.Domain.Utilities {
     public static class NumberUtility {
 
         public static int ThousandToInt(this string str) {
-            return int.Parse(str, NumberStyles.AllowThousands);
+            try {
+                if (string.IsNullOrEmpty(str)) {
+                    return -1;
+                }
+                return int.Parse(str, NumberStyles.AllowThousands);
+            } catch (Exception ex) {
+                return -1;
+            }
         }
 
         public static float ThousandToFloat(this string str) {
-            return float.Parse(str, NumberStyles.AllowThousands | NumberStyles.AllowDecimalPoint);
+            try {
+                if (string.IsNullOrEmpty(str)) {
+                    return -1f;
+                }
+                return float.Parse(str, NumberStyles.AllowThousands | NumberStyles.AllowDecimalPoint);
+            } catch (Exception ex) {
+                return -1f;
+            }
         }
 
         public static float ToFloat(this string str) {

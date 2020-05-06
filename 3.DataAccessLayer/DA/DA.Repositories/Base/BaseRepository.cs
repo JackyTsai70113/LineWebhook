@@ -7,7 +7,7 @@ using System.Text;
 
 namespace DA.Repositories.Base {
 
-    public class BaseRepository : IBaseRepository {
+    public class BaseRepository<T> : IBaseRepository {
         public static SqlConnection SqlConnection { get; set; }
 
         public BaseRepository() {

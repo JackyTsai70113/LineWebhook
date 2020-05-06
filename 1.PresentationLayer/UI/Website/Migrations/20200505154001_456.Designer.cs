@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Website.Data;
 
 namespace Website.Migrations
 {
     [DbContext(typeof(LineWebhookContext))]
-    partial class LineWebhookContextModelSnapshot : ModelSnapshot
+    [Migration("20200505154001_456")]
+    partial class _456
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,6 +38,9 @@ namespace Website.Migrations
 
                     b.Property<DateTime>("CreateDateTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Date1")
+                        .HasColumnType("date");
 
                     b.Property<int>("Direction")
                         .HasColumnType("int");

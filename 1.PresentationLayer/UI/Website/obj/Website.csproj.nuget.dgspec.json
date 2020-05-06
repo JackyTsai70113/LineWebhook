@@ -121,12 +121,6 @@
               "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL\\BL.Services\\BL.Services.csproj": {
                 "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL\\BL.Services\\BL.Services.csproj"
               },
-              "D:\\ASP.NET Core Web App\\LineWebhook\\3.DataAccessLayer\\DA\\DA.Managers\\DA.Managers.csproj": {
-                "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\3.DataAccessLayer\\DA\\DA.Managers\\DA.Managers.csproj"
-              },
-              "D:\\ASP.NET Core Web App\\LineWebhook\\3.DataAccessLayer\\DA\\DA.Repositories\\DA.Repositories.csproj": {
-                "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\3.DataAccessLayer\\DA\\DA.Repositories\\DA.Repositories.csproj"
-              },
               "D:\\ASP.NET Core Web App\\LineWebhook\\4.ModelsLayer\\Models\\Models.csproj": {
                 "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\4.ModelsLayer\\Models\\Models.csproj"
               },
@@ -283,6 +277,9 @@
               },
               "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL\\BL.Interfaces\\BL.Interfaces.csproj": {
                 "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL\\BL.Interfaces\\BL.Interfaces.csproj"
+              },
+              "D:\\ASP.NET Core Web App\\LineWebhook\\3.DataAccessLayer\\DA\\DA.Managers\\DA.Managers.csproj": {
+                "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\3.DataAccessLayer\\DA\\DA.Managers\\DA.Managers.csproj"
               },
               "D:\\ASP.NET Core Web App\\LineWebhook\\3.DataAccessLayer\\DA\\DA.Repositories\\DA.Repositories.csproj": {
                 "projectPath": "D:\\ASP.NET Core Web App\\LineWebhook\\3.DataAccessLayer\\DA\\DA.Repositories\\DA.Repositories.csproj"

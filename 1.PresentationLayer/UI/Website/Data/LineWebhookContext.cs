@@ -18,7 +18,7 @@ namespace Website.Data {
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.Entity<DailyQuote>()
-                .HasAlternateKey(c => new { c.Date, c.StockCode });
+                .HasKey(c => new { c.Date, c.StockCode });
         }
     }
 }
