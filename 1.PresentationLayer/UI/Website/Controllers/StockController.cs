@@ -23,13 +23,8 @@ namespace Website.Controllers {
         public IDailyQuoteService DailyQuoteService { get; set; }
 
         public IActionResult Index() {
-            //DailyQuoteService d = new DailyQuoteService();
-            //d.CreateDailyQuote();
-            //Array values = Enum.GetValues(typeof(StockCodeEnum));
-            //List<DividendDistribution> dividendDistributions = CashDividendManager.Get(values);
-            //return Ok(dividendDistributions);
-            int successDailyQuotes = DailyQuoteService.GetDailyQuoteListAndSave(2020, StockCategoryEnum.FinancialAndInsurance);
-            return Ok(successDailyQuotes);
+            IActionResult test = GetDailyQuoteByDate();
+            return test;
         }
 
         public IActionResult CreateDailyQuote() {
@@ -38,6 +33,27 @@ namespace Website.Controllers {
 
         public IActionResult GetDailyQuoteList() {
             return Ok("");
+        }
+
+        public IActionResult GetDailyQuoteListByMonth() {
+            int successDailyQuoteNumber = DailyQuoteService.GetDailyQuoteListByMonthAndSave(
+                new DateTime(2012, 5, 10), StockCategoryEnum.FinancialAndInsurance);
+            return Ok(successDailyQuoteNumber);
+        }
+
+        public IActionResult GetDailyQuoteListByYear() {
+            int successDailyQuoteNumber2010 = DailyQuoteService.GetDailyQuoteListByYearAndSave(2010, StockCategoryEnum.FinancialAndInsurance);
+            return Ok(successDailyQuoteNumber2010);
+        }
+
+        public IActionResult GetDailyQuoteByDate() {
+            List<DailyQuote> dailyQuoteList = DailyQuoteService.GetDailyQuoteByDate(new DateTime(2020, 5, 8));
+            return Ok(dailyQuoteList);
+        }
+
+        public IActionResult GetDailyQuoteByDateAndStockCode() {
+            DailyQuote dailyQuote = DailyQuoteService.GetFirstDailyQuoteByDateAndStockCode(new DateTime(2020, 5, 8), "2884");
+            return Ok(dailyQuote);
         }
     }
 }

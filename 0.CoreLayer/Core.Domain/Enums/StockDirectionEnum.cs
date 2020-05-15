@@ -25,6 +25,9 @@ namespace Core.Domain.Enums {
                 case " ":
                     return StockDirectionEnum.Not;
 
+                case "X":
+                    return StockDirectionEnum.Not;
+
                 default:
                     throw new ValidationException("不符合 漲跌Enum 的預期(+/-/ )");
             }

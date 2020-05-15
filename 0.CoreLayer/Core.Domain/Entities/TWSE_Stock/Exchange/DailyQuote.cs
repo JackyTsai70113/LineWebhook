@@ -1,5 +1,4 @@
 ﻿using Core.Domain.Enums;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,9 +20,11 @@ namespace Core.Domain.Entities.TWSE_Stock.Exchange {
 
         public DateTime CreateDateTime { get; set; }
 
+        [Required]
         [Column(TypeName = "date")]
         public DateTime Date { get; set; }
 
+        [Required]
         [MaxLength(8)]
         public string StockCode { get; set; }
 

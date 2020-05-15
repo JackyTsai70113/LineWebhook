@@ -15,6 +15,7 @@ namespace Core.Domain.Utilities {
                 }
                 return int.Parse(str, NumberStyles.AllowThousands);
             } catch (Exception ex) {
+                Console.WriteLine($"ThousandToInt 失敗, str: {str}, ex: {ex}");
                 return -1;
             }
         }
@@ -26,6 +27,7 @@ namespace Core.Domain.Utilities {
                 }
                 return float.Parse(str, NumberStyles.AllowThousands | NumberStyles.AllowDecimalPoint);
             } catch (Exception ex) {
+                Console.WriteLine($"ThousandToFloat 失敗, str: {str}, ex: {ex}");
                 return -1f;
             }
         }

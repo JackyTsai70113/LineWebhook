@@ -43,7 +43,7 @@ namespace DA.Managers.TWSE_Stock {
             string contentStr = httpResponseMessage.Content.ReadAsStringAsync().Result;//取得內容
 
             // 當年年份
-            int nowYear = DateTimeUtility.GetNowYear();
+            int nowYear = DateTimeUtility.NowYear;
 
             // Angle Sharp Setting
             IConfiguration confiuration = Configuration.Default;

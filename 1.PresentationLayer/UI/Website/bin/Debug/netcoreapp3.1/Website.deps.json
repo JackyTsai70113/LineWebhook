@@ -2382,7 +2382,7 @@
       "Core.Domain/1.0.0": {
         "dependencies": {
           "Microsoft.CSharp": "4.7.0",
-          "Microsoft.EntityFrameworkCore": "3.1.3",
+          "Microsoft.Extensions.Configuration.Abstractions": "3.1.3",
           "Newtonsoft.Json": "12.0.3",
           "System.ComponentModel.Annotations": "4.7.0",
           "System.Data.SqlClient": "4.8.1",

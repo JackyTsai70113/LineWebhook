@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Core.Domain.Utilities {
 
+    public static class RangeUtility {
+    }
+
     /// <summary>
     /// 時間區間
     /// </summary>
@@ -42,8 +45,23 @@ namespace Core.Domain.Utilities {
         /// <returns>DateTime的IEnumerable</returns>
         /// <remarks>可再改到IRange裡面</remarks>
         public IEnumerable<DateTime> EachDay() {
-            for (DateTime day = Start; day.Date <= End; day = day.AddDays(1))
+            for (DateTime day = Start; day.Date <= End; day = day.AddDays(1)) {
                 yield return day;
+            }
+        }
+
+        /// <summary>
+        /// 回傳此時間區間內的每一工作天
+        /// </summary>
+        /// <returns>DateTime的IEnumerable</returns>
+        /// <remarks>可再改到IRange裡面</remarks>
+        public IEnumerable<DateTime> EachWorkDay() {
+            for (DateTime day = Start; day.Date <= End; day = day.AddDays(1)) {
+                if (day.IsWeekend()) {
+                    continue;
+                }
+                yield return day;
+            }
         }
     }
 }

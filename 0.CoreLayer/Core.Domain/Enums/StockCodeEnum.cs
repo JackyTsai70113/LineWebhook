@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Core.Domain.Enums {
 
+    /// <summary>
+    /// 股票代號Enum
+    /// </summary>
     public enum StockCodeEnum {
 
         #region 通信網路業
