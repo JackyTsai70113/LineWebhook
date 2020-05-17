@@ -9,10 +9,6 @@ namespace BL.Services.Base {
     public class BaseService : IBaseService {
         protected static readonly string LineWebhookContextConnectionString = ConfigurationUtility.GetSqlConnectionString("LineWebhookContext");
 
-        protected string GetConnectionString(DBContextEnum dBContextEnum) {
-            return ConfigurationUtility.GetSqlConnectionString(dBContextEnum.ToString());
-        }
-
         protected enum DBContextEnum {
             LineWebhookContext = 0
         }

@@ -14,7 +14,6 @@ using System.Text;
 using Utility.MaskDatas;
 using Website.Models;
 using Models.MaskDatas;
-using Utility.StringUtil;
 using Utility.Google.MapAPIs;
 
 namespace Website.Controllers {
@@ -27,11 +26,11 @@ namespace Website.Controllers {
         }
 
         public IActionResult Index() {
-            var MaskDataList = MaskDataHandler.GetTopMaskDatasByComputingDistance("110台灣台北市信義區虎林街132巷37號");
+            //var MaskDataList = MaskDataHandler.GetTopMaskDatasByComputingDistance("110台灣台北市信義區虎林街132巷37號");
             // 取得 maskData 的 List
             //var MaskDataList = MaskDataSourceHandler.GetList();
-            ViewData["result"] = "MaskDatanoyeList.Count: " + MaskDataList.Count.ToString();
-            return View(MaskDataList);
+            //ViewData["result"] = "MaskDatanoyeList.Count: " + MaskDataList.Count.ToString();
+            return View();
         }
 
         public IActionResult List() {

@@ -1,16 +1,14 @@
 ﻿using Core.Domain.Entities.TWSE_Stock.Exchange;
 using Core.Domain.Enums;
-using Core.Domain.Interafaces.Managers.TWSE_Stock;
 using Core.Domain.Utilities;
+using DA.Managers.Interfaces.TWSE_Stock;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace DA.Managers.TWSE_Stock {
@@ -312,22 +310,17 @@ namespace DA.Managers.TWSE_Stock {
         private static object lockObj = new object();
 
         /// <summary>
-        /// 根據 日期 以及 股票分類 取得每日收盤情形列表
+        /// 根據 日期 以及 股票分類 抓取每日收盤情形列表
         /// </summary>
         /// <param name="dateTime">日期</param>
         /// <param name="stockCategoryEnum">股票分類</param>
         /// <returns>每日收盤情形列表</returns>
-        /// 從 <see cref="GetDailyQuoteListByMonth(DateTime, StockCategoryEnum)"/> 可以根據 月份 以及 股票分類 取得每日收盤情形列表
+        /// 從 <see cref="CrawlDailyQuoteListByMonth(DateTime, StockCategoryEnum)"/> 可以根據 月份 以及 股票分類 取得每日收盤情形列表
         /// 從 <see cref="GetDailyQuoteListByYear(DateTime, StockCategoryEnum)"/> 可以根據 年份 以及 股票分類 取得每日收盤情形列表
-        public static List<DailyQuote> GetDailyQuoteListByDay(DateTime dateTime,
-                                                              StockCategoryEnum stockCategoryEnum = StockCategoryEnum.FinancialAndInsurance) {
-            if (dateTime.IsWeekend()) {
-                return new List<DailyQuote>();
-            }
-
+        public List<DailyQuote> CrawlDailyQuoteListByDate(DateTime dateTime,
+                                                          StockCategoryEnum stockCategoryEnum = StockCategoryEnum.FinancialAndInsurance) {
             List<DailyQuote> result = new List<DailyQuote>();
-
-            byte[] bytes = BytesFromDailyQuotesAPI(dateTime, stockCategoryEnum);
+            byte[] bytes = BytesFromDailyQuotesAPIAsync(dateTime, stockCategoryEnum).Result;
             result.AddRange(GetDailyQuoteListFromBytes(bytes));
 
             return result;
@@ -339,15 +332,15 @@ namespace DA.Managers.TWSE_Stock {
         /// <param name="dateTime">日期，用於取得月份</param>
         /// <param name="stockCategoryEnum">股票分類</param>
         /// <returns>每日收盤情形列表</returns>
-        /// 從 <see cref="GetDailyQuoteListByDay(DateTime, StockCategoryEnum)"/> 可以根據 日期 以及 股票分類 取得每日收盤情形列表
+        /// 從 <see cref="CrawlDailyQuoteListByDate(DateTime, StockCategoryEnum)"/> 可以根據 日期 以及 股票分類 取得每日收盤情形列表
         /// 從 <see cref="GetDailyQuoteListByYear(DateTime, StockCategoryEnum)"/> 可以根據 年份 以及 股票分類 取得每日收盤情形列表
-        public List<DailyQuote> GetDailyQuoteListByMonth(DateTime dateTime,
+        public List<DailyQuote> CrawlDailyQuoteListByMonth(DateTime dateTime,
                                                          StockCategoryEnum stockCategoryEnum = StockCategoryEnum.FinancialAndInsurance) {
             List<DailyQuote> result = new List<DailyQuote>();
 
             Stopwatch sw1 = new Stopwatch();
             sw1.Start();
-            IEnumerable<DateTime> DateTimeEnumerable = dateTime.GetDateTimeEnumerableByMonthBeforeNow().EachWorkDay();
+            IEnumerable<DateTime> DateTimeEnumerable = dateTime.GetDateTimeEnumerableByMonthBeforeNow().EachDay();
             List<Task<byte[]>> taskList = new List<Task<byte[]>>();
             foreach (DateTime dt in DateTimeEnumerable) {
                 taskList.Add(BytesFromDailyQuotesAPIAsync(dt.Date, stockCategoryEnum));
@@ -376,13 +369,13 @@ namespace DA.Managers.TWSE_Stock {
         /// <param name="year">年份</param>
         /// <param name="stockCategoryEnum">股票分類</param>
         /// <returns>每日收盤情形列表</returns>
-        /// 從 <see cref="GetDailyQuoteListByDay(DateTime, StockCategoryEnum)"/> 可以根據 日期 以及 股票分類 取得每日收盤情形列表
-        /// 從 <see cref="GetDailyQuoteListByMonth(DateTime, StockCategoryEnum)"/> 可以根據 月份 以及 股票分類 取得每日收盤情形列表
-        public List<DailyQuote> GetDailyQuoteListByYear(int year,
+        /// 從 <see cref="CrawlDailyQuoteListByDate(DateTime, StockCategoryEnum)"/> 可以根據 日期 以及 股票分類 取得每日收盤情形列表
+        /// 從 <see cref="CrawlDailyQuoteListByMonth(DateTime, StockCategoryEnum)"/> 可以根據 月份 以及 股票分類 取得每日收盤情形列表
+        public List<DailyQuote> CrawlDailyQuoteListByYear(int year,
                                                         StockCategoryEnum stockCategoryEnum = StockCategoryEnum.FinancialAndInsurance) {
             List<DailyQuote> result = new List<DailyQuote>();
 
-            IEnumerable<DateTime> DateTimeEnumerable = year.GetDateTimeRangeByYearBeforeNow().EachWorkDay();
+            IEnumerable<DateTime> DateTimeEnumerable = year.GetDateTimeRangeByYearBeforeNow().EachWeekendDay();
             List<Task<byte[]>> taskList = new List<Task<byte[]>>();
             foreach (DateTime dt in DateTimeEnumerable) {
                 taskList.Add(BytesFromDailyQuotesAPIAsync(dt.Date, stockCategoryEnum));
@@ -425,9 +418,9 @@ namespace DA.Managers.TWSE_Stock {
             JsonElement dateElement = root.GetProperty("params").GetProperty("date");
             DateTime date = DateTime.ParseExact(dateElement.ToString(), "yyyyMMdd", CultureInfo.InvariantCulture);
 
-            JsonElement stockDataElemnts = root.GetProperty("data1");
-            for (int i = 0; i < stockDataElemnts.GetArrayLength(); i++) {
-                JsonElement dailyQuoteArray = root.GetProperty("data1")[i];
+            JsonElement stockDataElements = root.GetProperty("data1");
+            for (int i = 0; i < stockDataElements.GetArrayLength(); i++) {
+                JsonElement dailyQuoteArray = stockDataElements[i];
                 DailyQuote dailyQuote = GetDailyQuote(dailyQuoteArray, date);
                 dailyQuoteList.Add(dailyQuote);
             }
@@ -506,6 +499,7 @@ namespace DA.Managers.TWSE_Stock {
                     }
                 }
             } catch (Exception ex) {
+                Console.WriteLine(ex.ToString());
                 uriIndex++;
                 bytes = BytesFromDailyQuotesAPI(dateTime, stockCategory);
             }
@@ -519,7 +513,6 @@ namespace DA.Managers.TWSE_Stock {
         /// <param name="dateTime">指定時間</param>
         /// <returns>位元組</returns>
         private static async Task<byte[]> BytesFromDailyQuotesAPIAsync(DateTime dateTime, StockCategoryEnum stockCategory) {
-            byte[] bytes = null;
             string responseType = "json";
             string dateStr = dateTime.ToString("yyyyMMdd");
             string typeStr = ((int)stockCategory).ToString();
@@ -538,6 +531,7 @@ namespace DA.Managers.TWSE_Stock {
             HttpClientHandler httpClientHandler = new HttpClientHandler {
                 Proxy = proxy,
             };
+            byte[] bytes;
             try {
                 HttpClient client = new HttpClient(handler: httpClientHandler, disposeHandler: true);
                 HttpResponseMessage httpResponseMessage = await client.GetAsync(uri);
@@ -561,6 +555,7 @@ namespace DA.Managers.TWSE_Stock {
                     bytes = await BytesFromDailyQuotesAPIAsync(dateTime, stockCategory);
                 }
             } catch (Exception ex) {
+                Console.WriteLine(ex.ToString());
                 AddUriIndex();
                 bytes = await BytesFromDailyQuotesAPIAsync(dateTime, stockCategory);
             }
@@ -582,129 +577,56 @@ namespace DA.Managers.TWSE_Stock {
         #region 商業邏輯工具
 
         /// <summary>
-        /// 判斷是否為可轉型的字串
-        /// </summary>
-        /// <param name="jsonStr">字串</param>
-        /// <returns>是否可轉型</returns>
-        private static bool IsValidString(string jsonStr) {
-            // 空白字串
-            if (string.IsNullOrWhiteSpace(jsonStr)) {
-                return false;
-            }
-            // 無值的json回傳值
-            if (jsonStr == "--") {
-                return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// 嘗試轉為int，並取得轉換結果
-        /// </summary>
-        /// <param name="jsonElement">JsonValue</param>
-        /// <param name="intNumber">整數</param>
-        /// <returns>是否轉換成功</returns>
-        private static bool TryParseInt(JsonElement jsonElement, out int intNumber) {
-            bool result;
-            // 設定無法正確 Parse 的值
-            intNumber = -1;
-
-            try {
-                string jsonStr = jsonElement.ToString();
-
-                if (!IsValidString(jsonStr)) {
-                    return false;
-                }
-
-                intNumber = int.Parse(jsonStr, NumberStyles.AllowThousands);
-                result = true;
-            } catch (Exception ex) {
-                result = false;
-                intNumber = -1;
-                Console.WriteLine(ex.ToString());
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// 嘗試轉為float，並取得轉換結果
-        /// </summary>
-        /// <param name="jsonElement">JsonValue</param>
-        /// <param name="intNumber">整數</param>
-        /// <returns>是否轉換成功</returns>
-        private static bool TryParseFloat(JsonElement jsonElement, out float floatNumber) {
-            bool result;
-            // 設定無法正確 Parse 的值
-            floatNumber = -1f;
-
-            try {
-                string jsonStr = jsonElement.ToString();
-
-                if (!IsValidString(jsonStr)) {
-                    return false;
-                }
-
-                floatNumber = float.Parse(jsonStr, NumberStyles.AllowThousands | NumberStyles.AllowDecimalPoint);
-                result = true;
-            } catch (Exception ex) {
-                result = false;
-                floatNumber = -1f;
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// 將 JsonElement 轉換成 DailyQuote
+        /// 將 JsonElement 轉換成 每日收盤行情物件
         /// </summary>
         /// <param name="dailyQuoteArray">json 形式的 DailyQuote</param>
         /// <param name="date">日期</param>
-        /// <returns>DailyQuote物件</returns>
+        /// <returns>每日收盤行情物件</returns>
         private static DailyQuote GetDailyQuote(JsonElement dailyQuoteArray, DateTime date) {
             DailyQuote dailyQuote = new DailyQuote();
 
             string stockCode = dailyQuoteArray[0].ToString();
-            if (!TryParseInt(dailyQuoteArray[2], out int tradeVolume)) {
-                Console.WriteLine($"TryParseInt 失敗, date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[2]}");
+            if (!dailyQuoteArray[2].ToString().TryParse(out int tradeVolume)) {
+                Console.WriteLine($"TryParseInt 失敗.ToString(), date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[2]}");
             };
-            if (!TryParseInt(dailyQuoteArray[3], out int transaction)) {
-                Console.WriteLine($"TryParseInt 失敗, date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[3]}");
+            if (!dailyQuoteArray[3].ToString().TryParse(out int transaction)) {
+                Console.WriteLine($"TryParseInt 失敗.ToString(), date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[3]}");
             };
-            if (!TryParseInt(dailyQuoteArray[4], out int tradeValue)) {
-                Console.WriteLine($"TryParseInt 失敗, date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[4]}");
+            if (!dailyQuoteArray[4].ToString().TryParse(out long tradeValue)) {
+                Console.WriteLine($"TryParseInt 失敗.ToString(), date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[4]}");
             };
 
-            if (!TryParseFloat(dailyQuoteArray[5], out float openingPrice)) {
-                Console.WriteLine($"TryParseFloat 失敗, date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[5]}");
+            if (!dailyQuoteArray[5].ToString().TryParse(out float openingPrice)) {
+                Console.WriteLine($"TryParseFloat 失敗.ToString(), date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[5]}");
             };
-            if (!TryParseFloat(dailyQuoteArray[6], out float highestPrice)) {
-                Console.WriteLine($"TryParseFloat 失敗, date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[6]}");
+            if (!dailyQuoteArray[6].ToString().TryParse(out float highestPrice)) {
+                Console.WriteLine($"TryParseFloat 失敗.ToString(), date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[6]}");
             };
-            if (!TryParseFloat(dailyQuoteArray[7], out float lowestPrice)) {
-                Console.WriteLine($"TryParseFloat 失敗, date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[7]}");
+            if (!dailyQuoteArray[7].ToString().TryParse(out float lowestPrice)) {
+                Console.WriteLine($"TryParseFloat 失敗.ToString(), date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[7]}");
             };
-            if (!TryParseFloat(dailyQuoteArray[8], out float closingPrice)) {
-                Console.WriteLine($"TryParseFloat 失敗, date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[8]}");
+            if (!dailyQuoteArray[8].ToString().TryParse(out float closingPrice)) {
+                Console.WriteLine($"TryParseFloat 失敗.ToString(), date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[8]}");
             };
             StockDirectionEnum direction = dailyQuoteArray[9].ToString().StripHtmlTag().ToStockDirectionEnum();
-            if (!TryParseFloat(dailyQuoteArray[10], out float change)) {
-                Console.WriteLine($"TryParseFloat 失敗, date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[10]}");
+            if (!dailyQuoteArray[10].ToString().TryParse(out float change)) {
+                Console.WriteLine($"TryParseFloat 失敗.ToString(), date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[10]}");
             };
-            if (!TryParseFloat(dailyQuoteArray[11], out float lastBestBidPrice)) {
-                Console.WriteLine($"TryParseFloat 失敗, date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[11]}");
-            };
-
-            if (!TryParseInt(dailyQuoteArray[12], out int lastBestBidVolume)) {
-                Console.WriteLine($"TryParseInt 失敗, date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[12]}");
-            };
-            if (!TryParseFloat(dailyQuoteArray[13], out float lastBestAskPrice)) {
-                Console.WriteLine($"TryParseFloat 失敗, date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[13]}");
+            if (!dailyQuoteArray[11].ToString().TryParse(out float lastBestBidPrice)) {
+                Console.WriteLine($"TryParseFloat 失敗.ToString(), date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[11]}");
             };
 
-            if (!TryParseInt(dailyQuoteArray[14], out int lastBestAskVolume)) {
-                Console.WriteLine($"TryParseInt 失敗, date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[14]}");
+            if (!dailyQuoteArray[12].ToString().TryParse(out int lastBestBidVolume)) {
+                Console.WriteLine($"TryParseInt 失敗.ToString(), date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[12]}");
             };
-            if (!TryParseFloat(dailyQuoteArray[15], out float priceEarningRatio)) {
+            if (!dailyQuoteArray[13].ToString().TryParse(out float lastBestAskPrice)) {
+                Console.WriteLine($"TryParseFloat 失敗.ToString(), date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[13]}");
+            };
+
+            if (!dailyQuoteArray[14].ToString().TryParse(out int lastBestAskVolume)) {
+                Console.WriteLine($"TryParseInt 失敗.ToString(), date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[14]}");
+            };
+            if (!dailyQuoteArray[15].ToString().TryParse(out float priceEarningRatio)) {
                 Console.WriteLine($"TryParseFloat 失敗, date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[15]}");
             };
 

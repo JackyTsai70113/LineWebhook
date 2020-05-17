@@ -19,6 +19,38 @@ namespace Website.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Core.Domain.Entities.TWSE_Stock.DividendDistribution", b =>
+                {
+                    b.Property<short>("Year")
+                        .HasColumnType("smallint");
+
+                    b.Property<string>("StockCode")
+                        .HasColumnType("nvarchar(8)")
+                        .HasMaxLength(8);
+
+                    b.Property<float>("CashDividendsFromLegalReserveAndCapitalSurplus")
+                        .HasColumnType("real");
+
+                    b.Property<float>("CashDividendsToBeDistributedFromRetainedEarnings")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime>("CreateDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<float>("SharesDistributedFromEarnings")
+                        .HasColumnType("real");
+
+                    b.Property<float>("SharesDistributedFromLegalReserveAndCapitalSurplus")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime>("UpdateDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Year", "StockCode");
+
+                    b.ToTable("DividendDistributions");
+                });
+
             modelBuilder.Entity("Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote", b =>
                 {
                     b.Property<DateTime>("Date")
@@ -64,8 +96,8 @@ namespace Website.Migrations
                     b.Property<float>("PriceEarningRatio")
                         .HasColumnType("real");
 
-                    b.Property<int>("TradeValue")
-                        .HasColumnType("int");
+                    b.Property<long>("TradeValue")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("TradeVolume")
                         .HasColumnType("int");
@@ -73,9 +105,118 @@ namespace Website.Migrations
                     b.Property<int>("Transaction")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("UpdateDateTime")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Date", "StockCode");
 
                     b.ToTable("DailyQuotes");
+                });
+
+            modelBuilder.Entity("Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation", b =>
+                {
+                    b.Property<short>("Year")
+                        .HasColumnType("smallint");
+
+                    b.Property<string>("StockCode")
+                        .HasColumnType("nvarchar(8)")
+                        .HasMaxLength(8);
+
+                    b.Property<float>("AverageClosingPrice")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime>("CreateDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<float>("HighestPrice")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime>("HighestPriceDate")
+                        .HasColumnType("date");
+
+                    b.Property<float>("LowestPrice")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime>("LowestPriceDate")
+                        .HasColumnType("date");
+
+                    b.Property<long>("TradeValue")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TradeVolume")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Transaction")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdateDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Year", "StockCode");
+
+                    b.ToTable("YearlyTradingInformations");
+                });
+
+            modelBuilder.Entity("Core.Domain.Entities.TWSE_Stock.StockValueEstimation", b =>
+                {
+                    b.Property<string>("StockCode")
+                        .HasColumnType("nvarchar(8)")
+                        .HasMaxLength(8);
+
+                    b.Property<float>("CheapPriceByDividendsIn10Years")
+                        .HasColumnType("real");
+
+                    b.Property<float>("CheapPriceByDividendsIn5Years")
+                        .HasColumnType("real");
+
+                    b.Property<float>("CheapPriceByRecentDividends")
+                        .HasColumnType("real");
+
+                    b.Property<float>("CheapPriceByStockPriceOver10Years")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime>("CreateDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<float>("DividendsIn10Years")
+                        .HasColumnType("real");
+
+                    b.Property<float>("DividendsIn5Years")
+                        .HasColumnType("real");
+
+                    b.Property<float>("ExpensivePriceByDividendsIn10Years")
+                        .HasColumnType("real");
+
+                    b.Property<float>("ExpensivePriceByDividendsIn5Years")
+                        .HasColumnType("real");
+
+                    b.Property<float>("ExpensivePriceByRecentDividends")
+                        .HasColumnType("real");
+
+                    b.Property<float>("ExpensivePriceByStockPriceOver10Years")
+                        .HasColumnType("real");
+
+                    b.Property<float>("ReasonablePriceByDividendsIn10Years")
+                        .HasColumnType("real");
+
+                    b.Property<float>("ReasonablePriceByDividendsIn5Years")
+                        .HasColumnType("real");
+
+                    b.Property<float>("ReasonablePriceByRecentDividends")
+                        .HasColumnType("real");
+
+                    b.Property<float>("ReasonablePriceByStockPriceOver10Years")
+                        .HasColumnType("real");
+
+                    b.Property<float>("RecentDividends")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime>("UpdateDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("StockCode");
+
+                    b.ToTable("StockValueEstimations");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,63 +1,75 @@
-﻿using Core.Domain.Enums;
+﻿using Core.Domain.Entities.Base;
+using Core.Domain.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Core.Domain.Entities.TWSE_Stock {
 
     /// <summary>
-    /// 股利分派情形
+    /// 股利分派
     /// </summary>
-    public class DividendDistribution {
+    public class DividendDistribution : EntityBase {
+
+        public DividendDistribution() : base() {
+        }
 
         /// <summary>
         /// 股票代號
         /// </summary>
-        public StockCodeEnum StockCode { get; set; }
+        [Required]
+        [MaxLength(8)]
+        public string StockCode { get; set; }
 
         /// <summary>
-        /// 當期股利
+        /// 年份
         /// </summary>
-        public float RecentDividend { get; set; }
+        /// <remarks>範圍: -2^15 (-32,768) 到 2^15-1 (32,767)</remarks>
+        [Required]
+        [Column(TypeName = "smallint")]
+        public short Year { get; set; }
 
         /// <summary>
-        /// 5年平均股利
+        /// 盈餘分配之現金股利(元/股)
         /// </summary>
-        public float DividendIn5Years { get; set; }
+        public float CashDividendsToBeDistributedFromRetainedEarnings { get; set; }
 
         /// <summary>
-        /// 10年平均股利
+        /// 法定盈餘公積、資本公積之現金股利(元/股)
         /// </summary>
-        public float DividendIn10Years { get; set; }
+        public float CashDividendsFromLegalReserveAndCapitalSurplus { get; set; }
 
         /// <summary>
-        /// 便宜價(當期)
+        /// 盈餘轉增資配股(元/股)
         /// </summary>
-        public float RecentCheapPrice { get; set; }
+        public float SharesDistributedFromEarnings { get; set; }
 
         /// <summary>
-        /// 合理價(當期)
+        /// 法定盈餘公積、資本公積轉增資配股(元/股)
         /// </summary>
-        public float RecentReasonablePrice { get; set; }
+        public float SharesDistributedFromLegalReserveAndCapitalSurplus { get; set; }
 
         /// <summary>
-        /// 昂貴價(當期)
+        /// 合計股利
         /// </summary>
-        public float RecentExpensivePrice { get; set; }
+        [NotMapped]
+        public float Dividends {
+            get {
+                return GetZeroIfNotValid(CashDividendsToBeDistributedFromRetainedEarnings)
+                    + GetZeroIfNotValid(CashDividendsFromLegalReserveAndCapitalSurplus)
+                    + GetZeroIfNotValid(SharesDistributedFromEarnings)
+                    + GetZeroIfNotValid(SharesDistributedFromLegalReserveAndCapitalSurplus);
+            }
+        }
 
-        /// <summary>
-        /// 便宜價(十年平均)
-        /// </summary>
-        public float CheapPriceIn10Years { get; set; }
-
-        /// <summary>
-        /// 合理價(十年平均)
-        /// </summary>
-        public float ReasonablePriceIn10Years { get; set; }
-
-        /// <summary>
-        /// 昂貴價(十年平均)
-        /// </summary>
-        public float ExpensivePriceIn10Years { get; set; }
+        private static float GetZeroIfNotValid(float floatNumber) {
+            if (floatNumber == -1f) {
+                return 0;
+            }
+            return floatNumber;
+        }
     }
 }

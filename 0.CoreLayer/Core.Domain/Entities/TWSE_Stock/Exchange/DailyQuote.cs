@@ -1,29 +1,33 @@
-﻿using Core.Domain.Enums;
+﻿using Core.Domain.Entities.Base;
+using Core.Domain.Enums;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
+/// <summary>
+/// 股市交易
+/// </summary>
 namespace Core.Domain.Entities.TWSE_Stock.Exchange {
 
     /// <summary>
     /// 每日收盤行情
     /// </summary>
     /// <remarks>DailyQuote.CreateDateTime會在建構子賦值</remarks>
-    public class DailyQuote {
+    public class DailyQuote : EntityBase {
 
-        public DailyQuote() {
-            CreateDateTime = DateTime.Now;
+        public DailyQuote() : base() {
         }
 
-        public DateTime CreateDateTime { get; set; }
-
+        /// <summary>
+        /// 日期
+        /// </summary>
         [Required]
         [Column(TypeName = "date")]
         public DateTime Date { get; set; }
 
+        /// <summary>
+        /// 股票代號
+        /// </summary>
         [Required]
         [MaxLength(8)]
         public string StockCode { get; set; }
@@ -46,7 +50,7 @@ namespace Core.Domain.Entities.TWSE_Stock.Exchange {
         /// 成交金額
         /// </summary>
         [Display(Name = "成交金額")]
-        public int TradeValue { get; set; }
+        public long TradeValue { get; set; }
 
         /// <summary>
         /// 開盤價
@@ -115,9 +119,16 @@ namespace Core.Domain.Entities.TWSE_Stock.Exchange {
         /// <summary>
         /// 本益比
         /// </summary>
+        /// <remarks>每賺一元所要花的時間成本(越低越好)</remarks>
         [Display(Name = "本益比")]
         public float PriceEarningRatio { get; set; }
 
         #endregion 交易單位
+
+        /*
+            兩家公司股價若相同 → EPS越高越好
+            兩家公司EPS若相同 → 股價越低越好
+            兩家公司股價和EPS都不同 → 本益比越低越好
+         */
     }
 }

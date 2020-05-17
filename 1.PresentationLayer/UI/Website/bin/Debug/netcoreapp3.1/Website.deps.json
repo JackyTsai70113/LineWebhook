@@ -2354,6 +2354,7 @@
       },
       "BL.Interfaces/1.0.0": {
         "dependencies": {
+          "Core.Domain": "1.0.0",
           "Models": "1.0.0"
         },
         "runtime": {

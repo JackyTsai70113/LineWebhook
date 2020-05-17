@@ -1,4 +1,4 @@
-﻿using Core.Domain.Interafaces.Utilities;
+﻿using Core.Domain.Interfaces.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -61,6 +61,19 @@ namespace Core.Domain.Utilities {
                     continue;
                 }
                 yield return day;
+            }
+        }
+
+        /// <summary>
+        /// 回傳此時間區間內的每一周末天
+        /// </summary>
+        /// <returns>DateTime的IEnumerable</returns>
+        /// <remarks>可再改到IRange裡面</remarks>
+        public IEnumerable<DateTime> EachWeekendDay() {
+            for (DateTime day = Start; day.Date <= End; day = day.AddDays(1)) {
+                if (day.IsWeekend()) {
+                    yield return day;
+                }
             }
         }
     }

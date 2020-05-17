@@ -1,5 +1,5 @@
 ﻿using Core.Domain.Entities.TWSE_Stock.Exchange;
-using Core.Domain.Interafaces.Repositories.Base;
+using Core.Domain.Interfaces.Repositories.Base;
 using Core.Domain.Utilities;
 using Dapper;
 using System;
@@ -25,15 +25,15 @@ namespace DA.Repositories.Base {
         private static SqlConnection SqlConnection { get; set; }
 
         /// <summary>
-        /// 取得SqlServer連線
+        /// 取得Sql Server連線
         /// </summary>
-        /// <returns>SqlServer連線</returns>
+        /// <returns>Sql Server連線</returns>
         public static SqlConnection GetSqlConnection() {
             return SqlConnection;
         }
 
         /// <summary>
-        /// 設定SqlServer連線
+        /// 設定Sql Server連線
         /// </summary>
         /// <param name="isAutoCloseConnection">是否自動關閉連線</param>
         /// <param name="connectionString">連線字串</param>

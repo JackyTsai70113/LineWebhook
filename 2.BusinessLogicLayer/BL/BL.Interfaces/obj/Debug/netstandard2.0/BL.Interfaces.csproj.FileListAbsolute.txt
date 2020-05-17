@@ -10,3 +10,5 @@ D:\ASP.NET Core Web App\LineWebhook\2.BusinessLogicLayer\BL\BL.Interfaces\obj\De
 D:\ASP.NET Core Web App\LineWebhook\2.BusinessLogicLayer\BL\BL.Interfaces\obj\Debug\netstandard2.0\BL.Interfaces.csproj.CopyComplete
 D:\ASP.NET Core Web App\LineWebhook\2.BusinessLogicLayer\BL\BL.Interfaces\obj\Debug\netstandard2.0\BL.Interfaces.dll
 D:\ASP.NET Core Web App\LineWebhook\2.BusinessLogicLayer\BL\BL.Interfaces\obj\Debug\netstandard2.0\BL.Interfaces.pdb
+D:\ASP.NET Core Web App\LineWebhook\2.BusinessLogicLayer\BL\BL.Interfaces\bin\Debug\netstandard2.0\Core.Domain.dll
+D:\ASP.NET Core Web App\LineWebhook\2.BusinessLogicLayer\BL\BL.Interfaces\bin\Debug\netstandard2.0\Core.Domain.pdb

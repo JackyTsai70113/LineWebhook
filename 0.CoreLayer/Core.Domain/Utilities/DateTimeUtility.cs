@@ -8,6 +8,15 @@ namespace Core.Domain.Utilities {
     public static class DateTimeUtility {
 
         /// <summary>
+        /// UNIX 紀元時間
+        /// </summary>
+        public static DateTime Unix_Epoch_StartTime {
+            get {
+                return new DateTime(1970, 1, 1);
+            }
+        }
+
+        /// <summary>
         /// 現在月份
         /// </summary>
         public static int NowMonth { get; } = DateTime.Now.Month;
@@ -16,6 +25,8 @@ namespace Core.Domain.Utilities {
         /// 現在年份
         /// </summary>
         public static int NowYear { get; } = DateTime.Now.Year;
+
+        public static int NowROCYear { get; } = DateTime.Now.Year - 1911;
 
         public static bool IsWeekend(this DateTime dateTime) {
             return dateTime.DayOfWeek == DayOfWeek.Saturday
@@ -27,9 +38,14 @@ namespace Core.Domain.Utilities {
         /// </summary>
         /// <param name="taiwanYear">民國年</param>
         /// <returns>西元年</returns>
-        public static int GetADYear(this int taiwanYear) {
+        public static int ToADYear(this int taiwanYear) {
             return taiwanYear + 1911;
         }
+
+        /// <summary>
+        /// 自 1970-01-01T00:00:00Z 以來所經過的秒數。
+        /// </summary>
+        public static long NowMilliseconds { get; } = DateTimeOffset.Now.ToUnixTimeMilliseconds();
 
         /// <summary>
         /// 取得日期月初
