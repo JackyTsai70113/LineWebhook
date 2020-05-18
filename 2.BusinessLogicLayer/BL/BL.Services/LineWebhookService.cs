@@ -255,7 +255,7 @@ namespace BL.Services {
                         template = new CarouselTemplate() {
                             columns = new List<ColumnObject>() {
                                 new ColumnObject() {
-                                    thumbnailImageUrl = "https://example.com/bot/images/item1.jpg",
+                                    thumbnailImageUrl = "https://image.shutterstock.com/image-photo/beautiful-water-drop-on-dandelion-260nw-789676552.jpg",
                                     imageBackgroundColor = "#FFFFFF",
                                     title = "this is menu",
                                     text = "description",
