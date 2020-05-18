@@ -1,5 +1,8 @@
 ﻿using BL.Interfaces;
 using Core.Domain.DTO.ResponseDTO.Line;
+using Core.Domain.DTO.ResponseDTO.Line.Messages;
+using Core.Domain.DTO.ResponseDTO.Line.Messages.Templates;
+using Core.Domain.DTO.ResponseDTO.Line.Messages.Templates.ActionObjects;
 using DA.Managers.CambridgeDictionary;
 using DA.Managers.Interfaces;
 using Models.Google.API;
@@ -247,6 +250,26 @@ namespace BL.Services {
             try {
                 // Set up messages to send
                 List<dynamic> messages = new List<dynamic> {
+                    new TemplateMessage() {
+                        altText = "this is a carousel template",
+                        template = new CarouselTemplate() {
+                            columns = new List<ColumnObject>() {
+                                new ColumnObject() {
+                                    thumbnailImageUrl = "https://example.com/bot/images/item1.jpg",
+                                    imageBackgroundColor = "#FFFFFF",
+                                    title = "this is menu",
+                                    text = "description",
+                                    defaultAction = new MessageAction() {
+                                        type = "uri",
+                                        label = "View detail",
+                                        text = "message action text"
+                                    }
+                                }
+                            },
+                            imageAspectRatio = "rectangle",
+                            imageSize = "cover"
+                        }
+                    }
                 };
 
                 result = ResponseHandler.PostToLineServer(new ReplyMessageRequestBody {

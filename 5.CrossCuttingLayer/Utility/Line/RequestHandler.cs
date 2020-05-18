@@ -3,6 +3,8 @@ using System.IO;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Core.Domain.DTO.ResponseDTO.Line;
+using Core.Domain.DTO.ResponseDTO.Line.Messages;
 using Models.Line;
 using Models.Line.Webhook;
 using Newtonsoft.Json;
