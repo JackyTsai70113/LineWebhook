@@ -4,6 +4,9 @@ using System.Runtime.CompilerServices;
 
 namespace Models.Line.Webhook {
 
+    /// <summary>
+    /// 訊息
+    /// </summary>
     public class Message {
         public string type { get; set; }
         public string id { get; set; }

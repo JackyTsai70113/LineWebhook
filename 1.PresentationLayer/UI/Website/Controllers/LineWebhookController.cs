@@ -9,7 +9,7 @@ namespace Website.Controllers {
     /// LineWebhook控制器，Line Server 的 I/O
     /// </summary>
     public class LineWebhookController : Controller {
-        public ILineWebhookService LineWebhookService { get; set; }
+        private ILineWebhookService LineWebhookService { get; set; }
 
         public LineWebhookController() {
             LineWebhookService = new LineWebhookService();

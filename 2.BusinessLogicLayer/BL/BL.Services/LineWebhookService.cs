@@ -1,4 +1,6 @@
 ﻿using BL.Interfaces;
+using DA.Managers.CambridgeDictionary;
+using DA.Managers.Interfaces;
 using Models.Google.API;
 using Models.Line;
 
@@ -21,7 +23,13 @@ using Utility.StringUtil;
 namespace BL.Services {
 
     public class LineWebhookService : ILineWebhookService {
+
+        public LineWebhookService() {
+            CambridgeDictionaryManager = new CambridgeDictionaryManager();
+        }
+
         private RequestBodyFromLineServer LineRequestBody { get; set; }
+        private ICambridgeDictionaryManager CambridgeDictionaryManager { get; set; }
 
         /// <summary>
         /// 判讀LineServer來的請求物件後回應
@@ -89,7 +97,7 @@ namespace BL.Services {
                     }
                 };
 
-                result = ResponseHandler.PostToLineServer(new RequestBodyToLine {
+                result = ResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
                     replyToken = LineRequestBody.Events[0].replyToken,
                     messages = messages
                 });
@@ -108,6 +116,9 @@ namespace BL.Services {
                     string packageIdStr = text.Split(' ')[1];
                     string stickerIdStr = text.Split(' ')[2];
                     result = ReplyStickerMessages(packageIdStr, stickerIdStr);
+                } else if (text.StartsWith("cd ")) {
+                    string vocabulary = text.Split(' ')[1];
+                    result = ReplyCambridgeDictionaryMessages(vocabulary);
                 } else {
                     result = ReplyTestMessages(text);
                 }
@@ -166,7 +177,7 @@ namespace BL.Services {
                     }
                 }
 
-                result = ResponseHandler.PostToLineServer(new RequestBodyToLine {
+                result = ResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
                     replyToken = LineRequestBody.Events[0].replyToken,
                     messages = messages
                 });
@@ -219,7 +230,25 @@ namespace BL.Services {
                     }
                 };
 
-                result = ResponseHandler.PostToLineServer(new RequestBodyToLine {
+                result = ResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
+                    replyToken = LineRequestBody.Events[0].replyToken,
+                    messages = messages
+                });
+            } catch (Exception ex) {
+                result += "Exception: " + ex.ToString();
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            return result;
+        }
+
+        private string ReplyCambridgeDictionaryMessages(string vocabulary) {
+            string result = "";
+            try {
+                // Set up messages to send
+                List<dynamic> messages = new List<dynamic> {
+                };
+
+                result = ResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
                     replyToken = LineRequestBody.Events[0].replyToken,
                     messages = messages
                 });

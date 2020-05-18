@@ -1,4 +1,5 @@
-﻿using Models.Line.Webhook;
+﻿using Core.Domain.DTO.ResponseDTO.Line;
+using Models.Line.Webhook;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Utility.Line {
             W39EcS0j5WNEZGIlkup0nJ+xlBf+mcw89H1xKAc5Ubd0xA9/Z
             9RSIwdB04t89/1O/w1cDnyilFU=";
 
-        public static string PostToLineServer(RequestBodyToLine requestBody) {
+        public static string PostToLineServer(ReplyMessageRequestBody requestBody) {
             string result = "";
             try {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(httpPostRequestUri);
