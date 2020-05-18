@@ -255,58 +255,50 @@ namespace BL.Services {
                         template = new CarouselTemplate() {
                             columns = new List<ColumnObject>() {
                                 new ColumnObject() {
-                                    thumbnailImageUrl = "https://image.shutterstock.com/image-photo/beautiful-water-drop-on-dandelion-260nw-789676552.jpg",
+                                    thumbnailImageUrl = "https://example.com/bot/images/item1.jpg",
                                     imageBackgroundColor = "#FFFFFF",
                                     title = "this is menu",
                                     text = "description",
                                     defaultAction = new URIAction() {
-                                        type = "uri",
                                         label = "View detail",
-                                        uri = "https://www.google.com/"
+                                        uri = "http://example.com/page/123"
                                     },
                                     actions = new List<ActionObject>() {
-                                        new URIAction() {
-                                            type = "uri",
-                                            label = "View detail2",
-                                            uri = "https://www.google.com/"
+                                        new PostbackAction() {
+                                            label = "Buy",
+                                            data = "action=buy&itemid=111"
+                                        },
+                                        new PostbackAction() {
+                                            label = "Add to cart",
+                                            data = "action=add&itemid=111"
                                         },
                                         new URIAction() {
-                                            type = "uri",
-                                            label = "View detail3",
-                                            uri = "https://www.google.com/"
-                                        },
-                                        new URIAction() {
-                                            type = "uri",
-                                            label = "View detail4",
-                                            uri = "https://www.google.com/"
+                                            label = "View detail",
+                                            uri = "http://example.com/page/111"
                                         }
                                     }
                                 },
                                 new ColumnObject() {
-                                    thumbnailImageUrl = "https://image.shutterstock.com/image-photo/beautiful-water-drop-on-dandelion-260nw-789676552.jpg",
-                                    imageBackgroundColor = "#FFFFFF",
+                                    thumbnailImageUrl = "https://example.com/bot/images/item2.jpg",
+                                    imageBackgroundColor = "#000000",
                                     title = "this is menu",
                                     text = "description",
                                     defaultAction = new URIAction() {
-                                        type = "uri",
                                         label = "View detail",
                                         uri = "https://www.google.com/"
                                     },
                                     actions = new List<ActionObject>() {
-                                        new URIAction() {
-                                            type = "uri",
-                                            label = "View detail5",
-                                            uri = "https://www.google.com/"
+                                        new PostbackAction() {
+                                            label = "Buy",
+                                            data = "action=buy&itemid=222"
+                                        },
+                                        new PostbackAction() {
+                                            label = "Add to cart",
+                                            data = "action=add&itemid=222"
                                         },
                                         new URIAction() {
-                                            type = "uri",
-                                            label = "View detail6",
-                                            uri = "https://www.google.com/"
-                                        },
-                                        new URIAction() {
-                                            type = "uri",
-                                            label = "View detail7",
-                                            uri = "https://www.google.com/"
+                                            label = "View detail",
+                                            uri = "http://example.com/page/222"
                                         }
                                     }
                                 }
