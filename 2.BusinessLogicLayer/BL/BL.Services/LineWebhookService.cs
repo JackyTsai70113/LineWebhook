@@ -259,16 +259,16 @@ namespace BL.Services {
                                     imageBackgroundColor = "#FFFFFF",
                                     title = "this is menu",
                                     text = "description",
-                                    defaultAction = new MessageAction() {
+                                    defaultAction = new URIAction() {
                                         type = "uri",
                                         label = "View detail",
-                                        text = "message action text"
+                                        uri = "https://www.google.com/"
                                     },
                                     actions = new List<ActionObject>() {
-                                        new MessageAction() {
+                                        new URIAction() {
                                             type = "uri",
                                             label = "View detail2",
-                                            text = "message action text2"
+                                            uri = "https://www.google.com/"
                                         }
                                     }
                                 }
