@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\..\0.CoreLayer\Core.Domain\Core.Domain.csproj" />
     <ProjectReference Include="..\..\4.ModelsLayer\Models\Models.csproj" />
   </ItemGroup>
 

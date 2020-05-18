@@ -1,7 +1,6 @@
 ﻿using Core.Domain.Entities.TWSE_Stock;
 using Core.Domain.Entities.TWSE_Stock.Exchange;
 using Microsoft.EntityFrameworkCore;
-using Models.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;

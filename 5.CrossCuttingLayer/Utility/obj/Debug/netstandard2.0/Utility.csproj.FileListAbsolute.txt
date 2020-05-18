@@ -10,3 +10,5 @@ D:\ASP.NET Core Web App\LineWebhook\5.CrossCuttingLayer\Utility\bin\Debug\netsta
 D:\ASP.NET Core Web App\LineWebhook\5.CrossCuttingLayer\Utility\bin\Debug\netstandard2.0\Models.pdb
 D:\ASP.NET Core Web App\LineWebhook\5.CrossCuttingLayer\Utility\obj\Debug\netstandard2.0\Utility.csproj.CopyComplete
 D:\ASP.NET Core Web App\LineWebhook\5.CrossCuttingLayer\Utility\obj\Debug\netstandard2.0\Utility.csproj.CoreCompileInputs.cache
+D:\ASP.NET Core Web App\LineWebhook\5.CrossCuttingLayer\Utility\bin\Debug\netstandard2.0\Core.Domain.dll
+D:\ASP.NET Core Web App\LineWebhook\5.CrossCuttingLayer\Utility\bin\Debug\netstandard2.0\Core.Domain.pdb
