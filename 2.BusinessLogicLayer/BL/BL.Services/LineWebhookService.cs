@@ -269,6 +269,44 @@ namespace BL.Services {
                                             type = "uri",
                                             label = "View detail2",
                                             uri = "https://www.google.com/"
+                                        },
+                                        new URIAction() {
+                                            type = "uri",
+                                            label = "View detail3",
+                                            uri = "https://www.google.com/"
+                                        },
+                                        new URIAction() {
+                                            type = "uri",
+                                            label = "View detail4",
+                                            uri = "https://www.google.com/"
+                                        }
+                                    }
+                                },
+                                new ColumnObject() {
+                                    thumbnailImageUrl = "https://image.shutterstock.com/image-photo/beautiful-water-drop-on-dandelion-260nw-789676552.jpg",
+                                    imageBackgroundColor = "#FFFFFF",
+                                    title = "this is menu",
+                                    text = "description",
+                                    defaultAction = new URIAction() {
+                                        type = "uri",
+                                        label = "View detail",
+                                        uri = "https://www.google.com/"
+                                    },
+                                    actions = new List<ActionObject>() {
+                                        new URIAction() {
+                                            type = "uri",
+                                            label = "View detail5",
+                                            uri = "https://www.google.com/"
+                                        },
+                                        new URIAction() {
+                                            type = "uri",
+                                            label = "View detail6",
+                                            uri = "https://www.google.com/"
+                                        },
+                                        new URIAction() {
+                                            type = "uri",
+                                            label = "View detail7",
+                                            uri = "https://www.google.com/"
                                         }
                                     }
                                 }
