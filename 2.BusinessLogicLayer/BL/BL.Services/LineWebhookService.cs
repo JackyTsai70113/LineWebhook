@@ -263,6 +263,13 @@ namespace BL.Services {
                                         type = "uri",
                                         label = "View detail",
                                         text = "message action text"
+                                    },
+                                    actions = new List<ActionObject>() {
+                                        new MessageAction() {
+                                            type = "uri",
+                                            label = "View detail2",
+                                            text = "message action text2"
+                                        }
                                     }
                                 }
                             },

@@ -9,6 +9,6 @@ namespace Core.Domain.DTO.ResponseDTO.Line.Messages {
     /// </summary>
     public class Message {
         public string type { get; set; }
-        public string id { get; set; }
+        //public string id { get; set; }
     }
 }
