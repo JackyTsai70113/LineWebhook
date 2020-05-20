@@ -28,8 +28,10 @@ namespace Utility.Line {
 
                 // Write data to requestStream
                 ASCIIEncoding encoding = new ASCIIEncoding();
-                byte[] data = encoding.GetBytes(
-                    System.Text.Json.JsonSerializer.Serialize(requestBody));
+                string testStr = "{\"type\":\"template\",\"altText\":\"thisisacarouseltemplate\",\"template\":{\"type\":\"carousel\",\"columns\":[{\"thumbnailImageUrl\":\"https://example.com/bot/images/item1.jpg\",\"imageBackgroundColor\":\"#FFFFFF\",\"title\":\"thisismenu\",\"text\":\"description\",\"defaultAction\":{\"type\":\"uri\",\"label\":\"Viewdetail\",\"uri\":\"http://example.com/page/123\"},\"actions\":[{\"type\":\"postback\",\"label\":\"Buy\",\"data\":\"action=buy&itemid=111\"},{\"type\":\"postback\",\"label\":\"Addtocart\",\"data\":\"action=add&itemid=111\"},{\"type\":\"uri\",\"label\":\"Viewdetail\",\"uri\":\"http://example.com/page/111\"}]},{\"thumbnailImageUrl\":\"https://example.com/bot/images/item2.jpg\",\"imageBackgroundColor\":\"#000000\",\"title\":\"thisismenu\",\"text\":\"description\",\"defaultAction\":{\"type\":\"uri\",\"label\":\"Viewdetail\",\"uri\":\"http://example.com/page/222\"},\"actions\":[{\"type\":\"postback\",\"label\":\"Buy\",\"data\":\"action=buy&itemid=222\"},{\"type\":\"postback\",\"label\":\"Addtocart\",\"data\":\"action=add&itemid=222\"},{\"type\":\"uri\",\"label\":\"Viewdetail\",\"uri\":\"http://example.com/page/222\"}]}],\"imageAspectRatio\":\"rectangle\",\"imageSize\":\"cover\"}}";
+                //byte[] data = encoding.GetBytes(
+                //    System.Text.Json.JsonSerializer.Serialize(requestBody));
+                byte[] data = encoding.GetBytes(testStr);
                 request.ContentLength = data.Length;
                 Stream requestStream = request.GetRequestStream();
                 //requestStream.WriteTimeout = 20000;
