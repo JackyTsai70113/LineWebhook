@@ -17,18 +17,17 @@ namespace Core.Domain.DTO.ResponseDTO.Line.Messages.Templates {
         public List<ColumnObject> columns { get; set; }
 
         // rectangle: 1.51:1 / square: 1:1
-        public string imageAspectRatio { get; set; }
+        //public string imageAspectRatio { get; set; }
 
         // cover / contain
         /*
          cover: The image fills the entire image area. Parts of the image that do not fit in the area are not displayed.
         contain: The entire image is displayed in the image area. A background is displayed in the unused areas to the left and right of vertical images and in the areas above and below horizontal images.
         */
-        public string imageSize { get; set; }
+        //public string imageSize { get; set; }
     }
 
     public class ColumnObject {
-
         /// <summary>
         ///
         /// </summary>
@@ -39,17 +38,17 @@ namespace Core.Domain.DTO.ResponseDTO.Line.Messages.Templates {
         /// Max width: 1024px
         /// Max file size: 1 MB
         /// </remarks>
-        public string thumbnailImageUrl { get; set; }
+        //public string thumbnailImageUrl { get; set; }
 
         /// <summary>
         /// Default: #FFFFFF (white)
         /// </summary>
-        public string imageBackgroundColor { get; set; }
+        //public string imageBackgroundColor { get; set; }
 
         /// <summary>
         /// Max character limit: 40
         /// </summary>
-        public string title { get; set; }
+        //public string title { get; set; }
 
         /// <summary>
         /// title
@@ -64,7 +63,7 @@ namespace Core.Domain.DTO.ResponseDTO.Line.Messages.Templates {
         /// <summary>
         /// Action when image, title or text area is tapped.
         /// </summary>
-        public ActionObject defaultAction { get; set; }
+        //public ActionObject defaultAction { get; set; }
 
         /// <summary>
         /// Action when tapped

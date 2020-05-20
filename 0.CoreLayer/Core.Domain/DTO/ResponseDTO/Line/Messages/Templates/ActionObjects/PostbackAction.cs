@@ -12,7 +12,7 @@ namespace Core.Domain.DTO.ResponseDTO.Line.Messages.Templates.ActionObjects {
 
         public string label { get; set; }
         public string data { get; set; }
-        public string displayText { get; set; }
-        public string text { get; set; }
+        //public string displayText { get; set; }
+        //public string text { get; set; }
     }
 }

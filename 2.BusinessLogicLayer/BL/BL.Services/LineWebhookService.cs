@@ -263,14 +263,7 @@ namespace BL.Services {
                         template = new CarouselTemplate() {
                             columns = new List<ColumnObject>() {
                                 new ColumnObject() {
-                                    thumbnailImageUrl = "https://the-allstars.com/blog/images/articl/articl4_1_1.jpg",
-                                    imageBackgroundColor = "#000000",
-                                    title = "this is menu",
                                     text = "description",
-                                    defaultAction = new URIAction() {
-                                        label = "View detail",
-                                        uri = "https://www.google.com/"
-                                    },
                                     actions = new List<ActionObject>() {
                                         new PostbackAction() {
                                             label = "Buy",
@@ -286,9 +279,7 @@ namespace BL.Services {
                                         }
                                     }
                                 }
-                            },
-                            imageAspectRatio = "rectangle",
-                            imageSize = "cover"
+                            }
                         }
                     }
                 };
