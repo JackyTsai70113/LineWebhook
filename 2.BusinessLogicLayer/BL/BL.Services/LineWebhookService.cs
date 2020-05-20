@@ -3,6 +3,7 @@ using Core.Domain.DTO.ResponseDTO.Line;
 using Core.Domain.DTO.ResponseDTO.Line.Messages;
 using Core.Domain.DTO.ResponseDTO.Line.Messages.Templates;
 using Core.Domain.DTO.ResponseDTO.Line.Messages.Templates.ActionObjects;
+using Core.Domain.Utilities;
 using DA.Managers.CambridgeDictionary;
 using DA.Managers.Interfaces;
 using Models.Google.API;
@@ -123,6 +124,13 @@ namespace BL.Services {
                 } else if (text.StartsWith("cd ")) {
                     string vocabulary = text.Split(' ')[1];
                     result = ReplyCambridgeDictionaryMessages(vocabulary);
+                } else if (text.StartsWith("sp")) {
+                    text[2].ToString().TryParse(out int times);
+                    string skey = text.Substring(63, 32);
+                    string skey1 = text.Substring(63, 32);
+                    string skey2 = text.Substring(63, 33);
+                    string skey3 = text.Substring(62, 32);
+                    result = ReplyShopeeMessages(times, skey);
                 } else {
                     result = ReplyTestMessages(text);
                 }
@@ -317,6 +325,54 @@ namespace BL.Services {
                 result += "Exception: " + ex.ToString();
                 Console.WriteLine($"Exception: {ex.Message}");
             }
+            return result;
+        }
+
+        private string ReplyShopeeMessages(int times, string skey) {
+            string uri = "https://games.shopee.tw/farm/api/friend/anonymous/help";
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+            request.Method = "POST";
+            //request.Headers.Add("Content-Type", "application/json");
+            //request.Headers.Add("Authorization", "Bearer " + channelAccessToken);
+
+            // Write data to requestStream
+            ASCIIEncoding encoding = new ASCIIEncoding();
+            var requestBody = new {
+                shareKey = skey,
+                channel = "lineChat"
+            };
+            byte[] data = encoding.GetBytes(
+                System.Text.Json.JsonSerializer.Serialize(requestBody));
+            request.ContentLength = data.Length;
+            Stream requestStream = request.GetRequestStream();
+            //requestStream.WriteTimeout = 20000;
+            requestStream.Write(data, 0, data.Length);
+            requestStream.Close();
+
+            // Add 紀錄發至LineServer的requestBody
+            string requestBodyStr = JsonConvert.SerializeObject(requestBody, Formatting.Indented);
+            Console.WriteLine($"========== TO Shopee SERVER: {uri} ==========");
+            Console.WriteLine($"requestBody:");
+            Console.WriteLine($"{requestBodyStr}");
+            Console.WriteLine($"====================");
+
+            WebResponse response = request.GetResponse();
+            Stream stream = response.GetResponseStream();
+            StreamReader streamReader = new StreamReader(stream);
+            string result = streamReader.ReadToEnd();
+
+            List<dynamic> messages = new List<dynamic> {
+                    new TextMessage {
+                        type = "text",
+                        text = result
+                    }
+                };
+
+            result = ResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
+                replyToken = LineRequestBody.Events[0].replyToken,
+                messages = messages
+            });
+
             return result;
         }
 
