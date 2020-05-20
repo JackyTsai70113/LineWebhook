@@ -332,8 +332,7 @@ namespace BL.Services {
             string uri = "https://games.shopee.tw/farm/api/friend/anonymous/help";
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
             request.Method = "POST";
-            //request.Headers.Add("Content-Type", "application/json");
-            //request.Headers.Add("Authorization", "Bearer " + channelAccessToken);
+            request.Headers.Add("Content-Type", "application/json");
 
             // Write data to requestStream
             ASCIIEncoding encoding = new ASCIIEncoding();
