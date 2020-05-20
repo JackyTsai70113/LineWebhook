@@ -257,65 +257,55 @@ namespace BL.Services {
             string result = "";
             try {
                 // Set up messages to send
-                //List<dynamic> messages = new List<dynamic> {
-                //    new TemplateMessage() {
-                //        altText = "this is a carousel template",
-                //        template = new CarouselTemplate() {
-                //            columns = new List<ColumnObject>() {
-                //                new ColumnObject() {
-                //                    thumbnailImageUrl = "https://example.com/bot/images/item1.jpg",
-                //                    imageBackgroundColor = "#FFFFFF",
-                //                    title = "this is menu",
-                //                    text = "description",
-                //                    defaultAction = new URIAction() {
-                //                        label = "View detail",
-                //                        uri = "http://example.com/page/123"
-                //                    },
-                //                    actions = new List<ActionObject>() {
-                //                        new PostbackAction() {
-                //                            label = "Buy",
-                //                            data = "action=buy&itemid=111"
-                //                        },
-                //                        new PostbackAction() {
-                //                            label = "Add to cart",
-                //                            data = "action=add&itemid=111"
-                //                        },
-                //                        new URIAction() {
-                //                            label = "View detail",
-                //                            uri = "http://example.com/page/111"
-                //                        }
-                //                    }
-                //                },
-                //                new ColumnObject() {
-                //                    thumbnailImageUrl = "https://example.com/bot/images/item2.jpg",
-                //                    imageBackgroundColor = "#000000",
-                //                    title = "this is menu",
-                //                    text = "description",
-                //                    defaultAction = new URIAction() {
-                //                        label = "View detail",
-                //                        uri = "https://www.google.com/"
-                //                    },
-                //                    actions = new List<ActionObject>() {
-                //                        new PostbackAction() {
-                //                            label = "Buy",
-                //                            data = "action=buy&itemid=222"
-                //                        },
-                //                        new PostbackAction() {
-                //                            label = "Add to cart",
-                //                            data = "action=add&itemid=222"
-                //                        },
-                //                        new URIAction() {
-                //                            label = "View detail",
-                //                            uri = "http://example.com/page/222"
-                //                        }
-                //                    }
-                //                }
-                //            },
-                //            imageAspectRatio = "rectangle",
-                //            imageSize = "cover"
-                //        }
-                //    }
-                //};
+                List<dynamic> messages = new List<dynamic> {
+                    new TemplateMessage() {
+                        altText = "this is a carousel template",
+                        template = new CarouselTemplate() {
+                            columns = new List<ColumnObject>() {
+                                new ColumnObject() {
+                                    thumbnailImageUrl = "https://the-allstars.com/blog/images/articl/articl4_1_1.jpg",
+                                    imageBackgroundColor = "#000000",
+                                    title = "this is menu",
+                                    text = "description",
+                                    defaultAction = new URIAction() {
+                                        label = "View detail",
+                                        uri = "https://www.google.com/"
+                                    },
+                                    actions = new List<ActionObject>() {
+                                        new PostbackAction() {
+                                            label = "Buy",
+                                            data = "action=buy&itemid=111"
+                                        },
+                                        new PostbackAction() {
+                                            label = "Add to cart",
+                                            data = "action=add&itemid=111"
+                                        },
+                                        new URIAction() {
+                                            label = "View detail",
+                                            uri = "https://www.google.com/"
+                                        }
+                                    }
+                                }
+                            },
+                            imageAspectRatio = "rectangle",
+                            imageSize = "cover"
+                        }
+                    }
+                };
+                result = ResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
+                    replyToken = LineRequestBody.Events[0].replyToken,
+                    messages = messages
+                });
+            } catch (Exception ex) {
+                result += "Exception: " + ex.ToString();
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            return result;
+        }
+
+        private string ReplyConfirmMessages(int times, string skey) {
+            string result = "";
+            try {
                 List<dynamic> messages = new List<dynamic> {
                     new {
                         type = "template",
@@ -338,6 +328,7 @@ namespace BL.Services {
                         }
                     }
                 };
+
                 result = ResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
                     replyToken = LineRequestBody.Events[0].replyToken,
                     messages = messages
