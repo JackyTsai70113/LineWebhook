@@ -258,26 +258,23 @@ namespace BL.Services {
             try {
                 // Set up messages to send
                 List<dynamic> messages = new List<dynamic> {
-                    new {
-                        type = "template",
+                    new TemplateMessage() {
                         altText = "this is a carousel template",
-                        template = new {
-                            type = "carousel",
-                            columns = new List<dynamic>() {
-                                new {
+                        template = new CarouselTemplate() {
+                            columns = new List<ColumnObject>() {
+                                new ColumnObject(){
                                     text = "description",
-                                    actions = new List<dynamic>() {
-                                        new {
-                                            type = "message",
+                                    actions = new List<ActionObject>() {
+                                        new MessageAction() {
                                             label = "Yes",
                                             text = "Yes"
                                         },
-                                        new {
+                                        new MessageAction() {
                                             type = "message",
                                             label = "Yes2",
                                             text = "Yes2"
                                         },
-                                        new {
+                                        new MessageAction() {
                                             type = "message",
                                             label = "Yes3",
                                             text = "Yes3"
