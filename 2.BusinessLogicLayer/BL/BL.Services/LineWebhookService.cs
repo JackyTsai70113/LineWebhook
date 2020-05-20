@@ -257,66 +257,87 @@ namespace BL.Services {
             string result = "";
             try {
                 // Set up messages to send
+                //List<dynamic> messages = new List<dynamic> {
+                //    new TemplateMessage() {
+                //        altText = "this is a carousel template",
+                //        template = new CarouselTemplate() {
+                //            columns = new List<ColumnObject>() {
+                //                new ColumnObject() {
+                //                    thumbnailImageUrl = "https://example.com/bot/images/item1.jpg",
+                //                    imageBackgroundColor = "#FFFFFF",
+                //                    title = "this is menu",
+                //                    text = "description",
+                //                    defaultAction = new URIAction() {
+                //                        label = "View detail",
+                //                        uri = "http://example.com/page/123"
+                //                    },
+                //                    actions = new List<ActionObject>() {
+                //                        new PostbackAction() {
+                //                            label = "Buy",
+                //                            data = "action=buy&itemid=111"
+                //                        },
+                //                        new PostbackAction() {
+                //                            label = "Add to cart",
+                //                            data = "action=add&itemid=111"
+                //                        },
+                //                        new URIAction() {
+                //                            label = "View detail",
+                //                            uri = "http://example.com/page/111"
+                //                        }
+                //                    }
+                //                },
+                //                new ColumnObject() {
+                //                    thumbnailImageUrl = "https://example.com/bot/images/item2.jpg",
+                //                    imageBackgroundColor = "#000000",
+                //                    title = "this is menu",
+                //                    text = "description",
+                //                    defaultAction = new URIAction() {
+                //                        label = "View detail",
+                //                        uri = "https://www.google.com/"
+                //                    },
+                //                    actions = new List<ActionObject>() {
+                //                        new PostbackAction() {
+                //                            label = "Buy",
+                //                            data = "action=buy&itemid=222"
+                //                        },
+                //                        new PostbackAction() {
+                //                            label = "Add to cart",
+                //                            data = "action=add&itemid=222"
+                //                        },
+                //                        new URIAction() {
+                //                            label = "View detail",
+                //                            uri = "http://example.com/page/222"
+                //                        }
+                //                    }
+                //                }
+                //            },
+                //            imageAspectRatio = "rectangle",
+                //            imageSize = "cover"
+                //        }
+                //    }
+                //};
                 List<dynamic> messages = new List<dynamic> {
-                    new TemplateMessage() {
-                        altText = "this is a carousel template",
-                        template = new CarouselTemplate() {
-                            columns = new List<ColumnObject>() {
-                                new ColumnObject() {
-                                    thumbnailImageUrl = "https://example.com/bot/images/item1.jpg",
-                                    imageBackgroundColor = "#FFFFFF",
-                                    title = "this is menu",
-                                    text = "description",
-                                    defaultAction = new URIAction() {
-                                        label = "View detail",
-                                        uri = "http://example.com/page/123"
-                                    },
-                                    actions = new List<ActionObject>() {
-                                        new PostbackAction() {
-                                            label = "Buy",
-                                            data = "action=buy&itemid=111"
-                                        },
-                                        new PostbackAction() {
-                                            label = "Add to cart",
-                                            data = "action=add&itemid=111"
-                                        },
-                                        new URIAction() {
-                                            label = "View detail",
-                                            uri = "http://example.com/page/111"
-                                        }
-                                    }
+                    new {
+                        type = "template",
+                        altText = "this is a confirm template",
+                        template = new {
+                            type = "confirm",
+                            text = "Are you sure?",
+                            actions = new List<dynamic> {
+                                new {
+                                    type = "message",
+                                    label = "Yes",
+                                    text = "yes"
                                 },
-                                new ColumnObject() {
-                                    thumbnailImageUrl = "https://example.com/bot/images/item2.jpg",
-                                    imageBackgroundColor = "#000000",
-                                    title = "this is menu",
-                                    text = "description",
-                                    defaultAction = new URIAction() {
-                                        label = "View detail",
-                                        uri = "https://www.google.com/"
-                                    },
-                                    actions = new List<ActionObject>() {
-                                        new PostbackAction() {
-                                            label = "Buy",
-                                            data = "action=buy&itemid=222"
-                                        },
-                                        new PostbackAction() {
-                                            label = "Add to cart",
-                                            data = "action=add&itemid=222"
-                                        },
-                                        new URIAction() {
-                                            label = "View detail",
-                                            uri = "http://example.com/page/222"
-                                        }
-                                    }
+                                new {
+                                    type = "message",
+                                    label = "No",
+                                    text = "no"
                                 }
-                            },
-                            imageAspectRatio = "rectangle",
-                            imageSize = "cover"
+                            }
                         }
                     }
                 };
-
                 result = ResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
                     replyToken = LineRequestBody.Events[0].replyToken,
                     messages = messages
