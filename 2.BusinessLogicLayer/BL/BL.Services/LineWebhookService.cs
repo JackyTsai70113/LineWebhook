@@ -258,24 +258,29 @@ namespace BL.Services {
             try {
                 // Set up messages to send
                 List<dynamic> messages = new List<dynamic> {
-                    new TemplateMessage() {
+                    new {
+                        type = "template",
                         altText = "this is a carousel template",
-                        template = new CarouselTemplate() {
-                            columns = new List<ColumnObject>() {
-                                new ColumnObject() {
+                        template = new {
+                            type = "carousel",
+                            columns = new List<dynamic>() {
+                                new {
                                     text = "description",
-                                    actions = new List<ActionObject>() {
-                                        new PostbackAction() {
-                                            label = "Buy",
-                                            data = "action=buy&itemid=111"
+                                    actions = new List<dynamic>() {
+                                        new {
+                                            type = "message",
+                                            label = "Yes",
+                                            text = "Yes"
                                         },
-                                        new PostbackAction() {
-                                            label = "Add to cart",
-                                            data = "action=add&itemid=111"
+                                        new {
+                                            type = "message",
+                                            label = "Yes2",
+                                            text = "Yes2"
                                         },
-                                        new URIAction() {
-                                            label = "View detail",
-                                            uri = "https://www.google.com/"
+                                        new {
+                                            type = "message",
+                                            label = "Yes3",
+                                            text = "Yes3"
                                         }
                                     }
                                 }
