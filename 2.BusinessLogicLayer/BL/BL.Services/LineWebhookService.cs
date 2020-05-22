@@ -270,37 +270,32 @@ namespace BL.Services {
                                             text = "Yes"
                                         },
                                         new MessageAction() {
-                                            type = "message",
                                             label = "Yes2",
                                             text = "Yes2"
                                         },
                                         new MessageAction() {
-                                            type = "message",
                                             label = "Yes3",
                                             text = "Yes3"
                                         }
                                     }
+                                },
+                                new ColumnObject(){
+                                    text = "456",
+                                    actions = new List<ActionObject>() {
+                                        new MessageAction() {
+                                            label = "Yes4",
+                                            text = "Yes4"
+                                        },
+                                        new MessageAction() {
+                                            label = "Yes5",
+                                            text = "Yes5"
+                                        },
+                                        new MessageAction() {
+                                            label = "Yes6",
+                                            text = "Yes6"
+                                        }
+                                    }
                                 }
-                                //,
-                                //new ColumnObject(){
-                                //    text = "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890abcdefghijklmnopq",
-                                //    actions = new List<ActionObject>() {
-                                //        new MessageAction() {
-                                //            label = "Yes",
-                                //            text = "Yes"
-                                //        },
-                                //        new MessageAction() {
-                                //            type = "message",
-                                //            label = "Yes2",
-                                //            text = "Yes2"
-                                //        },
-                                //        new MessageAction() {
-                                //            type = "message",
-                                //            label = "Yes3",
-                                //            text = "Yes3"
-                                //        }
-                                //    }
-                                //}
                             }
                         }
                     }
