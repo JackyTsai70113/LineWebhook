@@ -263,7 +263,8 @@ namespace BL.Services {
                         template = new CarouselTemplate() {
                             columns = new List<CarouselColumnObject>() {
                                 new CarouselColumnObject(){
-                                    text = "一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七是我嗎",
+                                    //text = "一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七是我嗎",
+                                    text = "123",
                                     actions = new List<ActionObject>() {
                                         new MessageAction() {
                                             label = "Yes",
@@ -274,24 +275,25 @@ namespace BL.Services {
                                             text = "Yes2"
                                         }
                                     }
-                                },
-                                new CarouselColumnObject(){
-                                    text = "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890abcdefghij",
-                                    actions = new List<ActionObject>() {
-                                        new MessageAction() {
-                                            label = "Yes4",
-                                            text = "Yes4"
-                                        },
-                                        new MessageAction() {
-                                            label = "Yes5",
-                                            text = "Yes5"
-                                        },
-                                        new MessageAction() {
-                                            label = "Yes6",
-                                            text = "Yes6"
-                                        }
-                                    }
                                 }
+                                //,
+                                //new CarouselColumnObject(){
+                                //    text = "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890abcdefghij",
+                                //    actions = new List<ActionObject>() {
+                                //        new MessageAction() {
+                                //            label = "Yes4",
+                                //            text = "Yes4"
+                                //        },
+                                //        new MessageAction() {
+                                //            label = "Yes5",
+                                //            text = "Yes5"
+                                //        },
+                                //        new MessageAction() {
+                                //            label = "Yes6",
+                                //            text = "Yes6"
+                                //        }
+                                //    }
+                                //}
                             }
                         }
                     }
