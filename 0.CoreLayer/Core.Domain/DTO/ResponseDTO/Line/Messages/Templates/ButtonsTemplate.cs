@@ -1,9 +1,13 @@
-﻿using System;
+﻿using Core.Domain.DTO.ResponseDTO.Line.Messages.Templates.ActionObjects;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Core.Domain.DTO.ResponseDTO.Line.Messages.Templates {
 
+    /// <summary>
+    /// 按鈕模板
+    /// </summary>
     public class ButtonsTemplate : Template {
 
         public ButtonsTemplate() {
@@ -11,10 +15,9 @@ namespace Core.Domain.DTO.ResponseDTO.Line.Messages.Templates {
         }
 
         /// <summary>
-        ///
+        /// 圖片網址 (Max character limit: 1,000)
         /// </summary>
         /// <remarks>
-        /// Image URL (Max character limit: 1,000)
         /// HTTPS over TLS 1.2 or later
         /// JPEG or PNG
         /// Max width: 1024px
@@ -22,48 +25,44 @@ namespace Core.Domain.DTO.ResponseDTO.Line.Messages.Templates {
         /// </remarks>
         public string thumbnailImageUrl { get; set; }
 
-        // rectangle: 1.51:1 / square: 1:1
+        // rectangle: 1.51:1 (預設)/ square: 1:1
         public string imageAspectRatio { get; set; }
 
-        // cover / contain
-        /*
-         cover: The image fills the entire image area. Parts of the image that do not fit in the area are not displayed.
-        contain: The entire image is displayed in the image area. A background is displayed in the unused areas to the left and right of vertical images and in the areas above and below horizontal images.
-        */
+        /// <summary>
+        /// 滿版 cover / 包含 contain
+        /// </summary>
+        /// <remarks>
+        /// cover: The image fills the entire image area.
+        /// Parts of the image that do not fit in the area are not displayed.
+        /// contain: The entire image is displayed in the image area.
+        /// A background is displayed in the unused areas to the left and right of vertical images
+        /// and in the areas above and below horizontal images.
+        /// </remarks>
         public string imageSize { get; set; }
 
         /// <summary>
-        /// Default: #FFFFFF (white)
+        /// 圖片背景顏色, 預設 #FFFFFF (white)
         /// </summary>
         public string imageBackgroundColor { get; set; }
 
         /// <summary>
-        /// Max character limit: 40
+        /// 標題, 上限 40 字元
         /// </summary>
         public string title { get; set; }
 
         /// <summary>
-        /// title
+        /// [必填] 文字, 上限字元: 160 (無圖或標題) / 60 (有圖或標題)
         /// </summary>
-        /// <remarks>
-        /// Message text
-        /// Max character limit: 160 (no image or title)
-        /// Max character limit: 60 (message with an image or title)
-        /// </remarks>
         public string text { get; set; }
 
         /// <summary>
-        /// Action when image, title or text area is tapped.
+        /// 預設點擊動作, 點擊圖片, 標題, 文字的預設動作
         /// </summary>
         public ActionObject defaultAction { get; set; }
 
         /// <summary>
-        /// Action when tapped
-        /// Max objects: 4
+        /// [必填] 點擊動作 (最多四個)
         /// </summary>
         public List<ActionObject> actions { get; set; }
-
-        public class ActionObject {
-        }
     }
 }

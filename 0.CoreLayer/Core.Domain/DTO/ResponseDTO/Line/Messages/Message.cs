@@ -7,8 +7,13 @@ namespace Core.Domain.DTO.ResponseDTO.Line.Messages {
     /// <summary>
     /// 訊息
     /// </summary>
-    public class Message {
+    public abstract class Message {
+
+        /// <summary>
+        /// [必填] 訊息類型
+        /// </summary>
         public string type { get; set; }
+
         //public string id { get; set; }
     }
 }
