@@ -263,7 +263,7 @@ namespace BL.Services {
                         template = new CarouselTemplate() {
                             columns = new List<ColumnObject>() {
                                 new ColumnObject(){
-                                    text = "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890abcdefghij",
+                                    text = "一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七是我嗎",
                                     actions = new List<ActionObject>() {
                                         new MessageAction() {
                                             label = "Yes",
