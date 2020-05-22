@@ -263,7 +263,7 @@ namespace BL.Services {
                         template = new CarouselTemplate() {
                             columns = new List<ColumnObject>() {
                                 new ColumnObject(){
-                                    text = "123",
+                                    text = "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890abcdefghij",
                                     actions = new List<ActionObject>() {
                                         new MessageAction() {
                                             label = "Yes",
@@ -280,7 +280,7 @@ namespace BL.Services {
                                     }
                                 },
                                 new ColumnObject(){
-                                    text = "456",
+                                    text = "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890abcdefghij",
                                     actions = new List<ActionObject>() {
                                         new MessageAction() {
                                             label = "Yes4",
