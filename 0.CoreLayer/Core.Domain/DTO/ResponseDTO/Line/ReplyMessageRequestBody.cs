@@ -23,6 +23,6 @@ namespace Core.Domain.DTO.ResponseDTO.Line {
         /// <summary>
         /// 回覆的訊息列表，最多五則
         /// </summary>
-        public List<dynamic> messages { get; set; }
+        public List<Message> messages { get; set; }
     }
 }

@@ -95,7 +95,7 @@ namespace BL.Services {
             string result = "";
             try {
                 // Set up messages to send
-                List<dynamic> messages = new List<dynamic> {
+                List<Message> messages = new List<Message> {
                     new TextMessage {
                         type = "text",
                         text = text
@@ -153,7 +153,7 @@ namespace BL.Services {
                 var topMaskDatas = MaskDataHandler.GetTopMaskDatasByComputingDistance(address, 5);
 
                 // Set up messages to send
-                var messages = new List<dynamic>();
+                var messages = new List<Message>();
                 StringBuilder builder = new StringBuilder();
 
                 if (topMaskDatas.Count == 0) {
@@ -214,7 +214,7 @@ namespace BL.Services {
                 }
 
                 // Set up messages to send
-                List<dynamic> messages = new List<dynamic> {
+                List<Message> messages = new List<Message> {
                     new StickerMessage {
                         type = "sticker",
                         packageId = packageId.ToString(),
@@ -257,7 +257,7 @@ namespace BL.Services {
             string result = "";
             try {
                 // Set up messages to send
-                List<dynamic> messages = new List<dynamic> {
+                List<Message> messages = new List<Message> {
                     new TemplateMessage() {
                         altText = "this is a carousel template",
                         template = new CarouselTemplate() {
@@ -322,10 +322,10 @@ namespace BL.Services {
                     }
                 };
 
-                result = ResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
-                    replyToken = LineRequestBody.Events[0].replyToken,
-                    messages = messages
-                });
+                //result = ResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
+                //    replyToken = LineRequestBody.Events[0].replyToken,
+                //    messages = messages
+                //});
             } catch (Exception ex) {
                 result += "Exception: " + ex.ToString();
                 Console.WriteLine($"Exception: {ex.Message}");
@@ -365,7 +365,7 @@ namespace BL.Services {
             StreamReader streamReader = new StreamReader(stream);
             string result = streamReader.ReadToEnd();
 
-            List<dynamic> messages = new List<dynamic> {
+            List<Message> messages = new List<Message> {
                     new TextMessage {
                         type = "text",
                         text = result
