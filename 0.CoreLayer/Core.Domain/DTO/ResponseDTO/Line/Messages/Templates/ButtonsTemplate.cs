@@ -61,7 +61,7 @@ namespace Core.Domain.DTO.ResponseDTO.Line.Messages.Templates {
         public ActionObject defaultAction { get; set; }
 
         /// <summary>
-        /// [必填] 點擊動作 (最多四個)
+        /// [必填] 點擊動作列表 (最多四個)
         /// </summary>
         public List<ActionObject> actions { get; set; }
     }

@@ -16,13 +16,11 @@ namespace Core.Domain.DTO.ResponseDTO.Line.Messages.Templates {
         }
 
         /// <summary>
-        /// Column列表, 上限 10 個
+        /// [必填] Column列表, 上限 10 個
         /// </summary>
-        [Required]
-        public List<ColumnObject> columns { get; set; }
+        public List<CarouselColumnObject> columns { get; set; }
 
         // rectangle: 1.51:1 (預設)/ square: 1:1
-        [Required(ErrorMessage = "imageAspectRatio must be specified")]
         public string imageAspectRatio { get; set; }
 
         /// <summary>
@@ -39,9 +37,9 @@ namespace Core.Domain.DTO.ResponseDTO.Line.Messages.Templates {
     }
 
     /// <summary>
-    /// Column
+    /// carousel 的 column 物件
     /// </summary>
-    public class ColumnObject {
+    public class CarouselColumnObject {
 
         /// <summary>
         /// 圖片網址 (Max character limit: 1,000)
@@ -49,6 +47,7 @@ namespace Core.Domain.DTO.ResponseDTO.Line.Messages.Templates {
         /// <remarks>
         /// HTTPS over TLS 1.2 or later
         /// JPEG or PNG
+        /// Aspect ratio: 1:1.51
         /// Max width: 1024px
         /// Max file size: 1 MB
         /// </remarks>

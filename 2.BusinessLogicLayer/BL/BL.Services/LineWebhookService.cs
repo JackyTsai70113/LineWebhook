@@ -261,25 +261,17 @@ namespace BL.Services {
                     new TemplateMessage() {
                         altText = "this is a carousel template",
                         template = new CarouselTemplate() {
-                            columns = new List<ColumnObject>() {
-                                new ColumnObject(){
+                            columns = new List<CarouselColumnObject>() {
+                                new CarouselColumnObject(){
                                     text = "一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七是我嗎",
                                     actions = new List<ActionObject>() {
                                         new MessageAction() {
                                             label = "Yes",
                                             text = "Yes"
-                                        },
-                                        new MessageAction() {
-                                            label = "Yes2",
-                                            text = "Yes2"
-                                        },
-                                        new MessageAction() {
-                                            label = "Yes3",
-                                            text = "Yes3"
                                         }
                                     }
                                 },
-                                new ColumnObject(){
+                                new CarouselColumnObject(){
                                     text = "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890abcdefghij",
                                     actions = new List<ActionObject>() {
                                         new MessageAction() {
