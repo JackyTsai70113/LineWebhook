@@ -272,10 +272,6 @@ namespace BL.Services {
                                         new MessageAction() {
                                             label = "Yes2",
                                             text = "Yes2"
-                                        },
-                                        new MessageAction() {
-                                            label = "Yes3",
-                                            text = "Yes3"
                                         }
                                     }
                                 },
