@@ -64,7 +64,7 @@ namespace Core.Domain.DTO.ResponseDTO.Line.Messages.Templates {
         public string title { get; set; }
 
         /// <summary>
-        /// [必填] 文字, 上限字元: 160 (無圖或標題) / 60 (有圖或標題)
+        /// [必填] 文字, 上限字元: 120 (無圖或標題) / 60 (有圖或標題)
         /// </summary>
         public string text { get; set; }
 
