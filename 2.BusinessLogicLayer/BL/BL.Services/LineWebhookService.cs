@@ -95,7 +95,7 @@ namespace BL.Services {
             string result = "";
             try {
                 // Set up messages to send
-                List<Message> messages = new List<Message> {
+                List<dynamic> messages = new List<dynamic> {
                     new TextMessage {
                         type = "text",
                         text = text
@@ -153,7 +153,7 @@ namespace BL.Services {
                 var topMaskDatas = MaskDataHandler.GetTopMaskDatasByComputingDistance(address, 5);
 
                 // Set up messages to send
-                var messages = new List<Message>();
+                var messages = new List<dynamic>();
                 StringBuilder builder = new StringBuilder();
 
                 if (topMaskDatas.Count == 0) {
@@ -214,7 +214,7 @@ namespace BL.Services {
                 }
 
                 // Set up messages to send
-                List<Message> messages = new List<Message> {
+                List<dynamic> messages = new List<dynamic> {
                     new StickerMessage {
                         type = "sticker",
                         packageId = packageId.ToString(),
@@ -257,7 +257,7 @@ namespace BL.Services {
             string result = "";
             try {
                 // Set up messages to send
-                List<Message> messages = new List<Message> {
+                List<dynamic> messages = new List<dynamic> {
                     new TemplateMessage() {
                         altText = "this is a carousel template",
                         template = new CarouselTemplate() {
@@ -299,29 +299,28 @@ namespace BL.Services {
         private string ReplyConfirmMessages(int times, string skey) {
             string result = "";
             try {
-                //List<Message> messages = new List<Message> {
-                //    new {
-                //        type = "template",
-                //        altText = "this is a confirm template",
-                //        template = new {
-                //            type = "confirm",
-                //            text = "Are you sure?",
-                //            actions = new List<dynamic> {
-                //                new {
-                //                    type = "message",
-                //                    label = "Yes",
-                //                    text = "yes"
-                //                },
-                //                new {
-                //                    type = "message",
-                //                    label = "No",
-                //                    text = "no"
-                //                }
-                //            }
-                //        }
-                //    }
-                //};
-                List<Message> messages = new List<Message>();
+                List<dynamic> messages = new List<dynamic> {
+                    new {
+                        type = "template",
+                        altText = "this is a confirm template",
+                        template = new {
+                            type = "confirm",
+                            text = "Are you sure?",
+                            actions = new List<dynamic> {
+                                new {
+                                    type = "message",
+                                    label = "Yes",
+                                    text = "yes"
+                                },
+                                new {
+                                    type = "message",
+                                    label = "No",
+                                    text = "no"
+                                }
+                            }
+                        }
+                    }
+                };
 
                 result = ResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
                     replyToken = LineRequestBody.Events[0].replyToken,
@@ -366,7 +365,7 @@ namespace BL.Services {
             StreamReader streamReader = new StreamReader(stream);
             string result = streamReader.ReadToEnd();
 
-            List<Message> messages = new List<Message> {
+            List<dynamic> messages = new List<dynamic> {
                     new TextMessage {
                         type = "text",
                         text = result
