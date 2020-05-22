@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Domain.DTO.ResponseDTO.Line.Messages;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -22,6 +23,6 @@ namespace Core.Domain.DTO.ResponseDTO.Line {
         /// <summary>
         /// 回覆的訊息列表，最多五則
         /// </summary>
-        public List<dynamic> messages { get; set; }
+        public List<Message> messages { get; set; }
     }
 }
