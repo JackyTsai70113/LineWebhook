@@ -335,7 +335,7 @@ namespace BL.Services {
                     new TemplateMessage() {
                         altText = "this is a carousel template",
                         template = new CarouselTemplate() {
-                            columns = columns
+                            columns = columns.Take(10).ToList()
                         }
                     }
                 };
