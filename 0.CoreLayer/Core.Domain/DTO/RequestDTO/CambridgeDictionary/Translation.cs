@@ -55,13 +55,8 @@ namespace Core.Domain.DTO.RequestDTO.CambridgeDictionary {
         /// </summary>
         public string TranslationStr {
             get {
-                string title = $"{Name} {Speech} {UkType} {Uk_KKPhonetic} {UsType} {Us_KKPhonetic}\n";
-                string meanStr = string.Join("",
-                    Means.Select(x => {
-                        string indexStr = (Means.IndexOf(x) + 1).ToString();
-                        return indexStr + ".\n" + x.MeanStr;
-                    })
-                );
+                string title = $"{Name} {Speech} {UkType} {Uk_KKPhonetic} {UsType} {Us_KKPhonetic}\n\n";
+                string meanStr = string.Join("\n", Means.Select(x => x.MeanStr));
                 return title + meanStr;
             }
         }
