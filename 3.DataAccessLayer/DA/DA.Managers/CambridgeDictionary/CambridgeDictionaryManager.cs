@@ -24,27 +24,68 @@ namespace DA.Managers.CambridgeDictionary {
 
             IDocument document = context.OpenAsync(req => req.Content(stream)).Result;
 
-            IElement senseBodyDsense_bDiv = document.QuerySelector("div.sense-body.dsense_b");
-
-            IHtmlCollection<IElement> blockDivs = senseBodyDsense_bDiv.QuerySelectorAll("div.def-block.ddef_block");
-
             List<Translation> translations = new List<Translation>();
-            foreach (var blockDiv in blockDivs) {
+            IHtmlCollection<IElement> prEntryBody__elDivs = document.QuerySelectorAll("div.pr.entry-body__el");
+            foreach (var prEntryBody__elDiv in prEntryBody__elDivs) {
                 Translation translation = new Translation();
-                // 英文翻譯
-                translation.English = blockDiv.QuerySelector("div.def.ddef_d.db").TextContent;
-                // 中文翻譯
-                translation.Chinese = blockDiv.QuerySelector("span.trans.dtrans.dtrans-se").TextContent;
-                // 例句列表
-                IHtmlCollection<IElement> exampDexampDivs = blockDiv.QuerySelectorAll("div.examp.dexamp");
-                foreach (IElement exampDexampDiv in exampDexampDivs) {
-                    Example example = new Example();
-                    example.English = exampDexampDiv.QuerySelector("span.eg.deg").TextContent;
-                    example.Chinese = exampDexampDiv.QuerySelector("span.trans.dtrans.dtrans-se.hdb").TextContent;
-                    translation.Examples.Add(example);
+
+                #region 詞性與音標
+
+                IElement posHeaderDposHDiv = prEntryBody__elDiv.QuerySelector("div.pos-header.dpos-h");
+                translation.Name = posHeaderDposHDiv.QuerySelector("span.hw.dhw").TextContent;
+                translation.Speech = prEntryBody__elDiv.QuerySelector("span.pos.dpos").TextContent;
+
+                IElement ukDpronIDiv = posHeaderDposHDiv.QuerySelector("span.uk.dpron-i");
+                translation.UkType = ukDpronIDiv.QuerySelector("span.region.dreg").TextContent;
+                translation.Uk_KKPhonetic = ukDpronIDiv.QuerySelector("span.pron.dpron").TextContent;
+
+                IElement usDpronIDiv = posHeaderDposHDiv.QuerySelector("span.us.dpron-i");
+                translation.UsType = usDpronIDiv.QuerySelector("span.region.dreg").TextContent;
+                translation.Us_KKPhonetic = usDpronIDiv.QuerySelector("span.pron.dpron").TextContent;
+
+                #endregion 詞性與音標
+
+                #region 翻譯與例句
+
+                IElement posBodyDiv = prEntryBody__elDiv.QuerySelector("div.pos-body");
+                IHtmlCollection<IElement> prDsenseDivs = posBodyDiv.QuerySelectorAll("div.pr.dsense");
+                foreach (IElement prDsenseDiv in prDsenseDivs) {
+                    Mean mean = new Mean();
+                    // 英文解釋
+                    mean.English = prDsenseDiv.QuerySelector("div.def.ddef_d.db").TextContent;
+                    // 中文意思
+                    mean.Chinese = prDsenseDiv.QuerySelector("span.trans.dtrans.dtrans-se").TextContent;
+
+                    IHtmlCollection<IElement> exampDexampDivs = prDsenseDiv.QuerySelectorAll("div.examp.dexamp");
+                    foreach (IElement exampDexampDiv in exampDexampDivs) {
+                        SentenceExample sentenceExample = new SentenceExample();
+                        sentenceExample.English = exampDexampDiv.QuerySelector("span.eg.deg").TextContent;
+                        sentenceExample.Chinese = exampDexampDiv.QuerySelector("span.trans.dtrans.dtrans-se.hdb").TextContent;
+                        mean.SentenceExamples.Add(sentenceExample);
+                    }
+                    translation.Means.Add(mean);
                 }
+
+                #endregion 翻譯與例句
+
                 translations.Add(translation);
             }
+            //foreach (var blockDiv in blockDivs) {
+            //    Translation translation = new Translation();
+            //    // 英文翻譯
+            //    translation.English = blockDiv.QuerySelector("div.def.ddef_d.db").TextContent;
+            //    // 中文翻譯
+            //    translation.Chinese = blockDiv.QuerySelector("span.trans.dtrans.dtrans-se").TextContent;
+            //    // 例句列表
+            //    IHtmlCollection<IElement> exampDexampDivs = blockDiv.QuerySelectorAll("div.examp.dexamp");
+            //    foreach (IElement exampDexampDiv in exampDexampDivs) {
+            //        Example example = new Example();
+            //        example.English = exampDexampDiv.QuerySelector("span.eg.deg").TextContent;
+            //        example.Chinese = exampDexampDiv.QuerySelector("span.trans.dtrans.dtrans-se.hdb").TextContent;
+            //        translation.Examples.Add(example);
+            //    }
+            //    translations.Add(translation);
+            //}
 
             return translations;
         }

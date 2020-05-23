@@ -12,24 +12,91 @@ namespace Core.Domain.DTO.RequestDTO.CambridgeDictionary {
     public class Translation {
 
         public Translation() {
-            Examples = new List<Example>();
+            Means = new List<Mean>();
         }
 
-        public string English { get; set; }
-        public string Chinese { get; set; }
-        public List<Example> Examples { get; set; }
+        /// <summary>
+        /// 名稱
+        /// </summary>
+        public string Name { get; set; }
 
         /// <summary>
-        /// 輸出用的文字
+        /// 詞性
         /// </summary>
-        public string BlockText {
+        public string Speech { get; set; }
+
+        /// <summary>
+        /// uk類型
+        /// </summary>
+        public string UkType { get; set; }
+
+        /// <summary>
+        /// uk的KK音標
+        /// </summary>
+        public string Uk_KKPhonetic { get; set; }
+
+        /// <summary>
+        /// us類型
+        /// </summary>
+        public string UsType { get; set; }
+
+        /// <summary>
+        /// us的KK音標
+        /// </summary>
+        public string Us_KKPhonetic { get; set; }
+
+        /// <summary>
+        /// 意思列表
+        /// </summary>
+        public List<Mean> Means { get; set; }
+
+        /// <summary>
+        /// 翻譯輸出文字
+        /// </summary>
+        public string TranslationStr {
             get {
-                var a = English + "\n"
-                    + Chinese + "\n";
-                string examplesStr = string.Join("", Examples.Select(x => x.English + "\n" + x.Chinese + "\n").ToArray());
-                return English + "\n"
-                    + Chinese + "\n"
-                    + examplesStr;
+                string title = $"{Name} {Speech} {UkType} {Uk_KKPhonetic} {UsType} {Us_KKPhonetic}\n";
+                string meanStr = string.Join("",
+                    Means.Select(x => {
+                        string index = Means.IndexOf(x).ToString();
+                        return index + 1 + ".\n" + x.MeanStr;
+                    })
+                );
+                return title + meanStr;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 意思
+    /// </summary>
+    public class Mean {
+
+        public Mean() {
+            SentenceExamples = new List<SentenceExample>();
+        }
+
+        /// <summary>
+        /// 英文解釋
+        /// </summary>
+        public string English { get; set; }
+
+        /// <summary>
+        /// 中文意思
+        /// </summary>
+        public string Chinese { get; set; }
+
+        /// <summary>
+        /// 範例列表
+        /// </summary>
+        public List<SentenceExample> SentenceExamples { get; set; }
+
+        /// <summary>
+        /// 意思輸出文字
+        /// </summary>
+        public string MeanStr {
+            get {
+                return $"{English}\n{Chinese}\n{string.Join("", SentenceExamples.Select(x => x.SentenceExampleStr))}";
             }
         }
     }
@@ -37,7 +104,7 @@ namespace Core.Domain.DTO.RequestDTO.CambridgeDictionary {
     /// <summary>
     /// 例句
     /// </summary>
-    public class Example {
+    public class SentenceExample {
 
         /// <summary>
         /// 例句英文
@@ -48,5 +115,11 @@ namespace Core.Domain.DTO.RequestDTO.CambridgeDictionary {
         /// 例句中文
         /// </summary>
         public string Chinese { get; set; }
+
+        public string SentenceExampleStr {
+            get {
+                return $"{English}\n{Chinese}\n";
+            }
+        }
     }
 }

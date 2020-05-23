@@ -310,12 +310,12 @@ namespace BL.Services {
                 //    var a = translation.BlockText.Substring(0, 100) + "...";
                 //}
                 // Set up messages to send
-                var a = translations.Select(x => translations.IndexOf(x) + x.BlockText);
+                string translationText = string.Join("\n", translations.Select(x => x.TranslationStr));
                 List<Message> messages = new List<Message> {
                     new TextMessage() {
-                        text = string.Join("", translations.Select(x => {
-                            return translations.IndexOf(x) + 1 + ".\n" + x.BlockText + "\n";
-                        }))
+                        text = translationText.Length > 5000 ?
+                            translationText.Substring(0, 4996) + " ..." :
+                            translationText
                     }
                 };
                 result = ResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
