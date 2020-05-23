@@ -24,10 +24,12 @@ namespace Core.Domain.DTO.RequestDTO.CambridgeDictionary {
         /// </summary>
         public string BlockText {
             get {
+                var a = English + "\n"
+                    + Chinese + "\n";
+                string examplesStr = string.Join("\n", Examples.Select(x => x.English + "\n" + x.Chinese).ToArray());
                 return English + "\n"
                     + Chinese + "\n"
-                    + Examples.Select(
-                        x => x.English + "\n" + x.Chinese + "\n");
+                    + examplesStr;
             }
         }
     }

@@ -303,9 +303,15 @@ namespace BL.Services {
         private string ReplyCambridgeDictionaryMessages(string vocabulary) {
             string result = "";
             try {
-                List<Translation> translation = CambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary);
-                List<CarouselColumnObject> columns = translation.Select(x => new CarouselColumnObject {
-                    text = x.BlockText.Substring(0, 100) + "...",
+                List<Translation> translations = CambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary);
+                //foreach (var translation in translations) {
+                //    var aa = translation.BlockText;
+                //    var ass = translation.BlockText.Substring(0, 100);
+                //    var a = translation.BlockText.Substring(0, 100) + "...";
+                //}
+                List<CarouselColumnObject> columns = translations.Select(x => new CarouselColumnObject {
+                    text = x.BlockText.Length > 112 ?
+                        x.BlockText.Substring(0, 109) + "..." : x.BlockText,
                     actions =
                         new List<ActionObject>() {
                             new MessageAction() {
