@@ -7,7 +7,7 @@ namespace Core.Domain.DTO.ResponseDTO.Line.Messages {
     /// <summary>
     /// 訊息
     /// </summary>
-    public abstract class Message {
+    public class Message {
 
         /// <summary>
         /// [必填] 訊息類型

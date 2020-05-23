@@ -1,4 +1,5 @@
 ﻿using BL.Interfaces;
+using Core.Domain.DTO.RequestDTO;
 using Core.Domain.DTO.ResponseDTO.Line;
 using Core.Domain.DTO.ResponseDTO.Line.Messages;
 using Core.Domain.DTO.ResponseDTO.Line.Messages.Templates;
@@ -19,6 +20,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Utility.Google.MapAPIs;
 using Utility.Line;
@@ -72,7 +74,7 @@ namespace BL.Services {
                     default:
                         Console.WriteLine($"無相符的 message.type: {(string)message.type}, requestBodyFromLineServer: " +
                             $"{JsonConvert.SerializeObject(requestBody, Formatting.Indented)}");
-                        result += ReplyTestMessages((string)message.type);
+                        result += ReplySameContentMessages((string)message.type);
                         break;
                 }
                 return result;
@@ -87,11 +89,83 @@ namespace BL.Services {
         }
 
         /// <summary>
-        /// 根據指定字串進行回應
+        /// 依照字串內容給於不同的 LINE 回應
+        /// </summary>
+        /// <param name="text">字串內容</param>
+        /// <returns>回應結果</returns>
+        private string ReplyTextMessages(string text) {
+            string result = "";
+            try {
+                // Set up messages to send
+                if (text.StartsWith("test")) {
+                    result = ReplyTestMessages(text.Substring(4));
+                } else if (text.StartsWith("sticker")) {
+                    string packageIdStr = text.Split(' ')[1];
+                    string stickerIdStr = text.Split(' ')[2];
+                    result = ReplyStickerMessages(packageIdStr, stickerIdStr);
+                } else if (text.StartsWith("cd ")) {
+                    string vocabulary = text.Split(' ')[1];
+                    result = ReplyCambridgeDictionaryMessages(vocabulary);
+                } else if (text.StartsWith("sp")) {
+                    text[2].ToString().TryParse(out int times);
+                    string skey = text.Substring(63, 32);
+                    string skey1 = text.Substring(63, 32);
+                    string skey2 = text.Substring(63, 33);
+                    string skey3 = text.Substring(62, 32);
+                    result = ReplyShopeeMessages(times, skey);
+                } else {
+                    result = ReplySameContentMessages(text);
+                }
+            } catch (Exception ex) {
+                result += "Exception: " + ex.ToString();
+                Console.WriteLine($"Exception: {ex}");
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 回應 text 內容
+        /// </summary>
+        /// <returns>LOG紀錄</returns>
+        private string ReplyTestMessages(string text) {
+            string result = "";
+            try {
+                //var TextMessage = new
+                //List<Message> messages2 = new List<Message> {
+                //    new TextMessage {
+                //        type = "text",
+                //        text = text
+                //    }
+                //};
+                //var replyMessageRequestBody = new ReplyMessageRequestBody {
+                //    replyToken = "myToken",
+                //    messages = messages2
+                //};
+                //var replyMessageRequestBody_SerializeObject = JsonConvert.SerializeObject(replyMessageRequestBody);
+                ReplyMessageRequestBody replyMessageRequestBody = JsonConvert.DeserializeObject<ReplyMessageRequestBody>(text);
+                Message message = replyMessageRequestBody.messages.First();
+                // Set up messages to send
+                List<Message> messages = new List<Message> {
+                    message
+                };
+
+                result = ResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
+                    replyToken = LineRequestBody.Events[0].replyToken,
+                    messages = messages
+                });
+            } catch (Exception ex) {
+                result += "Exception: " + ex.Message;
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 回應 text 內容
         /// </summary>
         /// <param name="text">指定字串</param>
         /// <returns>LOG紀錄</returns>
-        private string ReplyTestMessages(string text) {
+        private string ReplySameContentMessages(string text) {
             string result = "";
             try {
                 // Set up messages to send
@@ -109,34 +183,6 @@ namespace BL.Services {
             } catch (Exception ex) {
                 result += "Exception: " + ex.Message;
                 Console.WriteLine($"Exception: {ex.Message}");
-            }
-            return result;
-        }
-
-        private string ReplyTextMessages(string text) {
-            string result = "";
-            try {
-                // Set up messages to send
-                if (text.StartsWith("sticker")) {
-                    string packageIdStr = text.Split(' ')[1];
-                    string stickerIdStr = text.Split(' ')[2];
-                    result = ReplyStickerMessages(packageIdStr, stickerIdStr);
-                } else if (text.StartsWith("cd ")) {
-                    string vocabulary = text.Split(' ')[1];
-                    result = ReplyCambridgeDictionaryMessages(vocabulary);
-                } else if (text.StartsWith("sp")) {
-                    text[2].ToString().TryParse(out int times);
-                    string skey = text.Substring(63, 32);
-                    string skey1 = text.Substring(63, 32);
-                    string skey2 = text.Substring(63, 33);
-                    string skey3 = text.Substring(62, 32);
-                    result = ReplyShopeeMessages(times, skey);
-                } else {
-                    result = ReplyTestMessages(text);
-                }
-            } catch (Exception ex) {
-                result += "Exception: " + ex.ToString();
-                Console.WriteLine($"Exception: {ex}");
             }
             return result;
         }
@@ -256,6 +302,10 @@ namespace BL.Services {
         private string ReplyCambridgeDictionaryMessages(string vocabulary) {
             string result = "";
             try {
+                CambridgeDictionary cambridgeDictionary = CambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary);
+                string translation = string.Join("\n", cambridgeDictionary.TranslationList
+                    .Select(x => x[0] + "\n - " + x[1]));
+                int i = 0;
                 // Set up messages to send
                 List<Message> messages = new List<Message> {
                     new TemplateMessage() {
@@ -263,7 +313,7 @@ namespace BL.Services {
                         template = new CarouselTemplate() {
                             columns = new List<CarouselColumnObject>() {
                                 new CarouselColumnObject(){
-                                    text = "一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一我123",
+                                    text = translation,
                                     actions = new List<ActionObject>() {
                                         new MessageAction() {
                                             label = "Yes",
