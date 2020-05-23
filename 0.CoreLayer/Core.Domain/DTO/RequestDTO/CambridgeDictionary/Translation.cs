@@ -58,8 +58,8 @@ namespace Core.Domain.DTO.RequestDTO.CambridgeDictionary {
                 string title = $"{Name} {Speech} {UkType} {Uk_KKPhonetic} {UsType} {Us_KKPhonetic}\n";
                 string meanStr = string.Join("",
                     Means.Select(x => {
-                        string index = Means.IndexOf(x).ToString();
-                        return index + 1 + ".\n" + x.MeanStr;
+                        string indexStr = (Means.IndexOf(x) + 1).ToString();
+                        return indexStr + ".\n" + x.MeanStr;
                     })
                 );
                 return title + meanStr;
