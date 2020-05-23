@@ -310,8 +310,8 @@ namespace BL.Services {
                 //    var a = translation.BlockText.Substring(0, 100) + "...";
                 //}
                 List<CarouselColumnObject> columns = translations.Select(x => new CarouselColumnObject {
-                    text = x.BlockText.Length > 112 ?
-                        x.BlockText.Substring(0, 109) + "..." : x.BlockText,
+                    text = x.BlockText.Length > 120 ?
+                        x.BlockText.Substring(0, 117) + "..." : x.BlockText,
                     actions =
                         new List<ActionObject>() {
                             new MessageAction() {
