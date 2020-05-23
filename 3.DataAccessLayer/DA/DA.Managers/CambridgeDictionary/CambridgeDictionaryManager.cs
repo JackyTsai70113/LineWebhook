@@ -16,37 +16,28 @@ namespace DA.Managers.CambridgeDictionary {
         public Core.Domain.DTO.RequestDTO.CambridgeDictionary CrawlCambridgeDictionary(string vocabulary) {
             string url = $"https://dictionary.cambridge.org/zht/%E8%A9%9E%E5%85%B8/%E8%8B%B1%E8%AA%9E-%E6%BC%A2%E8%AA%9E-%E7%B9%81%E9%AB%94/" + vocabulary;
 
-            string contentStr = RequestUtility.GetStringFromGetRequest(url);
             Stream stream = RequestUtility.GetStreamFromGetRequestAsync(url).Result;
             // Angle Sharp Setting
             IConfiguration configuration = Configuration.Default;
             IBrowsingContext context = BrowsingContext.New(configuration);
 
             IDocument document = context.OpenAsync(req => req.Content(stream)).Result;
-            //從第3個Table開始爬
-            IElement senseBodyDsense_bDiv = document.QuerySelector("div.sense-body.dsense_b");
-            //var defBlockDdefBlockDiv = document.QuerySelectorAll("div.def-block ddef_block ")[];
-            //IHtmlCollection<IElement> trElements = defBlockDdefBlockDiv.QuerySelectorAll("tr");
 
-            //for (int i = 3; i < trElements.Length && i < 10 + 3; i++) {
-            //    IHtmlCollection<IElement> tdElements = trElements[i].QuerySelectorAll("td");
-            //    string yearStr = tdElements[1].InnerHtml.StripHtmlSpace().StripHtmlTag();
-            //    int year = 0;
-            //    if (yearStr.IndexOf('上') != -1) {
-            //        year = int.Parse(yearStr.TrimEnd("年上半年"));
-            //    } else if (yearStr.IndexOf('下') != -1) {
-            //        year = int.Parse(yearStr.TrimEnd("年下半年"));
-            //    } else {
-            //        year = int.Parse(yearStr.TrimEnd("年年度"));
-            //    }
-            //}
+            IElement senseBodyDsense_bDiv = document.QuerySelector("div.sense-body.dsense_b");
 
             #region 翻譯
 
+            IHtmlCollection<IElement> blockDivList = senseBodyDsense_bDiv.QuerySelectorAll("div.def-block.ddef_block");
+
             // 英文翻譯
-            List<string> englisgTranslationList = senseBodyDsense_bDiv.QuerySelectorAll("div.def.ddef_d.db").Select(x => x.InnerHtml.StripHtmlSpace().StripHtmlTag()).ToList();
+            var a = senseBodyDsense_bDiv.QuerySelectorAll("div.def-body.ddef_b");
+            List<string> englisgTranslationList = blockDivList.Select(x => x.QuerySelector("div.def.ddef_d.db").InnerHtml.StripHtmlSpace().StripHtmlTag()).ToList();
             // 中文翻譯
-            List<string> chineseTranslationList = senseBodyDsense_bDiv.QuerySelectorAll("span.trans.dtrans.dtrans-se").Select(x => x.InnerHtml).ToList();
+            List<string> chineseTranslationList = blockDivList.Select(x => x.QuerySelector("span.trans.dtrans.dtrans-se").InnerHtml).ToList();
+            foreach (var blockDiv in blockDivList) {
+                var englisgTranslation = blockDiv.QuerySelector("div.def.ddef_d.db").InnerHtml.StripHtmlSpace().StripHtmlTag();
+                var chineseTranslation = blockDiv.QuerySelector("span.trans.dtrans.dtrans-se").InnerHtml.StripHtmlSpace().StripHtmlTag();
+            }
             // 翻譯
             List<string[]> translationList = new List<string[]>();
             for (int i = 0; i < englisgTranslationList.Count(); i++) {

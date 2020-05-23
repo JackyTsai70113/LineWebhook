@@ -107,7 +107,6 @@ namespace DA.Managers.TWSE_Stock {
                 $"&date2=" + nowROCYear +
                 $"&qryType=1";
 
-            string contentStr = RequestUtility.GetStringFromGetRequest(url);
             Stream stream = await RequestUtility.GetStreamFromGetRequestAsync(url);
             // Angle Sharp Setting
             IConfiguration configuration = Configuration.Default;
@@ -119,7 +118,6 @@ namespace DA.Managers.TWSE_Stock {
             try {
                 table = document.QuerySelectorAll("table")[2];
             } catch (Exception ex) {
-                contentStr = RequestUtility.GetStringFromGetRequest(url);
                 stream = await RequestUtility.GetStreamFromGetRequestAsync(url);
                 document = await context.OpenAsync(req => req.Content(stream));
                 table = document.QuerySelectorAll("table")[2];

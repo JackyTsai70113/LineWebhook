@@ -306,8 +306,10 @@ namespace BL.Services {
                 CambridgeDictionary cambridgeDictionary = CambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary);
                 IEnumerable<string> columnTextIEnumerable = new List<string>();
                 //翻譯
-                columnTextIEnumerable = columnTextIEnumerable.Concat(cambridgeDictionary.TranslationList.Select(x => x[0] + "\n - " + x[1]));
+                List<string> translationText = cambridgeDictionary.TranslationList.Select(x => x[0] + "\n - " + x[1]).ToList();
+                columnTextIEnumerable = columnTextIEnumerable.Concat(translationText);
                 //用法
+                List<string> exampleText = cambridgeDictionary.ExampleList.Select(x => x[0] + "\n - " + x[1]).ToList();
                 columnTextIEnumerable = columnTextIEnumerable.Concat(cambridgeDictionary.ExampleList.Select(x => x[0] + "\n - " + x[1]));
                 //例句
                 columnTextIEnumerable = columnTextIEnumerable.Concat(cambridgeDictionary.ExampleSentenceList);
@@ -323,10 +325,6 @@ namespace BL.Services {
                             new MessageAction() {
                                 label = "Yes2",
                                 text = "Yes2"
-                            },
-                            new MessageAction() {
-                                label = "Yes3",
-                                text = "Yes3"
                             }
                         }
                     }));
@@ -335,7 +333,21 @@ namespace BL.Services {
                     new TemplateMessage() {
                         altText = "this is a carousel template",
                         template = new CarouselTemplate() {
-                            columns = columns.Take(10).ToList()
+                            columns = new List<CarouselColumnObject> {
+                                new CarouselColumnObject {
+                                    text = "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
+                                    actions = new List<ActionObject>() {
+                                        new MessageAction() {
+                                            label = "Yes",
+                                            text = "Yes"
+                                        },
+                                        new MessageAction() {
+                                            label = "Yes2",
+                                            text = "Yes2"
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 };
