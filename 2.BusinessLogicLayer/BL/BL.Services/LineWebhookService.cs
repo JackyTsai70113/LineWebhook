@@ -304,20 +304,25 @@ namespace BL.Services {
             string result = "";
             try {
                 List<Translation> translations = CambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary);
-                //foreach (var translation in translations) {
-                //    var aa = translation.BlockText;
-                //    var ass = translation.BlockText.Substring(0, 100);
-                //    var a = translation.BlockText.Substring(0, 100) + "...";
-                //}
-                // Set up messages to send
+                // 防呆: 超過5種詞性
+                if (translations.Count > 5) {
+                    translations = translations.Take(5).ToList();
+                }
+
+                // 設定發送的訊息
                 string translationText = string.Join("\n", translations.Select(x => x.TranslationStr));
-                List<Message> messages = new List<Message> {
-                    new TextMessage() {
-                        text = translationText.Length > 5000 ?
-                            translationText.Substring(0, 4996) + " ..." :
-                            translationText
+                List<Message> messages = new List<Message>();
+                foreach (Translation translation in translations) {
+                    string translationStr = translation.TranslationStr;
+                    // 防呆: 超過5000字數
+                    if (translationStr.Length > 5000) {
+                        translationStr = translationStr.Substring(0, 4996) + " ...";
                     }
-                };
+                    messages.Add(new TextMessage() {
+                        text = translationStr
+                    });
+                }
+
                 result = ResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
                     replyToken = LineRequestBody.Events[0].replyToken,
                     messages = messages
