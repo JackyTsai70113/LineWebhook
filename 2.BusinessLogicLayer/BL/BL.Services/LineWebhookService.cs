@@ -303,8 +303,8 @@ namespace BL.Services {
             string result = "";
             try {
                 CambridgeDictionary cambridgeDictionary = CambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary);
-                string translation = string.Join("\n", cambridgeDictionary.TranslationList
-                    .Select(x => x[0] + "\n - " + x[1]));
+                string translation = cambridgeDictionary.TranslationList
+                    .Select(x => x[0] + "\n - " + x[1]).FirstOrDefault();
                 int i = 0;
                 // Set up messages to send
                 List<Message> messages = new List<Message> {
