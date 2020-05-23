@@ -305,7 +305,7 @@ namespace BL.Services {
             try {
                 List<Translation> translation = CambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary);
                 List<CarouselColumnObject> columns = translation.Select(x => new CarouselColumnObject {
-                    text = x.BlockText,
+                    text = x.BlockText.Substring(0, 100) + "...",
                     actions =
                         new List<ActionObject>() {
                             new MessageAction() {
