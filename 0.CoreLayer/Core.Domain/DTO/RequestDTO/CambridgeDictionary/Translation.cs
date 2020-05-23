@@ -26,7 +26,7 @@ namespace Core.Domain.DTO.RequestDTO.CambridgeDictionary {
             get {
                 var a = English + "\n"
                     + Chinese + "\n";
-                string examplesStr = string.Join("\n", Examples.Select(x => x.English + "\n" + x.Chinese).ToArray());
+                string examplesStr = string.Join("", Examples.Select(x => x.English + "\n" + x.Chinese + "\n").ToArray());
                 return English + "\n"
                     + Chinese + "\n"
                     + examplesStr;

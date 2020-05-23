@@ -309,28 +309,13 @@ namespace BL.Services {
                 //    var ass = translation.BlockText.Substring(0, 100);
                 //    var a = translation.BlockText.Substring(0, 100) + "...";
                 //}
-                List<CarouselColumnObject> columns = translations.Select(x => new CarouselColumnObject {
-                    text = x.BlockText.Length > 120 ?
-                        x.BlockText.Substring(0, 117) + "..." : x.BlockText,
-                    actions =
-                        new List<ActionObject>() {
-                            new MessageAction() {
-                                label = "Yes",
-                                text = "Yes"
-                            },
-                            new MessageAction() {
-                                label = "Yes2",
-                                text = "Yes2"
-                            }
-                        }
-                }).ToList();
                 // Set up messages to send
+                var a = translations.Select(x => translations.IndexOf(x) + x.BlockText);
                 List<Message> messages = new List<Message> {
-                    new TemplateMessage() {
-                        altText = "this is a carousel template",
-                        template = new CarouselTemplate() {
-                            columns = columns
-                        }
+                    new TextMessage() {
+                        text = string.Join("", translations.Select(x => {
+                            return translations.IndexOf(x) + 1 + ".\n" + x.BlockText + "\n";
+                        }))
                     }
                 };
                 result = ResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
