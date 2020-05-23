@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Domain.DTO.RequestDTO.CambridgeDictionary;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,6 +7,6 @@ namespace DA.Managers.Interfaces {
 
     public interface ICambridgeDictionaryManager {
 
-        Core.Domain.DTO.RequestDTO.CambridgeDictionary CrawlCambridgeDictionary(string vocabulary);
+        List<Translation> CrawlCambridgeDictionary(string vocabulary);
     }
 }

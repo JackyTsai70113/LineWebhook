@@ -1,5 +1,6 @@
 ﻿using BL.Interfaces;
 using Core.Domain.DTO.RequestDTO;
+using Core.Domain.DTO.RequestDTO.CambridgeDictionary;
 using Core.Domain.DTO.ResponseDTO.Line;
 using Core.Domain.DTO.ResponseDTO.Line.Messages;
 using Core.Domain.DTO.ResponseDTO.Line.Messages.Templates;
@@ -302,22 +303,11 @@ namespace BL.Services {
         private string ReplyCambridgeDictionaryMessages(string vocabulary) {
             string result = "";
             try {
-                List<CarouselColumnObject> columns = new List<CarouselColumnObject>();
-                CambridgeDictionary cambridgeDictionary = CambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary);
-                IEnumerable<string> columnTextIEnumerable = new List<string>();
-                //翻譯
-                List<string> translationText = cambridgeDictionary.TranslationList.Select(x => x[0] + "\n - " + x[1]).ToList();
-                columnTextIEnumerable = columnTextIEnumerable.Concat(translationText);
-                //用法
-                List<string> exampleText = cambridgeDictionary.ExampleList.Select(x => x[0] + "\n - " + x[1]).ToList();
-                columnTextIEnumerable = columnTextIEnumerable.Concat(cambridgeDictionary.ExampleList.Select(x => x[0] + "\n - " + x[1]));
-                //例句
-                columnTextIEnumerable = columnTextIEnumerable.Concat(cambridgeDictionary.ExampleSentenceList);
-
-                columns.AddRange(columnTextIEnumerable
-                    .Select(x => new CarouselColumnObject {
-                        text = x,
-                        actions = new List<ActionObject>() {
+                List<Translation> translation = CambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary);
+                List<CarouselColumnObject> columns = translation.Select(x => new CarouselColumnObject {
+                    text = x.BlockText,
+                    actions =
+                        new List<ActionObject>() {
                             new MessageAction() {
                                 label = "Yes",
                                 text = "Yes"
@@ -327,27 +317,13 @@ namespace BL.Services {
                                 text = "Yes2"
                             }
                         }
-                    }));
+                }).ToList();
                 // Set up messages to send
                 List<Message> messages = new List<Message> {
                     new TemplateMessage() {
                         altText = "this is a carousel template",
                         template = new CarouselTemplate() {
-                            columns = new List<CarouselColumnObject> {
-                                new CarouselColumnObject {
-                                    text = "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
-                                    actions = new List<ActionObject>() {
-                                        new MessageAction() {
-                                            label = "Yes",
-                                            text = "Yes"
-                                        },
-                                        new MessageAction() {
-                                            label = "Yes2",
-                                            text = "Yes2"
-                                        }
-                                    }
-                                }
-                            }
+                            columns = columns
                         }
                     }
                 };
