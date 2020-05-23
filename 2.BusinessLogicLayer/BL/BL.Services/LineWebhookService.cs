@@ -302,197 +302,40 @@ namespace BL.Services {
         private string ReplyCambridgeDictionaryMessages(string vocabulary) {
             string result = "";
             try {
+                List<CarouselColumnObject> columns = new List<CarouselColumnObject>();
                 CambridgeDictionary cambridgeDictionary = CambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary);
-                string translation = cambridgeDictionary.TranslationList
-                    .Select(x => x[0] + "\n - " + x[1]).FirstOrDefault();
-                int i = 0;
+                IEnumerable<string> columnTextIEnumerable = new List<string>();
+                //翻譯
+                columnTextIEnumerable = columnTextIEnumerable.Concat(cambridgeDictionary.TranslationList.Select(x => x[0] + "\n - " + x[1]));
+                //用法
+                columnTextIEnumerable = columnTextIEnumerable.Concat(cambridgeDictionary.ExampleList.Select(x => x[0] + "\n - " + x[1]));
+                //例句
+                columnTextIEnumerable = columnTextIEnumerable.Concat(cambridgeDictionary.ExampleSentenceList);
+
+                columns.AddRange(columnTextIEnumerable
+                    .Select(x => new CarouselColumnObject {
+                        text = x,
+                        actions = new List<ActionObject>() {
+                            new MessageAction() {
+                                label = "Yes",
+                                text = "Yes"
+                            },
+                            new MessageAction() {
+                                label = "Yes2",
+                                text = "Yes2"
+                            },
+                            new MessageAction() {
+                                label = "Yes3",
+                                text = "Yes3"
+                            }
+                        }
+                    }));
                 // Set up messages to send
                 List<Message> messages = new List<Message> {
                     new TemplateMessage() {
                         altText = "this is a carousel template",
                         template = new CarouselTemplate() {
-                            columns = new List<CarouselColumnObject>() {
-                                new CarouselColumnObject(){
-                                    text = translation,
-                                    actions = new List<ActionObject>() {
-                                        new MessageAction() {
-                                            label = "Yes",
-                                            text = "Yes"
-                                        },
-                                        new MessageAction() {
-                                            label = "Yes2",
-                                            text = "Yes2"
-                                        },
-                                        new MessageAction() {
-                                            label = "Yes3",
-                                            text = "Yes3"
-                                        }
-                                    }
-                                },
-                                new CarouselColumnObject(){
-                                    text = "一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一我",
-                                    actions = new List<ActionObject>() {
-                                        new MessageAction() {
-                                            label = "Yes",
-                                            text = "Yes"
-                                        },
-                                        new MessageAction() {
-                                            label = "Yes2",
-                                            text = "Yes2"
-                                        },
-                                        new MessageAction() {
-                                            label = "Yes3",
-                                            text = "Yes3"
-                                        }
-                                    }
-                                },new CarouselColumnObject(){
-                                    text = "一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一我",
-                                    actions = new List<ActionObject>() {
-                                        new MessageAction() {
-                                            label = "Yes",
-                                            text = "Yes"
-                                        },
-                                        new MessageAction() {
-                                            label = "Yes2",
-                                            text = "Yes2"
-                                        },
-                                        new MessageAction() {
-                                            label = "Yes3",
-                                            text = "Yes3"
-                                        }
-                                    }
-                                },new CarouselColumnObject(){
-                                    text = "一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一我",
-                                    actions = new List<ActionObject>() {
-                                        new MessageAction() {
-                                            label = "Yes",
-                                            text = "Yes"
-                                        },
-                                        new MessageAction() {
-                                            label = "Yes2",
-                                            text = "Yes2"
-                                        },
-                                        new MessageAction() {
-                                            label = "Yes3",
-                                            text = "Yes3"
-                                        }
-                                    }
-                                },new CarouselColumnObject(){
-                                    text = "一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一我",
-                                    actions = new List<ActionObject>() {
-                                        new MessageAction() {
-                                            label = "Yes",
-                                            text = "Yes"
-                                        },
-                                        new MessageAction() {
-                                            label = "Yes2",
-                                            text = "Yes2"
-                                        },
-                                        new MessageAction() {
-                                            label = "Yes3",
-                                            text = "Yes3"
-                                        }
-                                    }
-                                },new CarouselColumnObject(){
-                                    text = "一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一我",
-                                    actions = new List<ActionObject>() {
-                                        new MessageAction() {
-                                            label = "Yes",
-                                            text = "Yes"
-                                        },
-                                        new MessageAction() {
-                                            label = "Yes2",
-                                            text = "Yes2"
-                                        },
-                                        new MessageAction() {
-                                            label = "Yes3",
-                                            text = "Yes3"
-                                        }
-                                    }
-                                },new CarouselColumnObject(){
-                                    text = "一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一我",
-                                    actions = new List<ActionObject>() {
-                                        new MessageAction() {
-                                            label = "Yes",
-                                            text = "Yes"
-                                        },
-                                        new MessageAction() {
-                                            label = "Yes2",
-                                            text = "Yes2"
-                                        },
-                                        new MessageAction() {
-                                            label = "Yes3",
-                                            text = "Yes3"
-                                        }
-                                    }
-                                },new CarouselColumnObject(){
-                                    text = "一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一我",
-                                    actions = new List<ActionObject>() {
-                                        new MessageAction() {
-                                            label = "Yes",
-                                            text = "Yes"
-                                        },
-                                        new MessageAction() {
-                                            label = "Yes2",
-                                            text = "Yes2"
-                                        },
-                                        new MessageAction() {
-                                            label = "Yes3",
-                                            text = "Yes3"
-                                        }
-                                    }
-                                },new CarouselColumnObject(){
-                                    text = "一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一我",
-                                    actions = new List<ActionObject>() {
-                                        new MessageAction() {
-                                            label = "Yes",
-                                            text = "Yes"
-                                        },
-                                        new MessageAction() {
-                                            label = "Yes2",
-                                            text = "Yes2"
-                                        },
-                                        new MessageAction() {
-                                            label = "Yes3",
-                                            text = "Yes3"
-                                        }
-                                    }
-                                },new CarouselColumnObject(){
-                                    text = "一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一二三四五六七八九零一我",
-                                    actions = new List<ActionObject>() {
-                                        new MessageAction() {
-                                            label = "Yes",
-                                            text = "Yes"
-                                        },
-                                        new MessageAction() {
-                                            label = "Yes2",
-                                            text = "Yes2"
-                                        },
-                                        new MessageAction() {
-                                            label = "Yes3",
-                                            text = "Yes3"
-                                        }
-                                    }
-                                }
-                                //,
-                                //new CarouselColumnObject(){
-                                //    text = "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890abcdefghij",
-                                //    actions = new List<ActionObject>() {
-                                //        new MessageAction() {
-                                //            label = "Yes4",
-                                //            text = "Yes4"
-                                //        },
-                                //        new MessageAction() {
-                                //            label = "Yes5",
-                                //            text = "Yes5"
-                                //        },
-                                //        new MessageAction() {
-                                //            label = "Yes6",
-                                //            text = "Yes6"
-                                //        }
-                                //    }
-                                //}
-                            }
+                            columns = columns
                         }
                     }
                 };
