@@ -96,7 +96,9 @@ namespace Core.Domain.DTO.RequestDTO.CambridgeDictionary {
         /// </summary>
         public string MeanStr {
             get {
-                return $"{English}\n{Chinese}\n{string.Join("", SentenceExamples.Select(x => x.SentenceExampleStr))}";
+                return $"{English}\n{Chinese}\n" +
+                    $"------------------------\n" +
+                    $"{string.Join("", SentenceExamples.Select(x => x.SentenceExampleStr))}";
             }
         }
     }
