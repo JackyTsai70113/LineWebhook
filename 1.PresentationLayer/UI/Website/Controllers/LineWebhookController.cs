@@ -2,6 +2,7 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using BL.Interfaces;
 using BL.Services;
+using Microsoft.Extensions.Logging;
 
 namespace Website.Controllers {
 
@@ -9,9 +10,11 @@ namespace Website.Controllers {
     /// LineWebhook控制器，Line Server 的 I/O
     /// </summary>
     public class LineWebhookController : Controller {
+        private readonly ILogger<HomeController> _logger;
         private ILineWebhookService LineWebhookService { get; set; }
 
-        public LineWebhookController() {
+        public LineWebhookController(ILogger<HomeController> logger) {
+            _logger = logger;
             LineWebhookService = new LineWebhookService();
         }
 
@@ -23,6 +26,7 @@ namespace Website.Controllers {
         [HttpPost]
         public IActionResult Index([FromBody] dynamic requestBody) {
             try {
+                _logger.LogInformation("Index page says hello");
                 string result = LineWebhookService.Response(requestBody);
                 return Content(requestBody.ToString() + "\n" + result);
             } catch (Exception ex) {

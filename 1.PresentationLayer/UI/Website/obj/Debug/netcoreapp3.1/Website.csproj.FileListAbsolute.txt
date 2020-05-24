@@ -180,5 +180,9 @@ D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\bin\Debug\net
 D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
+D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\bin\Debug\netcoreapp3.1\NLog.dll
+D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\bin\Debug\netcoreapp3.1\NLog.Extensions.Logging.dll
+D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\bin\Debug\netcoreapp3.1\NLog.Web.AspNetCore.dll
+D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\bin\Debug\netcoreapp3.1\nlog.config
 D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\obj\Debug\netcoreapp3.1\Website.csproj.CoreCompileInputs.cache
 D:\ASP.NET Core Web App\LineWebhook\1.PresentationLayer\UI\Website\obj\Debug\netcoreapp3.1\Website.MvcApplicationPartsAssemblyInfo.cache

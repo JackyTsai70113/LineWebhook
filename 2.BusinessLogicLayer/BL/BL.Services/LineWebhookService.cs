@@ -1,4 +1,5 @@
 ﻿using BL.Interfaces;
+using BL.Services.Base;
 using Core.Domain.DTO.RequestDTO;
 using Core.Domain.DTO.RequestDTO.CambridgeDictionary;
 using Core.Domain.DTO.ResponseDTO.Line;
@@ -30,7 +31,7 @@ using Utility.StringUtil;
 
 namespace BL.Services {
 
-    public class LineWebhookService : ILineWebhookService {
+    public class LineWebhookService : BaseService, ILineWebhookService {
 
         public LineWebhookService() {
             CambridgeDictionaryManager = new CambridgeDictionaryManager();
@@ -49,7 +50,7 @@ namespace BL.Services {
             try {
                 //處理requestBody
                 RequestBodyFromLineServer lineRequestBody = RequestHandler.GetLineRequestBody(requestBody);
-
+                logger.Info("asdfqwer");
                 Console.WriteLine($"========== From LINE SERVER ==========");
                 Console.WriteLine($"requestBody:");
                 Console.WriteLine($"{JsonConvert.SerializeObject(lineRequestBody, Formatting.Indented)}");
@@ -303,6 +304,8 @@ namespace BL.Services {
         private string ReplyCambridgeDictionaryMessages(string vocabulary) {
             string result = "";
             try {
+                NLog.Logger myLogger = NLog.LogManager.GetCurrentClassLogger();
+                myLogger.Info("ReplyCambridgeDictionaryMessages Start");
                 List<Translation> translations = CambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary);
                 // 防呆: 超過5種詞性
                 if (translations.Count > 5) {

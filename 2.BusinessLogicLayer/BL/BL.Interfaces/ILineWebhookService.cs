@@ -1,6 +1,8 @@
-﻿namespace BL.Interfaces {
+﻿using BL.Interfaces.Base;
 
-    public interface ILineWebhookService {
+namespace BL.Interfaces {
+
+    public interface ILineWebhookService : IBaseService {
 
         /// <summary>
         /// 判讀LineServer來的請求物件後回應

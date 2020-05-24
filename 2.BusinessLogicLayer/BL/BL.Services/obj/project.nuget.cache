@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "27DPT7kyocoVpbyZahkLvb7vX9bvgrnqdSpgb3JwAComxaUKBZGK6ACDsMkKf064YhsCI1WC+ZkvReCb9dZ4/Q==",
+  "dgSpecHash": "PmR4/joRPXPVc04u+JnreLncn1x8KP6eaV3QOFAl6v4VTCJbIGV5Xv0LBmpTf8xeDd9NLVknQyMtXk5MyIhxjQ==",
   "success": true,
   "projectFilePath": "D:\\ASP.NET Core Web App\\LineWebhook\\2.BusinessLogicLayer\\BL\\BL.Services\\BL.Services.csproj",
   "expectedPackageFiles": [
@@ -14,6 +14,7 @@
     "C:\\Users\\JackyTsai\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
     "C:\\Users\\JackyTsai\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
+    "C:\\Users\\JackyTsai\\.nuget\\packages\\nlog\\4.7.2\\nlog.4.7.2.nupkg.sha512",
     "C:\\Users\\JackyTsai\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.7.0\\runtime.native.system.data.sqlclient.sni.4.7.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
