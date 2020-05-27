@@ -26,7 +26,6 @@ namespace Website.Controllers {
         [HttpPost]
         public IActionResult Index([FromBody] dynamic requestBody) {
             try {
-                _logger.LogInformation("Index page says hello.");
                 string result = LineWebhookService.Response(requestBody);
                 return Content(requestBody.ToString() + "\n" + result);
             } catch (Exception ex) {
