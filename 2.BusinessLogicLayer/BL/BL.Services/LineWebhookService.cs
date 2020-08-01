@@ -37,7 +37,7 @@ namespace BL.Services {
             CambridgeDictionaryManager = new CambridgeDictionaryManager();
         }
 
-        private RequestBodyFromLineServer LineRequestBody { get; set; }
+        private RequestModelFromLineServer _LineRequestModel { get; set; }
         private ICambridgeDictionaryManager CambridgeDictionaryManager { get; set; }
 
         /// <summary>
@@ -48,20 +48,27 @@ namespace BL.Services {
         public string Response(dynamic requestBody) {
             string result = "";
             try {
-                //處理requestBody
-                RequestBodyFromLineServer lineRequestBody = RequestHandler.GetLineRequestBody(requestBody);
-                logger.Info("asdfqwer");
+
+                #region 處理RequestModel
+
+                //處理requestModel
+                RequestModelFromLineServer lineRequestModel =
+                    LineRequestHandler.GetLineRequestModel(requestBody);
+
                 Console.WriteLine($"========== From LINE SERVER ==========");
-                Console.WriteLine($"requestBody:");
-                Console.WriteLine($"{JsonConvert.SerializeObject(lineRequestBody, Formatting.Indented)}");
+                Console.WriteLine($"requestModel:");
+                Console.WriteLine($"{JsonConvert.SerializeObject(lineRequestModel, Formatting.Indented)}");
                 Console.WriteLine($"====================");
 
-                LineRequestBody = lineRequestBody;
+                _LineRequestModel = lineRequestModel;
+
+                #endregion 處理RequestModel
+
                 // 判斷訊息型態
-                dynamic message = LineRequestBody.Events[0].message;
+                dynamic message = lineRequestModel.Events[0].message;
                 switch ((string)message.type) {
                     case "text":
-                        result = ReplyTextMessages((string)message.text);
+                        result = ReplyTextMessages(message.text);
                         break;
 
                     case "location":
@@ -74,9 +81,12 @@ namespace BL.Services {
                         break;
 
                     default:
-                        Console.WriteLine($"無相符的 message.type: {(string)message.type}, requestBodyFromLineServer: " +
-                            $"{JsonConvert.SerializeObject(requestBody, Formatting.Indented)}");
-                        result += ReplySameContentMessages((string)message.type);
+                        Console.WriteLine($"無相符的");
+                        //Console.WriteLine($"無相符的 message.type: {(string)message.type}, " +
+                        //    $"requestModelFromLineServer: " +
+                        //    $"{JsonConvert.SerializeObject(requestBody, Formatting.Indented)}");
+                        //result += ReplySameContentMessages((string)message.type);
+                        result += $"無相符的";
                         break;
                 }
                 return result;
@@ -144,15 +154,16 @@ namespace BL.Services {
                 //    messages = messages2
                 //};
                 //var replyMessageRequestBody_SerializeObject = JsonConvert.SerializeObject(replyMessageRequestBody);
-                ReplyMessageRequestBody replyMessageRequestBody = JsonConvert.DeserializeObject<ReplyMessageRequestBody>(text);
+                ReplyMessageRequestBody replyMessageRequestBody =
+                    JsonConvert.DeserializeObject<ReplyMessageRequestBody>(text);
                 Message message = replyMessageRequestBody.messages.First();
                 // Set up messages to send
                 List<Message> messages = new List<Message> {
                     message
                 };
 
-                result = ResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
-                    replyToken = LineRequestBody.Events[0].replyToken,
+                result = LineResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
+                    replyToken = _LineRequestModel.Events[0].replyToken,
                     messages = messages
                 });
             } catch (Exception ex) {
@@ -178,8 +189,8 @@ namespace BL.Services {
                     }
                 };
 
-                result = ResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
-                    replyToken = LineRequestBody.Events[0].replyToken,
+                result = LineResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
+                    replyToken = _LineRequestModel.Events[0].replyToken,
                     messages = messages
                 });
             } catch (Exception ex) {
@@ -237,8 +248,8 @@ namespace BL.Services {
                     }
                 }
 
-                result = ResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
-                    replyToken = LineRequestBody.Events[0].replyToken,
+                result = LineResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
+                    replyToken = _LineRequestModel.Events[0].replyToken,
                     messages = messages
                 });
             } catch (Exception ex) {
@@ -290,8 +301,8 @@ namespace BL.Services {
                     }
                 };
 
-                result = ResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
-                    replyToken = LineRequestBody.Events[0].replyToken,
+                result = LineResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
+                    replyToken = _LineRequestModel.Events[0].replyToken,
                     messages = messages
                 });
             } catch (Exception ex) {
@@ -326,8 +337,8 @@ namespace BL.Services {
                     });
                 }
 
-                result = ResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
-                    replyToken = LineRequestBody.Events[0].replyToken,
+                result = LineResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
+                    replyToken = _LineRequestModel.Events[0].replyToken,
                     messages = messages
                 });
             } catch (Exception ex) {
@@ -413,8 +424,8 @@ namespace BL.Services {
                     }
                 };
 
-            result = ResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
-                replyToken = LineRequestBody.Events[0].replyToken,
+            result = LineResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
+                replyToken = _LineRequestModel.Events[0].replyToken,
                 messages = messages
             });
 

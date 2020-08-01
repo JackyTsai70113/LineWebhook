@@ -27,11 +27,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL.Interfaces", "2.Business
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DA.Repositories", "3.DataAccessLayer\DA\DA.Repositories\DA.Repositories.csproj", "{BC8651BC-EC41-42DA-ADB0-D6C7176864D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DA.Managers", "3.DataAccessLayer\DA\DA.Managers\DA.Managers.csproj", "{CDA63FA1-14F8-4F35-8047-35F1BC96EC61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DA.Managers", "3.DataAccessLayer\DA\DA.Managers\DA.Managers.csproj", "{CDA63FA1-14F8-4F35-8047-35F1BC96EC61}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.CoreLayer", "0.CoreLayer", "{D56E8D78-C470-4CA3-8905-718D70D225F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Domain", "0.CoreLayer\Core.Domain\Core.Domain.csproj", "{FCB97C2E-2037-4ABC-AA35-F29D27D1D29C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Domain", "0.CoreLayer\Core.Domain\Core.Domain.csproj", "{FCB97C2E-2037-4ABC-AA35-F29D27D1D29C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

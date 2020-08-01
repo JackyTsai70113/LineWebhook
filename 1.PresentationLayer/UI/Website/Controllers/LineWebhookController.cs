@@ -11,22 +11,22 @@ namespace Website.Controllers {
     /// </summary>
     public class LineWebhookController : Controller {
         private readonly ILogger<HomeController> _logger;
-        private ILineWebhookService LineWebhookService { get; set; }
+        private ILineWebhookService _LineWebhookService { get; set; }
 
         public LineWebhookController(ILogger<HomeController> logger) {
             _logger = logger;
-            LineWebhookService = new LineWebhookService();
+            _LineWebhookService = new LineWebhookService();
         }
 
         /// <summary>
-        /// LINE Webhook的入口，負責解讀line的訊息。
+        /// LineWebhook的入口，負責解讀line的訊息。
         /// </summary>
         /// <param name="requestBody"></param>
         /// <returns></returns>
         [HttpPost]
         public IActionResult Index([FromBody] dynamic requestBody) {
             try {
-                string result = LineWebhookService.Response(requestBody);
+                string result = _LineWebhookService.Response(requestBody);
                 return Content(requestBody.ToString() + "\n" + result);
             } catch (Exception ex) {
                 return Content($"Index 發生錯誤，requestBody: {requestBody}, ex: {ex}");
