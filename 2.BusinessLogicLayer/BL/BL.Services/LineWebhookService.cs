@@ -64,7 +64,8 @@ namespace BL.Services {
 
                 #endregion 處理RequestModel
 
-                // 判斷訊息型態，決定Post給Line的Model
+                #region 判斷RequestModel決定回傳給Line的訊息
+
                 dynamic message = lineRequestModel.Events[0].message;
                 List<Message> messages = null;
                 switch ((string)message.type) {
@@ -89,19 +90,32 @@ namespace BL.Services {
                         break;
                 }
 
+                #endregion 判斷RequestModel決定回傳給Line的訊息
+
+                #region Post到Line
+
                 ReplyMessageRequestBody replyMessageRequestBody =
                     new ReplyMessageRequestBody(_LineRequestModel.Events[0].replyToken, messages);
                 result = LineResponseHandler.PostToLineServer(replyMessageRequestBody);
+
+                #endregion Post到Line
+
+                #region 若不成功則Post debug 訊息到Line
+
                 if (result != "{}") {
-                    string debugStr = $"{JsonConvert.SerializeObject(lineRequestModel, Formatting.Indented)}";
+                    string debugStr = $"messages:\n" +
+                        $"{JsonConvert.SerializeObject(messages, Formatting.Indented)}\n";
                     if (result.StartsWith("伺服器無法取得回應")) {
-                        debugStr += "\n -> 伺服器無法取得回應";
+                        debugStr += "-> 伺服器無法取得回應";
                     } else {
-                        debugStr += "\n" + result;
+                        debugStr += result;
                     }
                     var debugMessages = GetSingleMessage(debugStr);
                     LineResponseHandler.PostToLineServer(new ReplyMessageRequestBody(_LineRequestModel.Events[0].replyToken, debugMessages));
                 }
+
+                #endregion 若不成功則Post debug 訊息到Line
+
                 return result;
             } catch (Exception ex) {
                 Console.WriteLine(
