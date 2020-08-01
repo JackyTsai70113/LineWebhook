@@ -143,7 +143,7 @@ namespace BL.Services {
                     string stickerIdStr = text.Split(' ')[2];
                     messages = GetStickerMessages(packageIdStr, stickerIdStr);
                 } else if (text.StartsWith("cj ")) {
-                    messages = GetImageMessages("");
+                    messages = GetImageMessages(text.Substring(3));
                 } else if (text.StartsWith("cd ")) {
                     string vocabulary = text.Split(' ')[1];
                     messages = GetCDMessages(vocabulary);
@@ -309,6 +309,12 @@ namespace BL.Services {
         }
 
         private List<Message> GetImageMessages(string text) {
+            Encoding big5 = Encoding.GetEncoding("big5");
+
+            // convert string to bytes
+            byte[] big5Bytes = big5.GetBytes("漢");
+            var fffff = BitConverter.ToString(big5Bytes).Replace("-", string.Empty);
+
             List<Message> messages = null;
             try {
                 // Set up messages to send

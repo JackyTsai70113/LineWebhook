@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Text;
 using Website.Data;
 
 namespace Website {
@@ -22,6 +23,7 @@ namespace Website {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             services.AddControllersWithViews();
 
             //using (SqlConnection connection = new SqlConnection(connectionString)) {
