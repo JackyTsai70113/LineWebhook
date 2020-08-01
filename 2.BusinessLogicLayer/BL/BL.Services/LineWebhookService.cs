@@ -81,12 +81,12 @@ namespace BL.Services {
                         break;
 
                     default:
-                        Console.WriteLine($"無相符的");
-                        //Console.WriteLine($"無相符的 message.type: {(string)message.type}, " +
-                        //    $"requestModelFromLineServer: " +
-                        //    $"{JsonConvert.SerializeObject(requestBody, Formatting.Indented)}");
-                        //result += ReplySameContentMessages((string)message.type);
-                        result += $"無相符的";
+                        Console.WriteLine($"無相符的 message.type: {(string)message.type}, " +
+                            $"requestModelFromLineServer: " +
+                            $"{JsonConvert.SerializeObject(lineRequestModel, Formatting.Indented)}");
+                        var a = (string)message.type;
+                        Console.WriteLine("a: " + a);
+                        result += ReplySameContentMessages((string)message.type);
                         break;
                 }
                 return result;
