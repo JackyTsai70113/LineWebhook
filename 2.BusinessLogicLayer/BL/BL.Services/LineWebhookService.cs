@@ -66,19 +66,17 @@ namespace BL.Services {
 
                 // 判斷訊息型態，決定
                 dynamic message = lineRequestModel.Events[0].message;
+                List<Message> messages = null;
                 switch ((string)message.type) {
                     case "text":
-                        result = ReplyTextMessages(message.text);
+                        messages = GetMessagesByText(message.text);
                         break;
 
                     case "location":
                         string address = message.address;
-                        result = ReplyPharmacyInfo(address);
+                        messages = GetPharmacyInfoMessages(address);
                         break;
-                }
 
-                List<Message> messages = null;
-                switch ((string)message.type) {
                     case "sticker":
                         messages = GetStickerMessages();
                         break;
@@ -93,9 +91,7 @@ namespace BL.Services {
 
                 ReplyMessageRequestBody replyMessageRequestBody =
                     new ReplyMessageRequestBody(_LineRequestModel.Events[0].replyToken, messages);
-                Console.WriteLine($"Before result");
                 result = LineResponseHandler.PostToLineServer(replyMessageRequestBody);
-                Console.WriteLine($"result:" + result);
                 if (result != "{}") {
                     string debugStr = $"{JsonConvert.SerializeObject(lineRequestModel, Formatting.Indented)}";
                     if (result.StartsWith("伺服器無法取得回應")) {
@@ -122,91 +118,44 @@ namespace BL.Services {
         /// </summary>
         /// <param name="text">字串內容</param>
         /// <returns>回應結果</returns>
-        private string ReplyTextMessages(string text) {
-            string result = "";
+        private List<Message> GetMessagesByText(string text) {
+            List<Message> messages = null;
             try {
-                List<Message> messages;
                 // Set up messages to send
                 if (text.StartsWith("test")) {
-                    result = ReplyTestMessages(text.Substring(4));
+                    messages = ReplyTestMessages(text.Substring(4));
                 } else if (text.StartsWith("sticker")) {
                     string packageIdStr = text.Split(' ')[1];
                     string stickerIdStr = text.Split(' ')[2];
-                    result = ReplyStickerMessages(packageIdStr, stickerIdStr);
+                    messages = GetStickerMessages(packageIdStr, stickerIdStr);
                 } else if (text.StartsWith("cd ")) {
                     string vocabulary = text.Split(' ')[1];
-
                     messages = GetCDMessages(vocabulary);
-
-                    result = LineResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
-                        replyToken = _LineRequestModel.Events[0].replyToken,
-                        messages = messages
-                    });
                 } else {
                     messages = GetSingleMessage(text);
-                    result = LineResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
-                        replyToken = _LineRequestModel.Events[0].replyToken,
-                        messages = messages
-                    });
                 }
             } catch (Exception ex) {
-                result += "Exception: " + ex.ToString();
                 Console.WriteLine($"Exception: {ex}");
             }
-            return result;
+            return messages;
         }
 
         /// <summary>
         /// 回應 text 內容
         /// </summary>
         /// <returns>LOG紀錄</returns>
-        private string ReplyTestMessages(string text) {
-            string result = "";
+        private List<Message> ReplyTestMessages(string text) {
+            List<Message> messages = null;
             try {
                 ReplyMessageRequestBody replyMessageRequestBody =
                     JsonConvert.DeserializeObject<ReplyMessageRequestBody>(text);
                 Message message = replyMessageRequestBody.messages.First();
                 // Set up messages to send
-                List<Message> messages = new List<Message> {
-                    message
-                };
-
-                result = LineResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
-                    replyToken = _LineRequestModel.Events[0].replyToken,
-                    messages = messages
-                });
+                messages = new List<Message> { message };
             } catch (Exception ex) {
-                result += "Exception: " + ex.Message;
                 Console.WriteLine($"Exception: {ex.Message}");
             }
-            return result;
-        }
-
-        /// <summary>
-        /// 回應 text 內容
-        /// </summary>
-        /// <param name="text">指定字串</param>
-        /// <returns>LOG紀錄</returns>
-        private string ReplySameContentMessages(string text) {
-            string result = "";
-            try {
-                // Set up messages to send
-                List<Message> messages = new List<Message> {
-                    new TextMessage {
-                        type = "text",
-                        text = text
-                    }
-                };
-
-                result = LineResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
-                    replyToken = _LineRequestModel.Events[0].replyToken,
-                    messages = messages
-                });
-            } catch (Exception ex) {
-                result += "Exception: " + ex.Message;
-                Console.WriteLine($"Exception: {ex.Message}");
-            }
-            return result;
+            return messages;
         }
 
         private List<Message> GetSingleMessage(string text) {
@@ -230,14 +179,14 @@ namespace BL.Services {
         /// </summary>
         /// <param name="address">指定地址</param>
         /// <returns>LOG紀錄</returns>
-        private string ReplyPharmacyInfo(string address) {
-            string result = "";
+        private List<Message> GetPharmacyInfoMessages(string address) {
+            List<Message> messages = null;
             try {
                 // 取得欲傳送的MaskDataList
                 var topMaskDatas = MaskDataHandler.GetTopMaskDatasByComputingDistance(address, 5);
 
                 // Set up messages to send
-                var messages = new List<Message>();
+                messages = new List<Message>();
                 StringBuilder builder = new StringBuilder();
 
                 if (topMaskDatas.Count == 0) {
@@ -272,69 +221,10 @@ namespace BL.Services {
                         });
                     }
                 }
-
-                result = LineResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
-                    replyToken = _LineRequestModel.Events[0].replyToken,
-                    messages = messages
-                });
             } catch (Exception ex) {
-                result += "Exception: " + ex.Message;
                 Console.WriteLine($"Exception: {ex.Message}");
             }
-            return result;
-        }
-
-        private string ReplyStickerMessages(string packageIdStr = "1", string stickerIdStr = "1") {
-            string result = "";
-            try {
-                if (!Int32.TryParse(packageIdStr, out int packageId)) {
-                    Console.WriteLine($"Ex: Cannot parse {packageIdStr} to Int.");
-                    packageId = 1;
-                }
-
-                if (!Int32.TryParse(stickerIdStr, out int stickerId)) {
-                    Console.WriteLine($"Ex: Cannot parse {stickerIdStr} to Int.");
-                    stickerId = 1;
-                }
-
-                // Set up messages to send
-                List<Message> messages = new List<Message> {
-                    new StickerMessage {
-                        type = "sticker",
-                        packageId = packageId.ToString(),
-                        stickerId = (stickerId++).ToString()
-                    },
-                    new StickerMessage {
-                        type = "sticker",
-                        packageId = packageId.ToString(),
-                        stickerId = (stickerId++).ToString()
-                    },
-                    new StickerMessage {
-                        type = "sticker",
-                        packageId = packageId.ToString(),
-                        stickerId = (stickerId++).ToString()
-                    },
-                    new StickerMessage {
-                        type = "sticker",
-                        packageId = packageId.ToString(),
-                        stickerId = (stickerId++).ToString()
-                    },
-                    new StickerMessage {
-                        type = "sticker",
-                        packageId = packageId.ToString(),
-                        stickerId = (stickerId++).ToString()
-                    }
-                };
-
-                result = LineResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
-                    replyToken = _LineRequestModel.Events[0].replyToken,
-                    messages = messages
-                });
-            } catch (Exception ex) {
-                result += "Exception: " + ex.ToString();
-                Console.WriteLine($"Exception: {ex.Message}");
-            }
-            return result;
+            return messages;
         }
 
         private List<Message> GetStickerMessages(string packageId = "0", string stickerId = "0") {
@@ -428,10 +318,10 @@ namespace BL.Services {
                     }
                 };
 
-                //result = ResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
-                //    replyToken = LineRequestBody.Events[0].replyToken,
-                //    messages = messages
-                //});
+                result = ResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
+                    replyToken = LineRequestBody.Events[0].replyToken,
+                    messages = messages
+                });
             } catch (Exception ex) {
                 result += "Exception: " + ex.ToString();
                 Console.WriteLine($"Exception: {ex.Message}");
