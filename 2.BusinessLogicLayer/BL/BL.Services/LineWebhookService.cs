@@ -308,29 +308,23 @@ namespace BL.Services {
             return messages;
         }
 
-        private List<Message> GetImageMessages(string text) {
-            Encoding big5 = Encoding.GetEncoding("big5");
-
+        private List<Message> GetImageMessages(string texts) {
             List<Message> messages = null;
             try {
+                Encoding big5 = Encoding.GetEncoding("big5");
                 var CJDomain = "http://input.foruto.com/cjdict/Images/CJZD_JPG/";
-                // convert string to bytes
-                byte[] big5Bytes0 = big5.GetBytes(text[0].ToString());
-                var big5Str0 = BitConverter.ToString(big5Bytes0).Replace("-", string.Empty);
-                // convert string to bytes
-                byte[] big5Bytes1 = big5.GetBytes(text[1].ToString());
-                var big5Str1 = BitConverter.ToString(big5Bytes1).Replace("-", string.Empty);
-                // convert string to bytes
-                byte[] big5Bytes2 = big5.GetBytes(text[2].ToString());
-                var big5Str2 = BitConverter.ToString(big5Bytes2).Replace("-", string.Empty);
 
+                StringBuilder sb = new StringBuilder();
+                foreach (var text in texts) {
+                    // convert string to bytes
+                    byte[] big5Bytes = big5.GetBytes(text.ToString());
+                    sb.AppendLine(text + ": " + BitConverter.ToString(big5Bytes).Replace("-", string.Empty));
+                    sb.AppendLine("--");
+                }
                 // Set up messages to send
                 messages = new List<Message> {
                     new TextMessage() {
-                        text =
-                        CJDomain + $"{big5Str0}" + ".JPG\n" +
-                        CJDomain + $"{big5Str1}" + ".JPG\n" +
-                        CJDomain + $"{big5Str2}" + ".JPG\n"
+                        text = sb.ToString()
                     }
                 };
             } catch (Exception ex) {
