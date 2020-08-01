@@ -86,7 +86,7 @@ namespace BL.Services {
                             $"{JsonConvert.SerializeObject(lineRequestModel, Formatting.Indented)}");
                         var a = (string)message.type;
                         Console.WriteLine("a: " + a);
-                        result += ReplySameContentMessages((string)message.type);
+                        result += ReplySameContentMessages((string)message.type + " type not implement response");
                         break;
                 }
                 return result;
