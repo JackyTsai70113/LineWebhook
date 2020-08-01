@@ -125,6 +125,7 @@ namespace BL.Services {
         private string ReplyTextMessages(string text) {
             string result = "";
             try {
+                List<Message> messages;
                 // Set up messages to send
                 if (text.StartsWith("test")) {
                     result = ReplyTestMessages(text.Substring(4));
@@ -134,13 +135,19 @@ namespace BL.Services {
                     result = ReplyStickerMessages(packageIdStr, stickerIdStr);
                 } else if (text.StartsWith("cd ")) {
                     string vocabulary = text.Split(' ')[1];
-                    result = ReplyCambridgeDictionaryMessages(vocabulary);
+
+                    messages = GetCDMessages(vocabulary);
+
+                    result = LineResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
+                        replyToken = _LineRequestModel.Events[0].replyToken,
+                        messages = messages
+                    });
                 } else if (text.StartsWith("sp")) {
                     text[2].ToString().TryParse(out int times);
                     string skey = text.Substring(63, 32);
                     result = ReplyShopeeMessages(times, skey);
                 } else {
-                    var messages = GetSingleMessage(text);
+                    messages = GetSingleMessage(text);
                     result = LineResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
                         replyToken = _LineRequestModel.Events[0].replyToken,
                         messages = messages
@@ -379,8 +386,13 @@ namespace BL.Services {
             return stickerMessages;
         }
 
-        private string ReplyCambridgeDictionaryMessages(string vocabulary) {
-            string result = "";
+        /// <summary>
+        /// 取得撈取劍橋辭典(CambridgeDictionary)網站的訊息列表
+        /// </summary>
+        /// <param name="vocabulary">單字</param>
+        /// <returns>訊息列表</returns>
+        private List<Message> GetCDMessages(string vocabulary) {
+            List<Message> messages = new List<Message>();
             try {
                 List<Translation> translations = CambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary);
                 // 防呆: 超過5種詞性
@@ -390,7 +402,6 @@ namespace BL.Services {
 
                 // 設定發送的訊息
                 string translationText = string.Join("\n", translations.Select(x => x.TranslationStr));
-                List<Message> messages = new List<Message>();
                 foreach (Translation translation in translations) {
                     string translationStr = translation.TranslationStr;
                     // 防呆: 超過5000字數
@@ -401,29 +412,10 @@ namespace BL.Services {
                         text = translationStr
                     });
                 }
-
-                result = LineResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
-                    replyToken = _LineRequestModel.Events[0].replyToken,
-                    messages = messages
-                });
-
-                // Set up messages to send
-                List<Message> messages2 = new List<Message> {
-                    new TextMessage {
-                        type = "text",
-                        text = result
-                    }
-                };
-
-                LineResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
-                    replyToken = _LineRequestModel.Events[0].replyToken,
-                    messages = messages2
-                });
             } catch (Exception ex) {
-                result += "Exception: " + ex.ToString();
                 Console.WriteLine($"Exception: {ex.Message}");
             }
-            return result;
+            return messages;
         }
 
         private string ReplyConfirmMessages(int times, string skey) {
