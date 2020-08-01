@@ -84,7 +84,7 @@ namespace BL.Services {
                         Console.WriteLine($"無相符的 message.type: {(string)message.type}, " +
                             $"requestModelFromLineServer: " +
                             $"{JsonConvert.SerializeObject(lineRequestModel, Formatting.Indented)}");
-                        result += ReplySameContentMessages("未支援此資料格式: " + (string)message.type);
+                        //result += ReplySameContentMessages("未支援此資料格式: " + (string)message.type);
                         break;
                 }
 
@@ -97,6 +97,14 @@ namespace BL.Services {
                         messages = ReplySameContentMessagesTodo("未支援此資料格式: " + (string)message.type);
                         break;
                 }
+
+                ReplyMessageRequestBody replyMessageRequestBody =
+                    new ReplyMessageRequestBody {
+                        replyToken = _LineRequestModel.Events[0].replyToken,
+                        messages = messages
+                    };
+                Console.WriteLine($"Before result");
+                result = LineResponseHandler.PostToLineServer(replyMessageRequestBody);
 
                 return result;
             } catch (Exception ex) {
