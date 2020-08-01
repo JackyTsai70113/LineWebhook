@@ -52,8 +52,8 @@ namespace Utility.Line {
                 StreamReader streamReader = new StreamReader(stream);
                 result = streamReader.ReadToEnd();
             } catch (WebException webEx) {
-                result += "Server未取得回應 " + webEx.ToString();
-                Console.WriteLine($"Server未取得回應 WebException: {webEx}");
+                result += "伺服器無法取得回應 " + webEx.ToString();
+                Console.WriteLine($"伺服器無法取得回應 WebException: {webEx}");
             } catch (Exception ex) {
                 result += "Exception: " + ex.ToString();
                 Console.WriteLine($"Exception: {ex}");

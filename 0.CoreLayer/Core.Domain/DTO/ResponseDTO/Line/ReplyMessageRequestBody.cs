@@ -10,6 +10,14 @@ namespace Core.Domain.DTO.ResponseDTO.Line {
     /// </summary>
     public class ReplyMessageRequestBody {
 
+        public ReplyMessageRequestBody() {
+        }
+
+        public ReplyMessageRequestBody(string _replyToken, List<Message> _messages) {
+            replyToken = _replyToken;
+            messages = _messages;
+        }
+
         /// <summary>
         /// 是否接收到通知
         /// </summary>

@@ -92,13 +92,20 @@ namespace BL.Services {
                 }
 
                 ReplyMessageRequestBody replyMessageRequestBody =
-                    new ReplyMessageRequestBody {
-                        replyToken = _LineRequestModel.Events[0].replyToken,
-                        messages = messages
-                    };
+                    new ReplyMessageRequestBody(_LineRequestModel.Events[0].replyToken, messages);
                 Console.WriteLine($"Before result");
                 result = LineResponseHandler.PostToLineServer(replyMessageRequestBody);
                 Console.WriteLine($"result:" + result);
+                if (result != "{}") {
+                    string debugStr = $"{JsonConvert.SerializeObject(lineRequestModel, Formatting.Indented)}";
+                    if (result.StartsWith("伺服器無法取得回應")) {
+                        debugStr += "\n -> 伺服器無法取得回應";
+                    } else {
+                        debugStr += "\n" + result;
+                    }
+                    var debugMessages = GetSingleMessage(debugStr);
+                    LineResponseHandler.PostToLineServer(new ReplyMessageRequestBody(_LineRequestModel.Events[0].replyToken, debugMessages));
+                }
                 return result;
             } catch (Exception ex) {
                 Console.WriteLine(
