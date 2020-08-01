@@ -121,9 +121,6 @@ namespace BL.Services {
                 } else if (text.StartsWith("sp")) {
                     text[2].ToString().TryParse(out int times);
                     string skey = text.Substring(63, 32);
-                    string skey1 = text.Substring(63, 32);
-                    string skey2 = text.Substring(63, 33);
-                    string skey3 = text.Substring(62, 32);
                     result = ReplyShopeeMessages(times, skey);
                 } else {
                     result = ReplySameContentMessages(text);
@@ -340,6 +337,19 @@ namespace BL.Services {
                 result = LineResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
                     replyToken = _LineRequestModel.Events[0].replyToken,
                     messages = messages
+                });
+
+                // Set up messages to send
+                List<Message> messages2 = new List<Message> {
+                    new TextMessage {
+                        type = "text",
+                        text = result
+                    }
+                };
+
+                LineResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
+                    replyToken = _LineRequestModel.Events[0].replyToken,
+                    messages = messages2
                 });
             } catch (Exception ex) {
                 result += "Exception: " + ex.ToString();
