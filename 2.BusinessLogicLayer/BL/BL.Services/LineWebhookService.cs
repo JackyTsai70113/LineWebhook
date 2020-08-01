@@ -142,10 +142,6 @@ namespace BL.Services {
                         replyToken = _LineRequestModel.Events[0].replyToken,
                         messages = messages
                     });
-                } else if (text.StartsWith("sp")) {
-                    text[2].ToString().TryParse(out int times);
-                    string skey = text.Substring(63, 32);
-                    result = ReplyShopeeMessages(times, skey);
                 } else {
                     messages = GetSingleMessage(text);
                     result = LineResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
@@ -167,18 +163,6 @@ namespace BL.Services {
         private string ReplyTestMessages(string text) {
             string result = "";
             try {
-                //var TextMessage = new
-                //List<Message> messages2 = new List<Message> {
-                //    new TextMessage {
-                //        type = "text",
-                //        text = text
-                //    }
-                //};
-                //var replyMessageRequestBody = new ReplyMessageRequestBody {
-                //    replyToken = "myToken",
-                //    messages = messages2
-                //};
-                //var replyMessageRequestBody_SerializeObject = JsonConvert.SerializeObject(replyMessageRequestBody);
                 ReplyMessageRequestBody replyMessageRequestBody =
                     JsonConvert.DeserializeObject<ReplyMessageRequestBody>(text);
                 Message message = replyMessageRequestBody.messages.First();
@@ -452,53 +436,6 @@ namespace BL.Services {
                 result += "Exception: " + ex.ToString();
                 Console.WriteLine($"Exception: {ex.Message}");
             }
-            return result;
-        }
-
-        private string ReplyShopeeMessages(int times, string skey) {
-            string uri = "https://games.shopee.tw/farm/api/friend/anonymous/help";
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
-            request.Method = "POST";
-            request.Headers.Add("Content-Type", "application/json");
-
-            // Write data to requestStream
-            ASCIIEncoding encoding = new ASCIIEncoding();
-            var requestBody = new {
-                shareKey = skey,
-                channel = "lineChat"
-            };
-            byte[] data = encoding.GetBytes(
-                System.Text.Json.JsonSerializer.Serialize(requestBody));
-            request.ContentLength = data.Length;
-            Stream requestStream = request.GetRequestStream();
-            //requestStream.WriteTimeout = 20000;
-            requestStream.Write(data, 0, data.Length);
-            requestStream.Close();
-
-            // Add 紀錄發至LineServer的requestBody
-            string requestBodyStr = JsonConvert.SerializeObject(requestBody, Formatting.Indented);
-            Console.WriteLine($"========== TO Shopee SERVER: {uri} ==========");
-            Console.WriteLine($"requestBody:");
-            Console.WriteLine($"{requestBodyStr}");
-            Console.WriteLine($"====================");
-
-            WebResponse response = request.GetResponse();
-            Stream stream = response.GetResponseStream();
-            StreamReader streamReader = new StreamReader(stream);
-            string result = streamReader.ReadToEnd();
-
-            List<Message> messages = new List<Message> {
-                    new TextMessage {
-                        type = "text",
-                        text = result
-                    }
-                };
-
-            result = LineResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
-                replyToken = _LineRequestModel.Events[0].replyToken,
-                messages = messages
-            });
-
             return result;
         }
     }
