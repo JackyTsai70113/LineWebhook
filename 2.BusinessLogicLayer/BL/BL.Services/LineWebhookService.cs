@@ -64,7 +64,7 @@ namespace BL.Services {
 
                 #endregion 處理RequestModel
 
-                // 判斷訊息型態
+                // 判斷訊息型態，決定
                 dynamic message = lineRequestModel.Events[0].message;
                 switch ((string)message.type) {
                     case "text":
@@ -84,11 +84,20 @@ namespace BL.Services {
                         Console.WriteLine($"無相符的 message.type: {(string)message.type}, " +
                             $"requestModelFromLineServer: " +
                             $"{JsonConvert.SerializeObject(lineRequestModel, Formatting.Indented)}");
-                        var a = (string)message.type;
-                        Console.WriteLine("a: " + a);
-                        result += ReplySameContentMessages((string)message.type + " type not implement response");
+                        result += ReplySameContentMessages("未支援此資料格式: " + (string)message.type);
                         break;
                 }
+
+                List<Message> messages = null;
+                switch ((string)message.type) {
+                    default:
+                        Console.WriteLine($"無相符的 message.type: {(string)message.type}, " +
+                            $"requestModelFromLineServer: " +
+                            $"{JsonConvert.SerializeObject(lineRequestModel, Formatting.Indented)}");
+                        messages = ReplySameContentMessagesTodo("未支援此資料格式: " + (string)message.type);
+                        break;
+                }
+
                 return result;
             } catch (Exception ex) {
                 Console.WriteLine(
@@ -195,6 +204,22 @@ namespace BL.Services {
                 Console.WriteLine($"Exception: {ex.Message}");
             }
             return result;
+        }
+
+        private List<Message> ReplySameContentMessagesTodo(string text) {
+            List<Message> messages = null;
+            try {
+                // Set up messages to send
+                messages = new List<Message> {
+                    new TextMessage {
+                        type = "text",
+                        text = text
+                    }
+                };
+            } catch (Exception ex) {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            return messages;
         }
 
         /// <summary>
@@ -312,8 +337,6 @@ namespace BL.Services {
         private string ReplyCambridgeDictionaryMessages(string vocabulary) {
             string result = "";
             try {
-                NLog.Logger myLogger = NLog.LogManager.GetCurrentClassLogger();
-                myLogger.Info("ReplyCambridgeDictionaryMessages Start");
                 List<Translation> translations = CambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary);
                 // 防呆: 超過5種詞性
                 if (translations.Count > 5) {
