@@ -79,13 +79,6 @@ namespace BL.Services {
                     case "sticker":
                         result = ReplyStickerMessages();
                         break;
-
-                    default:
-                        Console.WriteLine($"無相符的 message.type: {(string)message.type}, " +
-                            $"requestModelFromLineServer: " +
-                            $"{JsonConvert.SerializeObject(lineRequestModel, Formatting.Indented)}");
-                        //result += ReplySameContentMessages("未支援此資料格式: " + (string)message.type);
-                        break;
                 }
 
                 List<Message> messages = null;
@@ -94,7 +87,7 @@ namespace BL.Services {
                         Console.WriteLine($"無相符的 message.type: {(string)message.type}, " +
                             $"requestModelFromLineServer: " +
                             $"{JsonConvert.SerializeObject(lineRequestModel, Formatting.Indented)}");
-                        messages = ReplySameContentMessagesTodo("未支援此資料格式: " + (string)message.type);
+                        messages = GetSingleMessage("未支援此資料格式: " + (string)message.type);
                         break;
                 }
 
@@ -105,7 +98,7 @@ namespace BL.Services {
                     };
                 Console.WriteLine($"Before result");
                 result = LineResponseHandler.PostToLineServer(replyMessageRequestBody);
-
+                Console.WriteLine($"result:" + result);
                 return result;
             } catch (Exception ex) {
                 Console.WriteLine(
@@ -214,7 +207,7 @@ namespace BL.Services {
             return result;
         }
 
-        private List<Message> ReplySameContentMessagesTodo(string text) {
+        private List<Message> GetSingleMessage(string text) {
             List<Message> messages = null;
             try {
                 // Set up messages to send
