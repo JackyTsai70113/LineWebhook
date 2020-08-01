@@ -313,7 +313,7 @@ namespace BL.Services {
 
             List<Message> messages = null;
             try {
-                var CJDomain = "https://input.foruto.com/cjdict/Images/CJZD_JPG/";
+                var CJDomain = "http://input.foruto.com/cjdict/Images/CJZD_JPG/";
                 // convert string to bytes
                 byte[] big5Bytes0 = big5.GetBytes(text[0].ToString());
                 var big5Str0 = BitConverter.ToString(big5Bytes0).Replace("-", string.Empty);
