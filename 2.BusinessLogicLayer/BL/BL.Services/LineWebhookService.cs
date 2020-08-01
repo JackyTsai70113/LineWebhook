@@ -314,8 +314,8 @@ namespace BL.Services {
                 // Set up messages to send
                 messages = new List<Message> {
                     new ImageMessage() {
-                        originalContentUrl = "http://input.foruto.com/cjdict/Images/CJZD_JPG/BA7E.JPG",
-                        previewImageUrl = "http://input.foruto.com/cjdict/Images/CJZD_JPG/BA7E.JPG"
+                        originalContentUrl = "https://input.foruto.com/cjdict/Images/CJZD_JPG/BA7E.JPG",
+                        previewImageUrl = "https://input.foruto.com/cjdict/Images/CJZD_JPG/BA7E.JPG"
                     }
                 };
             } catch (Exception ex) {
