@@ -311,17 +311,26 @@ namespace BL.Services {
         private List<Message> GetImageMessages(string text) {
             Encoding big5 = Encoding.GetEncoding("big5");
 
-            // convert string to bytes
-            byte[] big5Bytes = big5.GetBytes("漢");
-            var fffff = BitConverter.ToString(big5Bytes).Replace("-", string.Empty);
-
             List<Message> messages = null;
             try {
+                var CJDomain = "https://input.foruto.com/cjdict/Images/CJZD_JPG/";
+                // convert string to bytes
+                byte[] big5Bytes0 = big5.GetBytes(text[0].ToString());
+                var big5Str0 = BitConverter.ToString(big5Bytes0).Replace("-", string.Empty);
+                // convert string to bytes
+                byte[] big5Bytes1 = big5.GetBytes(text[1].ToString());
+                var big5Str1 = BitConverter.ToString(big5Bytes1).Replace("-", string.Empty);
+                // convert string to bytes
+                byte[] big5Bytes2 = big5.GetBytes(text[2].ToString());
+                var big5Str2 = BitConverter.ToString(big5Bytes2).Replace("-", string.Empty);
+
                 // Set up messages to send
                 messages = new List<Message> {
-                    new ImageMessage() {
-                        originalContentUrl = "https://input.foruto.com/cjdict/Images/CJZD_JPG/BA7E.JPG",
-                        previewImageUrl = "https://input.foruto.com/cjdict/Images/CJZD_JPG/BA7E.JPG"
+                    new TextMessage() {
+                        text =
+                        CJDomain + $"{big5Str0}" + ".JPG\n" +
+                        CJDomain + $"{big5Str1}" + ".JPG\n" +
+                        CJDomain + $"{big5Str2}" + ".JPG\n"
                     }
                 };
             } catch (Exception ex) {
