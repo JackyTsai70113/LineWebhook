@@ -318,7 +318,8 @@ namespace BL.Services {
                 foreach (var text in texts) {
                     // convert string to bytes
                     byte[] big5Bytes = big5.GetBytes(text.ToString());
-                    sb.AppendLine(text + ": " + BitConverter.ToString(big5Bytes).Replace("-", string.Empty));
+                    var big5Str = BitConverter.ToString(big5Bytes).Replace("-", string.Empty);
+                    sb.AppendLine(text + ": " + CJDomain + big5Str + ".JPG");
                     sb.AppendLine("--");
                 }
                 // Set up messages to send
