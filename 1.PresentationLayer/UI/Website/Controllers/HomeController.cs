@@ -3,42 +3,48 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Utility;
+using Models.MaskDatas;
 using Newtonsoft.Json;
-using System.Net;
-using System.Text;
+using Utility;
+using Utility.Google.MapAPIs;
 using Utility.MaskDatas;
 using Website.Models;
-using Models.MaskDatas;
-using Utility.Google.MapAPIs;
 
-namespace Website.Controllers {
+namespace Website.Controllers
+{
 
-    public class HomeController : Controller {
+    public class HomeController : Controller
+    {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger) {
+        public HomeController(ILogger<HomeController> logger)
+        {
             _logger = logger;
         }
 
-        public IActionResult Index() {
+        public IActionResult Index()
+        {
             //var MaskDataList = MaskDataHandler.GetTopMaskDatasByComputingDistance("110台灣台北市信義區虎林街132巷37號");
             // 取得 maskData 的 List
-            //var MaskDataList = MaskDataSourceHandler.GetList();
-            //ViewData["result"] = "MaskDatanoyeList.Count: " + MaskDataList.Count.ToString();
+            var MaskDataList = MaskDataSourceHandler.GetList();
+            ViewData["result"] = "MaskDateList.Count: " + MaskDataList.Count.ToString();
             return View();
         }
 
-        public IActionResult List() {
+        public IActionResult List()
+        {
             var s = MapApiHandler.GetGeocoding("110台灣台北市信義區虎林街132巷37號");
             // 取得 maskData 的 List
             var maskDataList = MaskDataHandler.GetTopMaskDatasByComputingDistance("110台灣台北市信義區虎林街132巷37號", 5);
             StringBuilder builder = new StringBuilder();
-            foreach (var maskData in maskDataList) {
+            foreach (var maskData in maskDataList)
+            {
                 builder.AppendLine($"{maskData.Name}: 成人({maskData.AdultMasks})/兒童({maskData.ChildMasks})");
             }
             ViewData["testMaskData"] = builder.ToString();
@@ -46,7 +52,8 @@ namespace Website.Controllers {
         }
 
         // 取得區域對應的maskDataList index
-        private Dictionary<string, List<int>> GetMaskDataDict(List<MaskData> maskDataList) {
+        private Dictionary<string, List<int>> GetMaskDataDict(List<MaskData> maskDataList)
+        {
             /*
 
                 市 City
@@ -59,15 +66,19 @@ namespace Website.Controllers {
             //Dictionary<string, int> checkFirstDict;
             var listCount = maskDataList.Count;
             var locationDict = new Dictionary<string, List<int>>();
-            for (int i = 0; i < maskDataList.Count; i++) {
+            for (int i = 0; i < maskDataList.Count; i++)
+            {
                 var CityIndex = maskDataList[i].Address.IndexOf("市");
                 var CountyIndex = maskDataList[i].Address.IndexOf("縣");
                 var locationSuffix = maskDataList[i].Address.Substring(0, 6);
 
-                if (!locationDict.ContainsKey(locationSuffix)) {
+                if (!locationDict.ContainsKey(locationSuffix))
+                {
                     locationDict.Add(locationSuffix, new List<int>());
                     locationDict[locationSuffix].Add(i);
-                } else {
+                }
+                else
+                {
                     locationDict[locationSuffix].Add(i);
                 }
             }
@@ -75,38 +86,44 @@ namespace Website.Controllers {
             return locationDict;
         }
 
-        private List<MaskData> GetRightList(string myLocationSuffix, Dictionary<string, List<int>> maskDataDict, List<MaskData> maskDataList) {
+        private List<MaskData> GetRightList(string myLocationSuffix, Dictionary<string, List<int>> maskDataDict, List<MaskData> maskDataList)
+        {
             var result = new List<MaskData>();
-            foreach (var i in maskDataDict[myLocationSuffix]) {
+            foreach (var i in maskDataDict[myLocationSuffix])
+            {
                 result.Add(maskDataList[i]);
             }
             return result;
         }
 
-        public IActionResult Create() {
+        public IActionResult Create()
+        {
             MaskDealer maskDealer = new MaskDealer();
-            var maskDataStringList = maskDealer.GetMaskDataResponse().Split('\n')[1];
+            var maskDataStringList = maskDealer.GetMaskDataResponse().Split('\n') [1];
             var maskDataArr = maskDataStringList.Split(',');
             return View();
         }
 
-        public IActionResult Privacy() {
+        public IActionResult Privacy()
+        {
             return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error() {
+        public IActionResult Error()
+        {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
         [HttpPost]
-        public IActionResult postToLine([FromBody] dynamic body) {
+        public IActionResult postToLine([FromBody] dynamic body)
+        {
             PostData postDataObj = JsonConvert.DeserializeObject<PostData>(body.ToString());
             var uri = postDataObj.uri;
             var postData = postDataObj.postData;
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
             // 設定Request
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
+            var httpWebRequest = (HttpWebRequest) WebRequest.Create(uri);
             httpWebRequest.Method = "POST";
             httpWebRequest.Headers.Add("Content-Type", "application/json");
 

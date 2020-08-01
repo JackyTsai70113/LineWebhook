@@ -1,10 +1,4 @@
-﻿using AngleSharp;
-using AngleSharp.Dom;
-using Core.Domain.Entities.TWSE_Stock;
-using Core.Domain.Enums;
-using Core.Domain.Utilities;
-using DA.Managers.Interfaces.TWSE_Stock;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,25 +6,37 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using AngleSharp;
+using AngleSharp.Dom;
+using Core.Domain.Entities.TWSE_Stock;
+using Core.Domain.Enums;
+using Core.Domain.Utilities;
+using DA.Managers.Interfaces.TWSE_Stock;
 
-namespace DA.Managers.TWSE_Stock {
+namespace DA.Managers.TWSE_Stock
+{
 
-    public class DividendDistributionManager : IDividendDistributionManager {
+    public class DividendDistributionManager : IDividendDistributionManager
+    {
 
-        public List<DividendDistribution> CrawlDividendDistribution(StockCodeEnum stockCodeEnum) {
+        public List<DividendDistribution> CrawlDividendDistribution(StockCodeEnum stockCodeEnum)
+        {
             List<DividendDistribution> result = CrawlDividendDistributionListIn10YearsAsync(stockCodeEnum).Result;
             return result;
         }
 
-        public List<DividendDistribution> CrawlDividendDistribution(StockCodeEnum[] stockCodeEnums) {
+        public List<DividendDistribution> CrawlDividendDistribution(StockCodeEnum[] stockCodeEnums)
+        {
             List<DividendDistribution> result = new List<DividendDistribution>();
 
             var taskList = new List<Task<List<DividendDistribution>>>();
-            foreach (StockCodeEnum stockCodeEnum in stockCodeEnums) {
+            foreach (StockCodeEnum stockCodeEnum in stockCodeEnums)
+            {
                 taskList.Add(CrawlDividendDistributionListIn10YearsAsync(stockCodeEnum));
             }
             List<DividendDistribution>[] dividendDistributionListList = Task.WhenAll(taskList).Result;
-            foreach (var dividendDistributionList in dividendDistributionListList) {
+            foreach (var dividendDistributionList in dividendDistributionListList)
+            {
                 result.AddRange(dividendDistributionList);
             }
 
@@ -92,9 +98,10 @@ namespace DA.Managers.TWSE_Stock {
         //    return dividendDistribution;
         //}
 
-        private async Task<List<DividendDistribution>> CrawlDividendDistributionListIn10YearsAsync(StockCodeEnum stockCodeEnum) {
+        private async Task<List<DividendDistribution>> CrawlDividendDistributionListIn10YearsAsync(StockCodeEnum stockCodeEnum)
+        {
             //股票代號字串
-            string stockCodeStr = ((int)stockCodeEnum).ToString();
+            string stockCodeStr = ((int) stockCodeEnum).ToString();
 
             //當前民國年份
             int nowROCYear = DateTimeUtility.NowROCYear;
@@ -115,12 +122,15 @@ namespace DA.Managers.TWSE_Stock {
             IDocument document = await context.OpenAsync(req => req.Content(stream));
             //從第3個Table開始爬
             IElement table;
-            try {
-                table = document.QuerySelectorAll("table")[2];
-            } catch (Exception ex) {
+            try
+            {
+                table = document.QuerySelectorAll("table") [2];
+            }
+            catch (Exception)
+            {
                 stream = await RequestUtility.GetStreamFromGetRequestAsync(url);
                 document = await context.OpenAsync(req => req.Content(stream));
-                table = document.QuerySelectorAll("table")[2];
+                table = document.QuerySelectorAll("table") [2];
             }
             IHtmlCollection<IElement> trElements = table.QuerySelectorAll("tr");
 
@@ -128,20 +138,27 @@ namespace DA.Managers.TWSE_Stock {
             //List<float> stockDividendsIn10Year = new List<float>();
             List<DividendDistribution> dividendDistributionList = new List<DividendDistribution>();
             // 3: 從 tr 為 index=3 的開始爬，10: 計算10年就好
-            for (int i = 3; i < trElements.Length && i < 10 + 3; i++) {
+            for (int i = 3; i < trElements.Length && i < 10 + 3; i++)
+            {
                 IHtmlCollection<IElement> tdElements = trElements[i].QuerySelectorAll("td");
                 string yearStr = tdElements[1].InnerHtml.StripHtmlSpace().StripHtmlTag();
                 int year = 0;
-                if (yearStr.IndexOf('上') != -1) {
+                if (yearStr.IndexOf('上') != -1)
+                {
                     year = int.Parse(yearStr.TrimEnd("年上半年"));
-                } else if (yearStr.IndexOf('下') != -1) {
+                }
+                else if (yearStr.IndexOf('下') != -1)
+                {
                     year = int.Parse(yearStr.TrimEnd("年下半年"));
-                } else {
+                }
+                else
+                {
                     year = int.Parse(yearStr.TrimEnd("年年度"));
                 }
-                DividendDistribution dividendDistribution = new DividendDistribution {
+                DividendDistribution dividendDistribution = new DividendDistribution
+                {
                     StockCode = stockCodeEnum.ToStockCode(),
-                    Year = (short)year.ToADYear(),
+                    Year = (short) year.ToADYear(),
                     CashDividendsToBeDistributedFromRetainedEarnings = tdElements[10].InnerHtml.StripHtmlSpace().ToFloat(),
                     CashDividendsFromLegalReserveAndCapitalSurplus = tdElements[11].InnerHtml.StripHtmlSpace().ToFloat(),
                     SharesDistributedFromEarnings = tdElements[13].InnerHtml.StripHtmlSpace().ToFloat(),
