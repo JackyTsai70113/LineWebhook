@@ -64,7 +64,7 @@ namespace BL.Services {
 
                 #endregion 處理RequestModel
 
-                // 判斷訊息型態，決定
+                // 判斷訊息型態，決定Post給Line的Model
                 dynamic message = lineRequestModel.Events[0].message;
                 List<Message> messages = null;
                 switch ((string)message.type) {
@@ -292,10 +292,10 @@ namespace BL.Services {
             return messages;
         }
 
-        private string ReplyConfirmMessages(int times, string skey) {
-            string result = "";
+        private List<dynamic> ReplyConfirmMessages(int times, string skey) {
+            List<dynamic> messages = null;
             try {
-                List<dynamic> messages = new List<dynamic> {
+                messages = new List<dynamic> {
                     new {
                         type = "template",
                         altText = "this is a confirm template",
@@ -317,16 +317,10 @@ namespace BL.Services {
                         }
                     }
                 };
-
-                result = ResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
-                    replyToken = LineRequestBody.Events[0].replyToken,
-                    messages = messages
-                });
             } catch (Exception ex) {
-                result += "Exception: " + ex.ToString();
                 Console.WriteLine($"Exception: {ex.Message}");
             }
-            return result;
+            return messages;
         }
     }
 }
