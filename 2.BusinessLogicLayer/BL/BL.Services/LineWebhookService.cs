@@ -75,14 +75,14 @@ namespace BL.Services {
                         string address = message.address;
                         result = ReplyPharmacyInfo(address);
                         break;
-
-                    case "sticker":
-                        result = ReplyStickerMessages();
-                        break;
                 }
 
                 List<Message> messages = null;
                 switch ((string)message.type) {
+                    case "sticker":
+                        messages = GetStickerMessages();
+                        break;
+
                     default:
                         Console.WriteLine($"無相符的 message.type: {(string)message.type}, " +
                             $"requestModelFromLineServer: " +
@@ -133,7 +133,11 @@ namespace BL.Services {
                     string skey = text.Substring(63, 32);
                     result = ReplyShopeeMessages(times, skey);
                 } else {
-                    result = ReplySameContentMessages(text);
+                    var messages = GetSingleMessage(text);
+                    result = LineResponseHandler.PostToLineServer(new ReplyMessageRequestBody {
+                        replyToken = _LineRequestModel.Events[0].replyToken,
+                        messages = messages
+                    });
                 }
             } catch (Exception ex) {
                 result += "Exception: " + ex.ToString();
@@ -335,6 +339,39 @@ namespace BL.Services {
             return result;
         }
 
+        private List<Message> GetStickerMessages(string packageId = "0", string stickerId = "0") {
+            List<Message> stickerMessages = null;
+            try {
+                // Set up messages to send
+                stickerMessages = new List<Message> {
+                    new StickerMessage {
+                        type = "sticker",
+                        packageId = "1",
+                        stickerId = "8"
+                    },
+                    new StickerMessage {
+                        type = "sticker",
+                        packageId = "1",
+                        stickerId = "9"
+                    },
+                    new StickerMessage {
+                        type = "sticker",
+                        packageId = "1",
+                        stickerId = "10"
+                    },
+                    new StickerMessage {
+                        type = "sticker",
+                        packageId = "1",
+                        stickerId = "11"
+                    }
+                };
+            } catch (Exception ex) {
+                Console.WriteLine($"packageId: {packageId} stickerId: {stickerId}");
+                Console.WriteLine($"GetStickerMessages Exception: {ex}");
+            }
+            return stickerMessages;
+        }
+
         private string ReplyCambridgeDictionaryMessages(string vocabulary) {
             string result = "";
             try {
@@ -464,39 +501,6 @@ namespace BL.Services {
             });
 
             return result;
-        }
-
-        private List<StickerMessage> GetStickerMessages(string packageId = "0", string stickerId = "0") {
-            List<StickerMessage> stickerMessages = new List<StickerMessage>();
-            try {
-                // Set up messages to send
-                stickerMessages = new List<StickerMessage> {
-                    new StickerMessage {
-                        type = "sticker",
-                        packageId = "1",
-                        stickerId = "8"
-                    },
-                    new StickerMessage {
-                        type = "sticker",
-                        packageId = "1",
-                        stickerId = "9"
-                    },
-                    new StickerMessage {
-                        type = "sticker",
-                        packageId = "1",
-                        stickerId = "10"
-                    },
-                    new StickerMessage {
-                        type = "sticker",
-                        packageId = "1",
-                        stickerId = "11"
-                    }
-                };
-            } catch (Exception ex) {
-                Console.WriteLine($"packageId: {packageId} stickerId: {stickerId}");
-                Console.WriteLine($"GetStickerMessages Exception: {ex}");
-            }
-            return stickerMessages;
         }
     }
 }
