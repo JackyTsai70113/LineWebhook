@@ -142,6 +142,8 @@ namespace BL.Services {
                     string packageIdStr = text.Split(' ')[1];
                     string stickerIdStr = text.Split(' ')[2];
                     messages = GetStickerMessages(packageIdStr, stickerIdStr);
+                } else if (text.StartsWith("cj ")) {
+                    messages = GetImageMessages("");
                 } else if (text.StartsWith("cd ")) {
                     string vocabulary = text.Split(' ')[1];
                     messages = GetCDMessages(vocabulary);
@@ -300,6 +302,22 @@ namespace BL.Services {
                         text = translationStr
                     });
                 }
+            } catch (Exception ex) {
+                Console.WriteLine($"Exception: {ex.Message}");
+            }
+            return messages;
+        }
+
+        private List<Message> GetImageMessages(string text) {
+            List<Message> messages = null;
+            try {
+                // Set up messages to send
+                messages = new List<Message> {
+                    new ImageMessage() {
+                        originalContentUrl = "http://input.foruto.com/cjdict/Images/CJZD_JPG/BA7E.JPG",
+                        previewImageUrl = "http://input.foruto.com/cjdict/Images/CJZD_JPG/BA7E.JPG"
+                    }
+                };
             } catch (Exception ex) {
                 Console.WriteLine($"Exception: {ex.Message}");
             }
