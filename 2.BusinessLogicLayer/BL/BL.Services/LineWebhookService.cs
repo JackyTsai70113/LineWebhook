@@ -143,7 +143,7 @@ namespace BL.Services {
                     string stickerIdStr = text.Split(' ')[2];
                     messages = GetStickerMessages(packageIdStr, stickerIdStr);
                 } else if (text.StartsWith(" ")) { // 倉頡常用
-                    messages = GetImageMessages(text.Substring(3));
+                    messages = GetImageMessages(text.Substring(1));
                 } else if (text.StartsWith("cd ")) {
                     string vocabulary = text.Split(' ')[1];
                     messages = GetCDMessages(vocabulary);
