@@ -14,8 +14,6 @@ using Models.Line;
 
 //using Models.Line.API;
 
-using Models.Line.Webhook;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,6 +22,8 @@ using System.Net;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Models.Line.Webhook;
+using Newtonsoft.Json;
 using Utility.Google.MapAPIs;
 using Utility.Line;
 using Utility.MaskDatas;
@@ -142,7 +142,7 @@ namespace BL.Services {
                     string packageIdStr = text.Split(' ')[1];
                     string stickerIdStr = text.Split(' ')[2];
                     messages = GetStickerMessages(packageIdStr, stickerIdStr);
-                } else if (text.StartsWith("cj ")) {
+                } else if (text.StartsWith(" ")) { // 倉頡常用
                     messages = GetImageMessages(text.Substring(3));
                 } else if (text.StartsWith("cd ")) {
                     string vocabulary = text.Split(' ')[1];
@@ -180,8 +180,8 @@ namespace BL.Services {
                 // Set up messages to send
                 messages = new List<Message> {
                     new TextMessage {
-                        type = "text",
-                        text = text
+                    type = "text",
+                    text = text
                     }
                 };
             } catch (Exception ex) {
@@ -210,7 +210,7 @@ namespace BL.Services {
                     builder.Append($"所在區域({locationSuffix})沒有相關藥局");
                     messages.Add(new TextMessage {
                         type = "text",
-                        text = builder.ToString()
+                            text = builder.ToString()
                     });
                 } else {
                     foreach (var maskData in topMaskDatas) {
@@ -228,12 +228,12 @@ namespace BL.Services {
 
                         messages.Add(new LocationMessage {
                             type = "location",
-                            title = maskData.Name + "\n"
-                                + "成人: " + maskData.AdultMasks + "\n"
-                                + "兒童: " + maskData.ChildMasks,
-                            address = maskData.Address,
-                            latitude = lat,
-                            longitude = lng
+                                title = maskData.Name + "\n" +
+                                "成人: " + maskData.AdultMasks + "\n" +
+                                "兒童: " + maskData.ChildMasks,
+                                address = maskData.Address,
+                                latitude = lat,
+                                longitude = lng
                         });
                     }
                 }
@@ -249,24 +249,24 @@ namespace BL.Services {
                 // Set up messages to send
                 stickerMessages = new List<Message> {
                     new StickerMessage {
-                        type = "sticker",
-                        packageId = "1",
-                        stickerId = "8"
+                    type = "sticker",
+                    packageId = "1",
+                    stickerId = "8"
                     },
                     new StickerMessage {
-                        type = "sticker",
-                        packageId = "1",
-                        stickerId = "9"
+                    type = "sticker",
+                    packageId = "1",
+                    stickerId = "9"
                     },
                     new StickerMessage {
-                        type = "sticker",
-                        packageId = "1",
-                        stickerId = "10"
+                    type = "sticker",
+                    packageId = "1",
+                    stickerId = "10"
                     },
                     new StickerMessage {
-                        type = "sticker",
-                        packageId = "1",
-                        stickerId = "11"
+                    type = "sticker",
+                    packageId = "1",
+                    stickerId = "11"
                     }
                 };
             } catch (Exception ex) {
@@ -325,7 +325,7 @@ namespace BL.Services {
                 // Set up messages to send
                 messages = new List<Message> {
                     new TextMessage() {
-                        text = sb.ToString()
+                    text = sb.ToString()
                     }
                 };
             } catch (Exception ex) {
@@ -339,24 +339,24 @@ namespace BL.Services {
             try {
                 messages = new List<dynamic> {
                     new {
-                        type = "template",
-                        altText = "this is a confirm template",
-                        template = new {
-                            type = "confirm",
-                            text = "Are you sure?",
-                            actions = new List<dynamic> {
-                                new {
-                                    type = "message",
-                                    label = "Yes",
-                                    text = "yes"
-                                },
-                                new {
-                                    type = "message",
-                                    label = "No",
-                                    text = "no"
-                                }
-                            }
-                        }
+                    type = "template",
+                    altText = "this is a confirm template",
+                    template = new {
+                    type = "confirm",
+                    text = "Are you sure?",
+                    actions = new List<dynamic> {
+                    new {
+                    type = "message",
+                    label = "Yes",
+                    text = "yes"
+                    },
+                    new {
+                    type = "message",
+                    label = "No",
+                    text = "no"
+                    }
+                    }
+                    }
                     }
                 };
             } catch (Exception ex) {
