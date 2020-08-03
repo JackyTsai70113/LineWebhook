@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace Core.Domain.Utilities {
 
@@ -53,6 +54,10 @@ namespace Core.Domain.Utilities {
         public static string TrimEnd(this string str, string trimStr) {
             int yearIndex = str.IndexOf(trimStr);
             return str.Substring(0, yearIndex);
+        }
+
+        public static string Serialize(this Object obj) {
+            return JsonConvert.SerializeObject(obj);
         }
     }
 }

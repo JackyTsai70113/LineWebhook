@@ -1,28 +1,16 @@
-﻿using BL.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using BL.Interfaces;
 using BL.Services.Base;
-using Core.Domain.DTO.RequestDTO;
 using Core.Domain.DTO.RequestDTO.CambridgeDictionary;
 using Core.Domain.DTO.ResponseDTO.Line;
 using Core.Domain.DTO.ResponseDTO.Line.Messages;
-using Core.Domain.DTO.ResponseDTO.Line.Messages.Templates;
-using Core.Domain.DTO.ResponseDTO.Line.Messages.Templates.ActionObjects;
-using Core.Domain.Utilities;
 using DA.Managers.CambridgeDictionary;
 using DA.Managers.Interfaces;
 using Models.Google.API;
 using Models.Line;
-
-//using Models.Line.API;
-
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using Models.Line.Webhook;
 using Newtonsoft.Json;
 using Utility.Google.MapAPIs;
 using Utility.Line;
