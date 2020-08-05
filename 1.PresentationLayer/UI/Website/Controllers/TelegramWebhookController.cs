@@ -19,10 +19,23 @@ namespace Website.Controllers {
         /// <param name="requestBody"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Index() {
+        public IActionResult Index2() {
             try {
                 string result = telegramWebhookService.Response();
                 return Content("\n" + result);
+            } catch (Exception ex) {
+                return Content($"Index 發生錯誤，requestBody: ex: {ex}");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Index([FromBody] dynamic requestBody) {
+            try {
+                Console.WriteLine($"========== From Telegram SERVER ==========");
+                Console.WriteLine($"requestBody:");
+                Console.WriteLine($"{requestBody}");
+                Console.WriteLine($"====================");
+                return Content("\n");
             } catch (Exception ex) {
                 return Content($"Index 發生錯誤，requestBody: ex: {ex}");
             }
