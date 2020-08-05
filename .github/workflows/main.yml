@@ -12,7 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Set current date as env variable
-      run: echo "::set-env name=NOW::$(date +'%Y-%m-%dT%H:%M:%S')"
+      run: echo "::set-env name=NOW::$(date +'%Y-%m-%dT%H:%M:%S %z')"
     - name: Build and deploy the Docker image
       env: 
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
@@ -24,4 +24,4 @@ jobs:
         docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
         heroku container:push web -a $APP_NAME
         heroku container:release web -a $APP_NAME
-        curl -X GET "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage?chat_id=$TELEGRAM_JACKY_CHAT_ID&text=佈版完成 ($NOW)"
+        curl -X GET "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage?chat_id=$TELEGRAM_JACKY_CHAT_ID&text=佈版完成 ($NOW) (github.event.head_commit.message)"
