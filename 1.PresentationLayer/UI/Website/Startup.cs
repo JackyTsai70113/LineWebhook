@@ -30,6 +30,8 @@ namespace Website {
             //    var eventName = connection.QueryFirst<string>("SELECT TOP 1 Remark FROM Notes");
             //}
 
+            // register Mvc service
+            services.AddMvc();
             services.AddDbContext<LineWebhookContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("LineWebhookContext")));
         }

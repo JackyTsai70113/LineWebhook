@@ -8,8 +8,8 @@
     <ProjectReference Include="..\..\..\0.CoreLayer\Core.Domain\Core.Domain.csproj" />
     <ProjectReference Include="..\..\..\2.BusinessLogicLayer\BL\BL.Interfaces\BL.Interfaces.csproj" />
     <ProjectReference Include="..\..\..\2.BusinessLogicLayer\BL\BL.Services\BL.Services.csproj" />
-    <ProjectReference Include="..\..\..\5.CrossCuttingLayer\Utility\Utility.csproj" />
     <ProjectReference Include="..\..\..\4.ModelsLayer\Models\Models.csproj" />
+    <ProjectReference Include="..\..\..\5.CrossCuttingLayer\Utility\Utility.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,8 +22,8 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.4" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
-    <PackageReference Include="NLog" Version="4.7.2" />
-    <PackageReference Include="NLog.Web.AspNetCore" Version="4.9.2" />
+    <PackageReference Include="NLog" Version="4.7.3" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.9.3" />
   </ItemGroup>
 
   <PropertyGroup>

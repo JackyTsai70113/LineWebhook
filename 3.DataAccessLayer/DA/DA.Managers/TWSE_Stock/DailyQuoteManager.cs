@@ -1,8 +1,4 @@
-﻿using Core.Domain.Entities.TWSE_Stock.Exchange;
-using Core.Domain.Enums;
-using Core.Domain.Utilities;
-using DA.Managers.Interfaces.TWSE_Stock;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -10,6 +6,10 @@ using System.Net;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Core.Domain.Entities.TWSE_Stock.Exchange;
+using Core.Domain.Enums;
+using Core.Domain.Utilities;
+using DA.Managers.Interfaces.TWSE_Stock;
 
 namespace DA.Managers.TWSE_Stock {
 
@@ -318,7 +318,7 @@ namespace DA.Managers.TWSE_Stock {
         /// 從 <see cref="CrawlDailyQuoteListByMonth(DateTime, StockCategoryEnum)"/> 可以根據 月份 以及 股票分類 取得每日收盤情形列表
         /// 從 <see cref="GetDailyQuoteListByYear(DateTime, StockCategoryEnum)"/> 可以根據 年份 以及 股票分類 取得每日收盤情形列表
         public List<DailyQuote> CrawlDailyQuoteListByDate(DateTime dateTime,
-                                                          StockCategoryEnum stockCategoryEnum = StockCategoryEnum.FinancialAndInsurance) {
+            StockCategoryEnum stockCategoryEnum = StockCategoryEnum.FinancialAndInsurance) {
             List<DailyQuote> result = new List<DailyQuote>();
             byte[] bytes = BytesFromDailyQuotesAPIAsync(dateTime, stockCategoryEnum).Result;
             result.AddRange(GetDailyQuoteListFromBytes(bytes));
@@ -335,7 +335,7 @@ namespace DA.Managers.TWSE_Stock {
         /// 從 <see cref="CrawlDailyQuoteListByDate(DateTime, StockCategoryEnum)"/> 可以根據 日期 以及 股票分類 取得每日收盤情形列表
         /// 從 <see cref="GetDailyQuoteListByYear(DateTime, StockCategoryEnum)"/> 可以根據 年份 以及 股票分類 取得每日收盤情形列表
         public List<DailyQuote> CrawlDailyQuoteListByMonth(DateTime dateTime,
-                                                         StockCategoryEnum stockCategoryEnum = StockCategoryEnum.FinancialAndInsurance) {
+            StockCategoryEnum stockCategoryEnum = StockCategoryEnum.FinancialAndInsurance) {
             List<DailyQuote> result = new List<DailyQuote>();
 
             Stopwatch sw1 = new Stopwatch();
@@ -372,7 +372,7 @@ namespace DA.Managers.TWSE_Stock {
         /// 從 <see cref="CrawlDailyQuoteListByDate(DateTime, StockCategoryEnum)"/> 可以根據 日期 以及 股票分類 取得每日收盤情形列表
         /// 從 <see cref="CrawlDailyQuoteListByMonth(DateTime, StockCategoryEnum)"/> 可以根據 月份 以及 股票分類 取得每日收盤情形列表
         public List<DailyQuote> CrawlDailyQuoteListByYear(int year,
-                                                        StockCategoryEnum stockCategoryEnum = StockCategoryEnum.FinancialAndInsurance) {
+            StockCategoryEnum stockCategoryEnum = StockCategoryEnum.FinancialAndInsurance) {
             List<DailyQuote> result = new List<DailyQuote>();
 
             IEnumerable<DateTime> DateTimeEnumerable = year.GetDateTimeRangeByYearBeforeNow().EachWeekendDay();
@@ -473,7 +473,7 @@ namespace DA.Managers.TWSE_Stock {
                 Proxy = proxy,
             };
             try {
-                using (HttpClient client = new HttpClient(handler: httpClientHandler, disposeHandler: true)) {
+                using(HttpClient client = new HttpClient(handler: httpClientHandler, disposeHandler: true)) {
                     //發送請求
                     HttpResponseMessage httpResponseMessage = client.GetAsync(uri).Result;
 
@@ -539,7 +539,7 @@ namespace DA.Managers.TWSE_Stock {
                     //取得內容
                     bytes = await httpResponseMessage.Content.ReadAsByteArrayAsync();
                 } //檢查回應的伺服器狀態StatusCode是否是403 Forbidden
-                    else if (httpResponseMessage.StatusCode == HttpStatusCode.Forbidden) {
+                else if (httpResponseMessage.StatusCode == HttpStatusCode.Forbidden) {
                     AddUriIndex();
                     bytes = await BytesFromDailyQuotesAPIAsync(dateTime, stockCategory);
                     //throw new WebException("禁止伺服器請求!");
@@ -566,7 +566,7 @@ namespace DA.Managers.TWSE_Stock {
         #region Lock
 
         private static void AddUriIndex() {
-            lock (lockObj) {
+            lock(lockObj) {
                 uriIndex++;
                 uriIndex %= 240;
             }
@@ -608,7 +608,7 @@ namespace DA.Managers.TWSE_Stock {
             if (!dailyQuoteArray[8].ToString().TryParse(out float closingPrice)) {
                 Console.WriteLine($"TryParseFloat 失敗.ToString(), date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[8]}");
             };
-            StockDirectionEnum direction = dailyQuoteArray[9].ToString().StripHtmlTag().ToStockDirectionEnum();
+            StockDirectionEnum direction = StringUtility.StripHtmlTag(dailyQuoteArray[9].ToString()).ToStockDirectionEnum();
             if (!dailyQuoteArray[10].ToString().TryParse(out float change)) {
                 Console.WriteLine($"TryParseFloat 失敗.ToString(), date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[10]}");
             };

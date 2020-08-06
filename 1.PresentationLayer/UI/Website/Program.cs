@@ -14,7 +14,7 @@ namespace Website {
 
         public static void Main(string[] args) {
             // NLog: setup the logger first to catch all errors
-            NLog.Logger logger = NLogBuilder.ConfigureNLog("Nlog.config").GetCurrentClassLogger();
+            NLog.Logger logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
             try {
                 CreateHostBuilder(args).Build().Run();
             } catch (Exception ex) {
