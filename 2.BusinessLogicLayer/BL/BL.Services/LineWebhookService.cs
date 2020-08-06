@@ -304,6 +304,9 @@ namespace BL.Services {
 
                 StringBuilder sb = new StringBuilder();
                 foreach (var text in texts) {
+                    if (text == ' ') {
+                        continue;
+                    }
                     // convert string to bytes
                     byte[] big5Bytes = big5.GetBytes(text.ToString());
                     var big5Str = BitConverter.ToString(big5Bytes).Replace("-", string.Empty);
