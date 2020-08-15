@@ -130,7 +130,7 @@ namespace DA.Managers.TWSE_Stock {
             // 3: 從 tr 為 index=3 的開始爬，10: 計算10年就好
             for (int i = 3; i < trElements.Length && i < 10 + 3; i++) {
                 IHtmlCollection<IElement> tdElements = trElements[i].QuerySelectorAll("td");
-                string yearStr = tdElements[1].InnerHtml.StripHtmlSpace().StripHtmlTag();
+                string yearStr = StringUtility.StripHtmlTag(tdElements[1].InnerHtml.StripHtmlSpace());
                 int year = 0;
                 if (yearStr.IndexOf('上') != -1) {
                     year = int.Parse(yearStr.TrimEnd("年上半年"));

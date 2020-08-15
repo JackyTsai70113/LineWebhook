@@ -1,3 +1,4 @@
+using System.Text;
 using Core.Domain.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -5,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Text;
 using Website.Data;
 
 namespace Website {
@@ -15,7 +15,7 @@ namespace Website {
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
 
-            // �]�w Core.Domain.Utilities.ConfigurationUtility �� configuration
+            // Core.Domain.Utilities.ConfigurationUtility configuration
             ConfigurationUtility.Configuration = configuration;
         }
 
@@ -30,6 +30,8 @@ namespace Website {
             //    var eventName = connection.QueryFirst<string>("SELECT TOP 1 Remark FROM Notes");
             //}
 
+            // register Mvc service
+            services.AddMvc();
             services.AddDbContext<LineWebhookContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("LineWebhookContext")));
         }
@@ -38,17 +40,19 @@ namespace Website {
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
-                //Ū�glocalDB
+                //Ū�glocalDB
             } else {
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            // 強迫將 HTTP 全部轉向 HTTPS
             app.UseHttpsRedirection();
+            // 服務靜態檔案傳輸
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            // 設定授權檢查, 權限不夠直接403
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => {

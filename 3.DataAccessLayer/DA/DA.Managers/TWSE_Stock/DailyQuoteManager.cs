@@ -608,7 +608,7 @@ namespace DA.Managers.TWSE_Stock {
             if (!dailyQuoteArray[8].ToString().TryParse(out float closingPrice)) {
                 Console.WriteLine($"TryParseFloat 失敗.ToString(), date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[8]}");
             };
-            StockDirectionEnum direction = dailyQuoteArray[9].ToString().StripHtmlTag().ToStockDirectionEnum();
+            StockDirectionEnum direction = StringUtility.StripHtmlTag(dailyQuoteArray[9].ToString()).ToStockDirectionEnum();
             if (!dailyQuoteArray[10].ToString().TryParse(out float change)) {
                 Console.WriteLine($"TryParseFloat 失敗.ToString(), date: {date}, dailyQuoteArray: {dailyQuoteArray}, jsonStr: {dailyQuoteArray[10]}");
             };

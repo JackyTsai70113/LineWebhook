@@ -4,17 +4,17 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace Core.Domain.Utilities {
 
     public static class StringUtility {
-
         /// <summary>
         /// 去除 html string 的 Tag
         /// </summary>
         /// <param name="htmlStr">來源字串</param>
         /// <returns>字串</returns>
-        public static string StripHtmlTag(this string htmlStr) {
+        public static string StripHtmlTag(string htmlStr) {
             return Regex.Replace(htmlStr, "<.*?>", string.Empty);
         }
 
@@ -53,6 +53,11 @@ namespace Core.Domain.Utilities {
         public static string TrimEnd(this string str, string trimStr) {
             int yearIndex = str.IndexOf(trimStr);
             return str.Substring(0, yearIndex);
+        }
+
+        public static string Serialize(this Object obj) {
+
+            return JsonConvert.SerializeObject(obj);
         }
     }
 }
