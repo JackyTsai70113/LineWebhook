@@ -15,7 +15,7 @@ namespace DA.Managers.TWSE_Stock {
 
     public class DailyQuoteManager : IDailyQuoteManager {
 
-        private static List<string> uriList = new List<string> {
+        private static readonly List<string> uriList = new List<string> {
             "http://144.121.248.114:8080",
             "http://200.255.122.170:8080",
             "http://23.31.218.226:80",
@@ -307,7 +307,7 @@ namespace DA.Managers.TWSE_Stock {
         };
 
         private static int uriIndex = 0;
-        private static object lockObj = new object();
+        private static readonly object lockObj = new object();
 
         /// <summary>
         /// 根據 日期 以及 股票分類 抓取每日收盤情形列表
@@ -434,18 +434,18 @@ namespace DA.Managers.TWSE_Stock {
         /// <param name="bytes">byte array</param>
         /// <param name="data1_Index">資料index</param>
         /// <returns>每日收盤行情列表</returns>
-        private static DailyQuote GetDailyQuoteFromBytes(byte[] bytes, int data1_Index) {
-            DailyQuote dailyQuote;
-            JsonDocument doc = JsonDocument.Parse(bytes);
-            JsonElement root = doc.RootElement;
+        //private static DailyQuote GetDailyQuoteFromBytes(byte[] bytes, int data1_Index) {
+        //    DailyQuote dailyQuote;
+        //    JsonDocument doc = JsonDocument.Parse(bytes);
+        //    JsonElement root = doc.RootElement;
 
-            JsonElement dateElement = root.GetProperty("params").GetProperty("date");
-            DateTime date = DateTime.ParseExact(dateElement.ToString(), "yyyyMMdd", CultureInfo.InvariantCulture);
-            JsonElement dailyQuoteArray = root.GetProperty("data1")[data1_Index];
-            dailyQuote = GetDailyQuote(dailyQuoteArray, date);
+        //    JsonElement dateElement = root.GetProperty("params").GetProperty("date");
+        //    DateTime date = DateTime.ParseExact(dateElement.ToString(), "yyyyMMdd", CultureInfo.InvariantCulture);
+        //    JsonElement dailyQuoteArray = root.GetProperty("data1")[data1_Index];
+        //    dailyQuote = GetDailyQuote(dailyQuoteArray, date);
 
-            return dailyQuote;
-        }
+        //    return dailyQuote;
+        //}
 
         /// <summary>
         /// 取得 指定時間，指定股票分類 的每日收盤行情Api Response

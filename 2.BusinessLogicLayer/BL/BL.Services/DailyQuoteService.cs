@@ -2,13 +2,12 @@
 using BL.Services.Base;
 using Core.Domain.Entities.TWSE_Stock.Exchange;
 using Core.Domain.Enums;
-using Core.Domain.Interfaces.Repositories;
 using DA.Managers.Interfaces.TWSE_Stock;
 using DA.Managers.TWSE_Stock;
-using DA.Repositories;
+using DA.Repositories.Interfaces.TWSE_Stock;
+using DA.Repositories.TWSE_Stock;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace BL.Services {
 

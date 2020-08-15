@@ -1,8 +1,5 @@
 ﻿using Core.Domain.Entities.TWSE_Stock;
-using Core.Domain.Interfaces.Repositories.Base;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DA.Repositories.Interfaces.TWSE_Stock {
 

@@ -334,7 +334,7 @@ namespace BL.Services {
             return messages;
         }
 
-        private List<dynamic> ReplyConfirmMessages(int times, string skey) {
+        private List<dynamic> ReplyConfirmMessages() {
             List<dynamic> messages = null;
             try {
                 messages = new List<dynamic> {

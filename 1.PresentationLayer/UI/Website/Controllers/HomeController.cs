@@ -30,7 +30,6 @@ namespace Website.Controllers {
         }
 
         public IActionResult List() {
-            var s = MapApiHandler.GetGeocoding("110台灣台北市信義區虎林街132巷37號");
             // 取得 maskData 的 List
             var maskDataList = MaskDataHandler.GetTopMaskDatasByComputingDistance("110台灣台北市信義區虎林街132巷37號", 5);
             StringBuilder builder = new StringBuilder();
@@ -53,11 +52,10 @@ namespace Website.Controllers {
             */
 
             //Dictionary<string, int> checkFirstDict;
-            var listCount = maskDataList.Count;
             var locationDict = new Dictionary<string, List<int>>();
             for (int i = 0; i < maskDataList.Count; i++) {
-                var CityIndex = maskDataList[i].Address.IndexOf("市");
-                var CountyIndex = maskDataList[i].Address.IndexOf("縣");
+                //var CityIndex = maskDataList[i].Address.IndexOf("市");
+                //var CountyIndex = maskDataList[i].Address.IndexOf("縣");
                 var locationSuffix = maskDataList[i].Address.Substring(0, 6);
 
                 if (!locationDict.ContainsKey(locationSuffix)) {
@@ -80,9 +78,8 @@ namespace Website.Controllers {
         }
 
         public IActionResult Create() {
-            MaskDealer maskDealer = new MaskDealer();
-            var maskDataStringList = maskDealer.GetMaskDataResponse().Split('\n')[1];
-            var maskDataArr = maskDataStringList.Split(',');
+            //MaskDealer maskDealer = new MaskDealer();
+            //var maskDataStringList = maskDealer.GetMaskDataResponse().Split('\n')[1];
             return View();
         }
 

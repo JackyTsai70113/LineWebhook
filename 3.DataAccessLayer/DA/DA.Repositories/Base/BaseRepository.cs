@@ -1,13 +1,10 @@
-﻿using Core.Domain.Entities.TWSE_Stock.Exchange;
-using Core.Domain.Interfaces.Repositories.Base;
-using Core.Domain.Utilities;
+﻿using DA.Repositories.Interfaces;
 using Dapper;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Reflection;
-using System.Text;
 
 namespace DA.Repositories.Base {
 
