@@ -1,7 +1,6 @@
-﻿using Core.Domain.Interfaces.Utilities;
+﻿using Core.Domain.Utilities.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Core.Domain.Utilities {
 
