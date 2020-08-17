@@ -87,7 +87,7 @@ namespace Utility.MaskDatas {
             List<MaskData> result = new List<MaskData>();
 
             string locationSuffix = LocationHandler.GetLocationFirstDivisionSuffix(location);
-            List<MaskData> maskDataList = GetTopMaskDatasFromLocationSuffix(locationSuffix);
+            List<MaskData> maskDataList = GetTopMaskDatasFromLocationSuffix(locationSuffix, 5);
 
             //var MaskDataDistancesList = new List<MaskDataDistances>();
             //for (int i = 0; i < maskDataList.Count; i += 80) {
@@ -122,7 +122,7 @@ namespace Utility.MaskDatas {
             //        break;
             //    }
             //}
-            return maskDataList;
+            return maskDataList.Take(5).ToList();
         }
     }
 
