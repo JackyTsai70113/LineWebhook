@@ -1,8 +1,6 @@
 ﻿using Core.Domain.DTO.ResponseDTO.Line;
-using Models.Line.Webhook;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;

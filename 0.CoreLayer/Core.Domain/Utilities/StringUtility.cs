@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System;
 using System.IO;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
-using Newtonsoft.Json;
 
 namespace Core.Domain.Utilities {
 
     public static class StringUtility {
+
         /// <summary>
         /// 去除 html string 的 Tag
         /// </summary>
@@ -56,7 +55,6 @@ namespace Core.Domain.Utilities {
         }
 
         public static string Serialize(this Object obj) {
-
             return JsonConvert.SerializeObject(obj);
         }
     }

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 using Website.Data;
 
 namespace Website {
@@ -26,10 +27,6 @@ namespace Website {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             services.AddControllersWithViews();
 
-            //using (SqlConnection connection = new SqlConnection(connectionString)) {
-            //    var eventName = connection.QueryFirst<string>("SELECT TOP 1 Remark FROM Notes");
-            //}
-
             // register Mvc service
             services.AddMvc();
             services.AddDbContext<LineWebhookContext>(options =>
@@ -46,6 +43,9 @@ namespace Website {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseSerilogRequestLogging();
+
             // 強迫將 HTTP 全部轉向 HTTPS
             app.UseHttpsRedirection();
             // 服務靜態檔案傳輸
