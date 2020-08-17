@@ -2,42 +2,42 @@ namespace Utility.StringUtil {
 
     public class LocationHandler {
 
-        public static string GetLocationFirstDivisionSuffix(string address) {
-            int strStart;
-
+        public static string GetLocationFirstDivision(string address) {
             // 去除郵遞區號及台灣兩字
-            if ((strStart = address.IndexOf("灣")) == -1) {
-                strStart = 0;
+            int indexOfTaiwan = address.IndexOf("台灣");
+            if (indexOfTaiwan != -1) {
+                address = address.Substring(indexOfTaiwan + 2);
             }
 
-            int index = -1;
-            if ((index = address.IndexOf("市")) != -1) {
-                return address.Substring(strStart + 1, index - strStart);
-            } else if ((index = address.IndexOf("縣")) != -1) {
-                return address.Substring(strStart + 1, index - strStart);
+            int indexOfFirstDivision = -1;
+            if (address.Contains("市")) {
+                indexOfFirstDivision = address.IndexOf("市");
+            } else if (address.Contains("縣")) {
+                indexOfFirstDivision = address.IndexOf("縣");
             }
-            return "";
+
+            return address.Substring(0, indexOfFirstDivision + 1);
         }
 
-        public static string GetLocationSecondDivisionSuffix(string address) {
-            int strStart;
-
+        public static string GetLocationSecondDivision(string address) {
             // 去除郵遞區號及台灣兩字
-            if ((strStart = address.IndexOf("灣")) == -1) {
-                strStart = 0;
+            int indexOfTaiwan = address.IndexOf("台灣");
+            if (indexOfTaiwan != -1) {
+                address = address.Substring(indexOfTaiwan + 2);
             }
 
-            int index;
-            if ((index = address.IndexOf("區")) != -1) {
-                return address.Substring(strStart + 1, index - strStart);
-            } else if ((index = address.IndexOf("鄉")) != -1) {
-                return address.Substring(strStart + 1, index - strStart);
-            } else if ((index = address.IndexOf("鎮")) != -1) {
-                return address.Substring(strStart + 1, index - strStart);
-            } else if (address.IndexOf("縣") != -1 && (index = address.IndexOf("市")) != -1) {
-                return address.Substring(strStart + 1, index - strStart);
+            int indexOfSecondDivision = -1;
+            if (address.Contains("區")) {
+                indexOfSecondDivision = address.IndexOf("區");
+            } else if (address.Contains("鄉")) {
+                indexOfSecondDivision = address.IndexOf("鄉");
+            } else if (address.Contains("鎮")) {
+                indexOfSecondDivision = address.IndexOf("鎮");
+            } else if (address.IndexOf("縣") != -1 && address.Contains("市")) {
+                indexOfSecondDivision = address.IndexOf("市");
             }
-            return "";
+
+            return address.Substring(0, indexOfSecondDivision + 1);
         }
     }
 }

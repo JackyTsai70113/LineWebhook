@@ -14,9 +14,6 @@ using Models.MaskDatas;
 namespace Utility.MaskDatas {
 
     public class MaskDataSourceHandler {
-        // public static string GetDataStr()
-        // {
-        // }
 
         public static List<MaskData> GetList() {
             string uri = "http://data.nhi.gov.tw/Datasets/Download.ashx?rid=A21030000I-D50001-001&l=https://data.nhi.gov.tw/resource/mask/maskdata.csv";
@@ -32,30 +29,29 @@ namespace Utility.MaskDatas {
 
             var maskDataList = new List<MaskData>();
             for (int i = 1; i < maskDataStrArr.Length - 1; i++) {
-                var maskDataArr = maskDataStrArr[i].Split(',');
-                if (!Int32.TryParse(maskDataArr[4], out int adultMasks)) {
-                    Console.WriteLine($"Ex: Cannot parse {maskDataArr[4]} to Int.");
-                    adultMasks = Int32.MaxValue;
-                }
-                if (!Int32.TryParse(maskDataArr[5], out int childMasks)) {
-                    Console.WriteLine($"Ex: Cannot parse {maskDataArr[5]} to Int.");
-                    childMasks = Int32.MaxValue;
-                }
-                if (!DateTime.TryParse(maskDataArr[6], out DateTime updateTime)) {
-                    Console.WriteLine($"Ex: Cannot parse {maskDataArr[6]} to Int.");
-                    updateTime = DateTime.MinValue;
-                }
-                maskDataList.Add(new MaskData {
-                    Id = maskDataArr[0],
-                    Name = maskDataArr[1],
-                    Address = maskDataArr[2],
-                    PhoneNumber = maskDataArr[3],
-                    AdultMasks = adultMasks,
-                    ChildMasks = childMasks,
-                    UpdateTime = updateTime
-                });
+                maskDataList.Add(new MaskData(maskDataStrArr[i]));
             }
             return maskDataList;
+        }
+
+        public static void MaskDataAddressStatistics() {
+            List<MaskData> maskDatas = GetList();
+            List<string> strings1 = new List<string>();
+            List<string> strings2 = new List<string>();
+            List<string> strings3 = new List<string>();
+            List<string> strings4 = new List<string>();
+            List<string> strings5 = new List<string>();
+            foreach (var maskData in maskDatas) {
+                if (maskData.Address.Contains("¸ô") && maskData.Address.Contains("µó")) {
+                    strings1.Add(maskData.Address);
+                } else if (maskData.Address.Contains("¸ô")) {
+                    strings2.Add(maskData.Address);
+                } else if (maskData.Address.Contains("µó")) {
+                    strings3.Add(maskData.Address);
+                } else {
+                    strings4.Add(maskData.Address);
+                }
+            }
         }
     }
 }

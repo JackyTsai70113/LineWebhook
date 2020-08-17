@@ -49,7 +49,6 @@ namespace Utility.MaskDatas {
             int _count = 0;
 
             int strLength = locationSuffix.Length;
-            //var maskDataList = MaskDataSourceHandler.GetList();
             foreach (var maskData in maskDataList) {
                 if (maskData.Address.Substring(0, strLength) == locationSuffix) {
                     result.Add(maskData);
@@ -86,8 +85,8 @@ namespace Utility.MaskDatas {
             int currentCount = 0;
             List<MaskData> result = new List<MaskData>();
 
-            string locationSuffix = LocationHandler.GetLocationFirstDivisionSuffix(location);
-            List<MaskData> maskDataList = GetTopMaskDatasFromLocationSuffix(locationSuffix, 5);
+            string SecondDivision = LocationHandler.GetLocationSecondDivision(location);
+            List<MaskData> maskDataList = GetTopMaskDatasFromLocationSuffix(SecondDivision, 5);
 
             //var MaskDataDistancesList = new List<MaskDataDistances>();
             //for (int i = 0; i < maskDataList.Count; i += 80) {
