@@ -31,10 +31,8 @@ namespace Utility.Line {
                     NullValueHandling = NullValueHandling.Ignore
                 });
                 byte[] data = encoding.GetBytes(requestBodyStr2);
-                //byte[] data = encoding.GetBytes(testStr);
                 request.ContentLength = data.Length;
                 Stream requestStream = request.GetRequestStream();
-                //requestStream.WriteTimeout = 20000;
                 requestStream.Write(data, 0, data.Length);
                 requestStream.Close();
 
@@ -42,6 +40,8 @@ namespace Utility.Line {
                 string requestBodyStr = JsonConvert.SerializeObject(requestBody, Formatting.Indented);
                 Console.WriteLine($"========== TO LINE SERVER: {httpPostRequestUri} ==========");
                 Console.WriteLine($"requestBody:");
+                Console.WriteLine($"{requestBodyStr}");
+                Console.WriteLine($"====================");
                 Console.WriteLine($"{requestBodyStr2}");
                 Console.WriteLine($"====================");
 
@@ -50,8 +50,8 @@ namespace Utility.Line {
                 StreamReader streamReader = new StreamReader(stream);
                 result = streamReader.ReadToEnd();
             } catch (WebException webEx) {
-                result += "伺服器無法取得回應 " + webEx.ToString();
-                Console.WriteLine($"伺服器無法取得回應 WebException: {webEx}");
+                result += "伺服器無回應, " + webEx.ToString();
+                Console.WriteLine($"伺服器無回應, WebException: {webEx}");
             } catch (Exception ex) {
                 result += "Exception: " + ex.ToString();
                 Console.WriteLine($"Exception: {ex}");
