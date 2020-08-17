@@ -32,6 +32,7 @@ nupkg/
 msbuild.log
 msbuild.err
 msbuild.wrn
+Log/*
 
 # Visual Studio 2015
 **/.vs/*
