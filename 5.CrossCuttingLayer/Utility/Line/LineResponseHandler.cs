@@ -27,15 +27,16 @@ namespace Utility.Line {
                 // Write data to requestStream
                 UTF8Encoding encoding = new UTF8Encoding();
                 //string testStr = "{\"type\":\"template\",\"altText\":\"thisisacarouseltemplate\",\"template\":{\"type\":\"carousel\",\"columns\":[{\"thumbnailImageUrl\":\"https://example.com/bot/images/item1.jpg\",\"imageBackgroundColor\":\"#FFFFFF\",\"title\":\"thisismenu\",\"text\":\"description\",\"defaultAction\":{\"type\":\"uri\",\"label\":\"Viewdetail\",\"uri\":\"http://example.com/page/123\"},\"actions\":[{\"type\":\"postback\",\"label\":\"Buy\",\"data\":\"action=buy&itemid=111\"},{\"type\":\"postback\",\"label\":\"Addtocart\",\"data\":\"action=add&itemid=111\"},{\"type\":\"uri\",\"label\":\"Viewdetail\",\"uri\":\"http://example.com/page/111\"}]},{\"thumbnailImageUrl\":\"https://example.com/bot/images/item2.jpg\",\"imageBackgroundColor\":\"#000000\",\"title\":\"thisismenu\",\"text\":\"description\",\"defaultAction\":{\"type\":\"uri\",\"label\":\"Viewdetail\",\"uri\":\"http://example.com/page/222\"},\"actions\":[{\"type\":\"postback\",\"label\":\"Buy\",\"data\":\"action=buy&itemid=222\"},{\"type\":\"postback\",\"label\":\"Addtocart\",\"data\":\"action=add&itemid=222\"},{\"type\":\"uri\",\"label\":\"Viewdetail\",\"uri\":\"http://example.com/page/222\"}]}],\"imageAspectRatio\":\"rectangle\",\"imageSize\":\"cover\"}}";
-                string requestBodyStr2 = JsonConvert.SerializeObject(requestBody);
-                byte[] data = encoding.GetBytes(requestBodyStr2);
+                string requestBodyStr2 = JsonConvert.SerializeObject(requestBody, Formatting.Indented);
+                //byte[] data = encoding.GetBytes(requestBodyStr2);
+                byte[] data = encoding.GetBytes(requestBody);
                 request.ContentLength = data.Length;
                 Stream requestStream = request.GetRequestStream();
                 requestStream.Write(data, 0, data.Length);
                 requestStream.Close();
 
                 // Add 紀錄發至LineServer的requestBody
-                string requestBodyStr = JsonConvert.SerializeObject(requestBody, Formatting.Indented);
+                string requestBodyStr = JsonConvert.SerializeObject(requestBody);
                 Console.WriteLine($"========== TO LINE SERVER: {httpPostRequestUri} ==========");
                 Console.WriteLine($"requestBody:");
                 Console.WriteLine($"{requestBodyStr}");
