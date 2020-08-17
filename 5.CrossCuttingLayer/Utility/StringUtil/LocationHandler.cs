@@ -1,7 +1,9 @@
 namespace Utility.StringUtil {
+
     public class LocationHandler {
+
         public static string GetLocationFirstDivisionSuffix(string address) {
-            int strStart = 0;
+            int strStart;
 
             // 去除郵遞區號及台灣兩字
             if ((strStart = address.IndexOf("灣")) == -1) {
@@ -18,14 +20,14 @@ namespace Utility.StringUtil {
         }
 
         public static string GetLocationSecondDivisionSuffix(string address) {
-            int strStart = 0;
+            int strStart;
 
             // 去除郵遞區號及台灣兩字
             if ((strStart = address.IndexOf("灣")) == -1) {
                 strStart = 0;
             }
 
-            int index = -1;
+            int index;
             if ((index = address.IndexOf("區")) != -1) {
                 return address.Substring(strStart + 1, index - strStart);
             } else if ((index = address.IndexOf("鄉")) != -1) {

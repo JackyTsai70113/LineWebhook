@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using BL.Interfaces;
+﻿using BL.Interfaces;
 using BL.Services.Base;
 using Core.Domain.DTO.RequestDTO.CambridgeDictionary;
 using Core.Domain.DTO.ResponseDTO.Line;
 using Core.Domain.DTO.ResponseDTO.Line.Messages;
+using Core.Domain.ThirdParty.Line;
 using DA.Managers.CambridgeDictionary;
 using DA.Managers.Interfaces;
 using Models.Google.API;
 using Models.Line;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Utility.Google.MapAPIs;
-using Utility.Line;
 using Utility.MaskDatas;
 using Utility.StringUtil;
 
@@ -194,11 +194,10 @@ namespace BL.Services {
                 StringBuilder builder = new StringBuilder();
 
                 if (topMaskDatas.Count == 0) {
-                    string locationSuffix = LocationHandler.GetLocationFirstDivisionSuffix(address);
-                    builder.Append($"所在區域({locationSuffix})沒有相關藥局");
+                    builder.Append($"所在位置({address})沒有相關藥局");
                     messages.Add(new TextMessage {
                         type = "text",
-                            text = builder.ToString()
+                        text = builder.ToString()
                     });
                 } else {
                     foreach (var maskData in topMaskDatas) {
@@ -216,12 +215,12 @@ namespace BL.Services {
 
                         messages.Add(new LocationMessage {
                             type = "location",
-                                title = maskData.Name + "\n" +
+                            title = maskData.Name + "\n" +
                                 "成人: " + maskData.AdultMasks + "\n" +
                                 "兒童: " + maskData.ChildMasks,
-                                address = maskData.Address,
-                                latitude = lat,
-                                longitude = lng
+                            address = maskData.Address,
+                            latitude = lat,
+                            longitude = lng
                         });
                     }
                 }

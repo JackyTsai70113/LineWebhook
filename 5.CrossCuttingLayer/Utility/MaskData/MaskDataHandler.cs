@@ -83,51 +83,77 @@ namespace Utility.MaskDatas {
         }
 
         public static List<MaskData> GetTopMaskDatasByComputingDistance(string location, int count = Int32.MaxValue) {
-            int crurrentCount = 0;
+            int currentCount = 0;
             List<MaskData> result = new List<MaskData>();
 
             string locationSuffix = LocationHandler.GetLocationFirstDivisionSuffix(location);
             List<MaskData> maskDataList = GetTopMaskDatasFromLocationSuffix(locationSuffix);
 
-            var MaskDataDistancesList = new List<MaskDataDistances>();
-            for (int i = 0; i < maskDataList.Count; i += 80) {
-                StringBuilder destinationAddressBuilder = new StringBuilder();
-                for (int j = i; j < i + 80 && j < maskDataList.Count; j++) {
-                    destinationAddressBuilder.Append(maskDataList[j].Address);
-                    destinationAddressBuilder.Append("|");
-                }
-                var destinationAddress = destinationAddressBuilder.Remove(destinationAddressBuilder.Length - 1, 1).ToString();
-                var distanceMatrix = MapApiHandler.GetDistanceMatrix(destinationAddress, location);
-                for (int j = 0; j < distanceMatrix.rows.Count; j++) {
-                    var row = distanceMatrix.rows[j];
-                    // 距離(單位: 公尺)
-                    int distance;
-                    if (row.elements[0].status == "OK") {
-                        distance = row.elements[0].distance.value;
-                    } else {
-                        distance = Int32.MaxValue;
-                    }
+            //var MaskDataDistancesList = new List<MaskDataDistances>();
+            //for (int i = 0; i < maskDataList.Count; i += 80) {
+            //    StringBuilder destinationAddressBuilder = new StringBuilder();
+            //    for (int j = i; j < i + 80 && j < maskDataList.Count; j++) {
+            //        destinationAddressBuilder.Append(maskDataList[j].Address);
+            //        destinationAddressBuilder.Append("|");
+            //    }
+            //    var destinationAddress = destinationAddressBuilder.Remove(destinationAddressBuilder.Length - 1, 1).ToString();
+            //    var distanceMatrix = MapApiHandler.GetDistanceMatrix(destinationAddress, location);
+            //    for (int j = 0; j < distanceMatrix.rows.Count; j++) {
+            //        var row = distanceMatrix.rows[j];
+            //        // 距離(單位: 公尺)
+            //        int distance;
+            //        if (row.elements[0].status == "OK") {
+            //            distance = row.elements[0].distance.value;
+            //        } else {
+            //            distance = Int32.MaxValue;
+            //        }
 
-                    MaskDataDistancesList.Add(new MaskDataDistances {
-                        maskDataIndex = i + j,
-                        distance = distance
-                    });
-                }
-            }
-            MaskDataDistancesList.Sort(NumberUtil.Comparer.CompareDistance);
-            foreach (var MaskDataDistances in MaskDataDistancesList) {
-                result.Add(maskDataList[MaskDataDistances.maskDataIndex]);
-                crurrentCount++;
-                if (crurrentCount == count) {
-                    break;
-                }
-            }
-            return result;
+            //        MaskDataDistancesList.Add(new MaskDataDistances {
+            //            maskDataIndex = i + j,
+            //            distance = distance
+            //        });
+            //    }
+            //}
+            //MaskDataDistancesList.Sort(Comparer.CompareDistance);
+            //foreach (var MaskDataDistances in MaskDataDistancesList) {
+            //    result.Add(maskDataList[MaskDataDistances.maskDataIndex]);
+            //    currentCount++;
+            //    if (currentCount == count) {
+            //        break;
+            //    }
+            //}
+            return maskDataList;
         }
     }
 
     public class MaskDataDistances {
         public int maskDataIndex { get; set; }
         public int distance { get; set; }
+    }
+
+    public class Comparer {
+
+        public static int CompareDistance(
+            MaskDataDistances x, MaskDataDistances y) {
+            if (x == null) {
+                if (y == null) {
+                    return 0;
+                } else {
+                    return -1;
+                }
+            } else {
+                if (y == null) {
+                    return 1;
+                } else {
+                    int compare = x.distance.CompareTo(y.distance);
+
+                    if (compare != 0) {
+                        return compare;
+                    } else {
+                        return x.maskDataIndex.CompareTo(y.maskDataIndex);
+                    }
+                }
+            }
+        }
     }
 }
