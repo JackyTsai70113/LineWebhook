@@ -15,7 +15,7 @@ namespace Website {
 
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
-
+            var ddd = Configuration.GetSection("RedisConfig").Value;
             // Core.Domain.Utilities.ConfigurationUtility configuration
             ConfigurationUtility.Configuration = configuration;
         }

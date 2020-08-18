@@ -8,5 +8,11 @@ namespace Core.Domain.Utilities {
         public static string GetSqlConnectionString(string name) {
             return Configuration.GetConnectionString(name);
         }
+
+        public static string RedisConfig {
+            get {
+                return Configuration.GetSection("RedisConfig").Value;
+            }
+        }
     }
 }

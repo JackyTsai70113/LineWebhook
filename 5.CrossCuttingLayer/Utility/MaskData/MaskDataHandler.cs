@@ -87,40 +87,6 @@ namespace Utility.MaskDatas {
 
             string SecondDivision = LocationHandler.GetLocationSecondDivision(location);
             List<MaskData> maskDataList = GetTopMaskDatasFromLocationSuffix(SecondDivision, 5);
-
-            //var MaskDataDistancesList = new List<MaskDataDistances>();
-            //for (int i = 0; i < maskDataList.Count; i += 80) {
-            //    StringBuilder destinationAddressBuilder = new StringBuilder();
-            //    for (int j = i; j < i + 80 && j < maskDataList.Count; j++) {
-            //        destinationAddressBuilder.Append(maskDataList[j].Address);
-            //        destinationAddressBuilder.Append("|");
-            //    }
-            //    var destinationAddress = destinationAddressBuilder.Remove(destinationAddressBuilder.Length - 1, 1).ToString();
-            //    var distanceMatrix = MapApiHandler.GetDistanceMatrix(destinationAddress, location);
-            //    for (int j = 0; j < distanceMatrix.rows.Count; j++) {
-            //        var row = distanceMatrix.rows[j];
-            //        // 距離(單位: 公尺)
-            //        int distance;
-            //        if (row.elements[0].status == "OK") {
-            //            distance = row.elements[0].distance.value;
-            //        } else {
-            //            distance = Int32.MaxValue;
-            //        }
-
-            //        MaskDataDistancesList.Add(new MaskDataDistances {
-            //            maskDataIndex = i + j,
-            //            distance = distance
-            //        });
-            //    }
-            //}
-            //MaskDataDistancesList.Sort(Comparer.CompareDistance);
-            //foreach (var MaskDataDistances in MaskDataDistancesList) {
-            //    result.Add(maskDataList[MaskDataDistances.maskDataIndex]);
-            //    currentCount++;
-            //    if (currentCount == count) {
-            //        break;
-            //    }
-            //}
             return maskDataList.Take(5).ToList();
         }
     }

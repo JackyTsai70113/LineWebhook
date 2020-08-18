@@ -3,7 +3,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text;
+using Core.Domain.Cache;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Models.MaskDatas;
 using Newtonsoft.Json;
@@ -22,6 +24,7 @@ namespace Website.Controllers {
         }
 
         public IActionResult Index() {
+            var sss = new RedisCacheProvider();
             //var MaskDataList = MaskDataHandler.GetTopMaskDatasByComputingDistance("110台灣台北市信義區虎林街132巷37號");
             // 取得 maskData 的 List
             var MaskDataList = MaskDataSourceHandler.GetList();
