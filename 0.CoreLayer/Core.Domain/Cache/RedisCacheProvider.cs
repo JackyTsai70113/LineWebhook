@@ -7,10 +7,11 @@ using System.Text;
 namespace Core.Domain.Cache {
 
     public class RedisCacheProvider {
+        private readonly string config = ConfigurationUtility.RedisConfig;
 
         public RedisCacheProvider() {
             try {
-                ConnectionMultiplexer muxer = ConnectionMultiplexer.Connect(ConfigurationUtility.RedisConfig);
+                ConnectionMultiplexer muxer = ConnectionMultiplexer.Connect(config);
                 IDatabase conn = muxer.GetDatabase();
                 conn.StringSet("foo", "bar");
                 var value = conn.StringGet("foo");
