@@ -1,21 +1,23 @@
-﻿using BL.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using BL.Interfaces;
 using BL.Services.Base;
 using Core.Domain.DTO.RequestDTO.CambridgeDictionary;
 using Core.Domain.DTO.ResponseDTO.Line;
 using Core.Domain.DTO.ResponseDTO.Line.Messages;
+using Core.Domain.DTO.Sinopac;
 using Core.Domain.ThirdParty.Line;
 using DA.Managers.CambridgeDictionary;
 using DA.Managers.Interfaces;
+using DA.Managers.Interfaces.Sinopac;
+using DA.Managers.Sinopac;
 using Models.Google.API;
 using Models.Line;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Utility.Google.MapAPIs;
 using Utility.MaskDatas;
-using Utility.StringUtil;
 
 namespace BL.Services {
 
@@ -23,10 +25,12 @@ namespace BL.Services {
 
         public LineWebhookService() {
             CambridgeDictionaryManager = new CambridgeDictionaryManager();
+            ExchangeRateManager = new ExchangeRateManager();
         }
 
         private RequestModelFromLineServer _LineRequestModel { get; set; }
         private ICambridgeDictionaryManager CambridgeDictionaryManager { get; set; }
+        private IExchangeRateManager ExchangeRateManager { get; set; }
 
         /// <summary>
         /// 判讀LineServer來的請求物件後回應
@@ -126,11 +130,13 @@ namespace BL.Services {
                 // Set up messages to send
                 if (text.StartsWith("test")) {
                     messages = ReplyTestMessages(text.Substring(4));
+                } else if (text.StartsWith("sp")) {
+                    messages = GetSinopacMessages();
                 } else if (text.StartsWith("sticker")) {
                     string packageIdStr = text.Split(' ')[1];
                     string stickerIdStr = text.Split(' ')[2];
                     messages = GetStickerMessages(packageIdStr, stickerIdStr);
-                } else if (text.StartsWith(" ")) { // 倉頡常用
+                } else if (text.StartsWith(" ")) { // 倉頡用
                     messages = GetImageMessages(text.Substring(1));
                 } else if (text.StartsWith("cd ")) {
                     string vocabulary = text.Split(' ')[1];
@@ -177,6 +183,22 @@ namespace BL.Services {
             }
             return messages;
         }
+        private List<Message> GetSinopacMessages() {
+            List<ExchangeRate> exchangeRates = ExchangeRateManager.CrawlExchangeRate();
+
+            Info info = exchangeRates[0].SubInfo[0];
+            StringBuilder sb = new StringBuilder();
+            sb.Append("美金報價\n");
+            sb.Append($"\t銀行買入：{info.DataValue2}\n");
+            sb.Append($"\t銀行賣出：{info.DataValue3}\n");
+
+            List<Message> messages = new List<Message>();
+            messages.Add(new TextMessage {
+                type = "text",
+                    text = sb.ToString()
+            });
+            return messages;
+        }
 
         /// <summary>
         /// 根據指定地址進行回應藥局資訊
@@ -197,7 +219,7 @@ namespace BL.Services {
                     builder.Append($"所在位置({address})沒有相關藥局");
                     messages.Add(new TextMessage {
                         type = "text",
-                        text = builder.ToString()
+                            text = builder.ToString()
                     });
                 } else {
                     foreach (var maskData in topMaskDatas) {
@@ -215,12 +237,12 @@ namespace BL.Services {
 
                         messages.Add(new LocationMessage {
                             type = "location",
-                            title = maskData.Name + "\n" +
+                                title = maskData.Name + "\n" +
                                 "成人: " + maskData.AdultMasks + "\n" +
                                 "兒童: " + maskData.ChildMasks,
-                            address = maskData.Address,
-                            latitude = lat,
-                            longitude = lng
+                                address = maskData.Address,
+                                latitude = lat,
+                                longitude = lng
                         });
                     }
                 }

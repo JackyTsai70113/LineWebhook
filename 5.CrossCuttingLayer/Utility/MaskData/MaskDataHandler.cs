@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using Utility;
-using Newtonsoft.Json;
 using System.Net;
 using System.Text;
-using Models.MaskDatas;
+using System.Threading.Tasks;
+using System.Web;
 using Models.Google.API;
+using Models.MaskDatas;
+using Newtonsoft.Json;
+using Utility;
 using Utility.Google.MapAPIs;
 using Utility.StringUtil;
 
@@ -82,9 +82,6 @@ namespace Utility.MaskDatas {
         }
 
         public static List<MaskData> GetTopMaskDatasByComputingDistance(string location, int count = Int32.MaxValue) {
-            int currentCount = 0;
-            List<MaskData> result = new List<MaskData>();
-
             string SecondDivision = LocationHandler.GetLocationSecondDivision(location);
             List<MaskData> maskDataList = GetTopMaskDatasFromLocationSuffix(SecondDivision, 5);
             return maskDataList.Take(5).ToList();
