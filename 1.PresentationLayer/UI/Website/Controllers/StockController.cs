@@ -43,7 +43,7 @@ namespace Website.Controllers {
         public IActionResult CrawlDailyQuoteListAndSaveByDate() {
             List<DateTime> dateTimes = new List<DateTime>();
             int successDailyQuoteNumber = 0;
-            dateTimes.Add(new DateTime(2010, 02, 06));
+            dateTimes.Add(new DateTime(2020, 08, 26));
             foreach (var date in dateTimes) {
                 successDailyQuoteNumber += DailyQuoteService.CrawlDailyQuoteListAndUpdateByDate(
                     date, StockCategoryEnum.FinancialAndInsurance);

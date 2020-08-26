@@ -5,7 +5,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 
-namespace Core.Domain.ThirdParty.Line {
+namespace Core.Domain.ExternalServices.Line {
 
     public class LineResponseHandler {
         public static readonly string httpPostRequestUri = "https://api.line.me/v2/bot/message/reply";

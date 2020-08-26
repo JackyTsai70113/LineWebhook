@@ -4,9 +4,9 @@ using Core.Domain.DTO.RequestDTO.CambridgeDictionary;
 using Core.Domain.DTO.ResponseDTO.Line;
 using Core.Domain.DTO.ResponseDTO.Line.Messages;
 using Core.Domain.DTO.Sinopac;
-using Core.Domain.ThirdParty.Line;
+using Core.Domain.ExternalServices.Google;
+using Core.Domain.ExternalServices.Line;
 using DA.Managers.CambridgeDictionary;
-using DA.Managers.Google.Map;
 using DA.Managers.Interfaces;
 using DA.Managers.Interfaces.Sinopac;
 using DA.Managers.MaskInstitution;
@@ -226,7 +226,7 @@ namespace BL.Services {
                     return messages;
                 }
                 foreach (var maskData in topMaskDatas) {
-                    Location location = MapManager.GetGeocoding(maskData.Address).results[0].geometry.location;
+                    Location location = GoogleMapProvider.GetGeocoding(maskData.Address).results[0].geometry.location;
 
                     if (!Double.TryParse(location.lat, out double lat)) {
                         Console.WriteLine($"Ex: Cannot parse {location.lat} to Int.");

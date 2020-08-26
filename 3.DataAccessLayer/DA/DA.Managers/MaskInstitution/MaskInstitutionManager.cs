@@ -1,4 +1,4 @@
-﻿using Models.MaskDatas;
+﻿using Core.Domain.DTO.MaskInstitution;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,11 +71,11 @@ namespace DA.Managers.MaskInstitution {
 
         public static List<MaskData> GetTopMaskDatasByComputingDistance(string location, int count = Int32.MaxValue) {
             string SecondDivision = GetLocationSecondDivision(location);
-            List<MaskData> maskDataList = GetTopMaskDatasFromLocationSuffix(SecondDivision, 5);
-            return maskDataList.Take(5).ToList();
+            List<MaskData> maskDataList = GetTopMaskDatasFromLocationSuffix(SecondDivision, count);
+            return maskDataList.ToList();
         }
 
-        private static string GetLocationFirstDivision(string address) {
+        public static string GetLocationFirstDivision(string address) {
             // 去除郵遞區號及台灣兩字
             int indexOfTaiwan = address.IndexOf("台灣");
             if (indexOfTaiwan != -1) {

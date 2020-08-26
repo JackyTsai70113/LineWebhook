@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Core.Domain.ThirdParty.Line {
+namespace Core.Domain.ExternalServices.Line {
 
     public class LineRequestHandler {
 

@@ -53,9 +53,5 @@ namespace Core.Domain.Utilities {
             int yearIndex = str.IndexOf(trimStr);
             return str.Substring(0, yearIndex);
         }
-
-        public static string Serialize(this Object obj) {
-            return JsonConvert.SerializeObject(obj);
-        }
     }
 }

@@ -1,9 +1,7 @@
 ﻿using BL.Services.MaskInstitution;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Models.MaskDatas;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;

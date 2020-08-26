@@ -1,5 +1,5 @@
-﻿using DA.Managers.MaskInstitution;
-using Models.MaskDatas;
+﻿using Core.Domain.DTO.MaskInstitution;
+using DA.Managers.MaskInstitution;
 using System;
 using System.Collections.Generic;
 

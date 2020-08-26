@@ -1,4 +1,4 @@
-﻿using Models.MaskDatas;
+﻿using Core.Domain.DTO.MaskInstitution;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;

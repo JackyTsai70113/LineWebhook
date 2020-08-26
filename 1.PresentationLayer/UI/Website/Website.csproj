@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <ItemGroup>
     <None Include="..\..\..\.editorconfig" Link=".editorconfig" />
@@ -9,7 +9,6 @@
     <ProjectReference Include="..\..\..\2.BusinessLogicLayer\BL\BL.Interfaces\BL.Interfaces.csproj" />
     <ProjectReference Include="..\..\..\2.BusinessLogicLayer\BL\BL.Services\BL.Services.csproj" />
     <ProjectReference Include="..\..\..\4.ModelsLayer\Models\Models.csproj" />
-    <ProjectReference Include="..\..\..\5.CrossCuttingLayer\Utility\Utility.csproj" />
   </ItemGroup>
 
   <ItemGroup>
