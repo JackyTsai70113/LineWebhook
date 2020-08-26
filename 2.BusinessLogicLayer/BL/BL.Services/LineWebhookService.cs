@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using BL.Interfaces;
+﻿using BL.Interfaces;
 using BL.Services.Base;
 using Core.Domain.DTO.RequestDTO.CambridgeDictionary;
 using Core.Domain.DTO.ResponseDTO.Line;
@@ -10,14 +6,18 @@ using Core.Domain.DTO.ResponseDTO.Line.Messages;
 using Core.Domain.DTO.Sinopac;
 using Core.Domain.ThirdParty.Line;
 using DA.Managers.CambridgeDictionary;
+using DA.Managers.Google.Map;
 using DA.Managers.Interfaces;
 using DA.Managers.Interfaces.Sinopac;
+using DA.Managers.MaskInstitution;
 using DA.Managers.Sinopac;
 using Models.Google.API;
 using Models.Line;
 using Newtonsoft.Json;
-using Utility.Google.MapAPIs;
-using Utility.MaskDatas;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace BL.Services {
 
@@ -183,6 +183,7 @@ namespace BL.Services {
             }
             return messages;
         }
+
         private List<Message> GetSinopacMessages() {
             List<ExchangeRate> exchangeRates = ExchangeRateManager.CrawlExchangeRate();
 
@@ -192,11 +193,12 @@ namespace BL.Services {
             sb.Append($"\t銀行買入：{info.DataValue2}\n");
             sb.Append($"\t銀行賣出：{info.DataValue3}\n");
 
-            List<Message> messages = new List<Message>();
-            messages.Add(new TextMessage {
-                type = "text",
+            List<Message> messages = new List<Message> {
+                new TextMessage {
+                    type = "text",
                     text = sb.ToString()
-            });
+                }
+            };
             return messages;
         }
 
@@ -209,7 +211,7 @@ namespace BL.Services {
             List<Message> messages = null;
             try {
                 // 取得欲傳送的MaskDataList
-                var topMaskDatas = MaskDataHandler.GetTopMaskDatasByComputingDistance(address, 5);
+                var topMaskDatas = MaskInstitutionManager.GetTopMaskDatasByComputingDistance(address, 5);
 
                 // Set up messages to send
                 messages = new List<Message>();
@@ -219,35 +221,35 @@ namespace BL.Services {
                     builder.Append($"所在位置({address})沒有相關藥局");
                     messages.Add(new TextMessage {
                         type = "text",
-                            text = builder.ToString()
+                        text = builder.ToString()
                     });
-                } else {
-                    foreach (var maskData in topMaskDatas) {
-                        Location location = MapApiHandler.GetGeocoding(maskData.Address).results[0].geometry.location;
+                    return messages;
+                }
+                foreach (var maskData in topMaskDatas) {
+                    Location location = MapManager.GetGeocoding(maskData.Address).results[0].geometry.location;
 
-                        if (!Double.TryParse(location.lat, out double lat)) {
-                            Console.WriteLine($"Ex: Cannot parse {location.lat} to Int.");
-                            lat = Double.MinValue;
-                        }
-
-                        if (!Double.TryParse(location.lng, out double lng)) {
-                            Console.WriteLine($"Ex: Cannot parse {location.lng} to Int.");
-                            lng = Double.MinValue;
-                        }
-
-                        messages.Add(new LocationMessage {
-                            type = "location",
-                                title = maskData.Name + "\n" +
-                                "成人: " + maskData.AdultMasks + "\n" +
-                                "兒童: " + maskData.ChildMasks,
-                                address = maskData.Address,
-                                latitude = lat,
-                                longitude = lng
-                        });
+                    if (!Double.TryParse(location.lat, out double lat)) {
+                        Console.WriteLine($"Ex: Cannot parse {location.lat} to Int.");
+                        lat = Double.MinValue;
                     }
+
+                    if (!Double.TryParse(location.lng, out double lng)) {
+                        Console.WriteLine($"Ex: Cannot parse {location.lng} to Int.");
+                        lng = Double.MinValue;
+                    }
+
+                    messages.Add(new LocationMessage {
+                        type = "location",
+                        title = maskData.Name + "\n" +
+                            "成人: " + maskData.AdultMasks + "\n" +
+                            "兒童: " + maskData.ChildMasks,
+                        address = maskData.Address,
+                        latitude = lat,
+                        longitude = lng
+                    });
                 }
             } catch (Exception ex) {
-                Console.WriteLine($"Exception: {ex.Message}");
+                Console.WriteLine($"Exception: {ex}");
             }
             return messages;
         }

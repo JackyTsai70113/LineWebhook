@@ -10,10 +10,10 @@ namespace Website.Controllers {
     /// LineWebhook控制器，Line Server 的 I/O
     /// </summary>
     public class LineWebhookController : Controller {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<LineWebhookController> _logger;
         private ILineWebhookService _LineWebhookService { get; set; }
 
-        public LineWebhookController(ILogger<HomeController> logger) {
+        public LineWebhookController(ILogger<LineWebhookController> logger) {
             _logger = logger;
             _LineWebhookService = new LineWebhookService();
         }
