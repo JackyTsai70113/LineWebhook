@@ -9,7 +9,6 @@ COPY 2.BusinessLogicLayer/BL/BL.Services/*.csproj 2.BusinessLogicLayer/BL/BL.Ser
 COPY 3.DataAccessLayer/DA/DA.Managers/*.csproj 3.DataAccessLayer/DA/DA.Managers/
 COPY 3.DataAccessLayer/DA/DA.Repositories/*.csproj 3.DataAccessLayer/DA/DA.Repositories/
 COPY 4.ModelsLayer/Models/*.csproj 4.ModelsLayer/Models/
-COPY 5.CrossCuttingLayer/Utility/*.csproj 5.CrossCuttingLayer/Utility/
 RUN dotnet restore
 COPY . .
 
