@@ -8,5 +8,11 @@
         /// <param name="requestBody">TelegramServer來的請求物件</param>
         /// <returns>LOG紀錄</returns>
         string Response();
+
+        /// <summary>
+        /// 通知
+        /// </summary>
+        /// <param name="message">通知訊息</param>
+        void NotifyByMessage(string message);
     }
 }

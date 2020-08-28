@@ -14,7 +14,7 @@ namespace Website.Controllers {
     /// LineWebhook控制器，Line Server 的 I/O
     /// </summary>
     [ApiController]
-    [Route("LineWebhook")]
+    [Route("[controller]")]
     public class LineWebhookController : ControllerBase {
         private readonly ILogger<LineWebhookController> _logger;
         private ILineWebhookService _LineWebhookService { get; set; }
