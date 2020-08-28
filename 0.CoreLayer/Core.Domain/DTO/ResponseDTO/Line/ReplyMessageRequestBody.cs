@@ -10,9 +10,9 @@ namespace Core.Domain.DTO.ResponseDTO.Line {
     /// </summary>
     public class ReplyMessageRequestBody {
 
-        public ReplyMessageRequestBody(string _replyToken, List<Message> _messages) {
-            replyToken = _replyToken;
-            messages = _messages;
+        public ReplyMessageRequestBody(string replyToken, List<Message> messages) {
+            this.replyToken = replyToken;
+            this.messages = messages;
         }
 
         /// <summary>

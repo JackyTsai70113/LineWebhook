@@ -1,11 +1,10 @@
-﻿using BL.Interfaces;
-using BL.Services.Base;
+﻿using BL.Services.Base;
+using BL.Services.Google;
+using BL.Services.Interfaces;
 using Core.Domain.DTO.RequestDTO.CambridgeDictionary;
 using Core.Domain.DTO.ResponseDTO.Line;
 using Core.Domain.DTO.ResponseDTO.Line.Messages;
 using Core.Domain.DTO.Sinopac;
-using Core.Domain.ExternalServices.Google;
-using Core.Domain.ExternalServices.Line;
 using DA.Managers.CambridgeDictionary;
 using DA.Managers.Interfaces;
 using DA.Managers.Interfaces.Sinopac;
@@ -13,10 +12,13 @@ using DA.Managers.MaskInstitution;
 using DA.Managers.Sinopac;
 using Models.Google.API;
 using Models.Line;
+using Models.Line.Webhook;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 
 namespace BL.Services {
@@ -33,62 +35,16 @@ namespace BL.Services {
         private IExchangeRateManager ExchangeRateManager { get; set; }
 
         /// <summary>
-        /// 判讀LineServer來的請求物件後回應
+        /// 回覆Line Server
         /// </summary>
-        /// <param name="requestBody">LineServer來的請求物件</param>
-        /// <returns>LOG紀錄</returns>
-        public string Response(dynamic requestBody) {
-            string result = "";
+        /// <param name="replyToken">回覆token</param>
+        /// <param name="messages">訊息列表</param>
+        /// <returns>API結果</returns>
+        public string ResponseToLineServer(string replyToken, List<Message> messages) {
             try {
-
-                #region 處理RequestModel
-
-                //處理requestModel
-                RequestModelFromLineServer lineRequestModel =
-                    LineRequestHandler.GetLineRequestModel(requestBody);
-
-                Console.WriteLine($"========== From LINE SERVER ==========");
-                Console.WriteLine($"requestModel:");
-                Console.WriteLine($"{JsonConvert.SerializeObject(lineRequestModel, Formatting.Indented)}");
-                Console.WriteLine($"====================");
-
-                _LineRequestModel = lineRequestModel;
-
-                #endregion 處理RequestModel
-
-                #region 判斷RequestModel決定回傳給Line的訊息
-
-                dynamic message = lineRequestModel.Events[0].message;
-                List<Message> messages = null;
-                switch ((string)message.type) {
-                    case "text":
-                        messages = GetMessagesByText(message.text);
-                        break;
-
-                    case "location":
-                        string address = message.address;
-                        messages = GetPharmacyInfoMessages(address);
-                        break;
-
-                    case "sticker":
-                        messages = GetStickerMessages();
-                        break;
-
-                    default:
-                        Console.WriteLine($"無相符的 message.type: {(string)message.type}, " +
-                            $"requestModelFromLineServer: " +
-                            $"{JsonConvert.SerializeObject(lineRequestModel, Formatting.Indented)}");
-                        messages = GetSingleMessage("未支援此資料格式: " + (string)message.type);
-                        break;
-                }
-
-                #endregion 判斷RequestModel決定回傳給Line的訊息
-
                 #region Post到Line
 
-                ReplyMessageRequestBody replyMessageRequestBody =
-                    new ReplyMessageRequestBody(_LineRequestModel.Events[0].replyToken, messages);
-                result = LineResponseHandler.PostToLineServer(replyMessageRequestBody);
+                string result = PostToLineServer(replyToken, messages);
 
                 #endregion Post到Line
 
@@ -97,13 +53,13 @@ namespace BL.Services {
                 if (result != "{}") {
                     string debugStr = $"messages:\n" +
                         $"{JsonConvert.SerializeObject(messages, Formatting.Indented)}\n";
-                    if (result.StartsWith("伺服器無法取得回應")) {
-                        debugStr += "-> 伺服器無法取得回應";
+                    if (result.StartsWith("伺服器無回應")) {
+                        debugStr += "-> 伺服器無回應";
                     } else {
-                        debugStr += result;
+                        debugStr += "-> " + result;
                     }
                     var debugMessages = GetSingleMessage(debugStr);
-                    LineResponseHandler.PostToLineServer(new ReplyMessageRequestBody(_LineRequestModel.Events[0].replyToken, debugMessages));
+                    PostToLineServer(replyToken, debugMessages);
                 }
 
                 #endregion 若不成功則Post debug 訊息到Line
@@ -111,12 +67,42 @@ namespace BL.Services {
                 return result;
             } catch (Exception ex) {
                 Console.WriteLine(
-                    $"LineWebhookService.Response 錯誤, " +
-                    $"requestBody:{ requestBody}" +
-                    $"result: {result}" +
+                    $"LineWebhookService.Response 錯誤, replyToken: {replyToken}" +
+                    $"messages: {JsonConvert.SerializeObject(messages, Formatting.Indented)}\n" +
                     $"ex: {ex}");
                 return ex.ToString();
             }
+        }
+
+        /// <summary>
+        /// 依照RequestModel取得Line回應訊息
+        /// </summary>
+        /// <param name="lineRequestModel"></param>
+        /// <returns>Line回應訊息</returns>
+        public List<Message> GetReplyMessages(RequestModelFromLineServer lineRequestModel) {
+            dynamic message = lineRequestModel.Events[0].message;
+            List<Message> messages;
+            switch ((string)message.type) {
+                case "text":
+                    messages = GetMessagesByText(message.text);
+                    break;
+
+                case "location":
+                    messages = GetPharmacyInfoMessages(message.address);
+                    break;
+
+                case "sticker":
+                    messages = GetStickerMessages();
+                    break;
+
+                default:
+                    Console.WriteLine($"無相符的 message.type: {(string)message.type}, " +
+                        $"requestModelFromLineServer: " +
+                        $"{JsonConvert.SerializeObject(lineRequestModel, Formatting.Indented)}");
+                    messages = GetSingleMessage("未支援此資料格式: " + (string)message.type);
+                    break;
+            }
+            return messages;
         }
 
         /// <summary>
@@ -226,7 +212,7 @@ namespace BL.Services {
                     return messages;
                 }
                 foreach (var maskData in topMaskDatas) {
-                    Location location = GoogleMapProvider.GetGeocoding(maskData.Address).results[0].geometry.location;
+                    Location location = MapService.GetGeocoding(maskData.Address).results[0].geometry.location;
 
                     if (!Double.TryParse(location.lat, out double lat)) {
                         Console.WriteLine($"Ex: Cannot parse {location.lat} to Int.");
@@ -378,5 +364,92 @@ namespace BL.Services {
             }
             return messages;
         }
+
+        #region 處理Line的requestBody
+
+        /// <summary>
+        /// 將requestBody轉換成Line的RequestModel
+        /// </summary>
+        /// <param name="requestBody">Line的將requestBody</param>
+        /// <returns>Line的RequestModel</returns>
+        public RequestModelFromLineServer GetLineRequestModel(dynamic requestBody) {
+            RequestModelFromLineServer lineRequestBody = JsonConvert.
+                DeserializeObject<RequestModelFromLineServer>(requestBody.ToString());
+            foreach (Event @event in lineRequestBody.Events) {
+                switch (@event.message.type.Value) {
+                    case "text":
+                        @event.message = JsonConvert.DeserializeObject<TextMessage>(@event.message.ToString());
+                        break;
+
+                    case "location":
+                        @event.message = JsonConvert.DeserializeObject<LocationMessage>(@event.message.ToString());
+                        break;
+
+                    case "sticker":
+                        @event.message = JsonConvert.DeserializeObject<StickerMessage>(@event.message.ToString());
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            return lineRequestBody;
+        }
+
+        #endregion 處理Line的requestBody
+
+        #region 處理Line的responseBody
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="requestBody"></param>
+        /// <returns></returns>
+        public string PostToLineServer(string replyToken, List<Message> messages) {
+            string result = "";
+            try {
+                string requestUriString = "https://api.line.me/v2/bot/message/reply";
+                string channelAccessToken =
+                    @"tkOO80fthaESrdEWkHn5+gsypQLHd1N3DZcNsWaJku3GeO/
+                    HsFMyCSyU95KnA6p2bTLPFJS0y4joCknQyppqlwaDK34rrQgS
+                    W39EcS0j5WNEZGIlkup0nJ+xlBf+mcw89H1xKAc5Ubd0xA9/Z
+                    9RSIwdB04t89/1O/w1cDnyilFU=";
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUriString);
+                request.Method = "POST";
+                request.Headers.Add("Content-Type", "application/json");
+                request.Headers.Add("Authorization", "Bearer " + channelAccessToken);
+
+                // Write data to requestStream
+                UTF8Encoding encoding = new UTF8Encoding();
+                ReplyMessageRequestBody replyMessageRequestBody =
+                    new ReplyMessageRequestBody(replyToken, messages);
+                string requestBodyStr = JsonConvert.SerializeObject(replyMessageRequestBody, Formatting.Indented);
+                byte[] data = encoding.GetBytes(requestBodyStr);
+                request.ContentLength = data.Length;
+                Stream requestStream = request.GetRequestStream();
+                requestStream.Write(data, 0, data.Length);
+                requestStream.Close();
+
+                // Add 紀錄發至LineServer的requestBody
+                Console.WriteLine($"========== TO LINE SERVER: {requestUriString} ==========");
+                Console.WriteLine($"requestBody:");
+                Console.WriteLine($"{requestBodyStr}");
+                Console.WriteLine($"====================");
+
+                WebResponse response = request.GetResponse();
+                Stream stream = response.GetResponseStream();
+                StreamReader streamReader = new StreamReader(stream);
+                result = streamReader.ReadToEnd();
+            } catch (WebException webEx) {
+                result += "伺服器無回應, " + webEx.ToString();
+                Console.WriteLine($"伺服器無回應, WebException: {webEx}");
+            } catch (Exception ex) {
+                result += "Exception: " + ex.ToString();
+                Console.WriteLine($"Exception: {ex}");
+            }
+            return result;
+        }
+
+        #endregion 處理Line的responseBody
     }
 }

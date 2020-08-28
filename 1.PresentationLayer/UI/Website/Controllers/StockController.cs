@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using BL.Interfaces.TWSE_Stock;
-using BL.Services;
+﻿using BL.Services;
+using BL.Services.Interfaces.TWSE_Stock;
 using Core.Domain.Entities.TWSE_Stock;
 using Core.Domain.Entities.TWSE_Stock.Exchange;
 using Core.Domain.Enums;
 using Core.Domain.Utilities;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Website.Controllers {
 

@@ -3,9 +3,9 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Net;
 
-namespace Core.Domain.ExternalServices.Google {
+namespace BL.Services.Google {
 
-    public class GoogleMapProvider {
+    public class MapService {
         private static readonly string key = "AIzaSyAt8mx-_cf_K7SlutrTWNwuO0g4dPjqMNY";
 
         /// <summary>

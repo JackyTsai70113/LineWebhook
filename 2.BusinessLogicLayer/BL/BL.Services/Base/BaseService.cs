@@ -1,4 +1,4 @@
-﻿using BL.Interfaces.Base;
+﻿using BL.Services.Interfaces.Base;
 using Core.Domain.Utilities;
 
 namespace BL.Services.Base {

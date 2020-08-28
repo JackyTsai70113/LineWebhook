@@ -1,5 +1,5 @@
-﻿using BL.Interfaces.TWSE_Stock;
-using BL.Services.Base;
+﻿using BL.Services.Base;
+using BL.Services.Interfaces.TWSE_Stock;
 using Core.Domain.Entities.TWSE_Stock;
 using Core.Domain.Entities.TWSE_Stock.Exchange;
 using Core.Domain.Enums;
@@ -7,17 +7,12 @@ using DA.Managers.Interfaces.TWSE_Stock;
 using DA.Managers.TWSE_Stock;
 using DA.Repositories.Interfaces.TWSE_Stock;
 using DA.Repositories.TWSE_Stock;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace BL.Services {
 
     public class StockValueEstimationService : BaseService, IStockValueEstimationService {
-
         #region IOC
 
         public StockValueEstimationService() {
