@@ -1,7 +1,6 @@
 using BL.Services;
 using BL.Services.Interfaces;
 using BL.Services.Line;
-using Core.Domain.DTO.ResponseDTO.Line.Messages;
 using isRock.LineBot;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -26,7 +25,7 @@ namespace Website.Controllers {
 
         public LineWebhookController(ILogger<LineWebhookController> logger) {
             _logger = logger;
-            _LineWebhookService = new LineWebhookService();
+            _LineWebhookService = new LineWebhookService(ConfigService.LineChannelAccessToken);
         }
 
         /// <summary>
@@ -44,34 +43,17 @@ namespace Website.Controllers {
                 Bot bot = new Bot(token);
                 //Get  Post RawData
                 string postData = requestBody.ToString();
-                ReceivedMessage receivedMessage = JsonConvert.DeserializeObject<ReceivedMessage>(requestBody.ToString());
-
-                string replyToken2 = receivedMessage.events.FirstOrDefault().replyToken;
-                string message = "你剛才說了 " + receivedMessage.events.FirstOrDefault().message.text;
-                //bot.
-                ////取得LineBot接收到的訊息
-                var ReceivedMessage = bot.ReplyMessage(replyToken2, message);
-                Console.WriteLine($"ReceivedMessage: {ReceivedMessage}");
-                return new OkResult();
-                ////發送訊息
-                //var ret = LineBotHelper.SendMessage(
-                //    new List<string>() { ReceivedMessage.result[0].content.from },
-                //        "你剛才說了 " + ReceivedMessage.result[0].content.text);
-
-                //如果給200，LineBot訊息就不會重送
-                //return Request.CreateResponse(HttpStatusCode.OK, ret);
 
                 //處理requestModel
-                RequestModelFromLineServer lineRequestModel =
-                    _LineWebhookService.GetLineRequestModel(requestBody);
+                ReceivedMessage receivedMessage = Utility.Parsing(postData);
 
                 Console.WriteLine($"========== From LINE SERVER ==========");
                 Console.WriteLine($"requestModel:");
-                Console.WriteLine($"{JsonConvert.SerializeObject(lineRequestModel, Formatting.Indented)}");
+                Console.WriteLine($"{JsonConvert.SerializeObject(receivedMessage, Formatting.Indented)}");
                 Console.WriteLine($"====================");
 
-                string replyToken = lineRequestModel.Events[0].replyToken;
-                List<Core.Domain.DTO.ResponseDTO.Line.Messages.Message> messages = _LineWebhookService.GetReplyMessages(lineRequestModel);
+                string replyToken = receivedMessage.events.FirstOrDefault().replyToken;
+                List<MessageBase> messages = _LineWebhookService.GetReplyMessages(receivedMessage);
                 string result = _LineWebhookService.ResponseToLineServer(replyToken, messages);
 
                 return Content(requestBody.ToString() + "\n" + result);
