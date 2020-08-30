@@ -36,11 +36,6 @@ namespace Website.Controllers {
         [HttpPost]
         public IActionResult Index([FromBody] dynamic requestBody) {
             try {
-                Console.WriteLine(requestBody.ToString());
-                //Channel Access Token
-                var token = ConfigService.LineChannelAccessToken;
-                //create bot instance
-                Bot bot = new Bot(token);
                 //Get  Post RawData
                 string postData = requestBody.ToString();
 

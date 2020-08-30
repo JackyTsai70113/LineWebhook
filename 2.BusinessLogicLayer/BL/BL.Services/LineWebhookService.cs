@@ -42,14 +42,15 @@ namespace BL.Services {
         public string ResponseToLineServer(string replyToken, List<MessageBase> messages) {
             try {
                 #region Post到Line
+                Console.Write($"messages: {JsonConvert.SerializeObject(messages)}");
                 Bot bot = new Bot(_token);
                 string result = bot.ReplyMessage(replyToken, messages);
-
                 #endregion Post到Line
 
                 #region 若不成功則Post debug 訊息到Line
-
+                Console.Write($"result: {result}");
                 if (result != "{}") {
+                    Console.Write(result);
                     string debugStr = $"messages:\n" +
                         $"{JsonConvert.SerializeObject(messages, Formatting.Indented)}\n";
                     if (result.StartsWith("伺服器無回應")) {
@@ -60,7 +61,6 @@ namespace BL.Services {
                     var debugMessages = GetSingleMessage(debugStr);
                     bot.ReplyMessage(replyToken, debugMessages);
                 }
-
                 #endregion 若不成功則Post debug 訊息到Line
 
                 return result;
@@ -79,7 +79,7 @@ namespace BL.Services {
         /// <param name="lineRequestModel"></param>
         /// <returns>Line回應訊息</returns>
         public List<MessageBase> GetReplyMessages(ReceivedMessage lineRequestModel) {
-            Message message = lineRequestModel.events[0].message;
+            Message message = lineRequestModel.events.FirstOrDefault().message;
             List<MessageBase> messages;
             switch ((string)message.type) {
                 case "text":
@@ -123,7 +123,7 @@ namespace BL.Services {
                     messages = GetImageMessages(text.Substring(1));
                 } else if (text.StartsWith("cd ")) {
                     string vocabulary = text.Split(' ')[1];
-                    messages = GetCDMessages(vocabulary);
+                    messages = GetCambridgeDictionaryMessages(vocabulary);
                 } else {
                     messages = GetSingleMessage(text);
                 }
@@ -149,8 +149,9 @@ namespace BL.Services {
             Info info = exchangeRates[0].SubInfo[0];
             StringBuilder sb = new StringBuilder();
             sb.Append("美金報價\n");
+            sb.Append("---------------------\n");
             sb.Append($"\t銀行買入：{info.DataValue2}\n");
-            sb.Append($"\t銀行賣出：{info.DataValue3}\n");
+            sb.Append($"\t銀行賣出：{info.DataValue3}");
 
             List<MessageBase> messages = new List<MessageBase> {
                 new TextMessage(sb.ToString())
@@ -227,7 +228,7 @@ namespace BL.Services {
         /// </summary>
         /// <param name="vocabulary">單字</param>
         /// <returns>訊息列表</returns>
-        private List<MessageBase> GetCDMessages(string vocabulary) {
+        private List<MessageBase> GetCambridgeDictionaryMessages(string vocabulary) {
             List<MessageBase> messages = new List<MessageBase>();
             try {
                 List<Translation> translations = CambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary);

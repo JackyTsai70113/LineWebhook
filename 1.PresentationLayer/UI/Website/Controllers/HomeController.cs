@@ -22,13 +22,13 @@ namespace Website.Controllers {
         }
 
         public IActionResult Test() {
-            //傳送對象
-            var toUserID = ConfigService.LineJ_userId;
-            //Channel Access Token
-            var token = ConfigService.LineChannelAccessToken;
-            //create bot instance
-            Bot bot = new Bot(token);
-            //send message
+            ////傳送對象
+            //var toUserID = ConfigService.LineJ_userId;
+            ////Channel Access Token
+            //var token = ConfigService.LineChannelAccessToken;
+            ////create bot instance
+            //Bot bot = new Bot(token);
+            ////send message
             //bot.PushMessage(toUserID, "Hello test");
             return new OkResult();
         }

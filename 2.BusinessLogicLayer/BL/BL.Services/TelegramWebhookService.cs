@@ -58,16 +58,16 @@ namespace BL.Services {
             //Console.WriteLine(RequestUtility.GetStringFromGetRequest(uri));
         }
 
-        private async void Bot_OnMessage(object sender, MessageEventArgs e) {
-            if (e.Message.Text != null) {
-                Console.WriteLine($"Received a text message in chat {e.Message.Chat.Id}.");
+        //private async void Bot_OnMessage(object sender, MessageEventArgs e) {
+        //    if (e.Message.Text != null) {
+        //        Console.WriteLine($"Received a text message in chat {e.Message.Chat.Id}.");
 
-                await botClient.SendTextMessageAsync(
-                  chatId: e.Message.Chat,
-                  text: "You said:\n" + e.Message.Text
-                );
-            }
-        }
+        //        await botClient.SendTextMessageAsync(
+        //          chatId: e.Message.Chat,
+        //          text: "You said:\n" + e.Message.Text
+        //        );
+        //    }
+        //}
 
         private string GetMe() {
             var botClient = new TelegramBotClient("1253249749:AAEhPVK8fvahMGCKee_ZtG8fOivf4CjKYsY");
