@@ -1,0 +1,273 @@
+2020-08-30 15:19:55.843 +08:00 [INF] Main
+2020-08-30 15:19:56.309 +08:00 [INF] User profile is available. Using '/Users/tsaimengche/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2020-08-30 15:19:56.509 +08:00 [INF] Now listening on: https://localhost:5001
+2020-08-30 15:19:56.509 +08:00 [INF] Now listening on: http://localhost:5000
+2020-08-30 15:19:56.509 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-08-30 15:19:56.510 +08:00 [INF] Hosting environment: Development
+2020-08-30 15:19:56.510 +08:00 [INF] Content root path: /Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/1.PresentationLayer/UI/Website
+2020-08-30 15:21:57.933 +08:00 [INF] Request starting HTTP/1.1 POST https://localhost:5001/TelegramWebhook/notify application/json 33
+2020-08-30 15:21:57.966 +08:00 [INF] Executing endpoint 'Website.Controllers.TelegramWebhookController.Notify (Website)'
+2020-08-30 15:21:58.013 +08:00 [INF] Route matched with {action = "Notify", controller = "TelegramWebhook"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult Notify(Website.Controllers.NotifyModel) on controller Website.Controllers.TelegramWebhookController (Website).
+2020-08-30 15:21:59.822 +08:00 [INF] Executing HttpStatusCodeResult, setting HTTP status code 200
+2020-08-30 15:21:59.828 +08:00 [INF] Executed action Website.Controllers.TelegramWebhookController.Notify (Website) in 1810.905ms
+2020-08-30 15:21:59.829 +08:00 [INF] Executed endpoint 'Website.Controllers.TelegramWebhookController.Notify (Website)'
+2020-08-30 15:21:59.830 +08:00 [INF] HTTP POST /TelegramWebhook/notify responded 200 in 1889.8473 ms
+2020-08-30 15:21:59.834 +08:00 [INF] Request finished in 1903.8404ms 200 
+2020-08-30 15:22:30.544 +08:00 [INF] Request starting HTTP/1.1 POST https://localhost:5001/TelegramWebhook/notify application/json 33
+2020-08-30 15:22:30.547 +08:00 [INF] Executing endpoint 'Website.Controllers.TelegramWebhookController.Notify (Website)'
+2020-08-30 15:22:30.548 +08:00 [INF] Route matched with {action = "Notify", controller = "TelegramWebhook"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult Notify(Website.Controllers.NotifyModel) on controller Website.Controllers.TelegramWebhookController (Website).
+2020-08-30 15:22:32.043 +08:00 [INF] Executing HttpStatusCodeResult, setting HTTP status code 200
+2020-08-30 15:22:32.045 +08:00 [INF] Executed action Website.Controllers.TelegramWebhookController.Notify (Website) in 1496.413ms
+2020-08-30 15:22:32.046 +08:00 [INF] Executed endpoint 'Website.Controllers.TelegramWebhookController.Notify (Website)'
+2020-08-30 15:22:32.046 +08:00 [INF] HTTP POST /TelegramWebhook/notify responded 200 in 1501.2539 ms
+2020-08-30 15:22:32.049 +08:00 [INF] Request finished in 1504.4409ms 200 
+2020-08-30 15:24:54.595 +08:00 [INF] Application is shutting down...
+:00 [INF] User profile is available. Using '/Users/tsaimengche/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2020-08-30 15:24:00.805 +08:00 [FTL] Unable to start Kestrel.
+System.IO.IOException: Failed to bind to address https://127.0.0.1:5001: address already in use.
+ ---> Microsoft.AspNetCore.Connections.AddressInUseException: Address already in use
+ ---> System.Net.Sockets.SocketException (48): Address already in use
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServer.<>c__DisplayClass21_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(IServerAddressesFeature addresses, KestrelServerOptions serverOptions, ILogger logger, Func`2 createBinding)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServer.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+2020-08-30 15:24:49.341 +08:00 [INF] Main
+2020-08-30 15:24:49.595 +08:00 [INF] User profile is available. Using '/Users/tsaimengche/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2020-08-30 15:24:49.746 +08:00 [FTL] Unable to start Kestrel.
+System.IO.IOException: Failed to bind to address https://127.0.0.1:5001: address already in use.
+ ---> Microsoft.AspNetCore.Connections.AddressInUseException: Address already in use
+ ---> System.Net.Sockets.SocketException (48): Address already in use
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServer.<>c__DisplayClass21_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(IServerAddressesFeature addresses, KestrelServerOptions serverOptions, ILogger logger, Func`2 createBinding)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServer.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+2020-08-30 15:25:24.905 +08:00 [INF] Main
+2020-08-30 15:25:25.317 +08:00 [INF] User profile is available. Using '/Users/tsaimengche/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2020-08-30 15:25:25.669 +08:00 [INF] Now listening on: https://localhost:5001
+2020-08-30 15:25:25.670 +08:00 [INF] Now listening on: http://localhost:5000
+2020-08-30 15:25:25.671 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-08-30 15:25:25.671 +08:00 [INF] Hosting environment: Development
+2020-08-30 15:25:25.671 +08:00 [INF] Content root path: /Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/1.PresentationLayer/UI/Website
+2020-08-30 15:26:53.560 +08:00 [INF] Request starting HTTP/1.1 POST https://localhost:5001/TelegramWebhook/notify application/json 33
+2020-08-30 15:26:53.618 +08:00 [INF] Executing endpoint 'Website.Controllers.TelegramWebhookController.Notify (Website)'
+2020-08-30 15:26:53.671 +08:00 [INF] Route matched with {action = "Notify", controller = "TelegramWebhook"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult Notify(Website.Controllers.NotifyModel) on controller Website.Controllers.TelegramWebhookController (Website).
+2020-08-30 15:26:55.959 +08:00 [INF] Executing HttpStatusCodeResult, setting HTTP status code 200
+2020-08-30 15:26:55.973 +08:00 [INF] Executed action Website.Controllers.TelegramWebhookController.Notify (Website) in 2293.2634ms
+2020-08-30 15:26:55.974 +08:00 [INF] Executed endpoint 'Website.Controllers.TelegramWebhookController.Notify (Website)'
+2020-08-30 15:26:55.976 +08:00 [INF] HTTP POST /TelegramWebhook/notify responded 200 in 2405.0104 ms
+2020-08-30 15:26:55.982 +08:00 [INF] Request finished in 2424.3161ms 200 
+2020-08-30 15:27:21.523 +08:00 [INF] Application is shutting down...
+2020-08-30 15:27:30.436 +08:00 [INF] Main
+2020-08-30 15:27:30.679 +08:00 [INF] User profile is available. Using '/Users/tsaimengche/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2020-08-30 15:27:30.936 +08:00 [INF] Now listening on: https://localhost:5001
+2020-08-30 15:27:30.937 +08:00 [INF] Now listening on: http://localhost:5000
+2020-08-30 15:27:30.938 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-08-30 15:27:30.939 +08:00 [INF] Hosting environment: Development
+2020-08-30 15:27:30.939 +08:00 [INF] Content root path: /Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/1.PresentationLayer/UI/Website
+2020-08-30 15:29:10.709 +08:00 [INF] Application is shutting down...
+2020-08-30 15:29:18.980 +08:00 [INF] Main
+2020-08-30 15:29:19.254 +08:00 [INF] User profile is available. Using '/Users/tsaimengche/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2020-08-30 15:29:19.409 +08:00 [INF] Now listening on: https://localhost:5001
+2020-08-30 15:29:19.410 +08:00 [INF] Now listening on: http://localhost:5000
+2020-08-30 15:29:19.410 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-08-30 15:29:19.410 +08:00 [INF] Hosting environment: Development
+2020-08-30 15:29:19.411 +08:00 [INF] Content root path: /Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/1.PresentationLayer/UI/Website
+2020-08-30 15:29:54.415 +08:00 [INF] Application is shutting down...
+2020-08-30 15:30:04.261 +08:00 [INF] Main
+2020-08-30 15:30:04.493 +08:00 [INF] User profile is available. Using '/Users/tsaimengche/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2020-08-30 15:30:04.644 +08:00 [INF] Now listening on: https://localhost:5001
+2020-08-30 15:30:04.644 +08:00 [INF] Now listening on: http://localhost:5000
+2020-08-30 15:30:04.644 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-08-30 15:30:04.644 +08:00 [INF] Hosting environment: Development
+2020-08-30 15:30:04.644 +08:00 [INF] Content root path: /Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/1.PresentationLayer/UI/Website
+2020-08-30 15:30:41.724 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/  
+2020-08-30 15:30:41.759 +08:00 [INF] Executing endpoint 'Website.Controllers.HomeController.Index (Website)'
+2020-08-30 15:30:41.809 +08:00 [INF] Route matched with {action = "Index", controller = "Home"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller Website.Controllers.HomeController (Website).
+2020-08-30 15:30:42.476 +08:00 [INF] Executing ViewResult, running view Index.
+2020-08-30 15:30:42.632 +08:00 [INF] Executed ViewResult - view Index executed in 157.5011ms.
+2020-08-30 15:30:42.635 +08:00 [INF] Executed action Website.Controllers.HomeController.Index (Website) in 825.3912ms
+2020-08-30 15:30:42.637 +08:00 [INF] Executed endpoint 'Website.Controllers.HomeController.Index (Website)'
+2020-08-30 15:30:42.638 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/lib/bootstrap/dist/css/bootstrap.min.css  
+2020-08-30 15:30:42.639 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/js/site.js?v=BxFAw9RUJ1E4NycpKEjCNDeoSvr4RPHixdBq5wDnkeY  
+2020-08-30 15:30:42.639 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/lib/jquery/dist/jquery.min.js  
+2020-08-30 15:30:42.640 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/css/site.css  
+2020-08-30 15:30:42.640 +08:00 [INF] HTTP GET / responded 200 in 908.8563 ms
+2020-08-30 15:30:42.644 +08:00 [INF] Request finished in 924.9922ms 200 text/html; charset=utf-8
+2020-08-30 15:30:42.645 +08:00 [INF] The file /css/site.css was not modified
+2020-08-30 15:30:42.646 +08:00 [INF] HTTP GET /css/site.css responded 304 in 6.2880 ms
+2020-08-30 15:30:42.646 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/lib/bootstrap/dist/js/bootstrap.bundle.min.js  
+2020-08-30 15:30:42.647 +08:00 [INF] The file /lib/bootstrap/dist/css/bootstrap.min.css was not modified
+2020-08-30 15:30:42.647 +08:00 [INF] The file /js/site.js was not modified
+2020-08-30 15:30:42.647 +08:00 [INF] The file /lib/jquery/dist/jquery.min.js was not modified
+2020-08-30 15:30:42.647 +08:00 [INF] HTTP GET /js/site.js?v=BxFAw9RUJ1E4NycpKEjCNDeoSvr4RPHixdBq5wDnkeY responded 304 in 7.7798 ms
+2020-08-30 15:30:42.647 +08:00 [INF] Request finished in 7.926ms 304 text/css
+2020-08-30 15:30:42.647 +08:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 304 in 7.8165 ms
+2020-08-30 15:30:42.647 +08:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 304 in 8.5840 ms
+2020-08-30 15:30:42.647 +08:00 [INF] The file /lib/bootstrap/dist/js/bootstrap.bundle.min.js was not modified
+2020-08-30 15:30:42.649 +08:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 304 in 1.9174 ms
+2020-08-30 15:30:42.648 +08:00 [INF] Request finished in 9.6422ms 304 text/css
+2020-08-30 15:30:42.647 +08:00 [INF] Request finished in 8.4595ms 304 application/javascript
+2020-08-30 15:30:42.648 +08:00 [INF] Request finished in 8.7204ms 304 application/javascript
+2020-08-30 15:30:42.652 +08:00 [INF] Request finished in 5.0058ms 304 application/javascript
+2020-08-30 15:30:42.858 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/favicon.ico  
+2020-08-30 15:30:42.881 +08:00 [INF] Sending file. Request path: '/favicon.ico'. Physical path: '/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/1.PresentationLayer/UI/Website/wwwroot/favicon.ico'
+2020-08-30 15:30:42.882 +08:00 [INF] HTTP GET /favicon.ico responded 200 in 23.6509 ms
+2020-08-30 15:30:42.883 +08:00 [INF] Request finished in 25.8947ms 200 image/x-icon
+2020-08-30 15:30:42.890 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/apple-touch-icon-precomposed.png  
+2020-08-30 15:30:42.891 +08:00 [INF] HTTP GET /apple-touch-icon-precomposed.png responded 404 in 1.5168 ms
+2020-08-30 15:30:42.892 +08:00 [INF] Request finished in 2.2364ms 404 
+2020-08-30 15:30:42.897 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/apple-touch-icon.png  
+2020-08-30 15:30:42.898 +08:00 [INF] HTTP GET /apple-touch-icon.png responded 404 in 0.1808 ms
+2020-08-30 15:30:42.898 +08:00 [INF] Request finished in 1.1865ms 404 
+2020-08-30 15:31:39.996 +08:00 [INF] Request starting HTTP/1.1 POST https://localhost:5001/TelegramWebhook/notify application/json 33
+2020-08-30 15:31:39.999 +08:00 [INF] Executing endpoint 'Website.Controllers.TelegramWebhookController.Notify (Website)'
+2020-08-30 15:31:40.013 +08:00 [INF] Route matched with {action = "Notify", controller = "TelegramWebhook"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult Notify(Website.Controllers.NotifyModel) on controller Website.Controllers.TelegramWebhookController (Website).
+2020-08-30 15:31:40.040 +08:00 [INF] Executing HttpStatusCodeResult, setting HTTP status code 200
+2020-08-30 15:31:40.041 +08:00 [INF] Executed action Website.Controllers.TelegramWebhookController.Notify (Website) in 27.3732ms
+2020-08-30 15:31:40.041 +08:00 [INF] Executed endpoint 'Website.Controllers.TelegramWebhookController.Notify (Website)'
+2020-08-30 15:31:40.041 +08:00 [INF] HTTP POST /TelegramWebhook/notify responded 200 in 43.9210 ms
+2020-08-30 15:31:40.042 +08:00 [INF] Request finished in 46.3015ms 200 
+2020-08-30 15:59:16.782 +08:00 [INF] Application is shutting down...
+2020-08-30 15:59:29.447 +08:00 [INF] Main
+2020-08-30 15:59:29.698 +08:00 [INF] User profile is available. Using '/Users/tsaimengche/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2020-08-30 15:59:29.853 +08:00 [INF] Now listening on: https://localhost:5001
+2020-08-30 15:59:29.853 +08:00 [INF] Now listening on: http://localhost:5000
+2020-08-30 15:59:29.854 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-08-30 15:59:29.854 +08:00 [INF] Hosting environment: Development
+2020-08-30 15:59:29.855 +08:00 [INF] Content root path: /Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/1.PresentationLayer/UI/Website
+2020-08-30 16:03:09.011 +08:00 [INF] Application is shutting down...
+2020-08-30 16:04:10.060 +08:00 [INF] Main
+2020-08-30 16:04:10.334 +08:00 [INF] User profile is available. Using '/Users/tsaimengche/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2020-08-30 16:04:10.512 +08:00 [INF] Now listening on: https://localhost:5001
+2020-08-30 16:04:10.512 +08:00 [INF] Now listening on: http://localhost:5000
+2020-08-30 16:04:10.513 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-08-30 16:04:10.513 +08:00 [INF] Hosting environment: Development
+2020-08-30 16:04:10.513 +08:00 [INF] Content root path: /Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/1.PresentationLayer/UI/Website
+2020-08-30 17:02:12.089 +08:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/linewebhook/notify application/x-www-form-urlencoded 70
+2020-08-30 17:02:12.108 +08:00 [INF] HTTP POST /linewebhook/notify responded 307 in 11.4898 ms
+2020-08-30 17:02:12.119 +08:00 [INF] Request finished in 32.4751ms 307 
+2020-08-30 17:02:12.507 +08:00 [INF] Request starting HTTP/1.1 POST https://localhost:5001/linewebhook/notify application/x-www-form-urlencoded 70
+2020-08-30 17:02:12.535 +08:00 [INF] Executing endpoint 'Website.Controllers.LineWebhookController.Notify (Website)'
+2020-08-30 17:02:12.580 +08:00 [INF] Route matched with {action = "Notify", controller = "LineWebhook"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Notify(System.Object) on controller Website.Controllers.LineWebhookController (Website).
+2020-08-30 17:02:12.604 +08:00 [INF] Executing ObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ProblemDetails'.
+2020-08-30 17:02:12.616 +08:00 [INF] Executed action Website.Controllers.LineWebhookController.Notify (Website) in 31.1476ms
+2020-08-30 17:02:12.616 +08:00 [INF] Executed endpoint 'Website.Controllers.LineWebhookController.Notify (Website)'
+2020-08-30 17:02:12.617 +08:00 [INF] HTTP POST /linewebhook/notify responded 415 in 108.7777 ms
+2020-08-30 17:02:12.617 +08:00 [INF] Request finished in 110.0031ms 415 application/problem+json; charset=utf-8
+2020-08-30 17:02:36.640 +08:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/linewebhook/notify application/x-www-form-urlencoded 70
+2020-08-30 17:02:36.640 +08:00 [INF] HTTP POST /linewebhook/notify responded 307 in 0.1182 ms
+2020-08-30 17:02:36.641 +08:00 [INF] Request finished in 1.402ms 307 
+2020-08-30 17:02:36.961 +08:00 [INF] Request starting HTTP/1.1 POST https://localhost:5001/linewebhook/notify application/x-www-form-urlencoded 70
+2020-08-30 17:02:36.964 +08:00 [INF] Executing endpoint 'Website.Controllers.LineWebhookController.Notify (Website)'
+2020-08-30 17:02:36.965 +08:00 [INF] Route matched with {action = "Notify", controller = "LineWebhook"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Notify(System.Object) on controller Website.Controllers.LineWebhookController (Website).
+2020-08-30 17:02:36.967 +08:00 [INF] Executing ObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ProblemDetails'.
+2020-08-30 17:02:36.968 +08:00 [INF] Executed action Website.Controllers.LineWebhookController.Notify (Website) in 2.534ms
+2020-08-30 17:02:36.969 +08:00 [INF] Executed endpoint 'Website.Controllers.LineWebhookController.Notify (Website)'
+2020-08-30 17:02:36.972 +08:00 [INF] HTTP POST /linewebhook/notify responded 415 in 10.1101 ms
+2020-08-30 17:02:36.972 +08:00 [INF] Request finished in 11.7263ms 415 application/problem+json; charset=utf-8
+2020-08-30 17:04:45.123 +08:00 [INF] Application is shutting down...
+2020-08-30 17:06:26.168 +08:00 [INF] Main
+2020-08-30 17:06:26.409 +08:00 [INF] User profile is available. Using '/Users/tsaimengche/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2020-08-30 17:06:26.625 +08:00 [INF] Now listening on: https://localhost:5001
+2020-08-30 17:06:26.625 +08:00 [INF] Now listening on: http://localhost:5000
+2020-08-30 17:06:26.626 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-08-30 17:06:26.627 +08:00 [INF] Hosting environment: Development
+2020-08-30 17:06:26.627 +08:00 [INF] Content root path: /Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/1.PresentationLayer/UI/Website
+2020-08-30 17:07:14.304 +08:00 [INF] Request starting HTTP/1.1 POST https://localhost:5001/TelegramWebhook/notify application/json 33
+2020-08-30 17:07:14.345 +08:00 [INF] Executing endpoint 'Website.Controllers.TelegramWebhookController.Notify (Website)'
+2020-08-30 17:07:14.397 +08:00 [INF] Route matched with {action = "Notify", controller = "TelegramWebhook"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult Notify(Website.Controllers.NotifyModel) on controller Website.Controllers.TelegramWebhookController (Website).
+2020-08-30 17:07:14.433 +08:00 [INF] Executing HttpStatusCodeResult, setting HTTP status code 200
+2020-08-30 17:07:14.444 +08:00 [INF] Executed action Website.Controllers.TelegramWebhookController.Notify (Website) in 40.0046ms
+2020-08-30 17:07:14.445 +08:00 [INF] Executed endpoint 'Website.Controllers.TelegramWebhookController.Notify (Website)'
+2020-08-30 17:07:14.446 +08:00 [INF] HTTP POST /TelegramWebhook/notify responded 200 in 134.1551 ms
+2020-08-30 17:07:14.454 +08:00 [INF] Request finished in 157.5531ms 200 
+2020-08-30 17:08:49.206 +08:00 [INF] Application is shutting down...
+2020-08-30 17:08:57.875 +08:00 [INF] Main
+2020-08-30 17:08:58.123 +08:00 [INF] User profile is available. Using '/Users/tsaimengche/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2020-08-30 17:08:58.437 +08:00 [INF] Now listening on: https://localhost:5001
+2020-08-30 17:08:58.441 +08:00 [INF] Now listening on: http://localhost:5000
+2020-08-30 17:08:58.443 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-08-30 17:08:58.443 +08:00 [INF] Hosting environment: Development
+2020-08-30 17:08:58.444 +08:00 [INF] Content root path: /Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/1.PresentationLayer/UI/Website
+2020-08-30 17:09:01.217 +08:00 [INF] Request starting HTTP/1.1 POST https://localhost:5001/TelegramWebhook/notify application/json 33
+2020-08-30 17:09:01.273 +08:00 [INF] Executing endpoint 'Website.Controllers.TelegramWebhookController.Notify (Website)'
+2020-08-30 17:09:01.332 +08:00 [INF] Route matched with {action = "Notify", controller = "TelegramWebhook"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult Notify(Website.Controllers.NotifyModel) on controller Website.Controllers.TelegramWebhookController (Website).
+2020-08-30 17:09:01.357 +08:00 [INF] Executing HttpStatusCodeResult, setting HTTP status code 200
+2020-08-30 17:09:01.364 +08:00 [INF] Executed action Website.Controllers.TelegramWebhookController.Notify (Website) in 27.4007ms
+2020-08-30 17:09:01.365 +08:00 [INF] Executed endpoint 'Website.Controllers.TelegramWebhookController.Notify (Website)'
+2020-08-30 17:09:01.367 +08:00 [INF] HTTP POST /TelegramWebhook/notify responded 200 in 140.0949 ms
+2020-08-30 17:09:01.370 +08:00 [INF] Request finished in 157.2971ms 200 
+2020-08-30 17:10:53.920 +08:00 [INF] Request starting HTTP/1.1 POST https://localhost:5001/linewebhook/notify application/json 620
+2020-08-30 17:10:53.922 +08:00 [INF] Executing endpoint 'Website.Controllers.LineWebhookController.Notify (Website)'
+2020-08-30 17:10:53.928 +08:00 [INF] Route matched with {action = "Notify", controller = "LineWebhook"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Notify(System.Object) on controller Website.Controllers.LineWebhookController (Website).
+2020-08-30 17:10:53.994 +08:00 [INF] ================================
+2020-08-30 17:10:53.994 +08:00 [INF] {
+    "Destination": "Ud38795456c69751f9ce9d62ce9ffa1e1",
+    "Events": [
+        {
+            "type": "message",
+            "replyToken": "fa905a019f324440b794b9e5f40a361c",
+            "source": {
+                "userId": "Ue1ecd519348372f219c408b4b736297c",
+                "type": "user"
+            },
+            "timestamp": 1596296537571,
+            "mode": "active",
+            "message": {
+                "type": "image",
+                "id": "12423853459537",
+                "contentProvider": {
+                    "type": "line"
+                }
+            }
+        }
+    ]
+}
+2020-08-30 17:10:53.995 +08:00 [INF] Executing HttpStatusCodeResult, setting HTTP status code 200
+2020-08-30 17:10:53.995 +08:00 [INF] Executed action Website.Controllers.LineWebhookController.Notify (Website) in 67.4561ms
+2020-08-30 17:10:53.996 +08:00 [INF] Executed endpoint 'Website.Controllers.LineWebhookController.Notify (Website)'
+2020-08-30 17:10:53.996 +08:00 [INF] HTTP POST /linewebhook/notify responded 200 in 75.5820 ms
+2020-08-30 17:10:53.997 +08:00 [INF] Request finished in 76.8479ms 200 
+2020-08-30 17:12:16.904 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/linewebhook/notify  
+2020-08-30 17:12:16.906 +08:00 [INF] Executing endpoint '405 HTTP Method Not Supported'
+2020-08-30 17:12:16.906 +08:00 [INF] Executed endpoint '405 HTTP Method Not Supported'
+2020-08-30 17:12:16.906 +08:00 [INF] HTTP GET /linewebhook/notify responded 405 in 1.7144 ms
+2020-08-30 17:12:16.907 +08:00 [INF] Request finished in 3.3518ms 405 
+2020-08-30 17:14:47.021 +08:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/value  
+2020-08-30 17:14:47.022 +08:00 [INF] HTTP GET /api/value responded 404 in 0.1630 ms
+2020-08-30 17:14:47.022 +08:00 [INF] Request finished in 1.189ms 404 
+2020-08-30 17:16:49.126 +08:00 [INF] Request starting HTTP/1.1 POST http://localhost:5000/linewebhook/notify application/x-www-form-urlencoded 70
+2020-08-30 17:16:49.132 +08:00 [INF] HTTP POST /linewebhook/notify responded 307 in 4.8941 ms
+2020-08-30 17:16:49.133 +08:00 [INF] Request finished in 7.6552ms 307 
+2020-08-30 17:16:49.478 +08:00 [INF] Request starting HTTP/1.1 POST https://localhost:5001/linewebhook/notify application/x-www-form-urlencoded 70
+2020-08-30 17:16:49.479 +08:00 [INF] Executing endpoint 'Website.Controllers.LineWebhookController.Notify (Website)'
+2020-08-30 17:16:49.481 +08:00 [INF] Route matched with {action = "Notify", controller = "LineWebhook"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Notify(System.Object) on controller Website.Controllers.LineWebhookController (Website).
+2020-08-30 17:16:49.497 +08:00 [INF] Executing ObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ProblemDetails'.
+2020-08-30 17:16:49.500 +08:00 [INF] Executed action Website.Controllers.LineWebhookController.Notify (Website) in 18.6105ms
+2020-08-30 17:16:49.500 +08:00 [INF] Executed endpoint 'Website.Controllers.LineWebhookController.Notify (Website)'
+2020-08-30 17:16:49.501 +08:00 [INF] HTTP POST /linewebhook/notify responded 415 in 22.1889 ms
+2020-08-30 17:16:49.501 +08:00 [INF] Request finished in 23.5402ms 415 application/problem+json; charset=utf-8
