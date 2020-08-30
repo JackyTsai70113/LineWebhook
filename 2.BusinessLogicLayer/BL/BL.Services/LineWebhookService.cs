@@ -44,7 +44,8 @@ namespace BL.Services {
                 #region Post到Line
                 Console.Write($"messages: {JsonConvert.SerializeObject(messages)}");
                 Bot bot = new Bot(_token);
-                string result = bot.ReplyMessage(replyToken, messages);
+                string result = PostToLineServer(replyToken, messages);
+                //string result = bot.ReplyMessage(replyToken, messages);
                 #endregion Post到Line
 
                 #region 若不成功則Post debug 訊息到Line
@@ -350,51 +351,77 @@ namespace BL.Services {
         /// </summary>
         /// <param name="requestBody"></param>
         /// <returns></returns>
-        //public string PostToLineServer(string replyToken, List<Message> messages) {
-        //    string result = "";
-        //    try {
-        //        string requestUriString = "https://api.line.me/v2/bot/message/reply";
-        //        string channelAccessToken =
-        //            @"tkOO80fthaESrdEWkHn5+gsypQLHd1N3DZcNsWaJku3GeO/
-        //            HsFMyCSyU95KnA6p2bTLPFJS0y4joCknQyppqlwaDK34rrQgS
-        //            W39EcS0j5WNEZGIlkup0nJ+xlBf+mcw89H1xKAc5Ubd0xA9/Z
-        //            9RSIwdB04t89/1O/w1cDnyilFU=";
-        //        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUriString);
-        //        request.Method = "POST";
-        //        request.Headers.Add("Content-Type", "application/json");
-        //        request.Headers.Add("Authorization", "Bearer " + channelAccessToken);
+        public string PostToLineServer(string replyToken, List<MessageBase> messages) {
+            string result = "";
+            try {
+                string requestUriString = "https://api.line.me/v2/bot/message/reply";
+                string channelAccessToken =
+                    @"tkOO80fthaESrdEWkHn5+gsypQLHd1N3DZcNsWaJku3GeO/
+                    HsFMyCSyU95KnA6p2bTLPFJS0y4joCknQyppqlwaDK34rrQgS
+                    W39EcS0j5WNEZGIlkup0nJ+xlBf+mcw89H1xKAc5Ubd0xA9/Z
+                    9RSIwdB04t89/1O/w1cDnyilFU=";
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUriString);
+                request.Method = "POST";
+                request.Headers.Add("Content-Type", "application/json");
+                request.Headers.Add("Authorization", "Bearer " + channelAccessToken);
 
-        //        // Write data to requestStream
-        //        UTF8Encoding encoding = new UTF8Encoding();
-        //        ReplyMessageRequestBody replyMessageRequestBody =
-        //            new ReplyMessageRequestBody(replyToken, messages);
-        //        string requestBodyStr = JsonConvert.SerializeObject(replyMessageRequestBody, Formatting.Indented);
-        //        byte[] data = encoding.GetBytes(requestBodyStr);
-        //        request.ContentLength = data.Length;
-        //        Stream requestStream = request.GetRequestStream();
-        //        requestStream.Write(data, 0, data.Length);
-        //        requestStream.Close();
+                // Write data to requestStream
+                UTF8Encoding encoding = new UTF8Encoding();
+                ReplyMessageRequestBody replyMessageRequestBody =
+                    new ReplyMessageRequestBody(replyToken, messages);
+                string requestBodyStr = JsonConvert.SerializeObject(replyMessageRequestBody, Formatting.Indented);
+                byte[] data = encoding.GetBytes(requestBodyStr);
+                request.ContentLength = data.Length;
+                Stream requestStream = request.GetRequestStream();
+                requestStream.Write(data, 0, data.Length);
+                requestStream.Close();
 
-        //        // Add 紀錄發至LineServer的requestBody
-        //        Console.WriteLine($"========== TO LINE SERVER: {requestUriString} ==========");
-        //        Console.WriteLine($"requestBody:");
-        //        Console.WriteLine($"{requestBodyStr}");
-        //        Console.WriteLine($"====================");
+                // Add 紀錄發至LineServer的requestBody
+                Console.WriteLine($"========== TO LINE SERVER: {requestUriString} ==========");
+                Console.WriteLine($"requestBody:");
+                Console.WriteLine($"{requestBodyStr}");
+                Console.WriteLine($"====================");
 
-        //        WebResponse response = request.GetResponse();
-        //        Stream stream = response.GetResponseStream();
-        //        StreamReader streamReader = new StreamReader(stream);
-        //        result = streamReader.ReadToEnd();
-        //    } catch (WebException webEx) {
-        //        result += "伺服器無回應, " + webEx.ToString();
-        //        Console.WriteLine($"伺服器無回應, WebException: {webEx}");
-        //    } catch (Exception ex) {
-        //        result += "Exception: " + ex.ToString();
-        //        Console.WriteLine($"Exception: {ex}");
-        //    }
-        //    return result;
-        //}
+                WebResponse response = request.GetResponse();
+                Stream stream = response.GetResponseStream();
+                StreamReader streamReader = new StreamReader(stream);
+                result = streamReader.ReadToEnd();
+            } catch (WebException webEx) {
+                result += "伺服器無回應, " + webEx.ToString();
+                Console.WriteLine($"伺服器無回應, WebException: {webEx}");
+            } catch (Exception ex) {
+                result += "Exception: " + ex.ToString();
+                Console.WriteLine($"Exception: {ex}");
+            }
+            return result;
+        }
 
         #endregion 處理Line的responseBody
+    }
+
+    /// <summary>
+    /// LINE 的 Reply Message 的 Request body
+    /// </summary>
+    public class ReplyMessageRequestBody {
+
+        public ReplyMessageRequestBody(string replyToken, List<MessageBase> messages) {
+            this.replyToken = replyToken;
+            this.messages = messages;
+        }
+
+        /// <summary>
+        /// 是否接收到通知
+        /// </summary>
+        public bool notificationDisabled { get; set; }
+
+        /// <summary>
+        /// webhook接收到的回應權杖
+        /// </summary>
+        public string replyToken { get; set; }
+
+        /// <summary>
+        /// 回覆的訊息列表，最多五則
+        /// </summary>
+        public List<MessageBase> messages { get; set; }
     }
 }
