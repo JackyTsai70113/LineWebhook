@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Website.Data;
+using Website.Services;
 
 namespace Website {
 
@@ -16,6 +17,7 @@ namespace Website {
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
             ConfigurationUtility.Configuration = configuration;
+            ConfigService.Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -56,7 +58,7 @@ namespace Website {
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Test}/{id?}");
             });
         }
     }

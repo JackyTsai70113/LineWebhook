@@ -1,4 +1,5 @@
 ﻿using BL.Services.MaskInstitution;
+using isRock.LineBot;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -7,6 +8,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using Website.Models;
+using Website.Services;
 
 namespace Website.Controllers {
 
@@ -17,6 +19,18 @@ namespace Website.Controllers {
         public HomeController(ILogger<HomeController> logger) {
             _logger = logger;
             _maskInstitutionService = new MaskInstitutionService();
+        }
+
+        public IActionResult Test() {
+            //傳送對象
+            var toUserID = ConfigService.LineJ_userId;
+            //Channel Access Token
+            var token = ConfigService.LineChannelAccessToken;
+            //create bot instance
+            Bot bot = new Bot(token);
+            //send message
+            //bot.PushMessage(toUserID, "Hello test");
+            return new OkResult();
         }
 
         public IActionResult Index() {
