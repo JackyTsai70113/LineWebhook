@@ -66,7 +66,7 @@ namespace BL.Services {
                 return result;
             } catch (Exception ex) {
                 Console.WriteLine(
-                    $"LineWebhookService.Response 錯誤, replyToken: {replyToken}" +
+                    $"LineWebhookService.Response 錯誤, replyToken: {replyToken},\n" +
                     $"messages: {JsonConvert.SerializeObject(messages, Formatting.Indented)}\n" +
                     $"ex: {ex}");
                 return ex.ToString();
@@ -239,6 +239,7 @@ namespace BL.Services {
 
                 // 設定發送的訊息
                 string translationText = string.Join("\n", translations.Select(x => x.TranslationStr));
+                translationText = translationText.Replace('"', '\'');
                 foreach (Translation translation in translations) {
                     string translationStr = translation.TranslationStr;
                     // 防呆: 超過5000字數

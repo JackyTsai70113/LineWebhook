@@ -29,7 +29,9 @@ namespace Website.Controllers {
             ////create bot instance
             //Bot bot = new Bot(token);
             ////send message
-            //bot.PushMessage(toUserID, "Hello test");
+            //bot.PushMessage(toUserID,
+            //    "fix verb uk /fɪks/ us /fɪks/\n\nto repair something\n修理\n------------------------\nThey couldn't fix my old computer, so"
+            //);
             return new OkResult();
         }
 
