@@ -19,6 +19,7 @@ jobs:
       env: 
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         APP_NAME: ${{ 'linewebhookapp' }}
+        LINE_NOTIFY: ${{ secrets.LINE_NOTIFY_BEARER_TOKEN }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         TELEGRAM_JACKY_CHAT_ID: ${{secrets.TELEGRAM_JACKY_CHAT_ID}}  
       run: |
@@ -27,3 +28,4 @@ jobs:
         heroku container:push web -a $APP_NAME
         heroku container:release web -a $APP_NAME
         curl -X GET "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage?chat_id=$TELEGRAM_JACKY_CHAT_ID&text=佈版完成 ($NOW) ($TOP_COMMIT_MESSAGE)"
+        curl -H "Authorization: Bearer xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" -d "message=佈版完成 ($NOW) ($TOP_COMMIT_MESSAGE)" https://notify-api.line.me/api/notify
