@@ -47,10 +47,11 @@ namespace Website.Controllers {
                 ReceivedMessage receivedMessage = JsonConvert.DeserializeObject<ReceivedMessage>(requestBody.ToString());
 
                 string replyToken2 = receivedMessage.events.FirstOrDefault().replyToken;
-                string message = "你剛才說了 " + receivedMessage.events.FirstOrDefault().message;
+                string message = "你剛才說了 " + receivedMessage.events.FirstOrDefault().message.text;
                 //bot.
                 ////取得LineBot接收到的訊息
                 var ReceivedMessage = bot.ReplyMessage(replyToken2, message);
+                Console.WriteLine($"ReceivedMessage: {ReceivedMessage}");
                 return new OkResult();
                 ////發送訊息
                 //var ret = LineBotHelper.SendMessage(
