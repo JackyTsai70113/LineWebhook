@@ -10,7 +10,6 @@ using DA.Managers.MaskInstitution;
 using DA.Managers.Sinopac;
 using isRock.LineBot;
 using Models.Google.API;
-using Models.Line.Webhook;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -44,7 +43,6 @@ namespace BL.Services {
                 #region Post到Line
                 Console.Write($"messages: {JsonConvert.SerializeObject(messages)}");
                 Bot bot = new Bot(_token);
-                //string result = PostToLineServer(replyToken, messages);
                 string result = bot.ReplyMessage(replyToken, messages);
                 #endregion Post到Line
 
@@ -61,7 +59,6 @@ namespace BL.Services {
                     }
                     var debugMessages = GetSingleMessage(debugStr);
                     bot.ReplyMessage(replyToken, debugMessages);
-                    //PostToLineServer(replyToken, debugMessages);
                 }
                 #endregion 若不成功則Post debug 訊息到Line
 
@@ -128,9 +125,9 @@ namespace BL.Services {
                     string vocabulary = text.Split(' ')[1];
                     messages = GetCambridgeDictionaryMessages(vocabulary);
                 } else if (text.StartsWith("cdd ")) {
-                    int len = int.Parse(text.Split(' ')[1]);
-                    string vocabulary = text.Split(' ')[2];
-                    messages = GetCambridgeDictionaryMessages(vocabulary, len);
+                    string vocabulary = text.Split(' ')[1];
+                    int textLenth = int.Parse(text.Split(' ')[2]);
+                    messages = GetCambridgeDictionaryMessages(vocabulary, textLenth);
                 } else {
                     messages = GetSingleMessage(text);
                 }
@@ -246,11 +243,8 @@ namespace BL.Services {
                 // 設定發送的訊息
                 foreach (Translation translation in translations) {
                     string translationStr = translation.TranslationStr;
+                    translationStr = translationStr.Replace('\'', '’').TrimEnd();
                     // 防呆: 超過5000字數
-                    //if (translationStr.Length > 3000) {
-                    //    translationStr = translationStr.Substring(0, 270) + "...";
-                    //}
-                    translationStr = translationStr.Replace('\'', '’');
                     if (textLength == -1) {
                         if (translationStr.Length > 5000) {
                             translationStr = translationStr.Substring(0, 4996) + "...";
@@ -366,11 +360,7 @@ namespace BL.Services {
             string result = "";
             try {
                 string requestUriString = "https://api.line.me/v2/bot/message/reply";
-                string channelAccessToken =
-                    @"tkOO80fthaESrdEWkHn5+gsypQLHd1N3DZcNsWaJku3GeO/
-                    HsFMyCSyU95KnA6p2bTLPFJS0y4joCknQyppqlwaDK34rrQgS
-                    W39EcS0j5WNEZGIlkup0nJ+xlBf+mcw89H1xKAc5Ubd0xA9/Z
-                    9RSIwdB04t89/1O/w1cDnyilFU=";
+                string channelAccessToken = _token;
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUriString);
                 request.Method = "POST";
                 request.Headers.Add("Content-Type", "application/json");
