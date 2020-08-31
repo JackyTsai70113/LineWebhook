@@ -13,7 +13,7 @@ using Telegram.Bot.Types.Enums;
 namespace BL.Services {
 
     public class TelegramWebhookService : BaseService, ITelegramWebhookService {
-        TelegramBotClient botClient;
+        //readonly TelegramBotClient botClient;
 
         public TelegramWebhookService() {
         }
@@ -40,20 +40,20 @@ namespace BL.Services {
         /// 測試
         /// </summary>
         public void Test() {
-            botClient = new TelegramBotClient("1253249749:AAEhPVK8fvahMGCKee_ZtG8fOivf4CjKYsY");
-            ChatId chatId = new ChatId(1017180008);
-            var me = botClient.SendDiceAsync(chatId);
-            Message message = botClient.SendTextMessageAsync(
-              chatId: 1017180008, // or a chat id: 123456789
-              text: "Trying *all the parameters* of `sendMessage` method"
-            //parseMode: ParseMode.Markdown,
-            //disableNotification: true,
-            //replyToMessageId: e.Message.MessageId,
-            //replyMarkup: new InlineKeyboardMarkup(InlineKeyboardButton.WithUrl(
-            //  "Check sendMessage method",
-            //  "https://core.telegram.org/bots/api#sendmessage"
-            //))
-            ).Result;
+            //botClient = new TelegramBotClient("1253249749:AAEhPVK8fvahMGCKee_ZtG8fOivf4CjKYsY");
+            //ChatId chatId = new ChatId(1017180008);
+            //var me = botClient.SendDiceAsync(chatId);
+            //Message message = botClient.SendTextMessageAsync(
+            //  chatId: 1017180008, // or a chat id: 123456789
+            //  text: "Trying *all the parameters* of `sendMessage` method"
+            ////parseMode: ParseMode.Markdown,
+            ////disableNotification: true,
+            ////replyToMessageId: e.Message.MessageId,
+            ////replyMarkup: new InlineKeyboardMarkup(InlineKeyboardButton.WithUrl(
+            ////  "Check sendMessage method",
+            ////  "https://core.telegram.org/bots/api#sendmessage"
+            ////))
+            //).Result;
             //string uri = "https://api.telegram.org/bot1253249749:AAEhPVK8fvahMGCKee_ZtG8fOivf4CjKYsY/sendDice?chat_id=1017180008";
             //Console.WriteLine(RequestUtility.GetStringFromGetRequest(uri));
         }

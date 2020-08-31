@@ -7,7 +7,7 @@ namespace BL.Services.Line {
 
     public class LineBotService {
 
-        public LineBotService(string channelAccessToken) {
+        public LineBotService() {
         }
 
         public bool PushMessage() {

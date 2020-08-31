@@ -8,7 +8,6 @@
     <ProjectReference Include="..\..\..\0.CoreLayer\Core.Domain\Core.Domain.csproj" />
     <ProjectReference Include="..\..\..\3.DataAccessLayer\DA\DA.Managers\DA.Managers.csproj" />
     <ProjectReference Include="..\..\..\3.DataAccessLayer\DA\DA.Repositories\DA.Repositories.csproj" />
-    <ProjectReference Include="..\..\..\4.ModelsLayer\Models\Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>

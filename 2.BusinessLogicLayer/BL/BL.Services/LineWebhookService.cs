@@ -9,7 +9,6 @@ using DA.Managers.Interfaces.Sinopac;
 using DA.Managers.MaskInstitution;
 using DA.Managers.Sinopac;
 using isRock.LineBot;
-using Models.Google.API;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -157,8 +156,9 @@ namespace BL.Services {
             sb.Append($"\t銀行買入：{info.DataValue2}\n");
             sb.Append($"\t銀行賣出：{info.DataValue3}");
 
-            List<MessageBase> messages = new List<MessageBase>();
-            messages.Add(new TextMessage(sb.ToString()));
+            List<MessageBase> messages = new List<MessageBase> {
+                new TextMessage(sb.ToString())
+            };
             return messages;
         }
 
@@ -285,7 +285,7 @@ namespace BL.Services {
             return messages;
         }
 
-        private List<dynamic> ReplyConfirmMessages() {
+        public List<dynamic> ReplyConfirmMessages() {
             List<dynamic> messages = null;
             try {
                 messages = new List<dynamic> {
