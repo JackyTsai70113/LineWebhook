@@ -44,8 +44,8 @@ namespace BL.Services {
                 #region Post到Line
                 Console.Write($"messages: {JsonConvert.SerializeObject(messages)}");
                 Bot bot = new Bot(_token);
-                string result = PostToLineServer(replyToken, messages);
-                //string result = bot.ReplyMessage(replyToken, messages);
+                //string result = PostToLineServer(replyToken, messages);
+                string result = bot.ReplyMessage(replyToken, messages);
                 #endregion Post到Line
 
                 #region 若不成功則Post debug 訊息到Line
@@ -82,7 +82,7 @@ namespace BL.Services {
         public List<MessageBase> GetReplyMessages(ReceivedMessage lineRequestModel) {
             Message message = lineRequestModel.events.FirstOrDefault().message;
             List<MessageBase> messages;
-            switch ((string)message.type) {
+            switch (message.type) {
                 case "text":
                     messages = GetMessagesByText(message.text);
                     break;
@@ -113,21 +113,22 @@ namespace BL.Services {
         private List<MessageBase> GetMessagesByText(string text) {
             List<MessageBase> messages = null;
             try {
-                // Set up messages to send
-                if (text.StartsWith("sp")) {
-                    messages = GetSinopacMessages();
-                } else if (text.StartsWith("sticker")) {
-                    string packageIdStr = text.Split(' ')[1];
-                    string stickerIdStr = text.Split(' ')[2];
-                    messages = GetStickerMessages(packageIdStr, stickerIdStr);
-                } else if (text.StartsWith(" ")) { // 倉頡用
-                    messages = GetImageMessages(text.Substring(1));
-                } else if (text.StartsWith("cd ")) {
-                    string vocabulary = text.Split(' ')[1];
-                    messages = GetCambridgeDictionaryMessages(vocabulary);
-                } else {
-                    messages = GetSingleMessage(text);
-                }
+                messages = GetSingleMessage(text);
+                //// Set up messages to send
+                //if (text.StartsWith("sp")) {
+                //    messages = GetSinopacMessages();
+                //} else if (text.StartsWith("sticker")) {
+                //    string packageIdStr = text.Split(' ')[1];
+                //    string stickerIdStr = text.Split(' ')[2];
+                //    messages = GetStickerMessages(packageIdStr, stickerIdStr);
+                //} else if (text.StartsWith(" ")) { // 倉頡用
+                //    messages = GetImageMessages(text.Substring(1));
+                //} else if (text.StartsWith("cd ")) {
+                //    string vocabulary = text.Split(' ')[1];
+                //    messages = GetCambridgeDictionaryMessages(vocabulary);
+                //} else {
+                //    messages = GetSingleMessage(text);
+                //}
             } catch (Exception ex) {
                 Console.WriteLine($"Exception: {ex}");
             }
