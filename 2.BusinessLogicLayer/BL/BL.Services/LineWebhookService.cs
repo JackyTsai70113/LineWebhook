@@ -245,7 +245,7 @@ namespace BL.Services {
                     //if (translationStr.Length > 3000) {
                     //    translationStr = translationStr.Substring(0, 270) + "...";
                     //}
-                    translationStr = translationStr.Substring(0, 270) + "...";
+                    translationStr = translationStr.Substring(0, 50) + "...";
                     messages.Add(new TextMessage(translationStr));
                 }
             } catch (Exception ex) {
