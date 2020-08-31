@@ -44,8 +44,8 @@ namespace BL.Services {
                 #region Post到Line
                 Console.Write($"messages: {JsonConvert.SerializeObject(messages)}");
                 Bot bot = new Bot(_token);
-                string result = PostToLineServer(replyToken, messages);
-                //string result = bot.ReplyMessage(replyToken, messages);
+                //string result = PostToLineServer(replyToken, messages);
+                string result = bot.ReplyMessage(replyToken, messages);
                 #endregion Post到Line
 
                 #region 若不成功則Post debug 訊息到Line
@@ -82,7 +82,7 @@ namespace BL.Services {
         public List<MessageBase> GetReplyMessages(ReceivedMessage lineRequestModel) {
             Message message = lineRequestModel.events.FirstOrDefault().message;
             List<MessageBase> messages;
-            switch ((string)message.type) {
+            switch (message.type) {
                 case "text":
                     messages = GetMessagesByText(message.text);
                     break;
@@ -113,6 +113,7 @@ namespace BL.Services {
         private List<MessageBase> GetMessagesByText(string text) {
             List<MessageBase> messages = null;
             try {
+                //messages = GetSingleMessage(text);
                 // Set up messages to send
                 if (text.StartsWith("sp")) {
                     messages = GetSinopacMessages();
