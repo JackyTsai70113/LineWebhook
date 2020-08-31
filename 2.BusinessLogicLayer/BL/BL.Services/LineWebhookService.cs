@@ -135,7 +135,7 @@ namespace BL.Services {
                     messages = GetSingleMessage(text);
                 }
             } catch (Exception ex) {
-                Console.WriteLine($"Exception: {ex}");
+                Console.WriteLine($"[GetMessagesByText] Exception: {ex}");
             }
             return messages;
         }
@@ -145,7 +145,7 @@ namespace BL.Services {
             try {
                 messages.Add(new TextMessage(text));
             } catch (Exception ex) {
-                Console.WriteLine($"Exception: {ex.Message}");
+                Console.WriteLine($"[GetSingleMessage] Exception: {ex.Message}");
             }
             return messages;
         }
@@ -250,12 +250,13 @@ namespace BL.Services {
                     //if (translationStr.Length > 3000) {
                     //    translationStr = translationStr.Substring(0, 270) + "...";
                     //}
+                    translationStr = translationStr.Replace('\'', '’');
                     if (textLength == -1) {
                         if (translationStr.Length > 5000) {
-                            translationStr = translationStr.Replace('\'', '’').Substring(0, 4996) + "...";
+                            translationStr = translationStr.Substring(0, 4996) + "...";
                         }
-                    } else {
-                        translationStr = translationStr.Replace('\'', '’').Substring(0, textLength) + "...";
+                    } else if (translationStr.Length > textLength) {
+                        translationStr = translationStr.Substring(0, textLength) + "...";
                     }
                     messages.Add(new TextMessage(translationStr));
                 }
