@@ -126,6 +126,10 @@ namespace BL.Services {
                 } else if (text.StartsWith("cd ")) {
                     string vocabulary = text.Split(' ')[1];
                     messages = GetCambridgeDictionaryMessages(vocabulary);
+                } else if (text.StartsWith("cdd ")) {
+                    int len = int.Parse(text.Split(' ')[1]);
+                    string vocabulary = text.Split(' ')[2];
+                    messages = GetCambridgeDictionaryMessages(vocabulary, len);
                 } else {
                     messages = GetSingleMessage(text);
                 }
@@ -229,7 +233,7 @@ namespace BL.Services {
         /// </summary>
         /// <param name="vocabulary">單字</param>
         /// <returns>訊息列表</returns>
-        private List<MessageBase> GetCambridgeDictionaryMessages(string vocabulary) {
+        private List<MessageBase> GetCambridgeDictionaryMessages(string vocabulary, int textLength = -1) {
             List<MessageBase> messages = new List<MessageBase>();
             try {
                 List<Translation> translations = CambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary);
@@ -245,7 +249,11 @@ namespace BL.Services {
                     //if (translationStr.Length > 3000) {
                     //    translationStr = translationStr.Substring(0, 270) + "...";
                     //}
-                    translationStr = translationStr.Substring(0, 50) + "...";
+                    if (textLength == -1) {
+                        translationStr = translationStr.Substring(0, 50) + "...";
+                    } else {
+                        translationStr = translationStr.Substring(0, textLength) + "...";
+                    }
                     messages.Add(new TextMessage(translationStr));
                 }
             } catch (Exception ex) {
