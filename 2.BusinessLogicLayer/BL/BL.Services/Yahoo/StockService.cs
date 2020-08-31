@@ -25,7 +25,7 @@ namespace BL.Services.Yahoo {
         }
 
         public List<object[]> GetSubCandles() {
-            IReadOnlyList<Candle> candles = YahooFinanceApi.Yahoo.GetHistoricalAsync("2884.TW", new DateTime(2019, 7, 20), new DateTime(2020, 8, 31), Period.Daily).Result;
+            IReadOnlyList<Candle> candles = YahooFinanceApi.Yahoo.GetHistoricalAsync("2884.TW", new DateTime(2017, 7, 20), new DateTime(2020, 8, 31), Period.Daily).Result;
             var subCandles = candles.Select(c => new SubCandle {
                 Date = c.DateTime,
                 Open = c.Open,
