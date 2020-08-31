@@ -242,9 +242,10 @@ namespace BL.Services {
                 foreach (Translation translation in translations) {
                     string translationStr = translation.TranslationStr;
                     // 防呆: 超過5000字數
-                    if (translationStr.Length > 3000) {
-                        translationStr = translationStr.Substring(0, 2996) + " ...";
-                    }
+                    //if (translationStr.Length > 3000) {
+                    //    translationStr = translationStr.Substring(0, 270) + "...";
+                    //}
+                    translationStr = translationStr.Substring(0, 270) + "...";
                     messages.Add(new TextMessage(translationStr));
                 }
             } catch (Exception ex) {
