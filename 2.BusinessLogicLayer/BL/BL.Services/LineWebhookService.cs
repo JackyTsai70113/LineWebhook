@@ -154,9 +154,8 @@ namespace BL.Services {
             sb.Append($"\t銀行買入：{info.DataValue2}\n");
             sb.Append($"\t銀行賣出：{info.DataValue3}");
 
-            List<MessageBase> messages = new List<MessageBase> {
-                new TextMessage(sb.ToString())
-            };
+            List<MessageBase> messages = new List<MessageBase>();
+            messages.Add(new TextMessage(sb.ToString()));
             return messages;
         }
 
@@ -239,8 +238,6 @@ namespace BL.Services {
                 }
 
                 // 設定發送的訊息
-                string translationText = string.Join("\n", translations.Select(x => x.TranslationStr));
-                translationText = translationText.Replace('"', '\'');
                 foreach (Translation translation in translations) {
                     string translationStr = translation.TranslationStr;
                     // 防呆: 超過5000字數
