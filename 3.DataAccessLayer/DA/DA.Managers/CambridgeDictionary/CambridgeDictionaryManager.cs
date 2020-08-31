@@ -50,19 +50,25 @@ namespace DA.Managers.CambridgeDictionary {
                 IElement posBodyDiv = prEntryBody__elDiv.QuerySelector("div.pos-body");
                 IHtmlCollection<IElement> defBlockDdef_blockDivs = posBodyDiv.QuerySelectorAll("div.def-block.ddef_block");
                 foreach (IElement defBlockDdef_blockDiv in defBlockDdef_blockDivs) {
-                    Mean mean = new Mean {
-                        // 英文解釋
-                        English = defBlockDdef_blockDiv.QuerySelector("div.def.ddef_d.db").TextContent,
-                        // 中文意思
-                        Chinese = defBlockDdef_blockDiv.QuerySelector("span.trans.dtrans.dtrans-se").TextContent
-                    };
+                    Mean mean = new Mean();
+                    // 英文解釋
+                    if (defBlockDdef_blockDiv.QuerySelector("div.def.ddef_d.db") != null) {
+                        mean.English = defBlockDdef_blockDiv.QuerySelector("div.def.ddef_d.db").TextContent;
+                    }
+                    // 中文意思
+                    if (defBlockDdef_blockDiv.QuerySelector("span.trans.dtrans.dtrans-se") != null) {
+                        mean.Chinese = defBlockDdef_blockDiv.QuerySelector("span.trans.dtrans.dtrans-se").TextContent;
+                    }
 
                     IHtmlCollection<IElement> exampDexampDivs = defBlockDdef_blockDiv.QuerySelectorAll("div.examp.dexamp");
                     foreach (IElement exampDexampDiv in exampDexampDivs) {
-                        SentenceExample sentenceExample = new SentenceExample {
-                            English = exampDexampDiv.QuerySelector("span.eg.deg").TextContent,
-                            Chinese = exampDexampDiv.QuerySelector("span.trans.dtrans.dtrans-se.hdb").TextContent
-                        };
+                        SentenceExample sentenceExample = new SentenceExample();
+                        if (exampDexampDiv.QuerySelector("span.eg.deg") != null) {
+                            sentenceExample.English = exampDexampDiv.QuerySelector("span.eg.deg").TextContent;
+                        }
+                        if (exampDexampDiv.QuerySelector("span.trans.dtrans.dtrans-se.hdb") != null) {
+                            sentenceExample.Chinese = exampDexampDiv.QuerySelector("span.trans.dtrans.dtrans-se.hdb").TextContent;
+                        }
                         mean.SentenceExamples.Add(sentenceExample);
                     }
                     translation.Means.Add(mean);
