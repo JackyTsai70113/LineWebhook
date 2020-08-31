@@ -44,8 +44,8 @@ namespace BL.Services {
                 #region Post到Line
                 Console.Write($"messages: {JsonConvert.SerializeObject(messages)}");
                 Bot bot = new Bot(_token);
-                string result = PostToLineServer(replyToken, messages);
-                //string result = bot.ReplyMessage(replyToken, messages);
+                //string result = PostToLineServer(replyToken, messages);
+                string result = bot.ReplyMessage(replyToken, messages);
                 #endregion Post到Line
 
                 #region 若不成功則Post debug 訊息到Line
@@ -60,8 +60,8 @@ namespace BL.Services {
                         debugStr += "-> " + result;
                     }
                     var debugMessages = GetSingleMessage(debugStr);
-                    //bot.ReplyMessage(replyToken, debugMessages);
-                    PostToLineServer(replyToken, debugMessages);
+                    bot.ReplyMessage(replyToken, debugMessages);
+                    //PostToLineServer(replyToken, debugMessages);
                 }
                 #endregion 若不成功則Post debug 訊息到Line
 
