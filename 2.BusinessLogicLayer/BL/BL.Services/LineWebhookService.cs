@@ -251,9 +251,11 @@ namespace BL.Services {
                     //    translationStr = translationStr.Substring(0, 270) + "...";
                     //}
                     if (textLength == -1) {
-                        translationStr = translationStr.Substring(0, 50) + "...";
+                        if (translationStr.Length > 5000) {
+                            translationStr = translationStr.Replace('\'', '’').Substring(0, 4996) + "...";
+                        }
                     } else {
-                        translationStr = translationStr.Substring(0, textLength) + "...";
+                        translationStr = translationStr.Replace('\'', '’').Substring(0, textLength) + "...";
                     }
                     messages.Add(new TextMessage(translationStr));
                 }
