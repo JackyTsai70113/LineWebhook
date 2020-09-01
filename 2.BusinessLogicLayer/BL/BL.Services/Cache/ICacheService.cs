@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Core.Domain.Cache {
+namespace BL.Services.Cache {
 
-    public interface ICacheProvider {
+    public interface ICacheService {
 
         void Set<T>(string key, T value);
 

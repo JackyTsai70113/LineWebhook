@@ -3,11 +3,17 @@ using BL.Services.Interfaces;
 using Core.Domain.Utilities;
 using Newtonsoft.Json;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Telegram.Bot;
+using Telegram.Bot.Args;
+using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
 
 namespace BL.Services {
 
     public class TelegramWebhookService : BaseService, ITelegramWebhookService {
+        //readonly TelegramBotClient botClient;
 
         public TelegramWebhookService() {
         }
@@ -30,9 +36,40 @@ namespace BL.Services {
             RequestUtility.GetStringFromGetRequest(uri);
         }
 
+        /// <summary>
+        /// 測試
+        /// </summary>
+        public void Test() {
+            //botClient = new TelegramBotClient("1253249749:AAEhPVK8fvahMGCKee_ZtG8fOivf4CjKYsY");
+            //ChatId chatId = new ChatId(1017180008);
+            //var me = botClient.SendDiceAsync(chatId);
+            //Message message = botClient.SendTextMessageAsync(
+            //  chatId: 1017180008, // or a chat id: 123456789
+            //  text: "Trying *all the parameters* of `sendMessage` method"
+            ////parseMode: ParseMode.Markdown,
+            ////disableNotification: true,
+            ////replyToMessageId: e.Message.MessageId,
+            ////replyMarkup: new InlineKeyboardMarkup(InlineKeyboardButton.WithUrl(
+            ////  "Check sendMessage method",
+            ////  "https://core.telegram.org/bots/api#sendmessage"
+            ////))
+            //).Result;
+            //string uri = "https://api.telegram.org/bot1253249749:AAEhPVK8fvahMGCKee_ZtG8fOivf4CjKYsY/sendDice?chat_id=1017180008";
+            //Console.WriteLine(RequestUtility.GetStringFromGetRequest(uri));
+        }
+
+        //private async void Bot_OnMessage(object sender, MessageEventArgs e) {
+        //    if (e.Message.Text != null) {
+        //        Console.WriteLine($"Received a text message in chat {e.Message.Chat.Id}.");
+
+        //        await botClient.SendTextMessageAsync(
+        //          chatId: e.Message.Chat,
+        //          text: "You said:\n" + e.Message.Text
+        //        );
+        //    }
+        //}
+
         private string GetMe() {
-            //string uri = "https://api.telegram.org/bot1253249749:AAEhPVK8fvahMGCKee_ZtG8fOivf4CjKYsY/sendMessage?chat_id=1017180008&text=HelloText";
-            //RequestUtility.GetStringFromGetRequest(uri);
             var botClient = new TelegramBotClient("1253249749:AAEhPVK8fvahMGCKee_ZtG8fOivf4CjKYsY");
             var me = botClient.GetMeAsync().Result;
             string result = JsonConvert.SerializeObject(me);

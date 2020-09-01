@@ -2,17 +2,13 @@
 using BL.Services.Google;
 using BL.Services.Interfaces;
 using Core.Domain.DTO.RequestDTO.CambridgeDictionary;
-using Core.Domain.DTO.ResponseDTO.Line;
-using Core.Domain.DTO.ResponseDTO.Line.Messages;
 using Core.Domain.DTO.Sinopac;
 using DA.Managers.CambridgeDictionary;
 using DA.Managers.Interfaces;
 using DA.Managers.Interfaces.Sinopac;
 using DA.Managers.MaskInstitution;
 using DA.Managers.Sinopac;
-using Models.Google.API;
-using Models.Line;
-using Models.Line.Webhook;
+using isRock.LineBot;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -24,13 +20,14 @@ using System.Text;
 namespace BL.Services {
 
     public class LineWebhookService : BaseService, ILineWebhookService {
+        private readonly string _token;
 
-        public LineWebhookService() {
+        public LineWebhookService(string token) {
             CambridgeDictionaryManager = new CambridgeDictionaryManager();
             ExchangeRateManager = new ExchangeRateManager();
+            _token = token;
         }
 
-        private RequestModelFromLineServer _LineRequestModel { get; set; }
         private ICambridgeDictionaryManager CambridgeDictionaryManager { get; set; }
         private IExchangeRateManager ExchangeRateManager { get; set; }
 
@@ -40,17 +37,18 @@ namespace BL.Services {
         /// <param name="replyToken">回覆token</param>
         /// <param name="messages">訊息列表</param>
         /// <returns>API結果</returns>
-        public string ResponseToLineServer(string replyToken, List<Message> messages) {
+        public string ResponseToLineServer(string replyToken, List<MessageBase> messages) {
             try {
                 #region Post到Line
-
-                string result = PostToLineServer(replyToken, messages);
-
+                Console.Write($"messages: {JsonConvert.SerializeObject(messages)}");
+                Bot bot = new Bot(_token);
+                string result = bot.ReplyMessage(replyToken, messages);
                 #endregion Post到Line
 
                 #region 若不成功則Post debug 訊息到Line
-
+                Console.Write($"result: {result}");
                 if (result != "{}") {
+                    Console.Write(result);
                     string debugStr = $"messages:\n" +
                         $"{JsonConvert.SerializeObject(messages, Formatting.Indented)}\n";
                     if (result.StartsWith("伺服器無回應")) {
@@ -59,15 +57,14 @@ namespace BL.Services {
                         debugStr += "-> " + result;
                     }
                     var debugMessages = GetSingleMessage(debugStr);
-                    PostToLineServer(replyToken, debugMessages);
+                    bot.ReplyMessage(replyToken, debugMessages);
                 }
-
                 #endregion 若不成功則Post debug 訊息到Line
 
                 return result;
             } catch (Exception ex) {
                 Console.WriteLine(
-                    $"LineWebhookService.Response 錯誤, replyToken: {replyToken}" +
+                    $"LineWebhookService.Response 錯誤, replyToken: {replyToken},\n" +
                     $"messages: {JsonConvert.SerializeObject(messages, Formatting.Indented)}\n" +
                     $"ex: {ex}");
                 return ex.ToString();
@@ -79,10 +76,10 @@ namespace BL.Services {
         /// </summary>
         /// <param name="lineRequestModel"></param>
         /// <returns>Line回應訊息</returns>
-        public List<Message> GetReplyMessages(RequestModelFromLineServer lineRequestModel) {
-            dynamic message = lineRequestModel.Events[0].message;
-            List<Message> messages;
-            switch ((string)message.type) {
+        public List<MessageBase> GetReplyMessages(ReceivedMessage lineRequestModel) {
+            Message message = lineRequestModel.events.FirstOrDefault().message;
+            List<MessageBase> messages;
+            switch (message.type) {
                 case "text":
                     messages = GetMessagesByText(message.text);
                     break;
@@ -110,13 +107,12 @@ namespace BL.Services {
         /// </summary>
         /// <param name="text">字串內容</param>
         /// <returns>回應結果</returns>
-        private List<Message> GetMessagesByText(string text) {
-            List<Message> messages = null;
+        private List<MessageBase> GetMessagesByText(string text) {
+            List<MessageBase> messages = null;
             try {
+                //messages = GetSingleMessage(text);
                 // Set up messages to send
-                if (text.StartsWith("test")) {
-                    messages = ReplyTestMessages(text.Substring(4));
-                } else if (text.StartsWith("sp")) {
+                if (text.StartsWith("sp")) {
                     messages = GetSinopacMessages();
                 } else if (text.StartsWith("sticker")) {
                     string packageIdStr = text.Split(' ')[1];
@@ -126,64 +122,42 @@ namespace BL.Services {
                     messages = GetImageMessages(text.Substring(1));
                 } else if (text.StartsWith("cd ")) {
                     string vocabulary = text.Split(' ')[1];
-                    messages = GetCDMessages(vocabulary);
+                    messages = GetCambridgeDictionaryMessages(vocabulary);
+                } else if (text.StartsWith("cdd ")) {
+                    string vocabulary = text.Split(' ')[1];
+                    int textLenth = int.Parse(text.Split(' ')[2]);
+                    messages = GetCambridgeDictionaryMessages(vocabulary, textLenth);
                 } else {
                     messages = GetSingleMessage(text);
                 }
             } catch (Exception ex) {
-                Console.WriteLine($"Exception: {ex}");
+                Console.WriteLine($"[GetMessagesByText] Exception: {ex}");
             }
             return messages;
         }
 
-        /// <summary>
-        /// 回應 text 內容
-        /// </summary>
-        /// <returns>LOG紀錄</returns>
-        private List<Message> ReplyTestMessages(string text) {
-            List<Message> messages = null;
+        private List<MessageBase> GetSingleMessage(string text) {
+            List<MessageBase> messages = new List<MessageBase>();
             try {
-                ReplyMessageRequestBody replyMessageRequestBody =
-                    JsonConvert.DeserializeObject<ReplyMessageRequestBody>(text);
-                Message message = replyMessageRequestBody.messages.First();
-                // Set up messages to send
-                messages = new List<Message> { message };
+                messages.Add(new TextMessage(text));
             } catch (Exception ex) {
-                Console.WriteLine($"Exception: {ex.Message}");
+                Console.WriteLine($"[GetSingleMessage] Exception: {ex.Message}");
             }
             return messages;
         }
 
-        private List<Message> GetSingleMessage(string text) {
-            List<Message> messages = null;
-            try {
-                // Set up messages to send
-                messages = new List<Message> {
-                    new TextMessage {
-                    type = "text",
-                    text = text
-                    }
-                };
-            } catch (Exception ex) {
-                Console.WriteLine($"Exception: {ex.Message}");
-            }
-            return messages;
-        }
-
-        private List<Message> GetSinopacMessages() {
+        private List<MessageBase> GetSinopacMessages() {
             List<ExchangeRate> exchangeRates = ExchangeRateManager.CrawlExchangeRate();
 
             Info info = exchangeRates[0].SubInfo[0];
             StringBuilder sb = new StringBuilder();
             sb.Append("美金報價\n");
+            sb.Append("---------------------\n");
             sb.Append($"\t銀行買入：{info.DataValue2}\n");
-            sb.Append($"\t銀行賣出：{info.DataValue3}\n");
+            sb.Append($"\t銀行賣出：{info.DataValue3}");
 
-            List<Message> messages = new List<Message> {
-                new TextMessage {
-                    type = "text",
-                    text = sb.ToString()
-                }
+            List<MessageBase> messages = new List<MessageBase> {
+                new TextMessage(sb.ToString())
             };
             return messages;
         }
@@ -193,22 +167,19 @@ namespace BL.Services {
         /// </summary>
         /// <param name="address">指定地址</param>
         /// <returns>LOG紀錄</returns>
-        private List<Message> GetPharmacyInfoMessages(string address) {
-            List<Message> messages = null;
+        private List<MessageBase> GetPharmacyInfoMessages(string address) {
+            List<MessageBase> messages = null;
             try {
                 // 取得欲傳送的MaskDataList
                 var topMaskDatas = MaskInstitutionManager.GetTopMaskDatasByComputingDistance(address, 5);
 
                 // Set up messages to send
-                messages = new List<Message>();
+                messages = new List<MessageBase>();
                 StringBuilder builder = new StringBuilder();
 
                 if (topMaskDatas.Count == 0) {
                     builder.Append($"所在位置({address})沒有相關藥局");
-                    messages.Add(new TextMessage {
-                        type = "text",
-                        text = builder.ToString()
-                    });
+                    messages.Add(new TextMessage(builder.ToString()));
                     return messages;
                 }
                 foreach (var maskData in topMaskDatas) {
@@ -224,15 +195,13 @@ namespace BL.Services {
                         lng = Double.MinValue;
                     }
 
-                    messages.Add(new LocationMessage {
-                        type = "location",
-                        title = maskData.Name + "\n" +
+                    messages.Add(new LocationMessage(
+                        maskData.Name + "\n" +
                             "成人: " + maskData.AdultMasks + "\n" +
                             "兒童: " + maskData.ChildMasks,
-                        address = maskData.Address,
-                        latitude = lat,
-                        longitude = lng
-                    });
+                        maskData.Address,
+                        lat, lng
+                    ));
                 }
             } catch (Exception ex) {
                 Console.WriteLine($"Exception: {ex}");
@@ -240,31 +209,15 @@ namespace BL.Services {
             return messages;
         }
 
-        private List<Message> GetStickerMessages(string packageId = "0", string stickerId = "0") {
-            List<Message> stickerMessages = null;
+        private List<MessageBase> GetStickerMessages(string packageId = "0", string stickerId = "0") {
+            List<MessageBase> stickerMessages = null;
             try {
                 // Set up messages to send
-                stickerMessages = new List<Message> {
-                    new StickerMessage {
-                    type = "sticker",
-                    packageId = "1",
-                    stickerId = "8"
-                    },
-                    new StickerMessage {
-                    type = "sticker",
-                    packageId = "1",
-                    stickerId = "9"
-                    },
-                    new StickerMessage {
-                    type = "sticker",
-                    packageId = "1",
-                    stickerId = "10"
-                    },
-                    new StickerMessage {
-                    type = "sticker",
-                    packageId = "1",
-                    stickerId = "11"
-                    }
+                stickerMessages = new List<MessageBase> {
+                    new StickerMessage(1, 8),
+                    new StickerMessage(1, 9),
+                    new StickerMessage(1, 10),
+                    new StickerMessage(1, 11),
                 };
             } catch (Exception ex) {
                 Console.WriteLine($"packageId: {packageId} stickerId: {stickerId}");
@@ -278,8 +231,8 @@ namespace BL.Services {
         /// </summary>
         /// <param name="vocabulary">單字</param>
         /// <returns>訊息列表</returns>
-        private List<Message> GetCDMessages(string vocabulary) {
-            List<Message> messages = new List<Message>();
+        private List<MessageBase> GetCambridgeDictionaryMessages(string vocabulary, int textLength = -1) {
+            List<MessageBase> messages = new List<MessageBase>();
             try {
                 List<Translation> translations = CambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary);
                 // 防呆: 超過5種詞性
@@ -288,16 +241,18 @@ namespace BL.Services {
                 }
 
                 // 設定發送的訊息
-                string translationText = string.Join("\n", translations.Select(x => x.TranslationStr));
                 foreach (Translation translation in translations) {
                     string translationStr = translation.TranslationStr;
+                    translationStr = translationStr.Replace('\'', '’').TrimEnd();
                     // 防呆: 超過5000字數
-                    if (translationStr.Length > 5000) {
-                        translationStr = translationStr.Substring(0, 4996) + " ...";
+                    if (textLength == -1) {
+                        if (translationStr.Length > 5000) {
+                            translationStr = translationStr.Substring(0, 4996) + "...";
+                        }
+                    } else if (translationStr.Length > textLength) {
+                        translationStr = translationStr.Substring(0, textLength) + "...";
                     }
-                    messages.Add(new TextMessage() {
-                        text = translationStr
-                    });
+                    messages.Add(new TextMessage(translationStr));
                 }
             } catch (Exception ex) {
                 Console.WriteLine($"Exception: {ex.Message}");
@@ -305,8 +260,8 @@ namespace BL.Services {
             return messages;
         }
 
-        private List<Message> GetImageMessages(string texts) {
-            List<Message> messages = null;
+        private List<MessageBase> GetImageMessages(string texts) {
+            List<MessageBase> messages = new List<MessageBase>();
             try {
                 Encoding big5 = Encoding.GetEncoding("big5");
                 var CJDomain = "http://input.foruto.com/cjdict/Images/CJZD_JPG/";
@@ -323,18 +278,14 @@ namespace BL.Services {
                     sb.AppendLine("--");
                 }
                 // Set up messages to send
-                messages = new List<Message> {
-                    new TextMessage() {
-                    text = sb.ToString()
-                    }
-                };
+                messages.Add(new TextMessage(sb.ToString()));
             } catch (Exception ex) {
                 Console.WriteLine($"Exception: {ex.Message}");
             }
             return messages;
         }
 
-        private List<dynamic> ReplyConfirmMessages() {
+        public List<dynamic> ReplyConfirmMessages() {
             List<dynamic> messages = null;
             try {
                 messages = new List<dynamic> {
@@ -372,29 +323,29 @@ namespace BL.Services {
         /// </summary>
         /// <param name="requestBody">Line的將requestBody</param>
         /// <returns>Line的RequestModel</returns>
-        public RequestModelFromLineServer GetLineRequestModel(dynamic requestBody) {
-            RequestModelFromLineServer lineRequestBody = JsonConvert.
-                DeserializeObject<RequestModelFromLineServer>(requestBody.ToString());
-            foreach (Event @event in lineRequestBody.Events) {
-                switch (@event.message.type.Value) {
-                    case "text":
-                        @event.message = JsonConvert.DeserializeObject<TextMessage>(@event.message.ToString());
-                        break;
+        //public ReceivedMessage GetLineRequestModel(dynamic requestBody) {
+        //    ReceivedMessage lineRequestBody = JsonConvert.
+        //        DeserializeObject<ReceivedMessage>(requestBody.ToString());
+        //    foreach (isRock.LineBot.Event @event in lineRequestBody.events) {
+        //        switch (@event.message.type) {
+        //            case "text":
+        //                @event.message = JsonConvert.DeserializeObject<TextMessage>(@event.message.ToString());
+        //                break;
 
-                    case "location":
-                        @event.message = JsonConvert.DeserializeObject<LocationMessage>(@event.message.ToString());
-                        break;
+        //            case "location":
+        //                @event.message = JsonConvert.DeserializeObject<LocationMessage>(@event.message.ToString());
+        //                break;
 
-                    case "sticker":
-                        @event.message = JsonConvert.DeserializeObject<StickerMessage>(@event.message.ToString());
-                        break;
+        //            case "sticker":
+        //                @event.message = JsonConvert.DeserializeObject<StickerMessage>(@event.message.ToString());
+        //                break;
 
-                    default:
-                        break;
-                }
-            }
-            return lineRequestBody;
-        }
+        //            default:
+        //                break;
+        //        }
+        //    }
+        //    return lineRequestBody;
+        //}
 
         #endregion 處理Line的requestBody
 
@@ -405,15 +356,11 @@ namespace BL.Services {
         /// </summary>
         /// <param name="requestBody"></param>
         /// <returns></returns>
-        public string PostToLineServer(string replyToken, List<Message> messages) {
+        public string PostToLineServer(string replyToken, List<MessageBase> messages) {
             string result = "";
             try {
                 string requestUriString = "https://api.line.me/v2/bot/message/reply";
-                string channelAccessToken =
-                    @"tkOO80fthaESrdEWkHn5+gsypQLHd1N3DZcNsWaJku3GeO/
-                    HsFMyCSyU95KnA6p2bTLPFJS0y4joCknQyppqlwaDK34rrQgS
-                    W39EcS0j5WNEZGIlkup0nJ+xlBf+mcw89H1xKAc5Ubd0xA9/Z
-                    9RSIwdB04t89/1O/w1cDnyilFU=";
+                string channelAccessToken = _token;
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUriString);
                 request.Method = "POST";
                 request.Headers.Add("Content-Type", "application/json");
@@ -451,5 +398,31 @@ namespace BL.Services {
         }
 
         #endregion 處理Line的responseBody
+    }
+
+    /// <summary>
+    /// LINE 的 Reply Message 的 Request body
+    /// </summary>
+    public class ReplyMessageRequestBody {
+
+        public ReplyMessageRequestBody(string replyToken, List<MessageBase> messages) {
+            this.replyToken = replyToken;
+            this.messages = messages;
+        }
+
+        /// <summary>
+        /// 是否接收到通知
+        /// </summary>
+        public bool notificationDisabled { get; set; }
+
+        /// <summary>
+        /// webhook接收到的回應權杖
+        /// </summary>
+        public string replyToken { get; set; }
+
+        /// <summary>
+        /// 回覆的訊息列表，最多五則
+        /// </summary>
+        public List<MessageBase> messages { get; set; }
     }
 }

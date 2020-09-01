@@ -1,20 +1,16 @@
-﻿using Core.Domain.Utilities;
-using StackExchange.Redis;
+﻿using StackExchange.Redis;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Core.Domain.Cache {
+namespace BL.Services.Cache {
 
-    public class RedisCacheProvider {
-        private readonly string config = ConfigurationUtility.RedisConfig;
+    public class RedisCacheService {
 
-        public RedisCacheProvider() {
+        public RedisCacheService(string config) {
             try {
                 ConnectionMultiplexer muxer = ConnectionMultiplexer.Connect(config);
                 IDatabase conn = muxer.GetDatabase();
                 conn.StringSet("foo", "bar");
-                var value = conn.StringGet("foo");
+                RedisValue value = conn.StringGet("foo");
                 Console.WriteLine(value);
             } catch (Exception ex) {
                 Console.WriteLine(ex);

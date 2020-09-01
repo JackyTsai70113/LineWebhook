@@ -8,7 +8,6 @@
     <ProjectReference Include="..\..\..\0.CoreLayer\Core.Domain\Core.Domain.csproj" />
     <ProjectReference Include="..\..\..\3.DataAccessLayer\DA\DA.Managers\DA.Managers.csproj" />
     <ProjectReference Include="..\..\..\3.DataAccessLayer\DA\DA.Repositories\DA.Repositories.csproj" />
-    <ProjectReference Include="..\..\..\4.ModelsLayer\Models\Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,7 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="LineBotSDK" Version="2.2.26" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="4.7.1" />
+    <PackageReference Include="YahooFinanceApi" Version="2.1.2" />
   </ItemGroup>
 
 </Project>

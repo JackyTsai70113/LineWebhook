@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using BL.Services;
 using BL.Services.Interfaces;
-using Core.Domain.DTO.ResponseDTO.Line.Messages;
+using isRock.LineBot;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Models.Line;
 using Newtonsoft.Json;
+using Website.Services;
 
 namespace Website.Controllers {
 
@@ -21,7 +22,7 @@ namespace Website.Controllers {
 
         public LineWebhookController(ILogger<LineWebhookController> logger) {
             _logger = logger;
-            _LineWebhookService = new LineWebhookService();
+            _LineWebhookService = new LineWebhookService(ConfigService.LineChannelAccessToken);
         }
 
         /// <summary>
@@ -32,17 +33,19 @@ namespace Website.Controllers {
         [HttpPost]
         public IActionResult Index([FromBody] dynamic requestBody) {
             try {
+                //Get  Post RawData
+                string postData = requestBody.ToString();
+
                 //處理requestModel
-                RequestModelFromLineServer lineRequestModel =
-                    _LineWebhookService.GetLineRequestModel(requestBody);
+                ReceivedMessage receivedMessage = Utility.Parsing(postData);
 
                 Console.WriteLine($"========== From LINE SERVER ==========");
                 Console.WriteLine($"requestModel:");
-                Console.WriteLine($"{JsonConvert.SerializeObject(lineRequestModel, Formatting.Indented)}");
+                Console.WriteLine($"{JsonConvert.SerializeObject(receivedMessage, Formatting.Indented)}");
                 Console.WriteLine($"====================");
 
-                string replyToken = lineRequestModel.Events[0].replyToken;
-                List<Message> messages = _LineWebhookService.GetReplyMessages(lineRequestModel);
+                string replyToken = receivedMessage.events.FirstOrDefault().replyToken;
+                List<MessageBase> messages = _LineWebhookService.GetReplyMessages(receivedMessage);
                 string result = _LineWebhookService.ResponseToLineServer(replyToken, messages);
 
                 return Content(requestBody.ToString() + "\n" + result);

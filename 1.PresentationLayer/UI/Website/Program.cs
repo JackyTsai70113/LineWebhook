@@ -11,8 +11,8 @@ namespace Website {
         public static void Main(string[] args) {
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.Console()
-                .WriteTo.File(string.Format("Log2/{0}.txt", DateTime.Now.ToString("yyyyMMdd")))
-                .WriteTo.Seq("http://localhost:5341")
+                .WriteTo.File(string.Format("Log/{0}.txt", DateTime.Now.ToString("yyyyMMdd")))
+                //.WriteTo.Seq("http://localhost:5341")
                 .CreateLogger();
             Log.Information("Main");
             CreateHostBuilder(args).Build().Run();

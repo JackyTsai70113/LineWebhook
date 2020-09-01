@@ -63,6 +63,13 @@ namespace Website.Controllers {
             });
             return Ok();
         }
+
+        [HttpGet]
+        [Route("test")]
+        public ActionResult Test() {
+            telegramWebhookService.Test();
+            return Ok();
+        }
     }
 
     public class NotifyModel {

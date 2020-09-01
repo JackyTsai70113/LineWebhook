@@ -1,12 +1,16 @@
 ﻿using BL.Services.MaskInstitution;
+using BL.Services.Yahoo;
+using isRock.LineBot;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text;
 using Website.Models;
+using Website.Services;
 
 namespace Website.Controllers {
 
@@ -17,6 +21,11 @@ namespace Website.Controllers {
         public HomeController(ILogger<HomeController> logger) {
             _logger = logger;
             _maskInstitutionService = new MaskInstitutionService();
+        }
+
+        public IActionResult Test() {
+            var s = new StockService();
+            return new OkResult();
         }
 
         public IActionResult Index() {
@@ -44,37 +53,16 @@ namespace Website.Controllers {
             return View();
         }
 
+        public IActionResult KD() {
+            StockService stockService = new StockService();
+            List<object[]> subCandles = stockService.GetSubCandles();
+
+            return View(subCandles);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error() {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        [HttpPost]
-        public IActionResult postToLine([FromBody] dynamic body) {
-            PostData postDataObj = JsonConvert.DeserializeObject<PostData>(body.ToString());
-            var uri = postDataObj.uri;
-            var postData = postDataObj.postData;
-            ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
-            // 設定Request
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
-            httpWebRequest.Method = "POST";
-            httpWebRequest.Headers.Add("Content-Type", "application/json");
-
-            // 將postData寫入
-            ASCIIEncoding encoding = new ASCIIEncoding();
-            byte[] buffer = encoding.GetBytes(System.Text.Json.JsonSerializer.Serialize(postData));
-            httpWebRequest.ContentLength = buffer.Length;
-            var requestStream = httpWebRequest.GetRequestStream();
-            requestStream.Write(buffer, 0, buffer.Length);
-            requestStream.Close();
-
-            // 取得回應並記錄
-            var response = httpWebRequest.GetResponse();
-            var responseStream = response.GetResponseStream();
-            var streamReader = new StreamReader(responseStream);
-
-            var responseStr = streamReader.ReadToEnd();
-            return Content(responseStr);
         }
     }
 }

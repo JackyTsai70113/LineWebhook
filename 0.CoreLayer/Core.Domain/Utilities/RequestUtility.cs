@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Core.Domain.Utilities {
@@ -45,7 +43,7 @@ namespace Core.Domain.Utilities {
                 HttpResponseMessage httpResponseMessage = client.GetAsync(uri).Result;
 
                 //檢查回應的伺服器狀態StatusCode是否是200 OK
-                httpResponseMessage.EnsureSuccessStatusCode();
+                //httpResponseMessage.EnsureSuccessStatusCode();
 
                 string result = httpResponseMessage.Content.ReadAsStringAsync().Result;//取得內容
                 return result;
