@@ -1,9 +1,9 @@
-using BL.Services;
-using BL.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using BL.Services;
+using BL.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Website.Controllers {
 
@@ -55,13 +55,12 @@ namespace Website.Controllers {
                 return BadRequest();
             }
             Task.Run(() => {
-                for (int i = 0; i < 5; i++) {
+                for (int i = 0; i < 3; i++) {
                     DateTime now = DateTime.Now;
-                    telegramWebhookService.NotifyByMessage(now.ToString());
+                    telegramWebhookService.NotifyByMessage("現在時間： " + now.ToString());
                     Thread.Sleep(20000);
                 }
             });
-            telegramWebhookService.NotifyByMessage("Over");
             return Ok();
         }
 

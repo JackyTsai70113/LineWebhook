@@ -1,12 +1,12 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using BL.Services;
 using BL.Services.Interfaces;
 using isRock.LineBot;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Website.Services;
 
 namespace Website.Controllers {
@@ -52,6 +52,15 @@ namespace Website.Controllers {
             } catch (Exception ex) {
                 return Content($"Index 發生錯誤，requestBody: {requestBody}, ex: {ex}");
             }
+        }
+
+        [HttpPost]
+        [Route("notify")]
+        public IActionResult Notify(dynamic requestBody) {
+            string requestBodyStr = requestBody.ToString();
+            _logger.LogInformation("================================");
+            _logger.LogInformation(requestBodyStr);
+            return Ok();
         }
     }
 }
