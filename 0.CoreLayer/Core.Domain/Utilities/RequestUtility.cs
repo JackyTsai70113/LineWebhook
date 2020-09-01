@@ -56,14 +56,14 @@ namespace Core.Domain.Utilities {
         /// <summary>
         /// 從 GET Request 取得 stream
         /// </summary>
-        /// <param name="url">Request網址</param>
+        /// <param name="uri">Request網址</param>
         /// <returns>stream</returns>
-        public static Stream GetStreamFromGetRequest(string url) {
+        public static Stream GetStreamFromGetRequest(string uri) {
             try {
                 HttpClient client = new HttpClient();
 
                 //發送請求
-                HttpResponseMessage httpResponseMessage = client.GetAsync(url).Result;
+                HttpResponseMessage httpResponseMessage = client.GetAsync(uri).Result;
 
                 //檢查回應的伺服器狀態StatusCode是否是200 OK
                 httpResponseMessage.EnsureSuccessStatusCode();

@@ -1,5 +1,8 @@
-﻿using BL.Services.MaskInstitution;
-using BL.Services.Yahoo;
+﻿using BL.Services.Excel;
+using BL.Services.Line;
+using BL.Services.MaskInstitution;
+using BL.Services.TWSE_Stock;
+using BL.Services.YahooFinance;
 using isRock.LineBot;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -17,16 +20,21 @@ using Website.Services;
 namespace Website.Controllers {
 
     public class HomeController : Controller {
-        private readonly ILogger<HomeController> _logger;
         private readonly MaskInstitutionService _maskInstitutionService;
 
-        public HomeController(ILogger<HomeController> logger) {
-            Log.Information("THIS Is HomeController");
-            _logger = logger;
+        public HomeController() {
             _maskInstitutionService = new MaskInstitutionService();
         }
 
         public IActionResult Test() {
+            //StringBuilder sb = new StringBuilder();
+            //sb.Append("\n");
+            //for (int i = 0; i < 50; i++) {
+            //    sb.Append("證券名稱 " + i + "00000000\n");
+            //}
+            //string text = sb.ToString();
+            //new LineNotifyBotService().PushMessage_Group(text);
+            new TradingVolumeService();
             return new OkResult();
         }
 

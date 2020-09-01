@@ -1,6 +1,7 @@
 ﻿using BL.Services.Base;
 using BL.Services.Google;
 using BL.Services.Interfaces;
+using BL.Services.TWSE_Stock;
 using Core.Domain.DTO.RequestDTO.CambridgeDictionary;
 using Core.Domain.DTO.Sinopac;
 using DA.Managers.CambridgeDictionary;
@@ -15,6 +16,7 @@ using Serilog;
 using Serilog.Core;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -28,11 +30,13 @@ namespace BL.Services {
         public LineWebhookService(string token) {
             CambridgeDictionaryManager = new CambridgeDictionaryManager();
             ExchangeRateManager = new ExchangeRateManager();
+            _TradingVolumeService = new TradingVolumeService();
             _token = token;
         }
 
         private ICambridgeDictionaryManager CambridgeDictionaryManager { get; set; }
         private IExchangeRateManager ExchangeRateManager { get; set; }
+        private TradingVolumeService _TradingVolumeService { get; set; }
 
         /// <summary>
         /// 回覆Line Server
@@ -49,9 +53,8 @@ namespace BL.Services {
                 #endregion Post到Line
 
                 #region 若不成功則Post debug 訊息到Line
-                Console.Write($"result: {result}");
                 if (result != "{}") {
-                    Console.Write(result);
+                    Log.Error(result);
                     string debugStr = $"messages:\n" +
                         $"{JsonConvert.SerializeObject(messages, Formatting.Indented)}\n";
                     if (result.StartsWith("伺服器無回應")) {
@@ -66,7 +69,7 @@ namespace BL.Services {
 
                 return result;
             } catch (Exception ex) {
-                Console.WriteLine(
+                Log.Error(
                     $"LineWebhookService.Response 錯誤, replyToken: {replyToken},\n" +
                     $"messages: {JsonConvert.SerializeObject(messages, Formatting.Indented)}\n" +
                     $"ex: {ex}");
@@ -86,15 +89,12 @@ namespace BL.Services {
                 case "text":
                     messages = GetMessagesByText(message.text);
                     break;
-
                 case "location":
                     messages = GetPharmacyInfoMessages(message.address);
                     break;
-
                 case "sticker":
                     messages = GetStickerMessages();
                     break;
-
                 default:
                     Console.WriteLine($"無相符的 message.type: {(string)message.type}, " +
                         $"requestModelFromLineServer: " +
@@ -112,6 +112,7 @@ namespace BL.Services {
         /// <returns>回應結果</returns>
         private List<MessageBase> GetMessagesByText(string text) {
             List<MessageBase> messages = null;
+            string textStr;
             try {
                 //messages = GetSingleMessage(text);
                 // Set up messages to send
@@ -130,6 +131,15 @@ namespace BL.Services {
                     string vocabulary = text.Split(' ')[1];
                     int textLenth = int.Parse(text.Split(' ')[2]);
                     messages = GetCambridgeDictionaryMessages(vocabulary, textLenth);
+                } else if (text.StartsWith("tv ")) {
+                    string dateTimeStr = text.Split(' ')[1];
+                    if (string.IsNullOrEmpty(dateTimeStr)) {
+                        textStr = _TradingVolumeService.GetTradingVolumeStr_ForeignInvestors();
+                    } else {
+                        DateTime dateTime = DateTime.ParseExact(dateTimeStr, "yyyyMMdd", CultureInfo.InvariantCulture);
+                        textStr = _TradingVolumeService.GetTradingVolumeStr_ForeignInvestors(dateTime);
+                    }
+                    messages = GetSingleMessage(textStr);
                 } else {
                     messages = GetSingleMessage(text);
                 }
@@ -156,8 +166,8 @@ namespace BL.Services {
             StringBuilder sb = new StringBuilder();
             sb.Append("美金報價\n");
             sb.Append("---------------------\n");
-            sb.Append($"\t銀行買入：{info.DataValue2}\n");
-            sb.Append($"\t銀行賣出：{info.DataValue3}");
+            sb.Append($"銀行買入：{info.DataValue2}\n");
+            sb.Append($"銀行賣出：{info.DataValue3}");
 
             List<MessageBase> messages = new List<MessageBase> {
                 new TextMessage(sb.ToString())
@@ -363,11 +373,10 @@ namespace BL.Services {
             string result = "";
             try {
                 string requestUriString = "https://api.line.me/v2/bot/message/reply";
-                string channelAccessToken = _token;
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUriString);
                 request.Method = "POST";
                 request.Headers.Add("Content-Type", "application/json");
-                request.Headers.Add("Authorization", "Bearer " + channelAccessToken);
+                request.Headers.Add("Authorization", "Bearer " + _token);
 
                 // Write data to requestStream
                 UTF8Encoding encoding = new UTF8Encoding();

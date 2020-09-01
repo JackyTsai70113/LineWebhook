@@ -5,12 +5,12 @@ using System.Runtime.Serialization;
 using System.Text;
 using YahooFinanceApi;
 
-namespace BL.Services.Yahoo {
+namespace BL.Services.YahooFinance {
 
     public class StockService {
 
         public StockService() {
-            var history = YahooFinanceApi.Yahoo.GetHistoricalAsync("AAPL", new DateTime(2016, 1, 1), new DateTime(2016, 7, 1), Period.Daily).Result;
+            var history = Yahoo.GetHistoricalAsync("AAPL", new DateTime(2016, 1, 1), new DateTime(2016, 7, 1), Period.Daily).Result;
 
             //foreach (var candle in history) {
             //    Console.WriteLine($"DateTime: {candle.DateTime}, Open: {candle.Open}, High: {candle.High}, Low: {candle.Low}, Close: {candle.Close}, Volume: {candle.Volume}, AdjustedClose: {candle.AdjustedClose}");

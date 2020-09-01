@@ -1,5 +1,3 @@
-using System;
-using Core.Domain.Utilities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;

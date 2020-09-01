@@ -7,6 +7,7 @@ using isRock.LineBot;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Serilog;
 using Website.Services;
 
 namespace Website.Controllers {
@@ -22,7 +23,7 @@ namespace Website.Controllers {
 
         public LineWebhookController(ILogger<LineWebhookController> logger) {
             _logger = logger;
-            _LineWebhookService = new LineWebhookService(ConfigService.LineChannelAccessToken);
+            _LineWebhookService = new LineWebhookService(ConfigService.Line_ChannelAccessToken);
         }
 
         /// <summary>
@@ -39,15 +40,20 @@ namespace Website.Controllers {
                 //處理requestModel
                 ReceivedMessage receivedMessage = Utility.Parsing(postData);
 
-                Console.WriteLine($"========== From LINE SERVER ==========");
-                Console.WriteLine($"requestModel:");
-                Console.WriteLine($"{JsonConvert.SerializeObject(receivedMessage, Formatting.Indented)}");
-                Console.WriteLine($"====================");
+                Log.Information($"========== From LINE SERVER ==========");
+                Log.Information($"requestModel:");
+                Log.Information($"{JsonConvert.SerializeObject(receivedMessage, Formatting.Indented)}");
+                Log.Information($"====================");
 
                 string replyToken = receivedMessage.events.FirstOrDefault().replyToken;
                 List<MessageBase> messages = _LineWebhookService.GetReplyMessages(receivedMessage);
                 string result = _LineWebhookService.ResponseToLineServer(replyToken, messages);
 
+                // Add 紀錄發至LineServer的requestBody
+                Log.Information($"========== TO LINE SERVER ==========");
+                Log.Information($"messages:");
+                Log.Information($"{JsonConvert.SerializeObject(messages, Formatting.Indented)}");
+                Log.Information($"====================");
                 return Content(requestBody.ToString() + "\n" + result);
             } catch (Exception ex) {
                 return Content($"Index 發生錯誤，requestBody: {requestBody}, ex: {ex}");
