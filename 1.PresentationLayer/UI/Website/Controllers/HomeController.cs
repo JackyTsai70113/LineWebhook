@@ -4,6 +4,8 @@ using isRock.LineBot;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Serilog;
+using Serilog.Core;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -19,6 +21,7 @@ namespace Website.Controllers {
         private readonly MaskInstitutionService _maskInstitutionService;
 
         public HomeController(ILogger<HomeController> logger) {
+            Log.Information("THIS Is HomeController");
             _logger = logger;
             _maskInstitutionService = new MaskInstitutionService();
         }
