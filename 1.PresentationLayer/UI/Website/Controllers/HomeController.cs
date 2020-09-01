@@ -27,7 +27,6 @@ namespace Website.Controllers {
         }
 
         public IActionResult Test() {
-            var s = new StockService();
             return new OkResult();
         }
 
