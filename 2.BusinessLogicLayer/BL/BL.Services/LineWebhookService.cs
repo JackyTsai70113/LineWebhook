@@ -50,7 +50,7 @@ namespace BL.Services {
         public string ResponseToLineServer(string replyToken, List<MessageBase> messages) {
             try {
                 #region Post到Line
-                Console.Write($"messages: {JsonConvert.SerializeObject(messages)}");
+                Console.WriteLine($"[ResponseToLineServer] messages: {JsonConvert.SerializeObject(messages)}");
                 Bot bot = new Bot(_token);
                 string result = bot.ReplyMessage(replyToken, messages);
                 #endregion Post到Line
@@ -187,7 +187,7 @@ namespace BL.Services {
             List<MessageBase> messages = null;
             try {
                 // 取得欲傳送的MaskDataList
-                var topMaskDatas = MaskInstitutionManager.GetTopMaskDatasByComputingDistance(address, 5);
+                var topMaskDatas = MaskInstitutionManager.GetTopMaskDatasBySecondDivision(address, 20);
 
                 // Set up messages to send
                 messages = new List<MessageBase>();
@@ -211,7 +211,9 @@ namespace BL.Services {
                     //    lng = Double.MinValue;
                     //}
                     LatLng latLng = _GeocodingService.GetLatLngFromAddress(maskData.Address);
-
+                    if (latLng.lat == default || latLng.lng == default) {
+                        continue;
+                    }
                     messages.Add(new LocationMessage(
                         maskData.Name + "\n" +
                             "成人: " + maskData.AdultMasks + "\n" +
@@ -220,6 +222,9 @@ namespace BL.Services {
                         latLng.lat,
                         latLng.lng
                     ));
+                    if (messages.Count >= 5) {
+                        break;
+                    }
                 }
             } catch (Exception ex) {
                 Console.WriteLine($"Exception: {ex}");

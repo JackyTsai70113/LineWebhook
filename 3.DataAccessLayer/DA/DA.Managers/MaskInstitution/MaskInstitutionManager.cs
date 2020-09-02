@@ -69,7 +69,7 @@ namespace DA.Managers.MaskInstitution {
             return result;
         }
 
-        public static List<MaskData> GetTopMaskDatasByComputingDistance(string location, int count = Int32.MaxValue) {
+        public static List<MaskData> GetTopMaskDatasBySecondDivision(string location, int count = Int32.MaxValue) {
             string SecondDivision = GetLocationSecondDivision(location);
             List<MaskData> maskDataList = GetTopMaskDatasFromLocationSuffix(SecondDivision, count);
             return maskDataList.ToList();

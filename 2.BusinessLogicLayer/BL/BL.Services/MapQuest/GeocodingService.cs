@@ -19,13 +19,12 @@ namespace BL.Services.MapQuest {
         public LatLng GetLatLngFromAddress(string address) {
             LatLng latLng = new LatLng();
             var encodedAddress = HttpUtility.UrlEncode(address, Encoding.GetEncoding("UTF-8"));
-            string uri = $"http://www.mapquestapi.com/geocoding/v1/address?" +
-                $"key={_mapQuest_Key}" +
-                $"inFormat=kvp&" +
-                $"outFormat=json&" +
-                $"location={encodedAddress}&" +
-                $"thumbMaps=false&" +
-                $"maxResults=3";
+            string uri = "http://www.mapquestapi.com/geocoding/v1/address?" +
+                "key=" + _mapQuest_Key + "&" +
+                "inFormat=kvp&" +
+                "outFormat=json&" +
+                "location=" + encodedAddress + "&" +
+                "thumbMaps=false";
             string ssss = RequestUtility.GetStringFromGetRequest(uri);
             var response = JsonConvert.DeserializeObject<Response>(ssss);
             List<Location> locations = response.results[0].locations;
