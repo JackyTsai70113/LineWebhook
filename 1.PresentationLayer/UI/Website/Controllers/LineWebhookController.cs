@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using BL.Services;
 using BL.Services.Interfaces;
 using isRock.LineBot;
@@ -8,7 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Serilog;
-using Website.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Website.Controllers {
 

@@ -1,4 +1,3 @@
-using System.Text;
 using BL.Services;
 using Core.Domain.Utilities;
 using Microsoft.AspNetCore.Builder;
@@ -8,8 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using System.Text;
 using Website.Data;
-using Website.Services;
 
 namespace Website {
 

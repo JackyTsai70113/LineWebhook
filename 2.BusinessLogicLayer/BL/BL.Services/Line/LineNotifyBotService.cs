@@ -11,8 +11,10 @@ namespace BL.Services.Line {
 
     public class LineNotifyBotService {
         private readonly string _bearerToken_Jacky;
-        private readonly string _bearerToken_Jessi;
+
+        //private readonly string _bearerToken_Jessi;
         private readonly string _bearerToken_Group;
+
         private readonly string _notifyUri = "https://notify-api.line.me/api/notify";
 
         public LineNotifyBotService() {

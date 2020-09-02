@@ -41,5 +41,11 @@ namespace BL.Services {
                 return Configuration.GetSection("Line").GetSection("NotifyBearerToken_Group").Value;
             }
         }
+
+        public static string MapQuest_Key {
+            get {
+                return Configuration.GetSection("MapQuest_Key").Value;
+            }
+        }
     }
 }

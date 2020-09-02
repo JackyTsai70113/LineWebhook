@@ -1,21 +1,11 @@
-﻿using BL.Services.Excel;
-using BL.Services.Line;
+﻿using BL.Services.MapQuest;
 using BL.Services.MaskInstitution;
-using BL.Services.TWSE_Stock;
 using BL.Services.YahooFinance;
-using isRock.LineBot;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Serilog;
-using Serilog.Core;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Net;
 using System.Text;
 using Website.Models;
-using Website.Services;
 
 namespace Website.Controllers {
 
@@ -34,7 +24,7 @@ namespace Website.Controllers {
             //}
             //string text = sb.ToString();
             //new LineNotifyBotService().PushMessage_Group(text);
-            new TradingVolumeService();
+            new GeocodingService();
             return new OkResult();
         }
 

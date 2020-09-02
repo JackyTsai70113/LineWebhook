@@ -1,6 +1,7 @@
 ﻿using BL.Services.Base;
 using BL.Services.Google;
 using BL.Services.Interfaces;
+using BL.Services.MapQuest;
 using BL.Services.TWSE_Stock;
 using Core.Domain.DTO.RequestDTO.CambridgeDictionary;
 using Core.Domain.DTO.Sinopac;
@@ -30,6 +31,7 @@ namespace BL.Services {
         public LineWebhookService(string token) {
             CambridgeDictionaryManager = new CambridgeDictionaryManager();
             ExchangeRateManager = new ExchangeRateManager();
+            _GeocodingService = new GeocodingService();
             _TradingVolumeService = new TradingVolumeService();
             _token = token;
         }
@@ -37,6 +39,7 @@ namespace BL.Services {
         private ICambridgeDictionaryManager CambridgeDictionaryManager { get; set; }
         private IExchangeRateManager ExchangeRateManager { get; set; }
         private TradingVolumeService _TradingVolumeService { get; set; }
+        private GeocodingService _GeocodingService { get; set; }
 
         /// <summary>
         /// 回覆Line Server
@@ -196,24 +199,26 @@ namespace BL.Services {
                     return messages;
                 }
                 foreach (var maskData in topMaskDatas) {
-                    Location location = MapService.GetGeocoding(maskData.Address).results[0].geometry.location;
+                    //Location location = MapService.GetGeocoding(maskData.Address).results[0].geometry.location;
 
-                    if (!Double.TryParse(location.lat, out double lat)) {
-                        Console.WriteLine($"Ex: Cannot parse {location.lat} to Int.");
-                        lat = Double.MinValue;
-                    }
+                    //if (!Double.TryParse(location.lat, out double lat)) {
+                    //    Console.WriteLine($"Ex: Cannot parse {location.lat} to Int.");
+                    //    lat = Double.MinValue;
+                    //}
 
-                    if (!Double.TryParse(location.lng, out double lng)) {
-                        Console.WriteLine($"Ex: Cannot parse {location.lng} to Int.");
-                        lng = Double.MinValue;
-                    }
+                    //if (!Double.TryParse(location.lng, out double lng)) {
+                    //    Console.WriteLine($"Ex: Cannot parse {location.lng} to Int.");
+                    //    lng = Double.MinValue;
+                    //}
+                    LatLng latLng = _GeocodingService.GetLatLngFromAddress(maskData.Address);
 
                     messages.Add(new LocationMessage(
                         maskData.Name + "\n" +
                             "成人: " + maskData.AdultMasks + "\n" +
                             "兒童: " + maskData.ChildMasks,
                         maskData.Address,
-                        lat, lng
+                        latLng.lat,
+                        latLng.lng
                     ));
                 }
             } catch (Exception ex) {
