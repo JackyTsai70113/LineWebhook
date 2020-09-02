@@ -31,9 +31,10 @@ namespace BL.Services.MapQuest {
 
             List<Location> locations = response.results[0].locations;
             foreach (Location location in locations) {
-                if (latLng.lat != default && latLng.lng != default) {
+                if (location.latLng.lat != default && location.latLng.lng != default) {
                     latLng.lat = location.latLng.lat;
                     latLng.lng = location.latLng.lng;
+                    break;
                 }
             }
 
