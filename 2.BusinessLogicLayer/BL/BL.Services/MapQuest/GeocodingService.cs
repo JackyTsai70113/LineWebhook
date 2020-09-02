@@ -18,6 +18,7 @@ namespace BL.Services.MapQuest {
 
         public LatLng GetLatLngFromAddress(string address) {
             LatLng latLng = new LatLng();
+            address = "臺灣" + address;
             var encodedAddress = HttpUtility.UrlEncode(address, Encoding.GetEncoding("UTF-8"));
             string uri = "http://www.mapquestapi.com/geocoding/v1/address?" +
                 "key=" + _mapQuest_Key + "&" +
@@ -25,21 +26,17 @@ namespace BL.Services.MapQuest {
                 "outFormat=json&" +
                 "location=" + encodedAddress + "&" +
                 "thumbMaps=false";
-            string ssss = RequestUtility.GetStringFromGetRequest(uri);
-            var response = JsonConvert.DeserializeObject<Response>(ssss);
-            List<Location> locations = response.results[0].locations;
+            string responseStr = RequestUtility.GetStringFromGetRequest(uri);
+            var response = JsonConvert.DeserializeObject<Response>(responseStr);
 
+            List<Location> locations = response.results[0].locations;
             foreach (Location location in locations) {
-                if (location.adminArea1 == "TW") {
+                if (latLng.lat != default && latLng.lng != default) {
                     latLng.lat = location.latLng.lat;
                     latLng.lng = location.latLng.lng;
-                    break;
                 }
             }
-            if (latLng.lat == default || latLng.lng == default) {
-                string msg = "該地址找不到對應的經緯度: " + address;
-                Log.Error(msg);
-            }
+
             return latLng;
         }
 
