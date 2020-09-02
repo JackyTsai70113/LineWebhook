@@ -1,4 +1,5 @@
 ﻿using BL.Services.Excel;
+using ExcelDataReader.Log;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,10 +19,7 @@ namespace BL.Services.TWSE_Stock {
             _excelDataReaderService = excelDataReaderService;
         }
 
-        public string GetTradingVolumeStr_ForeignInvestors(DateTime dateTime = default) {
-            if (dateTime == default) {
-                dateTime = DateTime.Today;
-            }
+        public string GetTradingVolumeStr_ForeignInvestors(DateTime dateTime) {
             var dict = GetTradingVolumeDict_ForeignInvestors(dateTime);
             StringBuilder sb = new StringBuilder();
             sb.Append("");
@@ -41,6 +39,11 @@ namespace BL.Services.TWSE_Stock {
 
                 int startX = 3;
                 var table = dataSet.Tables[0];
+                if (table.Rows.Count == 1 && table.Columns.Count == 1) {
+                    Serilog.Log.Debug(
+                        $"[GetTradingVolumeDict_ForeignInvestors] 報表未順利取得()，dateTime: {dateTime}");
+                    return null;
+                }
                 for (int row = 0; row < 50; row++) {
                     //string securityCode = table.Rows[startX + row][1].ToString();
                     //securityCode = TrimQuotationMark(securityCode);

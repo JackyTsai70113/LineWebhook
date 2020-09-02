@@ -1,5 +1,4 @@
 ﻿using BL.Services.Base;
-using BL.Services.Google;
 using BL.Services.Interfaces;
 using BL.Services.MapQuest;
 using BL.Services.TWSE_Stock;
@@ -11,10 +10,8 @@ using DA.Managers.Interfaces.Sinopac;
 using DA.Managers.MaskInstitution;
 using DA.Managers.Sinopac;
 using isRock.LineBot;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Serilog;
-using Serilog.Core;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -34,6 +31,7 @@ namespace BL.Services {
             _GeocodingService = new GeocodingService();
             _TradingVolumeService = new TradingVolumeService();
             _token = token;
+            var dddd = GetCombinationTradingVolumeStr_ForeignInvestors(4);
         }
 
         private ICambridgeDictionaryManager CambridgeDictionaryManager { get; set; }
@@ -137,11 +135,16 @@ namespace BL.Services {
                 } else if (text.StartsWith("tv ")) {
                     string dateTimeStr = text.Split(' ')[1];
                     if (string.IsNullOrEmpty(dateTimeStr)) {
-                        textStr = _TradingVolumeService.GetTradingVolumeStr_ForeignInvestors();
+                        textStr = _TradingVolumeService.GetTradingVolumeStr_ForeignInvestors(DateTime.Today);
                     } else {
                         DateTime dateTime = DateTime.ParseExact(dateTimeStr, "yyyyMMdd", CultureInfo.InvariantCulture);
                         textStr = _TradingVolumeService.GetTradingVolumeStr_ForeignInvestors(dateTime);
                     }
+                    messages = GetSingleMessage(textStr);
+                } else if (text.StartsWith("tv") && text[2] != ' ') {
+                    string daysStr = text.Substring(2);
+                    int days = int.Parse(daysStr);
+                    textStr = GetCombinationTradingVolumeStr_ForeignInvestors(days);
                     messages = GetSingleMessage(textStr);
                 } else {
                     messages = GetSingleMessage(text);
@@ -155,7 +158,7 @@ namespace BL.Services {
         private List<MessageBase> GetSingleMessage(string text) {
             List<MessageBase> messages = new List<MessageBase>();
             try {
-                messages.Add(new TextMessage(text));
+                messages.Add(new TextMessage(text.Trim()));
             } catch (Exception ex) {
                 Console.WriteLine($"[GetSingleMessage] Exception: {ex.Message}");
             }
@@ -199,17 +202,6 @@ namespace BL.Services {
                     return messages;
                 }
                 foreach (var maskData in topMaskDatas) {
-                    //Location location = MapService.GetGeocoding(maskData.Address).results[0].geometry.location;
-
-                    //if (!Double.TryParse(location.lat, out double lat)) {
-                    //    Console.WriteLine($"Ex: Cannot parse {location.lat} to Int.");
-                    //    lat = Double.MinValue;
-                    //}
-
-                    //if (!Double.TryParse(location.lng, out double lng)) {
-                    //    Console.WriteLine($"Ex: Cannot parse {location.lng} to Int.");
-                    //    lng = Double.MinValue;
-                    //}
                     LatLng latLng = _GeocodingService.GetLatLngFromAddress(maskData.Address);
                     if (latLng.lat == default || latLng.lng == default) {
                         continue;
@@ -306,6 +298,62 @@ namespace BL.Services {
                 Console.WriteLine($"Exception: {ex.Message}");
             }
             return messages;
+        }
+
+        private string GetCombinationTradingVolumeStr_ForeignInvestors(int days) {
+            var tradingVolumeDict = GetCombinationTradingVolumeDict_ForeignInvestors(days);
+            StringBuilder sb = new StringBuilder();
+            sb.Append("");
+            foreach (var kvp in tradingVolumeDict) {
+                sb.Append(kvp.Key + " ");
+                sb.Append(kvp.Value + "\n");
+            }
+            return sb.ToString();
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="days"></param>
+        /// <returns></returns>
+        private Dictionary<string, int> GetCombinationTradingVolumeDict_ForeignInvestors(int days) {
+            int count = 0;
+            DateTime date = DateTime.Today;
+            Dictionary<string, int> combinationDict = new Dictionary<string, int>();
+            while (count < days) {
+                Dictionary<string, int> dict = _TradingVolumeService.GetTradingVolumeDict_ForeignInvestors(date);
+                if (dict == null) {
+                    date = date.AddDays(-1);
+                    continue;
+                }
+                if (count == 0) {
+                    combinationDict = dict;
+                    date = date.AddDays(-1);
+                    count++;
+                    continue;
+                }
+                List<string> keysNeedToDeleteInCombinationDict = new List<string>();
+                //如果新字典沒有此key，舊字典卻有，那就把key存起來，預備從舊字典刪除。
+                foreach (var kvp in combinationDict) {
+                    if (!dict.ContainsKey(kvp.Key)) {
+                        keysNeedToDeleteInCombinationDict.Add(kvp.Key);
+                    }
+                }
+                //從舊字典刪除新字典沒有的key
+                foreach (var key in keysNeedToDeleteInCombinationDict) {
+                    combinationDict.Remove(key);
+                }
+
+                foreach (var kvp in dict) {
+                    if (combinationDict.ContainsKey(kvp.Key)) {
+                        combinationDict[kvp.Key] += dict[kvp.Key];
+                    }
+                }
+
+                count++;
+                date = date.AddDays(-1);
+            }
+            return combinationDict;
         }
 
         public List<dynamic> ReplyConfirmMessages() {

@@ -9,6 +9,10 @@ using System.Web;
 
 namespace BL.Services.MapQuest {
 
+    /// <summary>
+    /// MapQuest服務的Map API，15000 transactions per month for free
+    /// https://developer.mapquest.com/documentation/
+    /// </summary>
     public class GeocodingService {
         private readonly string _mapQuest_Key;
 
