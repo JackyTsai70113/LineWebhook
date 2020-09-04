@@ -4,6 +4,7 @@ using BL.Services.MapQuest;
 using BL.Services.TWSE_Stock;
 using Core.Domain.DTO.RequestDTO.CambridgeDictionary;
 using Core.Domain.DTO.Sinopac;
+using Core.Domain.Enums;
 using DA.Managers.CambridgeDictionary;
 using DA.Managers.Interfaces;
 using DA.Managers.Interfaces.Sinopac;
@@ -48,7 +49,7 @@ namespace BL.Services {
         public string ResponseToLineServer(string replyToken, List<MessageBase> messages) {
             try {
                 #region Post到Line
-                Console.WriteLine($"[ResponseToLineServer] messages: {JsonConvert.SerializeObject(messages)}");
+                Log.Information($"[ResponseToLineServer] messages: {JsonConvert.SerializeObject(messages)}");
                 Bot bot = new Bot(_token);
                 string result = bot.ReplyMessage(replyToken, messages);
                 #endregion Post到Line
@@ -71,7 +72,7 @@ namespace BL.Services {
                 return result;
             } catch (Exception ex) {
                 Log.Error(
-                    $"LineWebhookService.Response 錯誤, replyToken: {replyToken},\n" +
+                    $"LineWebhookService.ResponseToLineServer 錯誤, replyToken: {replyToken},\n" +
                     $"messages: {JsonConvert.SerializeObject(messages, Formatting.Indented)}\n" +
                     $"ex: {ex}");
                 return ex.ToString();
@@ -133,19 +134,49 @@ namespace BL.Services {
                     int textLenth = int.Parse(text.Split(' ')[2]);
                     messages = GetCambridgeDictionaryMessages(vocabulary, textLenth);
                 } else if (text.StartsWith("tv ")) {
-                    string dateTimeStr = text.Split(' ')[1];
-                    if (string.IsNullOrEmpty(dateTimeStr)) {
-                        textStr = _TradingVolumeService.GetTradingVolumeStr_ForeignInvestors(DateTime.Today);
-                    } else {
-                        DateTime dateTime = DateTime.ParseExact(dateTimeStr, "yyyyMMdd", CultureInfo.InvariantCulture);
-                        textStr = _TradingVolumeService.GetTradingVolumeStr_ForeignInvestors(dateTime);
+                    Dictionary<string, int> dict = new Dictionary<string, int>();
+                    if (string.IsNullOrEmpty(text.Split(' ')[1])) {
+                        dict = _TradingVolumeService.GetTopTradingVolumeAscDict(
+                            ForeignAndOtherInvestorEnum.ForeignInvestors, DateTime.Today, 50);
+                    } else if (text.Split(' ').Count() == 2) {
+                        int dataNumber = int.Parse(text.Split(' ')[1]);
+                        dict = _TradingVolumeService.GetTopTradingVolumeAscDict(
+                            ForeignAndOtherInvestorEnum.ForeignInvestors, DateTime.Today, dataNumber);
+                    } else if (text.Split(' ').Count() > 2) {
+                        int dataNumber = int.Parse(text.Split(' ')[1]);
+                        DateTime dateTime = DateTime.ParseExact(text.Split(' ')[2], "yyyyMMdd", CultureInfo.InvariantCulture);
+                        dict = _TradingVolumeService.GetTopTradingVolumeAscDict(
+                            ForeignAndOtherInvestorEnum.ForeignInvestors, dateTime, dataNumber);
                     }
+                    textStr = _TradingVolumeService.GetTradingVolumeStr(dict);
+                    messages = GetSingleMessage(textStr);
+                } else if (text.StartsWith("tvr ")) {
+                    Dictionary<string, int> dict = new Dictionary<string, int>();
+                    if (string.IsNullOrEmpty(text.Split(' ')[1])) {
+                        dict = _TradingVolumeService.GetTopTradingVolumeDescDict(
+                            ForeignAndOtherInvestorEnum.ForeignInvestors, DateTime.Today, 50);
+                    } else if (text.Split(' ').Count() == 2) {
+                        int dataNumber = int.Parse(text.Split(' ')[1]);
+                        dict = _TradingVolumeService.GetTopTradingVolumeDescDict(
+                            ForeignAndOtherInvestorEnum.ForeignInvestors, DateTime.Today, dataNumber);
+                    } else if (text.Split(' ').Count() > 2) {
+                        int dataNumber = int.Parse(text.Split(' ')[1]);
+                        DateTime dateTime = DateTime.ParseExact(text.Split(' ')[2], "yyyyMMdd", CultureInfo.InvariantCulture);
+                        dict = _TradingVolumeService.GetTopTradingVolumeDescDict(
+                            ForeignAndOtherInvestorEnum.ForeignInvestors, dateTime, dataNumber);
+                    }
+                    textStr = _TradingVolumeService.GetTradingVolumeStr(dict);
                     messages = GetSingleMessage(textStr);
                 } else if (text.StartsWith("tv") && text[2] != ' ') {
                     string daysStr = text.Substring(2);
                     int days = int.Parse(daysStr);
-                    textStr = GetCombinationTradingVolumeStr_ForeignInvestors(days);
-                    messages = GetSingleMessage(textStr);
+                    if (days < 1 || days > 5) {
+                        textStr = "天數需為 1-5";
+                        messages = GetSingleMessage(textStr);
+                    } else {
+                        textStr = GetCombinationTradingVolumeStr_ForeignInvestors(days);
+                        messages = GetSingleMessage(textStr);
+                    }
                 } else {
                     messages = GetSingleMessage(text);
                 }
@@ -302,6 +333,11 @@ namespace BL.Services {
 
         private string GetCombinationTradingVolumeStr_ForeignInvestors(int days) {
             var tradingVolumeDict = GetCombinationTradingVolumeDict_ForeignInvestors(days);
+
+            if (tradingVolumeDict.Count == 0) {
+                return "查無對應資料";
+            }
+
             StringBuilder sb = new StringBuilder();
             sb.Append("");
             foreach (var kvp in tradingVolumeDict) {
@@ -321,7 +357,8 @@ namespace BL.Services {
             DateTime date = DateTime.Today;
             Dictionary<string, int> combinationDict = new Dictionary<string, int>();
             while (count < days) {
-                Dictionary<string, int> dict = _TradingVolumeService.GetTradingVolumeDict_ForeignInvestors(date);
+                Dictionary<string, int> dict = _TradingVolumeService.GetTopTradingVolumeDict_ForeignInvestors(
+                    ForeignAndOtherInvestorEnum.ForeignInvestors, date, 50);
                 if (dict == null) {
                     date = date.AddDays(-1);
                     continue;
