@@ -103,11 +103,11 @@ namespace BL.Services.TWSE_Stock {
             Dictionary<string, int> result = new Dictionary<string, int>();
             DateTime date = DateTime.Today;
             while (count < days) {
-                if (!TryGetAscTradingVolumeDict(date, out Dictionary<string, int> ascTradingVolumeDict)) {
+                if (!TryGetDescTradingVolumeDict(date, out Dictionary<string, int> descTradingVolumeDict)) {
                     date = date.AddDays(-1);
                     continue;
                 }
-                result = GetCombinationTradingVolumeDict(result, ascTradingVolumeDict);
+                result = GetCombinationTradingVolumeDict(result, descTradingVolumeDict);
                 count++;
                 date = date.AddDays(-1);
             }
