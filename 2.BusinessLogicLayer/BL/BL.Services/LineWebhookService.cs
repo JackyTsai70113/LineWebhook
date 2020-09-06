@@ -144,9 +144,9 @@ namespace BL.Services {
                     }
                     if (text.Split(' ').Count() == 1) {
                         if (isDesc) {
-                            textStr = _TradingVolumeService.GetDescTradingVolumeStr(DateTime.Now);
+                            textStr = _TradingVolumeService.GetDescTradingVolumeStr(DateTime.UtcNow.AddHours(8));
                         } else {
-                            textStr = _TradingVolumeService.GetAscTradingVolumeStr(DateTime.Now);
+                            textStr = _TradingVolumeService.GetAscTradingVolumeStr(DateTime.UtcNow.AddHours(8));
                         }
                         messages = GetSingleMessage(textStr);
                     } else if (text.Split(' ')[1].Count() == 1) {
