@@ -17,16 +17,6 @@ namespace Website.Controllers {
         }
 
         public IActionResult Test() {
-            //StringBuilder sb = new StringBuilder();
-            //sb.Append("\n");
-            //for (int i = 0; i < 50; i++) {
-            //    sb.Append("證券名稱 " + i + "00000000\n");
-            //}
-            //string text = sb.ToString();
-            //new LineNotifyBotService().PushMessage_Group(text);
-            //new TradingVolumeService();
-            //new LineWebhookService("");
-            new TradingVolumeService();
             return new OkResult();
         }
 

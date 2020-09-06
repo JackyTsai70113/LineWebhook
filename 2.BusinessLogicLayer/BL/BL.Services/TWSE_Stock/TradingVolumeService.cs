@@ -16,6 +16,38 @@ namespace BL.Services.TWSE_Stock {
     public class TradingVolumeService {
         private readonly ExcelDataReaderService _excelDataReaderService;
 
+        private readonly string[] ignoreStockName = {
+            "富邦VIX",
+
+            "FH香港正2",
+            "中信中國50正2",
+            "元大S&P500正2",
+            "元大S&P原油正2",
+            "元大台灣50正2",
+            "元大美債20正2",
+            "元大滬深300正2",
+            "國泰20年美債正2",
+            "國泰中國A50正2",
+            "國泰美國道瓊正2",
+            "國泰臺灣加權正2",
+            "富邦NASDAQ正2",
+            "富邦上証正2",
+            "富邦日本正2",
+            "富邦恒生國企正2",
+            "富邦臺灣加權正2",
+            "街口布蘭特油正2",
+
+            "FH香港反1",
+            "元大S&P500反1",
+            "元大台灣50反1",
+            "元大滬深300反1",
+            "國泰美國道瓊反1",
+            "富邦上証反1",
+            "富邦印度反1",
+            "富邦恒生國企反1",
+            "富邦臺灣加權反1",
+        };
+
         /// <summary>
         /// 取資料的筆數
         /// </summary>
@@ -30,146 +62,131 @@ namespace BL.Services.TWSE_Stock {
             _excelDataReaderService = excelDataReaderService;
         }
 
-        public string GetTradingVolumeStr(Dictionary<string, int> dict) {
+        public string GetAscTradingVolumeStr(DateTime date) {
+            if (!TryGetAscTradingVolumeDict(date, out Dictionary<string, int> tradingVolumeDict)) {
+                string dateStr = date.ToString("yyyy-MM-dd");
+                return dateStr + " 查無資料";
+            }
+            return GetTradingVolumeStr(tradingVolumeDict);
+        }
+
+        public string GetDescTradingVolumeStr(DateTime date) {
+            if (!TryGetDescTradingVolumeDict(date, out Dictionary<string, int> tradingVolumeDict)) {
+                string dateStr = date.ToString("yyyy-MM-dd");
+                return dateStr + " 查無資料";
+            }
+            return GetTradingVolumeStr(tradingVolumeDict);
+        }
+
+        public string GetAscTradingVolumeStrOverDays(int days) {
+            int count = 0;
+            Dictionary<string, int> result = new Dictionary<string, int>();
+            DateTime date = DateTime.Today;
+            while (count < days) {
+                if (!TryGetAscTradingVolumeDict(date, out Dictionary<string, int> ascTradingVolumeDict)) {
+                    date = date.AddDays(-1);
+                    continue;
+                }
+                result = GetCombinationTradingVolumeDict(result, ascTradingVolumeDict);
+                count++;
+                date = date.AddDays(-1);
+            }
+            result = result
+                .OrderBy(kvp => kvp.Value)
+                .Take(100)
+                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            return GetTradingVolumeStr(result);
+        }
+
+        public string GetDescTradingVolumeStrOverDays(int days) {
+            int count = 0;
+            Dictionary<string, int> result = new Dictionary<string, int>();
+            DateTime date = DateTime.Today;
+            while (count < days) {
+                if (!TryGetAscTradingVolumeDict(date, out Dictionary<string, int> ascTradingVolumeDict)) {
+                    date = date.AddDays(-1);
+                    continue;
+                }
+                result = GetCombinationTradingVolumeDict(result, ascTradingVolumeDict);
+                count++;
+                date = date.AddDays(-1);
+            }
+            result = result
+                .OrderByDescending(kvp => kvp.Value)
+                .Take(100)
+                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            return GetTradingVolumeStr(result);
+        }
+
+        private string GetTradingVolumeStr(Dictionary<string, int> dict) {
             if (dict.Count == 0) {
                 throw new Exception("查無資料");
             }
             StringBuilder sb = new StringBuilder();
             sb.Append("");
             foreach (var kvp in dict) {
-                sb.Append(kvp.Key + " ");
-                sb.Append(kvp.Value + "\n");
+                if (!ignoreStockName.Contains(kvp.Key)) {
+                    sb.Append(kvp.Key + " ");
+                    sb.Append(kvp.Value + "\n");
+                }
             }
             return sb.ToString();
         }
 
-        public Dictionary<string, int> GetAscTradingVolumeDict(DateTime dateTime) {
+        private bool TryGetAscTradingVolumeDict(DateTime dateTime, out Dictionary<string, int> ascTradingVolumeDict) {
             if (TryGetTradingVolume(
                     ForeignAndOtherInvestorEnum.ForeignInvestors, dateTime,
                     out TradingVolume tradingVolumeOfForeignInvestors) == false) {
-                return null;
-            }
-            var tradingVolumeDictOfForeignInvestors =
-                GetTradingVolumeDictionary(tradingVolumeOfForeignInvestors);
-            if (TryGetTradingVolume(
-                    ForeignAndOtherInvestorEnum.SecuritiesInvestmentTrustCompanies, dateTime,
-                    out TradingVolume tradingVolumeOfSecuritiesInvestmentTrustCompanies) == false) {
-                return null;
-            }
-            var tradingVolumeDictOfSecuritiesInvestmentTrustCompanies =
-                GetTradingVolumeDictionary(tradingVolumeOfSecuritiesInvestmentTrustCompanies);
-            var combinationTradingVolumeDict =
-                GetCombinationTradingVolumeDict(
-                    tradingVolumeDictOfForeignInvestors,
-                    tradingVolumeDictOfSecuritiesInvestmentTrustCompanies)
-                .OrderByDescending(kvp => kvp.Value)
-                .Take(100)
-                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            return combinationTradingVolumeDict;
-        }
-
-        public Dictionary<string, int> GetDescTradingVolumeDict(DateTime dateTime) {
-            if (TryGetTradingVolume(
-                    ForeignAndOtherInvestorEnum.ForeignInvestors, dateTime,
-                    out TradingVolume tradingVolumeOfForeignInvestors) == false) {
-                return null;
+                ascTradingVolumeDict = null;
+                return false;
             }
             var tradingVolumeDictOfForeignInvestors =
                 GetTradingVolumeDictionary(tradingVolumeOfForeignInvestors, false);
             if (TryGetTradingVolume(
                     ForeignAndOtherInvestorEnum.SecuritiesInvestmentTrustCompanies, dateTime,
                     out TradingVolume tradingVolumeOfSecuritiesInvestmentTrustCompanies) == false) {
-                return null;
+                ascTradingVolumeDict = null;
+                return false;
             }
             var tradingVolumeDictOfSecuritiesInvestmentTrustCompanies =
                 GetTradingVolumeDictionary(tradingVolumeOfSecuritiesInvestmentTrustCompanies, false);
-            var combinationTradingVolumeDict =
+            ascTradingVolumeDict =
                 GetCombinationTradingVolumeDict(
                     tradingVolumeDictOfForeignInvestors,
                     tradingVolumeDictOfSecuritiesInvestmentTrustCompanies)
                 .OrderBy(kvp => kvp.Value)
                 .Take(100)
                 .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            return combinationTradingVolumeDict;
+            return true;
         }
 
-        /// <summary>
-        /// 逆向取得 法人買賣金額(Trading Value of Foreign & Other Investors)
-        /// </summary>
-        /// <param name="foreignAndOtherInvestor">法人Enum(可選擇投信/外資及陸資)</param>
-        /// <param name="dateTime">日期</param>
-        /// <param name="topNumber">資料筆數</param>
-        /// <returns>法人買賣字典<證券名稱, 買賣超股數></returns>
-        public Dictionary<string, int> GetTopTradingVolumeDescDict(
-            ForeignAndOtherInvestorEnum foreignAndOtherInvestor, DateTime dateTime, int topNumber) {
-            Dictionary<string, int> dict;
-            if (TryGetTradingVolume(foreignAndOtherInvestor, dateTime, out TradingVolume tradingVolume) == false) {
-                return null;
+        private bool TryGetDescTradingVolumeDict(DateTime dateTime, out Dictionary<string, int> descTradingVolumeDict) {
+            if (TryGetTradingVolume(
+                    ForeignAndOtherInvestorEnum.ForeignInvestors, dateTime,
+                    out TradingVolume tradingVolumeOfForeignInvestors) == false) {
+                descTradingVolumeDict = null;
+                return false;
             }
-
-            dict = new Dictionary<string, int>();
-            string[] singleData = tradingVolume.data
-                .Where(d => {
-                    NumberStyles numberStyles = NumberStyles.AllowLeadingSign | NumberStyles.AllowThousands;
-                    return int.Parse(d[5], numberStyles) < 0;
-                }).First();
-            int index = tradingVolume.data.ToList().IndexOf(singleData);
-            for (int i = index; i < index + topNumber; i++) {
-                string name = tradingVolume.data[i][2].ToString().Trim();
-                NumberStyles numberStyles = NumberStyles.AllowLeadingSign | NumberStyles.AllowThousands;
-                int difference = int.Parse(tradingVolume.data[i][5], numberStyles);
-
-                if (!dict.ContainsKey(name)) {
-                    dict.Add(name, difference);
-                } else {
-                    throw new Exception("Key重複");
-                }
+            var tradingVolumeDictOfForeignInvestors =
+                GetTradingVolumeDictionary(tradingVolumeOfForeignInvestors);
+            if (TryGetTradingVolume(
+                    ForeignAndOtherInvestorEnum.SecuritiesInvestmentTrustCompanies, dateTime,
+                    out TradingVolume tradingVolumeOfSecuritiesInvestmentTrustCompanies) == false) {
+                descTradingVolumeDict = null;
+                return false;
             }
-            return dict;
+            var tradingVolumeDictOfSecuritiesInvestmentTrustCompanies =
+                GetTradingVolumeDictionary(tradingVolumeOfSecuritiesInvestmentTrustCompanies);
+            descTradingVolumeDict =
+                GetCombinationTradingVolumeDict(
+                    tradingVolumeDictOfForeignInvestors,
+                    tradingVolumeDictOfSecuritiesInvestmentTrustCompanies)
+                .OrderByDescending(kvp => kvp.Value)
+                .Take(100)
+                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            return true;
         }
 
-        /// <summary>
-        /// 取得 法人買賣金額(Trading Value of Foreign & Other Investors)
-        /// </summary>
-        /// <param name="foreignAndOtherInvestor">法人Enum(可選擇投信/外資及陸資)</param>
-        /// <param name="dateTime">日期</param>
-        /// <param name="topNumber">取前topNumber個</param>
-        /// <returns></returns>
-        public Dictionary<string, int> GetTopTradingVolumeDict_ForeignInvestors(
-            ForeignAndOtherInvestorEnum foreignAndOtherInvestor, DateTime dateTime, int topNumber) {
-            var dict = new Dictionary<string, int>();
-            try {
-                string dateStr = dateTime.ToString("yyyyMMdd");
-                string uri = "https://www.twse.com.tw/fund/TWT38U?response=csv&date=" + dateStr;
-                DataSet dataSet = _excelDataReaderService.GetDataSetFromUri(uri);
-
-                int startX = 3;
-                var table = dataSet.Tables[0];
-                if (table.Rows.Count == 1 && table.Columns.Count == 1) {
-                    Serilog.Log.Debug(
-                        $"[GetTradingVolumeDict_ForeignInvestors] 報表未順利取得()，dateTime: {dateTime}");
-                    return null;
-                }
-                for (int row = 0; row < 50; row++) {
-                    //string securityCode = table.Rows[startX + row][1].ToString();
-                    //securityCode = TrimQuotationMark(securityCode);
-                    string name = table.Rows[startX + row][2].ToString().Trim();
-                    int difference = int.Parse(table.Rows[startX + row][5].ToString(), NumberStyles.AllowThousands);
-
-                    if (!dict.ContainsKey(name)) {
-                        dict.Add(name, difference);
-                    } else {
-                        throw new Exception("Key重複");
-                    }
-                }
-                return dict;
-            } catch (Exception ex) {
-                Serilog.Log.Error("GetTradingVolume_ForeignInvestors" + ex.ToString());
-                RequestUtility.AddUriIndex();
-                return GetTopTradingVolumeDict_ForeignInvestors(
-                    foreignAndOtherInvestor, dateTime, topNumber);
-            }
-        }
         private Dictionary<string, int> GetCombinationTradingVolumeDict(Dictionary<string, int> dict1, Dictionary<string, int> dict2) {
             Dictionary<string, int> result = new Dictionary<string, int>(dict1);
             foreach (var kvp in dict2) {
@@ -181,6 +198,7 @@ namespace BL.Services.TWSE_Stock {
             }
             return result;
         }
+
         private Dictionary<string, int> GetTradingVolumeDictionary(TradingVolume tradingVolume, bool isDesc = true) {
             string[][] datas;
             if (isDesc) {

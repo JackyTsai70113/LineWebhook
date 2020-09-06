@@ -128,35 +128,48 @@ namespace BL.Services {
                     int textLenth = int.Parse(text.Split(' ')[2]);
                     messages = GetCambridgeDictionaryMessages(vocabulary, textLenth);
                 } else if (text.StartsWith("tv")) {
+                    if (text.Count() < 2) {
+                        throw new ArgumentException("請重新輸入(tv1或是tv2?)");
+                    }
                     bool isDesc;
                     switch (text[2]) {
                         case '1':
-                            isDesc = false;
+                            isDesc = true;
                             break;
                         case '2':
-                            isDesc = true;
+                            isDesc = false;
                             break;
                         default:
                             throw new ArgumentException("參數錯誤");
                     }
-
-                    if (text.Split(' ')[1].Count() == 1) {
+                    if (text.Split(' ').Count() == 1) {
+                        if (isDesc) {
+                            textStr = _TradingVolumeService.GetDescTradingVolumeStr(DateTime.Now);
+                        } else {
+                            textStr = _TradingVolumeService.GetAscTradingVolumeStr(DateTime.Now);
+                        }
+                        messages = GetSingleMessage(textStr);
+                    } else if (text.Split(' ')[1].Count() == 1) {
                         string daysStr = text.Split(' ')[1];
                         int days = int.Parse(daysStr);
                         if (days < 1 || days > 5) {
                             textStr = "交易天數需為 1-5";
                             messages = GetSingleMessage(textStr);
                         } else {
+                            if (isDesc) {
+                                textStr = _TradingVolumeService.GetDescTradingVolumeStrOverDays(days);
+                            } else {
+                                textStr = _TradingVolumeService.GetAscTradingVolumeStrOverDays(days);
+                            }
+                            messages = GetSingleMessage(textStr);
                         }
                     } else if (text.Split(' ')[1].Count() == 8) {
                         string dateTimeStr = text.Split(' ')[1];
                         DateTime dateTime = DateTime.ParseExact(dateTimeStr, "yyyyMMdd", CultureInfo.InvariantCulture);
                         if (isDesc) {
-                            var tradingVolumeDict = _TradingVolumeService.GetDescTradingVolumeDict(dateTime);
-                            textStr = _TradingVolumeService.GetTradingVolumeStr(tradingVolumeDict);
+                            textStr = _TradingVolumeService.GetDescTradingVolumeStr(dateTime);
                         } else {
-                            var tradingVolumeDict = _TradingVolumeService.GetAscTradingVolumeDict(dateTime);
-                            textStr = _TradingVolumeService.GetTradingVolumeStr(tradingVolumeDict);
+                            textStr = _TradingVolumeService.GetAscTradingVolumeStr(dateTime);
                         }
                         messages = GetSingleMessage(textStr);
                     } else {
