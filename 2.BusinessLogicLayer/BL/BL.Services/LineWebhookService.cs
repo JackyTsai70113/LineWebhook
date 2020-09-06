@@ -128,8 +128,8 @@ namespace BL.Services {
                     int textLenth = int.Parse(text.Split(' ')[2]);
                     messages = GetCambridgeDictionaryMessages(vocabulary, textLenth);
                 } else if (text.StartsWith("tv")) {
-                    if (text.Count() < 2) {
-                        throw new ArgumentException("請重新輸入(tv1或是tv2?)");
+                    if (text.Count() == 2) {
+                        throw new ArgumentException("請重新輸入...tv1 或 tv2 ?");
                     }
                     bool isDesc;
                     switch (text[2]) {
