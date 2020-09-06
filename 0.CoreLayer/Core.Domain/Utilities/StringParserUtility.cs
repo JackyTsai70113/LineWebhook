@@ -140,9 +140,8 @@ namespace Core.Domain.Utilities {
         /// </summary>
         /// <param name="str">字串</param>
         /// <param name="dateTime">日期</param>
-        /// <param name="format">字串格式</param>
         /// <returns>是否轉換成功</returns>
-        public static bool TryParse(this string str, out DateTime dateTime, string format = "yyyy/MM/dd") {
+        public static bool TryParse(this string str, out DateTime dateTime) {
             bool result;
             // 設定無法正確 Parse 的值
             dateTime = DateTimeUtility.Unix_Epoch_StartTime;

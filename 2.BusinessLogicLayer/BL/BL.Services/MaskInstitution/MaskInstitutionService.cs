@@ -12,7 +12,7 @@ namespace BL.Services.MaskInstitution {
             return maskInstitutionList.Count;
         }
 
-        public List<MaskData> GetTopMaskDatasByComputingDistance(string location, int count = Int32.MaxValue) {
+        public List<MaskData> GetTopMaskDatasByComputingDistance(string location, int count = int.MaxValue) {
             var maskDatas = MaskInstitutionManager.GetTopMaskDatasBySecondDivision(location, count);
             return maskDatas;
         }

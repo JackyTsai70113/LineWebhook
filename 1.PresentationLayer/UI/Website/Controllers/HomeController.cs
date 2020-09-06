@@ -1,6 +1,4 @@
-﻿using BL.Services;
-using BL.Services.MapQuest;
-using BL.Services.MaskInstitution;
+﻿using BL.Services.MaskInstitution;
 using BL.Services.TWSE_Stock;
 using BL.Services.YahooFinance;
 using Microsoft.AspNetCore.Mvc;
@@ -26,8 +24,9 @@ namespace Website.Controllers {
             //}
             //string text = sb.ToString();
             //new LineNotifyBotService().PushMessage_Group(text);
+            //new TradingVolumeService();
+            //new LineWebhookService("");
             new TradingVolumeService();
-            new LineWebhookService("");
             return new OkResult();
         }
 

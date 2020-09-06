@@ -47,5 +47,12 @@ namespace BL.Services {
                 return Configuration.GetSection("MapQuest_Key").Value;
             }
         }
+
+        public static int TWSE_TradingVolumeNumber {
+            get {
+                string numberStr = Configuration.GetSection("TWSE").GetSection("TradingVolumeNumber").Value;
+                return int.Parse(numberStr);
+            }
+        }
     }
 }

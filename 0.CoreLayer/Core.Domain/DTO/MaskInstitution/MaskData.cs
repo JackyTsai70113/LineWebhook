@@ -6,13 +6,13 @@ namespace Core.Domain.DTO.MaskInstitution {
 
         public MaskData(string maskDataStr) {
             var maskDataArr = maskDataStr.Split(',');
-            if (!Int32.TryParse(maskDataArr[4], out int adultMasks)) {
+            if (!int.TryParse(maskDataArr[4], out int adultMasks)) {
                 Console.WriteLine($"Ex: Cannot parse {maskDataArr[4]} to Int.");
-                adultMasks = Int32.MaxValue;
+                adultMasks = int.MaxValue;
             }
-            if (!Int32.TryParse(maskDataArr[5], out int childMasks)) {
+            if (!int.TryParse(maskDataArr[5], out int childMasks)) {
                 Console.WriteLine($"Ex: Cannot parse {maskDataArr[5]} to Int.");
-                childMasks = Int32.MaxValue;
+                childMasks = int.MaxValue;
             }
             if (!DateTime.TryParse(maskDataArr[6], out DateTime updateTime)) {
                 Console.WriteLine($"Ex: Cannot parse {maskDataArr[6]} to Int.");

@@ -28,7 +28,7 @@ namespace DA.Managers.MaskInstitution {
             return result;
         }
 
-        public static List<MaskData> GetTopMaskDatasFromLocationSuffix(string locationSuffix, int count = Int32.MaxValue) {
+        public static List<MaskData> GetTopMaskDatasFromLocationSuffix(string locationSuffix, int count = int.MaxValue) {
             if (maskDataList == null) {
                 maskDataList = MaskInstitutionSourceManager.GetList();
             }
@@ -69,7 +69,7 @@ namespace DA.Managers.MaskInstitution {
             return result;
         }
 
-        public static List<MaskData> GetTopMaskDatasBySecondDivision(string location, int count = Int32.MaxValue) {
+        public static List<MaskData> GetTopMaskDatasBySecondDivision(string location, int count = int.MaxValue) {
             string SecondDivision = GetLocationSecondDivision(location);
             List<MaskData> maskDataList = GetTopMaskDatasFromLocationSuffix(SecondDivision, count);
             return maskDataList.ToList();

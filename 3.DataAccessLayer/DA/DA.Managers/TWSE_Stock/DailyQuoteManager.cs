@@ -159,7 +159,7 @@ namespace DA.Managers.TWSE_Stock {
         /// <param name="dateTime">指定時間</param>
         /// <returns>位元組</returns>
         private static byte[] BytesFromDailyQuotesAPI(DateTime dateTime, StockCategoryEnum stockCategory) {
-            byte[] bytes = null;
+            byte[] bytes;
             string responseType = "json";
             string dateStr = dateTime.ToString("yyyyMMdd");
             string typeStr = ((int)stockCategory).ToString();
@@ -222,8 +222,8 @@ namespace DA.Managers.TWSE_Stock {
                 if (httpResponseMessage.StatusCode == HttpStatusCode.OK) {
                     //取得內容
                     bytes = await httpResponseMessage.Content.ReadAsByteArrayAsync();
-                } //檢查回應的伺服器狀態StatusCode是否是403 Forbidden
-                    else if (httpResponseMessage.StatusCode == HttpStatusCode.Forbidden) {
+                    //檢查回應的伺服器狀態StatusCode是否是403 Forbidden
+                } else if (httpResponseMessage.StatusCode == HttpStatusCode.Forbidden) {
                     RequestUtility.AddUriIndex();
                     bytes = await BytesFromDailyQuotesAPIAsync(dateTime, stockCategory);
                     //throw new WebException("禁止伺服器請求!");

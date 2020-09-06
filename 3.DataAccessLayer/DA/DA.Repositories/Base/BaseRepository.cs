@@ -171,7 +171,7 @@ namespace DA.Repositories.Base {
                         return int.Parse(data.ToString());
 
                     case "Single":
-                        return Single.Parse(data.ToString());
+                        return float.Parse(data.ToString());
 
                     case "decimal":
                         return decimal.Parse(data.ToString());

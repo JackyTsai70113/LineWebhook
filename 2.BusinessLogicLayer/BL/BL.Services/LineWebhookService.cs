@@ -4,12 +4,9 @@ using BL.Services.MapQuest;
 using BL.Services.TWSE_Stock;
 using Core.Domain.DTO.RequestDTO.CambridgeDictionary;
 using Core.Domain.DTO.Sinopac;
-using Core.Domain.Enums;
-using DA.Managers.CambridgeDictionary;
 using DA.Managers.Interfaces;
 using DA.Managers.Interfaces.Sinopac;
 using DA.Managers.MaskInstitution;
-using DA.Managers.Sinopac;
 using isRock.LineBot;
 using Newtonsoft.Json;
 using Serilog;
@@ -20,6 +17,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using Core.Domain.Utilities;
 
 namespace BL.Services {
 
@@ -27,12 +25,8 @@ namespace BL.Services {
         private readonly string _token;
 
         public LineWebhookService(string token) {
-            CambridgeDictionaryManager = new CambridgeDictionaryManager();
-            ExchangeRateManager = new ExchangeRateManager();
-            _GeocodingService = new GeocodingService();
             _TradingVolumeService = new TradingVolumeService();
             _token = token;
-            var dddd = GetCombinationTradingVolumeStr_ForeignInvestors(4);
         }
 
         private ICambridgeDictionaryManager CambridgeDictionaryManager { get; set; }
@@ -133,55 +127,48 @@ namespace BL.Services {
                     string vocabulary = text.Split(' ')[1];
                     int textLenth = int.Parse(text.Split(' ')[2]);
                     messages = GetCambridgeDictionaryMessages(vocabulary, textLenth);
-                } else if (text.StartsWith("tv ")) {
-                    Dictionary<string, int> dict = new Dictionary<string, int>();
-                    if (string.IsNullOrEmpty(text.Split(' ')[1])) {
-                        dict = _TradingVolumeService.GetTopTradingVolumeAscDict(
-                            ForeignAndOtherInvestorEnum.ForeignInvestors, DateTime.Today, 50);
-                    } else if (text.Split(' ').Count() == 2) {
-                        int dataNumber = int.Parse(text.Split(' ')[1]);
-                        dict = _TradingVolumeService.GetTopTradingVolumeAscDict(
-                            ForeignAndOtherInvestorEnum.ForeignInvestors, DateTime.Today, dataNumber);
-                    } else if (text.Split(' ').Count() > 2) {
-                        int dataNumber = int.Parse(text.Split(' ')[1]);
-                        DateTime dateTime = DateTime.ParseExact(text.Split(' ')[2], "yyyyMMdd", CultureInfo.InvariantCulture);
-                        dict = _TradingVolumeService.GetTopTradingVolumeAscDict(
-                            ForeignAndOtherInvestorEnum.ForeignInvestors, dateTime, dataNumber);
+                } else if (text.StartsWith("tv")) {
+                    bool isDesc;
+                    switch (text[2]) {
+                        case '1':
+                            isDesc = false;
+                            break;
+                        case '2':
+                            isDesc = true;
+                            break;
+                        default:
+                            throw new ArgumentException("參數錯誤");
                     }
-                    textStr = _TradingVolumeService.GetTradingVolumeStr(dict);
-                    messages = GetSingleMessage(textStr);
-                } else if (text.StartsWith("tvr ")) {
-                    Dictionary<string, int> dict = new Dictionary<string, int>();
-                    if (string.IsNullOrEmpty(text.Split(' ')[1])) {
-                        dict = _TradingVolumeService.GetTopTradingVolumeDescDict(
-                            ForeignAndOtherInvestorEnum.ForeignInvestors, DateTime.Today, 50);
-                    } else if (text.Split(' ').Count() == 2) {
-                        int dataNumber = int.Parse(text.Split(' ')[1]);
-                        dict = _TradingVolumeService.GetTopTradingVolumeDescDict(
-                            ForeignAndOtherInvestorEnum.ForeignInvestors, DateTime.Today, dataNumber);
-                    } else if (text.Split(' ').Count() > 2) {
-                        int dataNumber = int.Parse(text.Split(' ')[1]);
-                        DateTime dateTime = DateTime.ParseExact(text.Split(' ')[2], "yyyyMMdd", CultureInfo.InvariantCulture);
-                        dict = _TradingVolumeService.GetTopTradingVolumeDescDict(
-                            ForeignAndOtherInvestorEnum.ForeignInvestors, dateTime, dataNumber);
-                    }
-                    textStr = _TradingVolumeService.GetTradingVolumeStr(dict);
-                    messages = GetSingleMessage(textStr);
-                } else if (text.StartsWith("tv") && text[2] != ' ') {
-                    string daysStr = text.Substring(2);
-                    int days = int.Parse(daysStr);
-                    if (days < 1 || days > 5) {
-                        textStr = "天數需為 1-5";
+
+                    if (text.Split(' ')[1].Count() == 1) {
+                        string daysStr = text.Split(' ')[1];
+                        int days = int.Parse(daysStr);
+                        if (days < 1 || days > 5) {
+                            textStr = "交易天數需為 1-5";
+                            messages = GetSingleMessage(textStr);
+                        } else {
+                        }
+                    } else if (text.Split(' ')[1].Count() == 8) {
+                        string dateTimeStr = text.Split(' ')[1];
+                        DateTime dateTime = DateTime.ParseExact(dateTimeStr, "yyyyMMdd", CultureInfo.InvariantCulture);
+                        if (isDesc) {
+                            var tradingVolumeDict = _TradingVolumeService.GetDescTradingVolumeDict(dateTime);
+                            textStr = _TradingVolumeService.GetTradingVolumeStr(tradingVolumeDict);
+                        } else {
+                            var tradingVolumeDict = _TradingVolumeService.GetAscTradingVolumeDict(dateTime);
+                            textStr = _TradingVolumeService.GetTradingVolumeStr(tradingVolumeDict);
+                        }
                         messages = GetSingleMessage(textStr);
                     } else {
-                        textStr = GetCombinationTradingVolumeStr_ForeignInvestors(days);
-                        messages = GetSingleMessage(textStr);
+                        throw new ArgumentException("第二個參數錯誤");
                     }
                 } else {
                     messages = GetSingleMessage(text);
                 }
             } catch (Exception ex) {
-                Console.WriteLine($"[GetMessagesByText] Exception: {ex}");
+                string errorMsg = $"[GetMessagesByText] text: {text}, ex: {ex}";
+                Log.Error(errorMsg);
+                messages = GetSingleMessage(errorMsg);
             }
             return messages;
         }
@@ -239,8 +226,8 @@ namespace BL.Services {
                     }
                     messages.Add(new LocationMessage(
                         maskData.Name + "\n" +
-                            "成人: " + maskData.AdultMasks + "\n" +
-                            "兒童: " + maskData.ChildMasks,
+                        "成人: " + maskData.AdultMasks + "\n" +
+                        "兒童: " + maskData.ChildMasks,
                         maskData.Address,
                         latLng.lat,
                         latLng.lng
@@ -331,68 +318,6 @@ namespace BL.Services {
             return messages;
         }
 
-        private string GetCombinationTradingVolumeStr_ForeignInvestors(int days) {
-            var tradingVolumeDict = GetCombinationTradingVolumeDict_ForeignInvestors(days);
-
-            if (tradingVolumeDict.Count == 0) {
-                return "查無對應資料";
-            }
-
-            StringBuilder sb = new StringBuilder();
-            sb.Append("");
-            foreach (var kvp in tradingVolumeDict) {
-                sb.Append(kvp.Key + " ");
-                sb.Append(kvp.Value + "\n");
-            }
-            return sb.ToString();
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="days"></param>
-        /// <returns></returns>
-        private Dictionary<string, int> GetCombinationTradingVolumeDict_ForeignInvestors(int days) {
-            int count = 0;
-            DateTime date = DateTime.Today;
-            Dictionary<string, int> combinationDict = new Dictionary<string, int>();
-            while (count < days) {
-                Dictionary<string, int> dict = _TradingVolumeService.GetTopTradingVolumeDict_ForeignInvestors(
-                    ForeignAndOtherInvestorEnum.ForeignInvestors, date, 50);
-                if (dict == null) {
-                    date = date.AddDays(-1);
-                    continue;
-                }
-                if (count == 0) {
-                    combinationDict = dict;
-                    date = date.AddDays(-1);
-                    count++;
-                    continue;
-                }
-                List<string> keysNeedToDeleteInCombinationDict = new List<string>();
-                //如果新字典沒有此key，舊字典卻有，那就把key存起來，預備從舊字典刪除。
-                foreach (var kvp in combinationDict) {
-                    if (!dict.ContainsKey(kvp.Key)) {
-                        keysNeedToDeleteInCombinationDict.Add(kvp.Key);
-                    }
-                }
-                //從舊字典刪除新字典沒有的key
-                foreach (var key in keysNeedToDeleteInCombinationDict) {
-                    combinationDict.Remove(key);
-                }
-
-                foreach (var kvp in dict) {
-                    if (combinationDict.ContainsKey(kvp.Key)) {
-                        combinationDict[kvp.Key] += dict[kvp.Key];
-                    }
-                }
-
-                count++;
-                date = date.AddDays(-1);
-            }
-            return combinationDict;
-        }
-
         public List<dynamic> ReplyConfirmMessages() {
             List<dynamic> messages = null;
             try {
@@ -423,39 +348,6 @@ namespace BL.Services {
             }
             return messages;
         }
-
-        #region 處理Line的requestBody
-
-        /// <summary>
-        /// 將requestBody轉換成Line的RequestModel
-        /// </summary>
-        /// <param name="requestBody">Line的將requestBody</param>
-        /// <returns>Line的RequestModel</returns>
-        //public ReceivedMessage GetLineRequestModel(dynamic requestBody) {
-        //    ReceivedMessage lineRequestBody = JsonConvert.
-        //        DeserializeObject<ReceivedMessage>(requestBody.ToString());
-        //    foreach (isRock.LineBot.Event @event in lineRequestBody.events) {
-        //        switch (@event.message.type) {
-        //            case "text":
-        //                @event.message = JsonConvert.DeserializeObject<TextMessage>(@event.message.ToString());
-        //                break;
-
-        //            case "location":
-        //                @event.message = JsonConvert.DeserializeObject<LocationMessage>(@event.message.ToString());
-        //                break;
-
-        //            case "sticker":
-        //                @event.message = JsonConvert.DeserializeObject<StickerMessage>(@event.message.ToString());
-        //                break;
-
-        //            default:
-        //                break;
-        //        }
-        //    }
-        //    return lineRequestBody;
-        //}
-
-        #endregion 處理Line的requestBody
 
         #region 處理Line的responseBody
 
