@@ -125,10 +125,8 @@ namespace BL.Services.TWSE_Stock {
             StringBuilder sb = new StringBuilder();
             sb.Append("");
             foreach (var kvp in dict) {
-                if (!ignoreStockName.Contains(kvp.Key)) {
-                    sb.Append(kvp.Key + " ");
-                    sb.Append(kvp.Value + "\n");
-                }
+                sb.Append(kvp.Key + " ");
+                sb.Append(kvp.Value + "\n");
             }
             return sb.ToString();
         }
