@@ -1,11 +1,6 @@
-﻿using isRock.LineBot;
-using Serilog;
-using System;
-using System.Collections.Generic;
-using System.Net;
+﻿using System;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
+using Serilog;
 
 namespace BL.Services.Line {
 

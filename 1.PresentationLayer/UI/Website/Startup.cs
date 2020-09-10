@@ -1,5 +1,7 @@
+﻿using System;
+using System.Text;
 using BL.Services;
-using Core.Domain.Utilities;
+using BL.Services.HostedService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -7,13 +9,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using System.Text;
 using Website.Data;
 
 namespace Website {
 
     public class Startup {
         private IConfiguration Configuration { get; }
+
         public Startup() {
             var builder = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
@@ -31,6 +33,10 @@ namespace Website {
 
             services.AddDbContext<LineWebhookContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("LineWebhookContext")));
+            services.AddCronJob<NotifyCronJobService>(c => {
+                c.TimeZoneInfo = TimeZoneInfo.Utc;
+                c.CronExpression = @"0,30 1,2,3,4,5 * * *";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

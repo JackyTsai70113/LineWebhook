@@ -11,15 +11,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Cronos" Version="0.7.0" />
     <PackageReference Include="ExcelDataReader" Version="3.6.0" />
     <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
     <PackageReference Include="LineBotSDK" Version="2.2.26" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="4.7.1" />
     <PackageReference Include="YahooFinanceApi" Version="2.1.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="C\" />
   </ItemGroup>
 
 </Project>

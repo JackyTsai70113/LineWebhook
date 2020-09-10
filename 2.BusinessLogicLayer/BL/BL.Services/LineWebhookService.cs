@@ -92,10 +92,10 @@ namespace BL.Services {
                     messages = GetStickerMessages();
                     break;
                 default:
-                    Console.WriteLine($"無相符的 message.type: {(string)message.type}, " +
+                    Console.WriteLine($"無相符的 message.type: {message.type}, " +
                         $"requestModelFromLineServer: " +
                         $"{JsonConvert.SerializeObject(lineRequestModel, Formatting.Indented)}");
-                    messages = GetSingleMessage("未支援此資料格式: " + (string)message.type);
+                    messages = GetSingleMessage("未支援此資料格式: " + message.type);
                     break;
             }
             return messages;
@@ -107,83 +107,84 @@ namespace BL.Services {
         /// <param name="text">字串內容</param>
         /// <returns>回應結果</returns>
         private List<MessageBase> GetMessagesByText(string text) {
-            List<MessageBase> messages = null;
             string textStr;
             try {
-                //messages = GetSingleMessage(text);
                 // Set up messages to send
-                if (text.StartsWith("sp")) {
-                    messages = GetSinopacMessages();
-                } else if (text.StartsWith("sticker")) {
-                    string packageIdStr = text.Split(' ')[1];
-                    string stickerIdStr = text.Split(' ')[2];
-                    messages = GetStickerMessages(packageIdStr, stickerIdStr);
-                } else if (text.StartsWith(" ")) { // 倉頡用
-                    messages = GetImageMessages(text.Substring(1));
-                } else if (text.StartsWith("cd ")) {
-                    string vocabulary = text.Split(' ')[1];
-                    messages = GetCambridgeDictionaryMessages(vocabulary);
-                } else if (text.StartsWith("cdd ")) {
-                    string vocabulary = text.Split(' ')[1];
-                    int textLenth = int.Parse(text.Split(' ')[2]);
-                    messages = GetCambridgeDictionaryMessages(vocabulary, textLenth);
-                } else if (text.StartsWith("tv")) {
-                    if (text.Count() == 2) {
-                        throw new ArgumentException("請重新輸入...tv1 或 tv2 ?");
-                    }
-                    bool isDesc;
-                    switch (text[2]) {
-                        case '1':
-                            isDesc = true;
-                            break;
-                        case '2':
-                            isDesc = false;
-                            break;
-                        default:
-                            throw new ArgumentException("參數錯誤");
-                    }
-                    if (text.Split(' ').Count() == 1) {
-                        if (isDesc) {
+                switch (text.Split(' ')[0]) {
+                    case "":
+                        return GetImageMessages(text.Substring(1));
+                    case "sp":
+                        textStr = GetSinopacExchangeRateText();
+                        return GetSingleMessage(textStr);
+                    case "st":
+                        string packageIdStr = text.Split(' ')[1];
+                        string stickerIdStr = text.Split(' ')[2];
+                        return GetStickerMessages(packageIdStr, stickerIdStr);
+                    case "cd":
+                        string vocabulary = text.Split(' ')[1];
+                        return GetCambridgeDictionaryMessages(vocabulary);
+                    case "cdd":
+                        vocabulary = text.Split(' ')[1];
+                        int textLenth = int.Parse(text.Split(' ')[2]);
+                        return GetCambridgeDictionaryMessages(vocabulary, textLenth);
+                    case "tv":
+                        if (text == "tv") {
                             textStr = _TradingVolumeService.GetDescTradingVolumeStr(DateTime.UtcNow.AddHours(8));
-                        } else {
-                            textStr = _TradingVolumeService.GetAscTradingVolumeStr(DateTime.UtcNow.AddHours(8));
+                            return GetSingleMessage(textStr);
                         }
-                        messages = GetSingleMessage(textStr);
-                    } else if (text.Split(' ')[1].Count() == 1) {
-                        string daysStr = text.Split(' ')[1];
-                        int days = int.Parse(daysStr);
-                        if (days < 1 || days > 5) {
-                            textStr = "交易天數需為 1-5";
-                            messages = GetSingleMessage(textStr);
-                        } else {
-                            if (isDesc) {
-                                textStr = _TradingVolumeService.GetDescTradingVolumeStrOverDays(days);
-                            } else {
-                                textStr = _TradingVolumeService.GetAscTradingVolumeStrOverDays(days);
+                        if (text.Split(' ')[1].Count() == 1) {
+                            string daysStr = text.Split(' ')[1];
+                            int days = int.Parse(daysStr);
+
+                            if (days < 1 || days > 5) {
+                                textStr = "交易天數需為 1-5";
+                                return GetSingleMessage(textStr);
                             }
-                            messages = GetSingleMessage(textStr);
-                        }
-                    } else if (text.Split(' ')[1].Count() == 8) {
-                        string dateTimeStr = text.Split(' ')[1];
-                        DateTime dateTime = DateTime.ParseExact(dateTimeStr, "yyyyMMdd", CultureInfo.InvariantCulture);
-                        if (isDesc) {
+
+                            textStr = _TradingVolumeService.GetDescTradingVolumeStrOverDays(days);
+                            return GetSingleMessage(textStr);
+                        } else if (text.Split(' ')[1].Count() == 8) {
+                            string dateTimeStr = text.Split(' ')[1];
+                            DateTime dateTime = DateTime.ParseExact(dateTimeStr, "yyyyMMdd", CultureInfo.InvariantCulture);
+
                             textStr = _TradingVolumeService.GetDescTradingVolumeStr(dateTime);
-                        } else {
-                            textStr = _TradingVolumeService.GetAscTradingVolumeStr(dateTime);
+                            return GetSingleMessage(textStr);
                         }
-                        messages = GetSingleMessage(textStr);
-                    } else {
-                        throw new ArgumentException("第二個參數錯誤");
-                    }
-                } else {
-                    messages = GetSingleMessage(text);
+                        textStr = "請重新輸入!";
+                        return GetSingleMessage(textStr);
+                    case "tvv":
+                        if (text == "tvv") {
+                            textStr = _TradingVolumeService.GetAscTradingVolumeStr(DateTime.UtcNow.AddHours(8));
+                            return GetSingleMessage(textStr);
+                        }
+                        if (text.Split(' ')[1].Count() == 1) {
+                            string daysStr = text.Split(' ')[1];
+                            int days = int.Parse(daysStr);
+
+                            if (days < 1 || days > 5) {
+                                textStr = "交易天數需為 1-5";
+                                return GetSingleMessage(textStr);
+                            }
+
+                            textStr = _TradingVolumeService.GetAscTradingVolumeStrOverDays(days);
+                            return GetSingleMessage(textStr);
+                        } else if (text.Split(' ')[1].Count() == 8) {
+                            string dateTimeStr = text.Split(' ')[1];
+                            DateTime dateTime = DateTime.ParseExact(dateTimeStr, "yyyyMMdd", CultureInfo.InvariantCulture);
+
+                            textStr = _TradingVolumeService.GetAscTradingVolumeStr(dateTime);
+                            return GetSingleMessage(textStr);
+                        }
+                        textStr = "請重新輸入!";
+                        return GetSingleMessage(textStr);
+                    default:
+                        return GetSingleMessage(text);
                 }
             } catch (Exception ex) {
                 string errorMsg = $"[GetMessagesByText] text: {text}, ex: {ex}";
                 Log.Error(errorMsg);
-                messages = GetSingleMessage(errorMsg);
+                return GetSingleMessage(errorMsg);
             }
-            return messages;
         }
 
         private List<MessageBase> GetSingleMessage(string text) {
@@ -191,12 +192,12 @@ namespace BL.Services {
             try {
                 messages.Add(new TextMessage(text.Trim()));
             } catch (Exception ex) {
-                Console.WriteLine($"[GetSingleMessage] Exception: {ex.Message}");
+                Log.Error($"[GetSingleMessage] text: {text} Exception: {ex}");
             }
             return messages;
         }
 
-        private List<MessageBase> GetSinopacMessages() {
+        private string GetSinopacExchangeRateText() {
             List<ExchangeRate> exchangeRates = ExchangeRateManager.CrawlExchangeRate();
 
             Info info = exchangeRates[0].SubInfo[0];
@@ -206,10 +207,7 @@ namespace BL.Services {
             sb.Append($"銀行買入：{info.DataValue2}\n");
             sb.Append($"銀行賣出：{info.DataValue3}");
 
-            List<MessageBase> messages = new List<MessageBase> {
-                new TextMessage(sb.ToString())
-            };
-            return messages;
+            return sb.ToString();
         }
 
         /// <summary>
