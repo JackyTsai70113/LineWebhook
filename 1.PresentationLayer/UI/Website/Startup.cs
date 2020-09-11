@@ -35,7 +35,7 @@ namespace Website {
                 options.UseSqlServer(Configuration.GetConnectionString("LineWebhookContext")));
             services.AddCronJob<NotifyCronJobService>(c => {
                 c.TimeZoneInfo = TimeZoneInfo.Utc;
-                c.CronExpression = @"57 15 * * *";
+                c.CronExpression = @"10,12,14,16,18 16 * * *";
             });
         }
 

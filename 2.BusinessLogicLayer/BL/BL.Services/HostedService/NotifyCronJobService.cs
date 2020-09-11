@@ -3,25 +3,29 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using BL.Services.Line;
 using Microsoft.Extensions.Logging;
 
 namespace BL.Services.HostedService {
 
     public class NotifyCronJobService : BaseCronJobService {
+        private readonly LineNotifyBotService _lineNotifyBotService;
         private readonly ILogger<NotifyCronJobService> _logger;
 
-        public NotifyCronJobService(IScheduleConfig<NotifyCronJobService> config, ILogger<NotifyCronJobService> logger)
+        public NotifyCronJobService(
+            IScheduleConfig<NotifyCronJobService> config, ILogger<NotifyCronJobService> logger,
+            LineNotifyBotService lineNotifyBotService)
         : base(config.CronExpression, config.TimeZoneInfo) {
             _logger = logger;
+            _lineNotifyBotService = lineNotifyBotService;
         }
 
         public override Task StartAsync(CancellationToken cancellationToken) {
-            _logger.LogInformation("NotifyCronJobService starts.");
             return base.StartAsync(cancellationToken);
         }
 
         public override Task DoWorkAsync(CancellationToken cancellationToken) {
-            _logger.LogInformation($"{DateTime.Now:hh:mm:ss fff} NotifyCronJobService is working.");
+            _lineNotifyBotService.PushMessage_Jacky($"{DateTime.Now:hh:mm:ss fff} KD通知即將上線!");
             return Task.CompletedTask;
         }
 
