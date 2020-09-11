@@ -35,7 +35,7 @@ namespace BL.Services.Line {
                     result = httpClient.PostAsync(uri, new StringContent("")).Result.ToString();
                 }
 
-                Log.Information(result);
+                Log.Information($"[PushMessage] PostAsync.Result: {result}");
                 return true;
             } catch (Exception ex) {
                 Log.Information(ex.ToString());

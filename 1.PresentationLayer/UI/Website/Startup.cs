@@ -33,9 +33,14 @@ namespace Website {
 
             services.AddDbContext<LineWebhookContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("LineWebhookContext")));
+
             services.AddCronJob<NotifyCronJobService>(c => {
                 c.TimeZoneInfo = TimeZoneInfo.Utc;
-                c.CronExpression = @"20,22,24,26,28 16 * * *";
+                c.CronExpression = @"0,30 9-14 * * 1-5";
+            });
+            services.AddCronJob<NotifyCronJobService>(c => {
+                c.TimeZoneInfo = TimeZoneInfo.Utc;
+                c.CronExpression = @"4 17 * * *";
             });
         }
 

@@ -24,7 +24,8 @@ namespace BL.Services.HostedService {
         }
 
         public override Task DoWorkAsync(CancellationToken cancellationToken) {
-            _lineNotifyBotService.PushMessage_Jacky($"{DateTime.Now:hh:mm:ss fff} KD通知即將上線!");
+            _lineNotifyBotService.PushMessage_Jacky($"{DateTime.Now:HH:mm:ss fff} KD通知即將上線!");
+            _lineNotifyBotService.PushMessage_Jacky($"https://tinyurl.com/y5ou8l6a");
             return Task.CompletedTask;
         }
 
