@@ -13,11 +13,10 @@ namespace BL.Services.HostedService {
         private readonly ILogger<NotifyCronJobService> _logger;
 
         public NotifyCronJobService(
-            IScheduleConfig<NotifyCronJobService> config, ILogger<NotifyCronJobService> logger,
-            LineNotifyBotService lineNotifyBotService)
+            IScheduleConfig<NotifyCronJobService> config, ILogger<NotifyCronJobService> logger)
         : base(config.CronExpression, config.TimeZoneInfo) {
             _logger = logger;
-            _lineNotifyBotService = lineNotifyBotService;
+            _lineNotifyBotService = new LineNotifyBotService(); ;
         }
 
         public override Task StartAsync(CancellationToken cancellationToken) {
