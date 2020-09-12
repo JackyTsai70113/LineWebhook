@@ -116,7 +116,8 @@ namespace BL.Services {
                 // Set up messages to send
                 switch (text.Split(' ')[0]) {
                     case "":
-                        return GetImageMessages(text.Substring(1));
+                        textStr = GetImageMessages(text.Substring(1));
+                        return GetSingleMessage(textStr);
                     case "sp":
                         textStr = GetSinopacExchangeRateText();
                         return GetSingleMessage(textStr);
@@ -317,8 +318,7 @@ namespace BL.Services {
             }
         }
 
-        private List<MessageBase> GetImageMessages(string texts) {
-            List<MessageBase> messages = new List<MessageBase>();
+        private string GetImageMessages(string texts) {
             try {
                 Encoding big5 = Encoding.GetEncoding("big5");
                 var CJDomain = "http://input.foruto.com/cjdict/Images/CJZD_JPG/";
@@ -334,12 +334,12 @@ namespace BL.Services {
                     sb.AppendLine(text + ": " + CJDomain + big5Str + ".JPG");
                     sb.AppendLine("--");
                 }
-                // Set up messages to send
-                messages.Add(new TextMessage(sb.ToString()));
+                return sb.ToString();
             } catch (Exception ex) {
-                Console.WriteLine($"Exception: {ex.Message}");
+                string errorMsg = $"發生錯誤, 字詞：{texts}, ex: {ex}";
+                Console.WriteLine(errorMsg);
+                return errorMsg;
             }
-            return messages;
         }
 
         public List<dynamic> ReplyConfirmMessages() {
