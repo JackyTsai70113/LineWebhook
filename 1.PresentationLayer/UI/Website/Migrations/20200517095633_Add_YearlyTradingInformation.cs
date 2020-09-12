@@ -1,16 +1,12 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Website.Migrations
-{
-    public partial class Add_YearlyTradingInformation : Migration
-    {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+namespace Website.Migrations {
+    public partial class Add_YearlyTradingInformation : Migration {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.CreateTable(
                 name: "StockValueEstimations",
-                columns: table => new
-                {
+                columns: table => new {
                     StockCode = table.Column<string>(maxLength: 8, nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     UpdateDateTime = table.Column<DateTime>(nullable: false),
@@ -30,15 +26,13 @@ namespace Website.Migrations
                     ReasonablePriceByStockPriceOver10Years = table.Column<float>(nullable: false),
                     ExpensivePriceByStockPriceOver10Years = table.Column<float>(nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_StockValueEstimations", x => x.StockCode);
                 });
 
             migrationBuilder.CreateTable(
                 name: "YearlyTradingInformations",
-                columns: table => new
-                {
+                columns: table => new {
                     Year = table.Column<short>(type: "smallint", nullable: false),
                     StockCode = table.Column<string>(maxLength: 8, nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
@@ -52,14 +46,12 @@ namespace Website.Migrations
                     LowestPriceDate = table.Column<DateTime>(type: "date", nullable: false),
                     AverageClosingPrice = table.Column<float>(nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_YearlyTradingInformations", x => new { x.Year, x.StockCode });
                 });
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropTable(
                 name: "StockValueEstimations");
 

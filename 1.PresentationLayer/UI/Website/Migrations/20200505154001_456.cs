@@ -1,12 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Website.Migrations
-{
-    public partial class _456 : Migration
-    {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+namespace Website.Migrations {
+    public partial class _456 : Migration {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.AddColumn<DateTime>(
                 name: "Date1",
                 table: "DailyQuotes",
@@ -15,8 +12,7 @@ namespace Website.Migrations
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropColumn(
                 name: "Date1",
                 table: "DailyQuotes");

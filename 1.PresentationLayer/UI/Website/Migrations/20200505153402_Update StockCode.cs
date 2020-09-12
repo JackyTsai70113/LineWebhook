@@ -1,11 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Website.Migrations
-{
-    public partial class UpdateStockCode : Migration
-    {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+namespace Website.Migrations {
+    public partial class UpdateStockCode : Migration {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropPrimaryKey(
                 name: "PK_DailyQuotes",
                 table: "DailyQuotes");
@@ -20,8 +17,7 @@ namespace Website.Migrations
                 columns: new[] { "Date", "StockCode" });
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropPrimaryKey(
                 name: "PK_DailyQuotes",
                 table: "DailyQuotes");

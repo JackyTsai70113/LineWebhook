@@ -1,16 +1,12 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Website.Migrations
-{
-    public partial class InitialCreate : Migration
-    {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+namespace Website.Migrations {
+    public partial class InitialCreate : Migration {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.CreateTable(
                 name: "DailyQuotes",
-                columns: table => new
-                {
+                columns: table => new {
                     Date = table.Column<DateTime>(type: "date", nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     StockCode = table.Column<string>(maxLength: 8, nullable: false),
@@ -29,15 +25,13 @@ namespace Website.Migrations
                     LastBestAskVolume = table.Column<int>(nullable: false),
                     PriceEarningRatio = table.Column<float>(nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_DailyQuotes", x => x.Date);
                     table.UniqueConstraint("AK_DailyQuotes_Date_StockCode", x => new { x.Date, x.StockCode });
                 });
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropTable(
                 name: "DailyQuotes");
         }

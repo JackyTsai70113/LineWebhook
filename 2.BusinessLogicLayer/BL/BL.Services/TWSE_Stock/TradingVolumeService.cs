@@ -14,8 +14,7 @@ using System.Text;
 namespace BL.Services.TWSE_Stock {
 
     public class TradingVolumeService {
-        private readonly ExcelDataReaderService _excelDataReaderService;
-
+        /*
         private readonly string[] ignoreStockName = {
             "富邦VIX",
 
@@ -46,7 +45,7 @@ namespace BL.Services.TWSE_Stock {
             "富邦印度反1",
             "富邦恒生國企反1",
             "富邦臺灣加權反1",
-        };
+        };*/
 
         /// <summary>
         /// 取資料的筆數
@@ -55,11 +54,6 @@ namespace BL.Services.TWSE_Stock {
 
         public TradingVolumeService() {
             _topNumber = ConfigService.TWSE_TradingVolumeNumber;
-            _excelDataReaderService = new ExcelDataReaderService();
-        }
-
-        public TradingVolumeService(ExcelDataReaderService excelDataReaderService) {
-            _excelDataReaderService = excelDataReaderService;
         }
 
         public string GetAscTradingVolumeStr(DateTime date) {

@@ -1,16 +1,12 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Website.Migrations
-{
-    public partial class Add_DividendDistribution : Migration
-    {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+namespace Website.Migrations {
+    public partial class Add_DividendDistribution : Migration {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.CreateTable(
                 name: "DividendDistributions",
-                columns: table => new
-                {
+                columns: table => new {
                     StockCode = table.Column<string>(maxLength: 8, nullable: false),
                     Year = table.Column<short>(type: "smallint", nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
@@ -20,14 +16,12 @@ namespace Website.Migrations
                     SharesDistributedFromEarnings = table.Column<float>(nullable: false),
                     SharesDistributedFromLegalReserveAndCapitalSurplus = table.Column<float>(nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_DividendDistributions", x => new { x.Year, x.StockCode });
                 });
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropTable(
                 name: "DividendDistributions");
         }

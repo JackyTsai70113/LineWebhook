@@ -12,15 +12,13 @@ namespace Website.Controllers {
 
     public class HomeController : Controller {
         private readonly MaskInstitutionService _maskInstitutionService;
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger) {
+        public HomeController() {
             _maskInstitutionService = new MaskInstitutionService();
-            _logger = logger;
         }
 
         public IActionResult Test() {
-            _logger.LogInformation("This is test.");
+            //_logger.LogInformation("This is test.");
             return new OkResult();
         }
 
