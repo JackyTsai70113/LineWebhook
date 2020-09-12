@@ -47,7 +47,7 @@ namespace BL.Services {
         public string ResponseToLineServer(string replyToken, List<MessageBase> messages) {
             try {
                 #region Post到Line
-                Log.Information($"[ResponseToLineServer] messages: {JsonConvert.SerializeObject(messages)}");
+                //Log.Information($"[ResponseToLineServer] messages: {JsonConvert.SerializeObject(messages)}");
                 Bot bot = new Bot(_token);
                 string result = bot.ReplyMessage(replyToken, messages);
                 #endregion Post到Line
@@ -194,7 +194,8 @@ namespace BL.Services {
         private List<MessageBase> GetSingleMessage(string text) {
             List<MessageBase> messages = new List<MessageBase>();
             try {
-                messages.Add(new TextMessage(text.Trim()));
+                text = text.Replace('\'', '’').Trim();
+                messages.Add(new TextMessage(text));
             } catch (Exception ex) {
                 Log.Error($"[GetSingleMessage] text: {text} Exception: {ex}");
             }
@@ -286,6 +287,10 @@ namespace BL.Services {
             List<MessageBase> messages = new List<MessageBase>();
             try {
                 List<Translation> translations = _cambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary);
+                if (translations.Count == 0) {
+                    messages.Add(new TextMessage($"未能找到符合字詞: {vocabulary}"));
+                    return messages;
+                }
                 // 防呆: 超過5種詞性
                 if (translations.Count > 5) {
                     translations = translations.Take(5).ToList();
@@ -305,10 +310,11 @@ namespace BL.Services {
                     }
                     messages.Add(new TextMessage(translationStr));
                 }
+                return messages;
             } catch (Exception ex) {
-                Console.WriteLine($"Exception: {ex.Message}");
+                Log.Error($"vocabulary: {vocabulary}, ex: {ex}");
+                return messages;
             }
-            return messages;
         }
 
         private List<MessageBase> GetImageMessages(string texts) {

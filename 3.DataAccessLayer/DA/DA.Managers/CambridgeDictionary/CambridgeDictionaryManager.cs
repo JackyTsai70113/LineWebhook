@@ -24,8 +24,9 @@ namespace DA.Managers.CambridgeDictionary {
 
             IDocument document = context.OpenAsync(req => req.Content(stream)).Result;
 
-            List<Translation> translations = new List<Translation>();
             IHtmlCollection<IElement> prEntryBody__elDivs = document.QuerySelectorAll("div.pr.entry-body__el");
+
+            List<Translation> translations = new List<Translation>();
             foreach (var prEntryBody__elDiv in prEntryBody__elDivs) {
                 Translation translation = new Translation();
 
