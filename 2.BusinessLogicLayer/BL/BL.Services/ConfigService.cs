@@ -30,6 +30,12 @@ namespace BL.Services {
             }
         }
 
+        public static string Line_Jessi_userId {
+            get {
+                return Configuration.GetSection("Line").GetSection("Jessi_userId").Value;
+            }
+        }
+
         public static string Line_NotifyBearerToken_Jacky {
             get {
                 return Configuration.GetSection("Line").GetSection("NotifyBearerToken_Jacky").Value;

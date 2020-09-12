@@ -1,8 +1,12 @@
-﻿using BL.Services.MaskInstitution;
+﻿using BL.Services;
+using BL.Services.Line;
+using BL.Services.MaskInstitution;
 using BL.Services.TWSE_Stock;
 using BL.Services.YahooFinance;
+using isRock.LineBot;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -19,6 +23,22 @@ namespace Website.Controllers {
 
         public IActionResult Test() {
             //_logger.LogInformation("This is test.");
+            LineNotifyBotService lineNotifyBot = new LineNotifyBotService();
+            Bot bot = new Bot(ConfigService.Line_ChannelAccessToken);
+            //             {
+            //     "type": "image",
+            //     "originalContentUrl": "https://example.com/original.jpg",
+            //     "previewImageUrl": "https://example.com/preview.jpg"
+            // }
+            Uri uri = new Uri("https://drive.google.com/drive/u/0/folders/1cPTn6EF6ZXCGvbH2np2WoyM4Uw");
+            Uri uri1 = new Uri("https://i.imgur.com/Ipgt3Mz.png");
+            string ee1 = "https://drive.google.com/file/d/1bDGF9QgF3yb73qMJ_4PmxCwelinW2FENPQ/view?usp=sharing";
+            string ee2 = "https://drive.google.com/drive/u/0/folders/1cPTn6EF6ZXCGvbH2np2WoyM4Uw";
+            List<MessageBase> messages = new List<MessageBase>{
+                new TextMessage("書法班開課了，快點來"),
+                new ImageMessage(uri1, uri1)
+            };
+            string result = bot.PushMessage(ConfigService.Line_Jessi_userId, messages);
             return new OkResult();
         }
 

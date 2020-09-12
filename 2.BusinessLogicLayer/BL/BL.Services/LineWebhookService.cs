@@ -18,6 +18,8 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using Core.Domain.Utilities;
+using DA.Managers.CambridgeDictionary;
+using DA.Managers.Sinopac;
 
 namespace BL.Services {
 
@@ -25,12 +27,14 @@ namespace BL.Services {
         private readonly string _token;
 
         public LineWebhookService(string token) {
+            _cambridgeDictionaryManager = new CambridgeDictionaryManager();
+            _exchangeRateManager = new ExchangeRateManager();
             _TradingVolumeService = new TradingVolumeService();
             _token = token;
         }
 
-        private ICambridgeDictionaryManager CambridgeDictionaryManager { get; set; }
-        private IExchangeRateManager ExchangeRateManager { get; set; }
+        private ICambridgeDictionaryManager _cambridgeDictionaryManager { get; set; }
+        private IExchangeRateManager _exchangeRateManager { get; set; }
         private TradingVolumeService _TradingVolumeService { get; set; }
         private GeocodingService _GeocodingService { get; set; }
 
@@ -198,12 +202,15 @@ namespace BL.Services {
         }
 
         private string GetSinopacExchangeRateText() {
-            List<ExchangeRate> exchangeRates = ExchangeRateManager.CrawlExchangeRate();
-
+            List<ExchangeRate> exchangeRates = _exchangeRateManager.CrawlExchangeRate();
             Info info = exchangeRates[0].SubInfo[0];
+            string titleInfo = exchangeRates[0].TitleInfo;
+            titleInfo = StringUtility.StripHtmlTag(titleInfo);
+            titleInfo = titleInfo.Substring(0, titleInfo.IndexOf('本'));
             StringBuilder sb = new StringBuilder();
             sb.Append("美金報價\n");
             sb.Append("---------------------\n");
+            sb.Append($"({titleInfo})\n");
             sb.Append($"銀行買入：{info.DataValue2}\n");
             sb.Append($"銀行賣出：{info.DataValue3}");
 
@@ -278,7 +285,7 @@ namespace BL.Services {
         private List<MessageBase> GetCambridgeDictionaryMessages(string vocabulary, int textLength = -1) {
             List<MessageBase> messages = new List<MessageBase>();
             try {
-                List<Translation> translations = CambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary);
+                List<Translation> translations = _cambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary);
                 // 防呆: 超過5種詞性
                 if (translations.Count > 5) {
                     translations = translations.Take(5).ToList();
