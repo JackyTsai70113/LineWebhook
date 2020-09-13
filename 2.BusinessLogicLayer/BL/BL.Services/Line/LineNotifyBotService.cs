@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Web;
 using Serilog;
 
 namespace BL.Services.Line {
@@ -28,6 +29,8 @@ namespace BL.Services.Line {
         private bool PushMessage(string bearerToken, string text) {
             try {
                 string result;
+                text = $"[\n2020-09-13T09:41:37.973660+00:00 app[web.1]: {{\n2020-09-13T09:41:37.973661+00:00 app[web.1]: \"message\": \"Invalid package id\",";
+                text = HttpUtility.UrlEncode(text);
                 string uri = _notifyUri + $"?message={text}";
                 using (var httpClient = new HttpClient()) {
                     httpClient.BaseAddress = new Uri(uri);
