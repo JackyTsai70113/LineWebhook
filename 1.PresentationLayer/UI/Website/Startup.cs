@@ -36,7 +36,7 @@ namespace Website {
 
             services.AddCronJob<NotifyCronJobService>(c => {
                 c.TimeZoneInfo = TimeZoneInfo.Utc;
-                c.CronExpression = @"*/5 6-8 * * 1-5";
+                c.CronExpression = @"*/5 6-8 * * *";
             });
             services.AddCronJob<NotifyCronJobService>(c => {
                 c.TimeZoneInfo = TimeZoneInfo.Utc;
