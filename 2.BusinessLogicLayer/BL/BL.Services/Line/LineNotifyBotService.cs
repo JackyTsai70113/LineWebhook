@@ -35,10 +35,10 @@ namespace BL.Services.Line {
                     result = httpClient.PostAsync(uri, new StringContent("")).Result.ToString();
                 }
 
-                Log.Information($"[PushMessage] PostAsync.Result: {result}");
+                Log.Information($"[PushMessage] text: {text}, PostAsync.Result: {result}");
                 return true;
             } catch (Exception ex) {
-                Log.Information(ex.ToString());
+                Log.Error($"[PushMessage] text: {text}, ex: {ex}");
                 return false;
             }
         }
