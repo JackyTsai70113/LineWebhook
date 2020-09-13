@@ -356,7 +356,7 @@ namespace Core.Domain.Utilities {
         /// <returns>stream</returns>
         public static Stream GetStreamFromGetRequest(string uri) {
             try {
-                HttpClient client = GetNewHttpClient();
+                HttpClient client = new HttpClient();
 
                 //發送請求
                 HttpResponseMessage httpResponseMessage = client.GetAsync(uri).Result;
@@ -364,11 +364,9 @@ namespace Core.Domain.Utilities {
                 //檢查回應的伺服器狀態StatusCode是否是200 OK
                 httpResponseMessage.EnsureSuccessStatusCode();
 
-                Stream stream = httpResponseMessage.Content.ReadAsStreamAsync().Result;
-                return stream;
+                return httpResponseMessage.Content.ReadAsStreamAsync().Result;
             } catch (Exception ex) {
-                Console.WriteLine(ex.ToString());
-                throw ex;
+                return GetStreamFromGetRequest(uri);
             }
         }
 

@@ -12,9 +12,15 @@ namespace BL.Services {
             return Configuration.GetConnectionString(name);
         }
 
-        public static string RedisConfig {
+        public static string Redis_Endpoint {
             get {
-                return Configuration.GetSection("RedisConfig").Value;
+                return Configuration.GetSection("Redis").GetSection("Endpoint").Value;
+            }
+        }
+
+        public static string Redis_Password {
+            get {
+                return Configuration.GetSection("Redis").GetSection("Password").Value;
             }
         }
 

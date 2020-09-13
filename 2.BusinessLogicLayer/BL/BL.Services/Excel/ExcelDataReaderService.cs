@@ -16,21 +16,21 @@ namespace BL.Services.Excel {
 
         public DataSet GetDataSetFromUri(string uri) {
             var result = new DataSet();
-            var stream = RequestUtility.GetStreamFromGetRequest(uri);
-            using (var reader = ExcelReaderFactory.CreateCsvReader(
-                stream, new ExcelReaderConfiguration() { FallbackEncoding = Encoding.GetEncoding("big5") })) {
-                // Choose one of either 1 or 2:
+            //var stream = RequestUtility.GetStreamFromGetRequest(uri);
+            //using (var reader = ExcelReaderFactory.CreateCsvReader(
+            //    stream, new ExcelReaderConfiguration() { FallbackEncoding = Encoding.GetEncoding("big5") })) {
+            //    // Choose one of either 1 or 2:
 
-                // 1. Use the reader methods
-                do {
-                    while (reader.Read()) {
-                        // reader.GetDouble(0);
-                    }
-                } while (reader.NextResult());
+            //    // 1. Use the reader methods
+            //    do {
+            //        while (reader.Read()) {
+            //            // reader.GetDouble(0);
+            //        }
+            //    } while (reader.NextResult());
 
-                // 2. Use the AsDataSet extension method
-                result = reader.AsDataSet();
-            }
+            //    // 2. Use the AsDataSet extension method
+            //    result = reader.AsDataSet();
+            //}
             return result;
         }
     }

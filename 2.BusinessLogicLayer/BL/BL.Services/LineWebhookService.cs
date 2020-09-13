@@ -109,6 +109,7 @@ namespace BL.Services {
             }
             return messages;
         }
+
         private List<MessageBase> GetMessageBySticker(StickerMessage stickerMessage) {
             int packageId = int.Parse(stickerMessage.packageId);
             int stickerId = int.Parse(stickerMessage.stickerId);
@@ -120,6 +121,7 @@ namespace BL.Services {
             messages.AddRange(_lineMessageService.GetStickerMessages(packageId, stickerId, 4));
             return messages;
         }
+
         /// <summary>
         /// 依照字串內容給於不同的 LINE 回應
         /// </summary>
@@ -147,9 +149,22 @@ namespace BL.Services {
                         int textLenth = int.Parse(text.Split(' ')[2]);
                         return GetCambridgeDictionaryMessages(vocabulary, textLenth);
                     case "tv":
-                        if (text == "tvt") {
-                            textStr = _TradingVolumeService.GetDescTradingVolumeStr(DateTime.UtcNow.AddHours(8));
-                            return _lineMessageService.GetListOfSingleMessage(textStr);
+                        if (text.Split(' ')[1] == "test") {
+                            var quickReply = new QuickReply {
+                                items = new List<QuickReplyItemBase>{
+                                    new QuickReplyMessageAction("tv", "tv") {
+                                        imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
+                                    },
+                                    new QuickReplyMessageAction("tv 3", "tv 3") {
+                                        imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
+                                    },
+                                    new QuickReplyMessageAction("tv 5", "tv 5") {
+                                        imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
+                                    },
+                                }
+                            };
+                            var textMessage = new TextMessage("買超?") { quickReply = quickReply };
+                            return new List<MessageBase> { textMessage };
                         }
                         if (text == "tv") {
                             textStr = _TradingVolumeService.GetDescTradingVolumeStr(DateTime.UtcNow.AddHours(8));
@@ -208,8 +223,6 @@ namespace BL.Services {
                 Log.Error(errorMsg);
                 return _lineMessageService.GetListOfSingleMessage(errorMsg);
             }
-
-
         }
 
         private List<MessageBase> GetStickerMessages(string text) {
@@ -423,6 +436,7 @@ namespace BL.Services {
         public string message { get; set; }
         public List<Detail> details { get; set; }
     }
+
     public class Detail {
         public string message { get; set; }
         public string property { get; set; }

@@ -1,15 +1,13 @@
-﻿using BL.Services;
-using BL.Services.Line;
-using BL.Services.MaskInstitution;
-using BL.Services.TWSE_Stock;
-using BL.Services.YahooFinance;
-using isRock.LineBot;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
+using BL.Services.Cache;
+using BL.Services.Holiday;
+using BL.Services.MaskInstitution;
+using BL.Services.YahooFinance;
+using Microsoft.AspNetCore.Mvc;
 using Website.Models;
 
 namespace Website.Controllers {
@@ -22,16 +20,6 @@ namespace Website.Controllers {
         }
 
         public IActionResult Test() {
-            //_logger.LogInformation("This is test.");
-            //LineNotifyBotService lineNotifyBot = new LineNotifyBotService();
-            //Bot bot = new Bot(ConfigService.Line_ChannelAccessToken);
-            //             {
-            //     "type": "image",
-            //     "originalContentUrl": "https://example.com/original.jpg",
-            //     "previewImageUrl": "https://example.com/preview.jpg"
-            // }
-            //Uri uri1 = new Uri("https://i.imgur.com/Ipgt3Mz.png");
-
             return new OkResult();
         }
 
