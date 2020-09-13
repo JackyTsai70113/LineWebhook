@@ -24,7 +24,7 @@ namespace Website.Controllers {
         public IActionResult Test() {
             //_logger.LogInformation("This is test.");
             //LineNotifyBotService lineNotifyBot = new LineNotifyBotService();
-            Bot bot = new Bot(ConfigService.Line_ChannelAccessToken);
+            //Bot bot = new Bot(ConfigService.Line_ChannelAccessToken);
             //             {
             //     "type": "image",
             //     "originalContentUrl": "https://example.com/original.jpg",
@@ -32,25 +32,6 @@ namespace Website.Controllers {
             // }
             //Uri uri1 = new Uri("https://i.imgur.com/Ipgt3Mz.png");
 
-            var quickReply = new QuickReply();
-            var quickReplyMessageAction = new QuickReplyMessageAction("qr", "QuickReplyButton") {
-                imageUrl = new Uri("https://imgur.com/ZQVKq9T"),
-            };
-            quickReply.items = new List<QuickReplyItemBase>{
-                quickReplyMessageAction,
-                new QuickReplyPostbackAction("Buy1", "action=buy&itemid=111", "Buy2", ""),
-                new QuickReplyDatetimePickerAction("Select date", "storeId=12345", DatetimePickerModes.date),
-                new QuickReplyCameraAction("Open Camera"),
-                new QuickReplyCamerarollAction("Open Camera roll"),
-                new QuickReplyLocationAction("Location1")
-            };
-            var textMessage = new TextMessage("Please Select One.") {
-                quickReply = quickReply
-            };
-            List<MessageBase> messages = new List<MessageBase>{
-                textMessage
-            };
-            bot.PushMessage(ConfigService.Line_Jacky_userId, messages);
             return new OkResult();
         }
 

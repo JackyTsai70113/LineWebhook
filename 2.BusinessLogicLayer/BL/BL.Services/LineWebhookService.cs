@@ -147,6 +147,10 @@ namespace BL.Services {
                         int textLenth = int.Parse(text.Split(' ')[2]);
                         return GetCambridgeDictionaryMessages(vocabulary, textLenth);
                     case "tv":
+                        if (text == "tvt") {
+                            textStr = _TradingVolumeService.GetDescTradingVolumeStr(DateTime.UtcNow.AddHours(8));
+                            return _lineMessageService.GetListOfSingleMessage(textStr);
+                        }
                         if (text == "tv") {
                             textStr = _TradingVolumeService.GetDescTradingVolumeStr(DateTime.UtcNow.AddHours(8));
                             return _lineMessageService.GetListOfSingleMessage(textStr);
@@ -347,6 +351,28 @@ namespace BL.Services {
             quickReply.items = new List<QuickReplyItemBase>{
                 quickReplyMessageAction,
                 new QuickReplyPostbackAction("0901", "tv 20200901", "", ""),
+                new QuickReplyDatetimePickerAction("Select date", "storeId=12345", DatetimePickerModes.date),
+                new QuickReplyCameraAction("Open Camera"),
+                new QuickReplyCamerarollAction("Open Camera roll"),
+                new QuickReplyLocationAction("Location1")
+            };
+            var textMessage = new TextMessage("Please Select One.") {
+                quickReply = quickReply
+            };
+            List<MessageBase> messages = new List<MessageBase>{
+                textMessage
+            };
+            return messages;
+        }
+
+        private List<MessageBase> GetTradeVolumnReply() {
+            var quickReply = new QuickReply();
+            var quickReplyMessageAction = new QuickReplyMessageAction("qr", "QuickReplyButton") {
+                imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
+            };
+            quickReply.items = new List<QuickReplyItemBase>{
+                quickReplyMessageAction,
+                new QuickReplyPostbackAction("0901", "tv 20200901", "九月一號", ""),
                 new QuickReplyDatetimePickerAction("Select date", "storeId=12345", DatetimePickerModes.date),
                 new QuickReplyCameraAction("Open Camera"),
                 new QuickReplyCamerarollAction("Open Camera roll"),
