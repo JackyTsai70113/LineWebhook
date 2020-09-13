@@ -130,7 +130,7 @@ namespace BL.Services {
                     case "st":
                         int packageId = int.Parse(text.Split(' ')[1]);
                         int stickerId = int.Parse(text.Split(' ')[2]);
-                        if (text.Split(' ').Count() < 4) {
+                        if (text.Split(' ').Count() == 3) {
                             return _lineMessageService.GetStickerMessages(packageId, stickerId);
                         }
 
