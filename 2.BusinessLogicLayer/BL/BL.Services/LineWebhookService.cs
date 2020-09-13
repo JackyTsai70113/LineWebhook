@@ -68,15 +68,20 @@ namespace BL.Services {
                     }
                     var debugMessages = _lineMessageService.GetSingleMessage(debugStr);
                     bot.ReplyMessage(replyToken, debugMessages);
+
                 }
                 #endregion 若不成功則Post debug 訊息到Line
-
                 return result;
             } catch (Exception ex) {
+                int responseStartIndex = ex.ToString().IndexOf("Response");
+                int responseEndIndex = ex.ToString().IndexOf("Endpoint");
+                Log.Error("AA" + ex.ToString().Substring(responseStartIndex, responseEndIndex - responseStartIndex) + "AA");
                 Log.Error(
                     $"LineWebhookService.ResponseToLineServer 錯誤, replyToken: {replyToken},\n" +
                     $"messages: {JsonConvert.SerializeObject(messages, Formatting.Indented)}\n" +
                     $"ex: {ex}");
+                object dd = JsonConvert.DeserializeObject(ex.ToString());
+
                 return ex.ToString();
             }
         }
@@ -136,7 +141,12 @@ namespace BL.Services {
                     case "st":
                         int packageId = int.Parse(text.Split(' ')[1]);
                         int stickerId = int.Parse(text.Split(' ')[2]);
-                        return _lineMessageService.GetStickerMessages(packageId, stickerId);
+                        if (text.Split(' ').Count() < 4) {
+                            return _lineMessageService.GetStickerMessages(packageId, stickerId);
+                        }
+
+                        int count = int.Parse(text.Split(' ')[3]);
+                        return _lineMessageService.GetStickerMessages(packageId, stickerId, count);
                     case "cd":
                         string vocabulary = text.Split(' ')[1];
                         return GetCambridgeDictionaryMessages(vocabulary);
@@ -431,5 +441,14 @@ namespace BL.Services {
         /// 回覆的訊息列表，最多五則
         /// </summary>
         public List<MessageBase> messages { get; set; }
+    }
+
+    public class LineHttpPostExceptionResponse {
+        public string message { get; set; }
+        public List<Detail> details { get; set; }
+    }
+    public class Detail {
+        public string message { get; set; }
+        public string property { get; set; }
     }
 }
