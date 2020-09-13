@@ -53,7 +53,6 @@ namespace BL.Services {
         public string ResponseToLineServer(string replyToken, List<MessageBase> messages) {
             try {
                 #region Post到Line
-                //Log.Information($"[ResponseToLineServer] messages: {JsonConvert.SerializeObject(messages)}");
                 Bot bot = new Bot(_token);
                 string result = bot.ReplyMessage(replyToken, messages);
                 #endregion Post到Line
@@ -80,22 +79,33 @@ namespace BL.Services {
         /// <param name="lineRequestModel"></param>
         /// <returns>Line回應訊息</returns>
         public List<MessageBase> GetReplyMessages(ReceivedMessage lineRequestModel) {
-            Message message = lineRequestModel.events.FirstOrDefault().message;
             List<MessageBase> messages;
-            switch (message.type) {
-                case "text":
-                    messages = GetMessagesByText(message.text);
-                    break;
-                case "location":
-                    messages = GetPharmacyInfoMessages(message.address);
-                    break;
-                case "sticker":
-                    StickerMessage stickerMessage = _lineMessageService.GetStickerMessage(message);
-                    messages = GetMessageBySticker(stickerMessage);
-                    break;
-                default:
-                    messages = _lineMessageService.GetListOfSingleMessage("目前未支援此資料格式: " + message.type);
-                    break;
+            string type = lineRequestModel.events.FirstOrDefault().type;
+            if (type == "message") {
+                Message message = lineRequestModel.events.FirstOrDefault().message;
+                switch (message.type) {
+                    case "text":
+                        messages = GetMessagesByText(message.text);
+                        break;
+                    case "location":
+                        messages = GetPharmacyInfoMessages(message.address);
+                        break;
+                    case "sticker":
+                        StickerMessage stickerMessage = _lineMessageService.GetStickerMessage(message);
+                        messages = GetMessageBySticker(stickerMessage);
+                        break;
+                    default:
+                        messages = _lineMessageService.GetListOfSingleMessage("目前未支援此資料格式: " + message.type);
+                        break;
+                }
+            } else if (type == "postback") {
+                Postback postback = lineRequestModel.events.FirstOrDefault().postback;
+                messages = GetMessagesByText(postback.data);
+            } else {
+                string errorMsg = $"[GetReplyMessages] " +
+                    $"lineRequestModel: {JsonConvert.SerializeObject(lineRequestModel)}";
+                Log.Error(errorMsg);
+                return _lineMessageService.GetListOfSingleMessage(errorMsg);
             }
             return messages;
         }
@@ -332,11 +342,11 @@ namespace BL.Services {
         private List<MessageBase> GetReply() {
             var quickReply = new QuickReply();
             var quickReplyMessageAction = new QuickReplyMessageAction("qr", "QuickReplyButton") {
-                imageUrl = new Uri("https://imgur.com/ZQVKq9T"),
+                imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
             };
             quickReply.items = new List<QuickReplyItemBase>{
                 quickReplyMessageAction,
-                new QuickReplyPostbackAction("Buy1", "action=buy&itemid=111", "Buy2", ""),
+                new QuickReplyPostbackAction("0901", "tv 20200901", "", ""),
                 new QuickReplyDatetimePickerAction("Select date", "storeId=12345", DatetimePickerModes.date),
                 new QuickReplyCameraAction("Open Camera"),
                 new QuickReplyCamerarollAction("Open Camera roll"),
