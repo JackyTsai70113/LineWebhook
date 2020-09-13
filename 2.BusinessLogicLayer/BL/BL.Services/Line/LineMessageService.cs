@@ -52,8 +52,9 @@ namespace BL.Services.Line {
                         new StickerMessage(packageId, stickerId)
                     };
                 }
-                if (count > 5) {
-                    throw new ArgumentOutOfRangeException("count", "Count must be less than or equal to 5.");
+
+                if (count < 1 || count > 5) {
+                    return GetSingleMessage("參數錯誤！（個數必須介於1-5）");
                 }
 
                 var messages = new List<MessageBase>();

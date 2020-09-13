@@ -118,7 +118,6 @@ namespace BL.Services {
         private List<MessageBase> GetMessagesByText(string text) {
             string textStr;
             try {
-                // Set up messages to send
                 switch (text.Split(' ')[0]) {
                     case "":
                         textStr = GetCangjieImageMessages(text.Substring(1));
@@ -127,14 +126,7 @@ namespace BL.Services {
                         textStr = GetSinopacExchangeRateText();
                         return _lineMessageService.GetSingleMessage(textStr);
                     case "st":
-                        int packageId = int.Parse(text.Split(' ')[1]);
-                        int stickerId = int.Parse(text.Split(' ')[2]);
-                        if (text.Split(' ').Count() == 3) {
-                            return _lineMessageService.GetStickerMessages(packageId, stickerId);
-                        }
-
-                        int count = int.Parse(text.Split(' ')[3]);
-                        return _lineMessageService.GetStickerMessages(packageId, stickerId, count);
+                        return GetStickerMessages(text);
                     case "cd":
                         string vocabulary = text.Split(' ')[1];
                         return GetCambridgeDictionaryMessages(vocabulary);
@@ -200,6 +192,19 @@ namespace BL.Services {
                 Log.Error(errorMsg);
                 return _lineMessageService.GetSingleMessage(errorMsg);
             }
+
+
+        }
+
+        private List<MessageBase> GetStickerMessages(string text) {
+            int packageId = int.Parse(text.Split(' ')[1]);
+            int stickerId = int.Parse(text.Split(' ')[2]);
+            if (text.Split(' ').Count() == 3) {
+                return _lineMessageService.GetStickerMessages(packageId, stickerId);
+            }
+
+            int count = int.Parse(text.Split(' ')[3]);
+            return _lineMessageService.GetStickerMessages(packageId, stickerId, count);
         }
 
         private string GetSinopacExchangeRateText() {
@@ -238,7 +243,7 @@ namespace BL.Services {
                     messages.Add(new TextMessage(builder.ToString()));
                     return messages;
                 }
-                foreach (var maskData in topMaskDatas) {
+                foreach (Core.Domain.DTO.MaskInstitution.MaskData maskData in topMaskDatas) {
                     LatLng latLng = _GeocodingService.GetLatLngFromAddress(maskData.Address);
                     if (latLng.lat == default || latLng.lng == default) {
                         continue;
