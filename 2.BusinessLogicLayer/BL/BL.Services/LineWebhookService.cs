@@ -32,6 +32,7 @@ namespace BL.Services {
             _exchangeRateManager = new ExchangeRateManager();
             _TradingVolumeService = new TradingVolumeService();
             _lineMessageService = new LineMessageService();
+            _lineNotifyBotService = new LineNotifyBotService();
             _token = token;
         }
 
@@ -40,6 +41,7 @@ namespace BL.Services {
 
         private GeocodingService _GeocodingService { get; set; }
         private LineMessageService _lineMessageService { get; set; }
+        private LineNotifyBotService _lineNotifyBotService { get; set; }
         private TradingVolumeService _TradingVolumeService { get; set; }
 
         /// <summary>
@@ -55,32 +57,19 @@ namespace BL.Services {
                 Bot bot = new Bot(_token);
                 string result = bot.ReplyMessage(replyToken, messages);
                 #endregion Post到Line
-
-                #region 若不成功則Post debug 訊息到Line
-                if (result != "{}") {
-                    Log.Error(result);
-                    string debugStr = $"messages:\n" +
-                        $"{JsonConvert.SerializeObject(messages, Formatting.Indented)}\n";
-                    if (result.StartsWith("伺服器無回應")) {
-                        debugStr += "-> 伺服器無回應";
-                    } else {
-                        debugStr += "-> " + result;
-                    }
-                    var debugMessages = _lineMessageService.GetSingleMessage(debugStr);
-                    bot.ReplyMessage(replyToken, debugMessages);
-
-                }
-                #endregion 若不成功則Post debug 訊息到Line
                 return result;
             } catch (Exception ex) {
-                int responseStartIndex = ex.ToString().IndexOf("Response");
+                int responseStartIndex = ex.ToString().IndexOf("Response") + "Response:".Count();
                 int responseEndIndex = ex.ToString().IndexOf("Endpoint");
                 Log.Error("AA" + ex.ToString().Substring(responseStartIndex, responseEndIndex - responseStartIndex) + "AA");
+                string responseStr = ex.ToString().Substring(responseStartIndex, responseEndIndex - responseStartIndex).Trim();
+                LineHttpPostExceptionResponse response = JsonConvert.DeserializeObject<LineHttpPostExceptionResponse>(responseStr);
                 Log.Error(
                     $"LineWebhookService.ResponseToLineServer 錯誤, replyToken: {replyToken},\n" +
                     $"messages: {JsonConvert.SerializeObject(messages, Formatting.Indented)}\n" +
-                    $"ex: {ex}");
-                object dd = JsonConvert.DeserializeObject(ex.ToString());
+                    $"response: {JsonConvert.SerializeObject(response, Formatting.Indented)}");
+                _lineNotifyBotService.PushMessage_Jacky($"message: {response.message}, " +
+                    $"details: {JsonConvert.SerializeObject(response.details, Formatting.Indented)}");
 
                 return ex.ToString();
             }
