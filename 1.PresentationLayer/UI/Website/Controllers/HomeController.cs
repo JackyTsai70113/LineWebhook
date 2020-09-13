@@ -30,7 +30,7 @@ namespace Website.Controllers {
             //     "originalContentUrl": "https://example.com/original.jpg",
             //     "previewImageUrl": "https://example.com/preview.jpg"
             // }
-            Uri uri1 = new Uri("https://i.imgur.com/Ipgt3Mz.png");
+            //Uri uri1 = new Uri("https://i.imgur.com/Ipgt3Mz.png");
 
             var quickReply = new QuickReply();
             var quickReplyMessageAction = new QuickReplyMessageAction("qr", "QuickReplyButton") {
