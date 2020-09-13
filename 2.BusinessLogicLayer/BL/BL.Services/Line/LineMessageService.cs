@@ -9,17 +9,33 @@ namespace BL.Services.Line {
     /// </summary>
     public class LineMessageService {
 
-        public List<MessageBase> GetSingleMessage(string text) {
-            List<MessageBase> messages = new List<MessageBase>();
+        public MessageBase GetTextMessage(string text) {
             try {
                 text = text.Replace('\'', '’').Trim();
-                messages.Add(new TextMessage(text));
+                return new TextMessage(text);
             } catch (Exception ex) {
-                Log.Error($"[GetSingleMessage] text: {text} Exception: {ex}");
+                string errorMsg = $"[GetSingleMessage] text: {text} Exception: {ex}";
+                Log.Error(errorMsg);
+                errorMsg = errorMsg.Replace('\'', '’').Trim();
+                return new TextMessage(errorMsg);
             }
-            return messages;
         }
 
+        public List<MessageBase> GetListOfSingleMessage(string text) {
+            try {
+                text = text.Replace('\'', '’').Trim();
+                return new List<MessageBase>{
+                    GetTextMessage(text)
+                };
+            } catch (Exception ex) {
+                string errorMsg = $"[GetSingleMessage] text: {text} Exception: {ex}";
+                Log.Error(errorMsg);
+                errorMsg = errorMsg.Replace('\'', '’').Trim();
+                return new List<MessageBase>{
+                    GetTextMessage(errorMsg)
+                };
+            }
+        }
 
         public StickerMessage GetStickerMessage(Message stickerMessage) {
             int packageId = stickerMessage.packageId;
@@ -54,7 +70,7 @@ namespace BL.Services.Line {
                 }
 
                 if (count < 1 || count > 5) {
-                    return GetSingleMessage("參數錯誤！（個數必須介於1-5）");
+                    return GetListOfSingleMessage("參數錯誤！（個數必須介於1-5）");
                 }
 
                 var messages = new List<MessageBase>();
@@ -67,7 +83,7 @@ namespace BL.Services.Line {
                 string errorMsg = $"[GetStickerMessages] " +
                     $"packageId: {packageId}, stickerId: {stickerId}, ex: {ex}";
                 Log.Error(errorMsg);
-                return GetSingleMessage(errorMsg);
+                return GetListOfSingleMessage(errorMsg);
             }
         }
     }

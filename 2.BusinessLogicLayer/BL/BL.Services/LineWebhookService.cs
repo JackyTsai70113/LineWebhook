@@ -91,25 +91,25 @@ namespace BL.Services {
                     break;
                 case "sticker":
                     StickerMessage stickerMessage = _lineMessageService.GetStickerMessage(message);
-                    int packageId = int.Parse(stickerMessage.packageId);
-                    int stickerId = int.Parse(stickerMessage.stickerId);
-                    string text = $"[StickerMessage] packageId: {packageId}, stickerId: {stickerId}";
-                    TextMessage textMessage = new TextMessage(text);
-                    messages = new List<MessageBase>{
-                        textMessage
-                    };
-                    messages.AddRange(_lineMessageService.GetStickerMessages(packageId, stickerId, 4));
+                    messages = GetMessageBySticker(stickerMessage);
                     break;
                 default:
-                    Console.WriteLine($"無相符的 message.type: {message.type}, " +
-                        $"requestModelFromLineServer: " +
-                        $"{JsonConvert.SerializeObject(lineRequestModel, Formatting.Indented)}");
-                    messages = _lineMessageService.GetSingleMessage("未支援此資料格式: " + message.type);
+                    messages = _lineMessageService.GetListOfSingleMessage("目前未支援此資料格式: " + message.type);
                     break;
             }
             return messages;
         }
-
+        private List<MessageBase> GetMessageBySticker(StickerMessage stickerMessage) {
+            int packageId = int.Parse(stickerMessage.packageId);
+            int stickerId = int.Parse(stickerMessage.stickerId);
+            string text = $"[StickerMessage] packageId: {packageId}, stickerId: {stickerId}";
+            TextMessage textMessage = new TextMessage(text);
+            List<MessageBase> messages = new List<MessageBase>{
+                textMessage
+            };
+            messages.AddRange(_lineMessageService.GetStickerMessages(packageId, stickerId, 4));
+            return messages;
+        }
         /// <summary>
         /// 依照字串內容給於不同的 LINE 回應
         /// </summary>
@@ -119,12 +119,14 @@ namespace BL.Services {
             string textStr;
             try {
                 switch (text.Split(' ')[0]) {
+                    case "r":
+                        return GetReply();
                     case "":
                         textStr = GetCangjieImageMessages(text.Substring(1));
-                        return _lineMessageService.GetSingleMessage(textStr);
+                        return _lineMessageService.GetListOfSingleMessage(textStr);
                     case "sp":
                         textStr = GetSinopacExchangeRateText();
-                        return _lineMessageService.GetSingleMessage(textStr);
+                        return _lineMessageService.GetListOfSingleMessage(textStr);
                     case "st":
                         return GetStickerMessages(text);
                     case "cd":
@@ -137,7 +139,7 @@ namespace BL.Services {
                     case "tv":
                         if (text == "tv") {
                             textStr = _TradingVolumeService.GetDescTradingVolumeStr(DateTime.UtcNow.AddHours(8));
-                            return _lineMessageService.GetSingleMessage(textStr);
+                            return _lineMessageService.GetListOfSingleMessage(textStr);
                         }
                         if (text.Split(' ')[1].Count() == 1) {
                             string daysStr = text.Split(' ')[1];
@@ -145,24 +147,24 @@ namespace BL.Services {
 
                             if (days < 1 || days > 5) {
                                 textStr = "交易天數需為 1-5";
-                                return _lineMessageService.GetSingleMessage(textStr);
+                                return _lineMessageService.GetListOfSingleMessage(textStr);
                             }
 
                             textStr = _TradingVolumeService.GetDescTradingVolumeStrOverDays(days);
-                            return _lineMessageService.GetSingleMessage(textStr);
+                            return _lineMessageService.GetListOfSingleMessage(textStr);
                         } else if (text.Split(' ')[1].Count() == 8) {
                             string dateTimeStr = text.Split(' ')[1];
                             DateTime dateTime = DateTime.ParseExact(dateTimeStr, "yyyyMMdd", CultureInfo.InvariantCulture);
 
                             textStr = _TradingVolumeService.GetDescTradingVolumeStr(dateTime);
-                            return _lineMessageService.GetSingleMessage(textStr);
+                            return _lineMessageService.GetListOfSingleMessage(textStr);
                         }
                         textStr = "請重新輸入!";
-                        return _lineMessageService.GetSingleMessage(textStr);
+                        return _lineMessageService.GetListOfSingleMessage(textStr);
                     case "tvv":
                         if (text == "tvv") {
                             textStr = _TradingVolumeService.GetAscTradingVolumeStr(DateTime.UtcNow.AddHours(8));
-                            return _lineMessageService.GetSingleMessage(textStr);
+                            return _lineMessageService.GetListOfSingleMessage(textStr);
                         }
                         if (text.Split(' ')[1].Count() == 1) {
                             string daysStr = text.Split(' ')[1];
@@ -170,27 +172,27 @@ namespace BL.Services {
 
                             if (days < 1 || days > 5) {
                                 textStr = "交易天數需為 1-5";
-                                return _lineMessageService.GetSingleMessage(textStr);
+                                return _lineMessageService.GetListOfSingleMessage(textStr);
                             }
 
                             textStr = _TradingVolumeService.GetAscTradingVolumeStrOverDays(days);
-                            return _lineMessageService.GetSingleMessage(textStr);
+                            return _lineMessageService.GetListOfSingleMessage(textStr);
                         } else if (text.Split(' ')[1].Count() == 8) {
                             string dateTimeStr = text.Split(' ')[1];
                             DateTime dateTime = DateTime.ParseExact(dateTimeStr, "yyyyMMdd", CultureInfo.InvariantCulture);
 
                             textStr = _TradingVolumeService.GetAscTradingVolumeStr(dateTime);
-                            return _lineMessageService.GetSingleMessage(textStr);
+                            return _lineMessageService.GetListOfSingleMessage(textStr);
                         }
                         textStr = "請重新輸入!";
-                        return _lineMessageService.GetSingleMessage(textStr);
+                        return _lineMessageService.GetListOfSingleMessage(textStr);
                     default:
-                        return _lineMessageService.GetSingleMessage(text);
+                        return _lineMessageService.GetListOfSingleMessage(text);
                 }
             } catch (Exception ex) {
                 string errorMsg = $"[GetMessagesByText] text: {text}, ex: {ex}";
                 Log.Error(errorMsg);
-                return _lineMessageService.GetSingleMessage(errorMsg);
+                return _lineMessageService.GetListOfSingleMessage(errorMsg);
             }
 
 
@@ -287,7 +289,6 @@ namespace BL.Services {
                 // 設定發送的訊息
                 foreach (Translation translation in translations) {
                     string translationStr = translation.TranslationStr;
-                    translationStr = translationStr.Replace('\'', '’').TrimEnd();
                     // 防呆: 超過5000字數
                     if (textLength == -1) {
                         if (translationStr.Length > 5000) {
@@ -296,7 +297,7 @@ namespace BL.Services {
                     } else if (translationStr.Length > textLength) {
                         translationStr = translationStr.Substring(0, textLength) + "...";
                     }
-                    messages.Add(new TextMessage(translationStr));
+                    messages.Add(_lineMessageService.GetTextMessage(translationStr));
                 }
                 return messages;
             } catch (Exception ex) {
@@ -319,7 +320,6 @@ namespace BL.Services {
                     byte[] big5Bytes = big5.GetBytes(text.ToString());
                     var big5Str = BitConverter.ToString(big5Bytes).Replace("-", string.Empty);
                     sb.AppendLine(text + ": " + CJDomain + big5Str + ".JPG");
-                    sb.AppendLine("--");
                 }
                 return sb.ToString();
             } catch (Exception ex) {
@@ -327,6 +327,28 @@ namespace BL.Services {
                 Console.WriteLine(errorMsg);
                 return errorMsg;
             }
+        }
+
+        private List<MessageBase> GetReply() {
+            var quickReply = new QuickReply();
+            var quickReplyMessageAction = new QuickReplyMessageAction("qr", "QuickReplyButton") {
+                imageUrl = new Uri("https://imgur.com/ZQVKq9T"),
+            };
+            quickReply.items = new List<QuickReplyItemBase>{
+                quickReplyMessageAction,
+                new QuickReplyPostbackAction("Buy1", "action=buy&itemid=111", "Buy2", ""),
+                new QuickReplyDatetimePickerAction("Select date", "storeId=12345", DatetimePickerModes.date),
+                new QuickReplyCameraAction("Open Camera"),
+                new QuickReplyCamerarollAction("Open Camera roll"),
+                new QuickReplyLocationAction("Location1")
+            };
+            var textMessage = new TextMessage("Please Select One.") {
+                quickReply = quickReply
+            };
+            List<MessageBase> messages = new List<MessageBase>{
+                textMessage
+            };
+            return messages;
         }
 
         public List<dynamic> ReplyConfirmMessages() {
@@ -359,81 +381,6 @@ namespace BL.Services {
             }
             return messages;
         }
-
-        #region 處理Line的responseBody
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="requestBody"></param>
-        /// <returns></returns>
-        public string PostToLineServer(string replyToken, List<MessageBase> messages) {
-            string result = "";
-            try {
-                string requestUriString = "https://api.line.me/v2/bot/message/reply";
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUriString);
-                request.Method = "POST";
-                request.Headers.Add("Content-Type", "application/json");
-                request.Headers.Add("Authorization", "Bearer " + _token);
-
-                // Write data to requestStream
-                UTF8Encoding encoding = new UTF8Encoding();
-                ReplyMessageRequestBody replyMessageRequestBody =
-                    new ReplyMessageRequestBody(replyToken, messages);
-                string requestBodyStr = JsonConvert.SerializeObject(replyMessageRequestBody, Formatting.Indented);
-                byte[] data = encoding.GetBytes(requestBodyStr);
-                request.ContentLength = data.Length;
-                Stream requestStream = request.GetRequestStream();
-                requestStream.Write(data, 0, data.Length);
-                requestStream.Close();
-
-                // Add 紀錄發至LineServer的requestBody
-                Console.WriteLine($"========== TO LINE SERVER: {requestUriString} ==========");
-                Console.WriteLine($"requestBody:");
-                Console.WriteLine($"{requestBodyStr}");
-                Console.WriteLine($"====================");
-
-                WebResponse response = request.GetResponse();
-                Stream stream = response.GetResponseStream();
-                StreamReader streamReader = new StreamReader(stream);
-                result = streamReader.ReadToEnd();
-            } catch (WebException webEx) {
-                result += "伺服器無回應, " + webEx.ToString();
-                Console.WriteLine($"伺服器無回應, WebException: {webEx}");
-            } catch (Exception ex) {
-                result += "Exception: " + ex.ToString();
-                Console.WriteLine($"Exception: {ex}");
-            }
-            return result;
-        }
-
-        #endregion 處理Line的responseBody
-    }
-
-    /// <summary>
-    /// LINE 的 Reply Message 的 Request body
-    /// </summary>
-    public class ReplyMessageRequestBody {
-
-        public ReplyMessageRequestBody(string replyToken, List<MessageBase> messages) {
-            this.replyToken = replyToken;
-            this.messages = messages;
-        }
-
-        /// <summary>
-        /// 是否接收到通知
-        /// </summary>
-        public bool notificationDisabled { get; set; }
-
-        /// <summary>
-        /// webhook接收到的回應權杖
-        /// </summary>
-        public string replyToken { get; set; }
-
-        /// <summary>
-        /// 回覆的訊息列表，最多五則
-        /// </summary>
-        public List<MessageBase> messages { get; set; }
     }
 
     public class LineHttpPostExceptionResponse {
