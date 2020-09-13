@@ -61,12 +61,11 @@ namespace BL.Services {
             } catch (Exception ex) {
                 int responseStartIndex = ex.ToString().IndexOf("Response") + "Response:".Count();
                 int responseEndIndex = ex.ToString().IndexOf("Endpoint");
-                Log.Error("AA" + ex.ToString().Substring(responseStartIndex, responseEndIndex - responseStartIndex) + "AA");
                 string responseStr = ex.ToString().Substring(responseStartIndex, responseEndIndex - responseStartIndex).Trim();
                 LineHttpPostExceptionResponse response = JsonConvert.DeserializeObject<LineHttpPostExceptionResponse>(responseStr);
                 Log.Error(
                     $"LineWebhookService.ResponseToLineServer 錯誤, replyToken: {replyToken},\n" +
-                    $"messages: {JsonConvert.SerializeObject(messages, Formatting.Indented)}\n" +
+                    $"messages: {JsonConvert.SerializeObject(messages, Formatting.Indented)},\n" +
                     $"response: {JsonConvert.SerializeObject(response, Formatting.Indented)}");
                 _lineNotifyBotService.PushMessage_Jacky($"message: {response.message}, " +
                     $"details: {JsonConvert.SerializeObject(response.details, Formatting.Indented)}");
