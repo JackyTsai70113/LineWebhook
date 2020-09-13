@@ -31,11 +31,26 @@ namespace Website.Controllers {
             //     "previewImageUrl": "https://example.com/preview.jpg"
             // }
             Uri uri1 = new Uri("https://i.imgur.com/Ipgt3Mz.png");
-            List<MessageBase> messages = new List<MessageBase>{
-                new TextMessage("書法班開課了，快點來"),
-                new ImageMessage(uri1, uri1)
+
+            var quickReply = new QuickReply();
+            var quickReplyMessageAction = new QuickReplyMessageAction("qr", "QuickReplyButton") {
+                imageUrl = new Uri("https://imgur.com/ZQVKq9T"),
             };
-            bot.PushMessage(ConfigService.Line_Jessi_userId, messages);
+            quickReply.items = new List<QuickReplyItemBase>{
+                quickReplyMessageAction,
+                new QuickReplyPostbackAction("Buy1", "action=buy&itemid=111", "Buy2", ""),
+                new QuickReplyDatetimePickerAction("Select date", "storeId=12345", DatetimePickerModes.date),
+                new QuickReplyCameraAction("Open Camera"),
+                new QuickReplyCamerarollAction("Open Camera roll"),
+                new QuickReplyLocationAction("Location1")
+            };
+            var textMessage = new TextMessage("Please Select One.") {
+                quickReply = quickReply
+            };
+            List<MessageBase> messages = new List<MessageBase>{
+                textMessage
+            };
+            bot.PushMessage(ConfigService.Line_Jacky_userId, messages);
             return new OkResult();
         }
 
