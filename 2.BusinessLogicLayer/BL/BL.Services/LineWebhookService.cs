@@ -68,7 +68,7 @@ namespace BL.Services {
                     $"messages: {JsonConvert.SerializeObject(messages, Formatting.Indented)},\n" +
                     $"response: {JsonConvert.SerializeObject(response, Formatting.Indented)}");
                 _lineNotifyBotService.PushMessage_Jacky($"message: {response.message}, " +
-                    $"details: {JsonConvert.SerializeObject(response.details, Formatting.Indented)}");
+                    $"details: {JsonConvert.SerializeObject(response.details)}");
 
                 return ex.ToString();
             }

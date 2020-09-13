@@ -32,8 +32,12 @@ namespace BL.Services.Line {
         /// </summary>
         /// <remark>
         /// https://developers.line.biz/media/messaging-api/sticker_list.pdf
+        /// https://devdocs.line.me/files/sticker_list.pdf
         /// 範圍包含：
-        /// 
+        /// Moon James              1              1-17    21 100-139 401-430
+        /// Brown Cony              2             18-20 22-47 140-179 501-527
+        /// Cherry coco             3           180-259
+        /// Daily Life              4           260-307 601-632
         /// Brown, Cony & Sally 11537 52002734-52002773
         /// CHOCO & Friends     11538 51626494-51626533
         /// UNIVERSTAR BT21     11539 52114110-52114149
@@ -49,7 +53,7 @@ namespace BL.Services.Line {
                     };
                 }
                 if (count > 5) {
-                    throw new System.ArgumentOutOfRangeException("count", "Count must be less than or equal to 5.");
+                    throw new ArgumentOutOfRangeException("count", "Count must be less than or equal to 5.");
                 }
 
                 var messages = new List<MessageBase>();
@@ -62,9 +66,7 @@ namespace BL.Services.Line {
                 string errorMsg = $"[GetStickerMessages] " +
                     $"packageId: {packageId}, stickerId: {stickerId}, ex: {ex}";
                 Log.Error(errorMsg);
-                return new List<MessageBase>{
-                    new TextMessage(errorMsg)
-                };
+                return GetSingleMessage(errorMsg);
             }
         }
     }
