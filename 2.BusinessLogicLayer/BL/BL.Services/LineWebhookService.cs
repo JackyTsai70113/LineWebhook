@@ -135,7 +135,7 @@ namespace BL.Services {
             try {
                 switch (text.Split(' ')[0]) {
                     case "t":
-                        var m = _lineMessageService.GetTextMessageWithQuickReply();
+                        var m = _lineMessageService.GetCarouselTemplateMessage("asc");
                         return new List<MessageBase> { m, m };
                     case "t2":
                         var m2 = _lineMessageService.GetCarouselTemplateMessage2("");

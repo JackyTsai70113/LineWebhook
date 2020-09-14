@@ -133,15 +133,15 @@ namespace BL.Services.Line {
                     actions = new List<TemplateActionBase> {
                         new UriAction {
                             label = str[0].ToString(),
-                            uri = new Uri("https://input.foruto.com/cjdict/Images/CJZD_JPG/A7DA.JPG")
+                            uri = new Uri("http://input.foruto.com/cjdict/Images/CJZD_JPG/A7DA.JPG")
                         },
                         new UriAction {
                             label = str[1].ToString(),
-                            uri = new Uri("https://input.foruto.com/cjdict/Images/CJZD_JPG/AC4F.JPG")
+                            uri = new Uri("http://input.foruto.com/cjdict/Images/CJZD_JPG/AC4F.JPG")
                         },
                         new UriAction {
                             label = str[2].ToString(),
-                            uri = new Uri("https://input.foruto.com/cjdict/Images/CJZD_JPG/BDD6.JPG")
+                            uri = new Uri("http://input.foruto.com/cjdict/Images/CJZD_JPG/BDD6.JPG")
                         },
                     }
                 }
