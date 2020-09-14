@@ -1,26 +1,24 @@
-﻿using BL.Services.Base;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text;
+using BL.Services.Base;
 using BL.Services.Interfaces;
+using BL.Services.Line;
 using BL.Services.MapQuest;
 using BL.Services.TWSE_Stock;
 using Core.Domain.DTO.RequestDTO.CambridgeDictionary;
 using Core.Domain.DTO.Sinopac;
+using Core.Domain.Utilities;
+using DA.Managers.CambridgeDictionary;
 using DA.Managers.Interfaces;
 using DA.Managers.Interfaces.Sinopac;
 using DA.Managers.MaskInstitution;
+using DA.Managers.Sinopac;
 using isRock.LineBot;
 using Newtonsoft.Json;
 using Serilog;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using Core.Domain.Utilities;
-using DA.Managers.CambridgeDictionary;
-using DA.Managers.Sinopac;
-using BL.Services.Line;
 
 namespace BL.Services {
 
@@ -148,27 +146,91 @@ namespace BL.Services {
                         vocabulary = text.Split(' ')[1];
                         int textLenth = int.Parse(text.Split(' ')[2]);
                         return GetCambridgeDictionaryMessages(vocabulary, textLenth);
+                    case "tv9":
+                        var columns = new List<Column> {
+                            new Column() {
+                                thumbnailImageUrl = new Uri("https://i.imgur.com/n82BOcq.png"),
+                                title = "買賣超彙",
+                                text = "計算外資及陸資，投信綜合買賣超彙\n" +
+                                    "請設定計算區間:",
+                                actions = new List<TemplateActionBase> {
+                                    new PostbackAction {
+                                        label = "一天內👉",
+                                        data = "tv 1",
+                                        displayText = "我要查詢一天內綜合買賣超彙🙏"
+                                    },
+                                    new PostbackAction {
+                                        label = "三天內👉",
+                                        data = "tv 3",
+                                        displayText = "我要查詢三天內綜合買賣超彙🙏"
+                                    },
+                                    new PostbackAction {
+                                        label = "五天內👉",
+                                        data = "tv 5",
+                                        displayText = "我要查詢五天內綜合買賣超彙🙏"
+                                    }
+                                }
+                            },
+                            new Column() {
+                                thumbnailImageUrl = new Uri("https://i.imgur.com/n82BOcq.png"),
+                                title = "買賣超彙",
+                                text = "計算外資及陸資，投信綜合買賣超彙\n" +
+                                    "請設定計算區間:",
+                                actions = new List<TemplateActionBase> {
+                                    new DateTimePickerAction {
+                                        label = "選擇日期👉",
+                                        data = "DateTimePickerAction_data",
+                                        mode = "date",
+                                        initial = DateTime.UtcNow.AddHours(8).Date.ToString("yyyyMMdd"),
+                                        max = new DateTime(2025, 12, 31).ToString("yyyyMMdd"),
+                                        min = new DateTime(2011, 1, 1).ToString("yyyyMMdd")
+                                    }
+                                }
+                            },
+                        };
+                        var carouselTemplate = new CarouselTemplate() { columns = columns };
+                        var templateMessage = new TemplateMessage(carouselTemplate);
+                        return new List<MessageBase> { templateMessage };
                     case "tv":
-                        if (text.Split(' ')[1] == "test") {
+                        if (text == "tv") {
                             var quickReply = new QuickReply {
                                 items = new List<QuickReplyItemBase>{
-                                    new QuickReplyMessageAction("tv", "tv") {
+                                    new QuickReplyMessageAction("一天內", "tv 1") {
                                         imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
                                     },
-                                    new QuickReplyMessageAction("tv 3", "tv 3") {
+                                    new QuickReplyMessageAction("三天內", "tv 3") {
                                         imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
                                     },
-                                    new QuickReplyMessageAction("tv 5", "tv 5") {
+                                    new QuickReplyMessageAction("五天內", "tv 5") {
+                                        imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
+                                    },
+                                    new QuickReplyMessageAction("查詢指定日期", "tv date") {
                                         imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
                                     },
                                 }
                             };
-                            var textMessage = new TextMessage("買超?") { quickReply = quickReply };
+                            var textMessage = new TextMessage("開始統計買賣超彙 請問計算區間為何?") { quickReply = quickReply };
                             return new List<MessageBase> { textMessage };
                         }
-                        if (text == "tv") {
-                            textStr = _TradingVolumeService.GetDescTradingVolumeStr(DateTime.UtcNow.AddHours(8));
-                            return _lineMessageService.GetListOfSingleMessage(textStr);
+                        if (text == "tv date") {
+                            var quickReply = new QuickReply {
+                                items = new List<QuickReplyItemBase>{
+                                    new QuickReplyMessageAction("一天內", "tv 1") {
+                                        imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
+                                    },
+                                    new QuickReplyMessageAction("三天內", "tv 3") {
+                                        imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
+                                    },
+                                    new QuickReplyMessageAction("五天內", "tv 5") {
+                                        imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
+                                    },
+                                    new QuickReplyMessageAction("tv 5", "tv date") {
+                                        imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
+                                    },
+                                }
+                            };
+                            var textMessage = new TextMessage("開始統計買賣超彙 請問計算區間為何?") { quickReply = quickReply };
+                            return new List<MessageBase> { textMessage };
                         }
                         if (text.Split(' ')[1].Count() == 1) {
                             string daysStr = text.Split(' ')[1];
