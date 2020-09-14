@@ -134,8 +134,12 @@ namespace BL.Services {
             string textStr;
             try {
                 switch (text.Split(' ')[0]) {
-                    case "r":
-                        return GetReply();
+                    case "t":
+                        var m = _lineMessageService.GetTextMessageWithQuickReply();
+                        return new List<MessageBase> { m, m };
+                    case "t2":
+                        var m2 = _lineMessageService.GetTextMessageWithQuickReply2();
+                        return new List<MessageBase> { m2 };
                     case "":
                         textStr = GetCangjieImageMessages(text.Substring(1));
                         return _lineMessageService.GetListOfSingleMessage(textStr);
@@ -162,12 +166,14 @@ namespace BL.Services {
                                 textStr = "交易天數需為 1-5";
                                 return _lineMessageService.GetListOfSingleMessage(textStr);
                             }
-
-                            textStr = _TradingVolumeService.GetDescTradingVolumeStrOverDays(days);
+                            string nowStr = DateTime.UtcNow.AddHours(8).ToString("yyyy/MM/dd");
+                            textStr = $"以下是自{nowStr}在{days}天內的綜合買超股數:\n" +
+                                _TradingVolumeService.GetDescTradingVolumeStrOverDays(days);
                             return _lineMessageService.GetListOfSingleMessage(textStr);
                         } else if (text.Split(' ')[1].Count() == 10) {
                             DateTime dateTime = DateTime.Parse(text.Split(' ')[1]);
-                            textStr = _TradingVolumeService.GetDescTradingVolumeStr(dateTime);
+                            textStr = $"以下是{dateTime:yyyy/MM/dd}的綜合買超股數:\n" +
+                                _TradingVolumeService.GetDescTradingVolumeStr(dateTime);
                             return _lineMessageService.GetListOfSingleMessage(textStr);
                         }
                         textStr = $"請重新輸入! 參數錯誤({text.Split(' ')[1]})";
@@ -184,11 +190,14 @@ namespace BL.Services {
                                 return _lineMessageService.GetListOfSingleMessage(textStr);
                             }
 
-                            textStr = _TradingVolumeService.GetAscTradingVolumeStrOverDays(days);
+                            string nowStr = DateTime.UtcNow.AddHours(8).ToString("yyyy/MM/dd");
+                            textStr = $"以下是自{nowStr}在{days}天內的綜合賣超股數:\n" +
+                                _TradingVolumeService.GetAscTradingVolumeStrOverDays(days);
                             return _lineMessageService.GetListOfSingleMessage(textStr);
                         } else if (text.Split(' ')[1].Count() == 10) {
                             DateTime dateTime = DateTime.Parse(text.Split(' ')[1]);
-                            textStr = _TradingVolumeService.GetAscTradingVolumeStr(dateTime);
+                            textStr = $"以下是{dateTime:yyyy/MM/dd}的綜合賣超股數:\n" +
+                                _TradingVolumeService.GetAscTradingVolumeStr(dateTime);
                             return _lineMessageService.GetListOfSingleMessage(textStr);
                         }
                         textStr = $"請重新輸入! 參數錯誤({text.Split(' ')[1]})";
@@ -331,81 +340,6 @@ namespace BL.Services {
                 Console.WriteLine(errorMsg);
                 return errorMsg;
             }
-        }
-
-        private List<MessageBase> GetReply() {
-            var quickReply = new QuickReply();
-            var quickReplyMessageAction = new QuickReplyMessageAction("qr", "QuickReplyButton") {
-                imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
-            };
-            quickReply.items = new List<QuickReplyItemBase>{
-                quickReplyMessageAction,
-                new QuickReplyPostbackAction("0901", "tv 20200901", "", ""),
-                new QuickReplyDatetimePickerAction("Select date", "storeId=12345", DatetimePickerModes.date),
-                new QuickReplyCameraAction("Open Camera"),
-                new QuickReplyCamerarollAction("Open Camera roll"),
-                new QuickReplyLocationAction("Location1")
-            };
-            var textMessage = new TextMessage("Please Select One.") {
-                quickReply = quickReply
-            };
-            List<MessageBase> messages = new List<MessageBase>{
-                textMessage
-            };
-            return messages;
-        }
-
-        private List<MessageBase> GetTradeVolumnReply() {
-            var quickReply = new QuickReply();
-            var quickReplyMessageAction = new QuickReplyMessageAction("qr", "QuickReplyButton") {
-                imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
-            };
-            quickReply.items = new List<QuickReplyItemBase>{
-                quickReplyMessageAction,
-                new QuickReplyPostbackAction("0901", "tv 20200901", "九月一號", ""),
-                new QuickReplyDatetimePickerAction("Select date", "storeId=12345", DatetimePickerModes.date),
-                new QuickReplyCameraAction("Open Camera"),
-                new QuickReplyCamerarollAction("Open Camera roll"),
-                new QuickReplyLocationAction("Location1")
-            };
-            var textMessage = new TextMessage("Please Select One.") {
-                quickReply = quickReply
-            };
-            List<MessageBase> messages = new List<MessageBase>{
-                textMessage
-            };
-            return messages;
-        }
-
-        public List<dynamic> ReplyConfirmMessages() {
-            List<dynamic> messages = null;
-            try {
-                messages = new List<dynamic> {
-                    new {
-                    type = "template",
-                    altText = "this is a confirm template",
-                    template = new {
-                    type = "confirm",
-                    text = "Are you sure?",
-                    actions = new List<dynamic> {
-                    new {
-                    type = "message",
-                    label = "Yes",
-                    text = "yes"
-                    },
-                    new {
-                    type = "message",
-                    label = "No",
-                    text = "no"
-                    }
-                    }
-                    }
-                    }
-                };
-            } catch (Exception ex) {
-                Console.WriteLine($"Exception: {ex.Message}");
-            }
-            return messages;
         }
     }
 

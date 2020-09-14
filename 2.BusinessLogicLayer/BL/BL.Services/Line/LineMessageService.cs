@@ -103,29 +103,50 @@ namespace BL.Services.Line {
                             min = new DateTime(2011, 1, 1).ToString("yyyy-MM-dd")
                         }
                     }
-                },
+                }
             };
             return new TemplateMessage(new CarouselTemplate() { columns = columns });
         }
 
         public MessageBase GetTextMessageWithQuickReply() {
-            var quickReply = new QuickReply {
-                items = new List<QuickReplyItemBase>{
-                                    new QuickReplyMessageAction("一天內", "tv 1") {
-                                        imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
-                                    },
-                                    new QuickReplyMessageAction("三天內", "tv 3") {
-                                        imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
-                                    },
-                                    new QuickReplyMessageAction("五天內", "tv 5") {
-                                        imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
-                                    },
-                                    new QuickReplyMessageAction("查詢指定日期", "tv date") {
-                                        imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
-                                    },
-                                }
+            var quickReply = new QuickReply();
+            var quickReplyMessageAction = new QuickReplyMessageAction("qr", "QuickReplyButton") {
+                imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
             };
-            return new TextMessage("開始統計買賣超彙 請問計算區間為何?") { quickReply = quickReply };
+            quickReply.items = new List<QuickReplyItemBase>{
+                quickReplyMessageAction,
+                new QuickReplyPostbackAction("0901", "tv 20200901", "九月一號", ""),
+                new QuickReplyDatetimePickerAction("Select date", "storeId=12345", DatetimePickerModes.date),
+                new QuickReplyCameraAction("Open Camera"),
+                new QuickReplyCamerarollAction("Open Camera roll"),
+                new QuickReplyLocationAction("Location1")
+            };
+            return new TextMessage("Please Select One.") { quickReply = quickReply };
+        }
+
+        public MessageBase GetCarouselTemplateMessage2(string str) {
+            str = "我是誰";
+            var columns = new List<Column> {
+                new Column() {
+                    thumbnailImageUrl = new Uri("https://i.imgur.com/n82BOcq.png"),
+                    text = "請點擊查詢須查詢之文字:",
+                    actions = new List<TemplateActionBase> {
+                        new UriAction {
+                            label = str[0].ToString(),
+                            uri = new Uri("https://input.foruto.com/cjdict/Images/CJZD_JPG/A7DA.JPG")
+                        },
+                        new UriAction {
+                            label = str[1].ToString(),
+                            uri = new Uri("https://input.foruto.com/cjdict/Images/CJZD_JPG/AC4F.JPG")
+                        },
+                        new UriAction {
+                            label = str[2].ToString(),
+                            uri = new Uri("https://input.foruto.com/cjdict/Images/CJZD_JPG/BDD6.JPG")
+                        },
+                    }
+                }
+            };
+            return new TemplateMessage(new CarouselTemplate() { columns = columns });
         }
 
         public StickerMessage GetStickerMessage(Message stickerMessage) {

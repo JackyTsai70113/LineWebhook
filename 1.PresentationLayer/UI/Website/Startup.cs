@@ -34,14 +34,14 @@ namespace Website {
             services.AddDbContext<LineWebhookContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("LineWebhookContext")));
 
-            services.AddCronJob<NotifyCronJobService>(c => {
-                c.TimeZoneInfo = TimeZoneInfo.Utc;
-                c.CronExpression = @"*/2 * * * *";
-            });
-            services.AddCronJob<NotifyCronJobService>(c => {
-                c.TimeZoneInfo = TimeZoneInfo.Utc;
-                c.CronExpression = @"4 17 * * *";
-            });
+            //services.AddCronJob<NotifyCronJobService>(c => {
+            //    c.TimeZoneInfo = TimeZoneInfo.Utc;
+            //    c.CronExpression = @"*/2 * * * *";
+            //});
+            //services.AddCronJob<NotifyCronJobService>(c => {
+            //    c.TimeZoneInfo = TimeZoneInfo.Utc;
+            //    c.CronExpression = @"4 17 * * *";
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
