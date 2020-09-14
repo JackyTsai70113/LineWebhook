@@ -44,51 +44,59 @@ namespace BL.Services.Line {
         /// </summary>
         /// <returns></returns>
         /// <remarks>所有Column必須數量相同</remarks>
-        public MessageBase GetCarouselTemplateMessage() {
+        public MessageBase GetCarouselTemplateMessage(string ascOrDesc) {
+            string chineseWord, command;
+            if (ascOrDesc == "desc") {
+                chineseWord = "買超";
+                command = "tv";
+            } else if (ascOrDesc == "asc") {
+                chineseWord = "賣超";
+                command = "tvv";
+            } else {
+                throw new ArgumentException("ascOrDesc 不合法", "ascOrDesc");
+            }
             var dates = HolidayHelper.GetTheMostRecentBusinessDay(2);
             var columns = new List<Column> {
                 new Column() {
                     thumbnailImageUrl = new Uri("https://i.imgur.com/n82BOcq.png"),
-                    title = "買賣超彙",
-                    text = "計算外資及陸資，投信綜合買賣超彙\n" +
-                        "請設定計算區間:",
+                    title = $"計算外資及陸資，投信綜合{chineseWord}股數",
+                    text = "請選擇計算區間:",
                     actions = new List<TemplateActionBase> {
                         new PostbackAction {
                             label = "一天內👉",
-                            data = "tv 1",
-                            displayText = "我要查詢一天內綜合買賣超彙🙏"
+                            data = $"{command} 1",
+                            displayText = $"我要查詢一天內綜合{chineseWord}股數🙏"
                         },
                         new PostbackAction {
                             label = "三天內👉",
-                            data = "tv 3",
-                            displayText = "我要查詢三天內綜合買賣超彙🙏"
+                            data = $"{command} 3",
+                            displayText = $"我要查詢三天內綜合{chineseWord}股數🙏"
                         },
                         new PostbackAction {
                             label = "五天內👉",
-                            data = "tv 5",
-                            displayText = "我要查詢五天內綜合買賣超彙🙏"
+                            data = $"{command} 5",
+                            displayText = $"我要查詢五天內綜合{chineseWord}股數🙏"
                         }
                     }
                 },
                 new Column() {
                     thumbnailImageUrl = new Uri("https://i.imgur.com/n82BOcq.png"),
-                    title = "買賣超彙",
-                    text = "計算外資及陸資，投信綜合買賣超彙\n" +
-                        "請選擇日期:",
+                    title = $"計算外資及陸資，投信綜合{chineseWord}股數",
+                    text = "請選擇日期:",
                     actions = new List<TemplateActionBase> {
                         new PostbackAction {
                             label = $"{dates[0]:yyyy/MM/dd}👉",
-                            data = "tv " + dates[0].ToString("yyyyMMdd"),
-                            displayText = $"我要查詢{dates[0]:yyyy/MM/dd}的綜合買賣超彙🙏"
+                            data = "tv " + dates[0].ToString("yyyy-MM-dd"),
+                            displayText = $"我要查詢{dates[0]:yyyy/MM/dd}的綜合{chineseWord}股數🙏"
                         },
                         new PostbackAction {
                             label = $"{dates[1]:yyyy/MM/dd}👉",
-                            data = "tv " + dates[1].ToString("yyyyMMdd"),
-                            displayText = $"我要查詢{dates[1]:yyyy/MM/dd}的綜合買賣超彙🙏"
+                            data = "tv " + dates[1].ToString("yyyy-MM-dd"),
+                            displayText = $"我要查詢{dates[1]:yyyy/MM/dd}的綜合{chineseWord}股數🙏"
                         },
                         new DateTimePickerAction {
                             label = "選擇日期👉",
-                            data = "DateTimePickerAction_data",
+                            data = "tv",
                             mode = "date",
                             initial = DateTime.UtcNow.AddHours(8).Date.ToString("yyyy-MM-dd"),
                             max = new DateTime(2025, 12, 31).ToString("yyyy-MM-dd"),

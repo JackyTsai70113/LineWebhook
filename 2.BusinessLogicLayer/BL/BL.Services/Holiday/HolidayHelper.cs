@@ -26,7 +26,7 @@ namespace BL.Services.Holiday {
         /// <param name="date">起始日期，預設今天</param>
         /// <returns>營業日列表</returns>
         public static List<DateTime> GetTheMostRecentBusinessDay(int number = 1, DateTime? date = null) {
-            DateTime dateTime = DateTime.Today;
+            DateTime dateTime = DateTime.UtcNow.AddHours(8).Date;
             if (date != null) {
                 dateTime = date.Value.Date;
             }

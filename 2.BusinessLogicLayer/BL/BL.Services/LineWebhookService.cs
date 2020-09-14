@@ -98,7 +98,7 @@ namespace BL.Services {
                 }
             } else if (type == "postback") {
                 Postback postback = lineRequestModel.events.FirstOrDefault().postback;
-                Params @params = new Params();
+                Params @params = postback.Params;
                 if (postback.Params != null) {
                     messages = GetMessagesByText(postback.data + @params.datetime + @params.date + @params.time);
                 } else {
@@ -151,49 +151,9 @@ namespace BL.Services {
                         vocabulary = text.Split(' ')[1];
                         int textLenth = int.Parse(text.Split(' ')[2]);
                         return GetCambridgeDictionaryMessages(vocabulary, textLenth);
-                    case "tv9":
-                        var carouselTemplateMessage = _lineMessageService.GetCarouselTemplateMessage();
-                        return new List<MessageBase> { carouselTemplateMessage };
                     case "tv":
                         if (text == "tv") {
-                            var quickReply = new QuickReply {
-                                items = new List<QuickReplyItemBase>{
-                                    new QuickReplyMessageAction("一天內", "tv 1") {
-                                        imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
-                                    },
-                                    new QuickReplyMessageAction("三天內", "tv 3") {
-                                        imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
-                                    },
-                                    new QuickReplyMessageAction("五天內", "tv 5") {
-                                        imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
-                                    },
-                                    new QuickReplyMessageAction("查詢指定日期", "tv date") {
-                                        imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
-                                    },
-                                }
-                            };
-                            var textMessage = new TextMessage("開始統計買賣超彙 請問計算區間為何?") { quickReply = quickReply };
-                            return new List<MessageBase> { textMessage };
-                        }
-                        if (text == "tv date") {
-                            var quickReply = new QuickReply {
-                                items = new List<QuickReplyItemBase>{
-                                    new QuickReplyMessageAction("一天內", "tv 1") {
-                                        imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
-                                    },
-                                    new QuickReplyMessageAction("三天內", "tv 3") {
-                                        imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
-                                    },
-                                    new QuickReplyMessageAction("五天內", "tv 5") {
-                                        imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
-                                    },
-                                    new QuickReplyMessageAction("tv 5", "tv date") {
-                                        imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
-                                    },
-                                }
-                            };
-                            var textMessage = new TextMessage("開始統計買賣超彙 請問計算區間為何?") { quickReply = quickReply };
-                            return new List<MessageBase> { textMessage };
+                            return new List<MessageBase> { _lineMessageService.GetCarouselTemplateMessage("desc") };
                         }
                         if (text.Split(' ')[1].Count() == 1) {
                             string daysStr = text.Split(' ')[1];
@@ -206,14 +166,12 @@ namespace BL.Services {
 
                             textStr = _TradingVolumeService.GetDescTradingVolumeStrOverDays(days);
                             return _lineMessageService.GetListOfSingleMessage(textStr);
-                        } else if (text.Split(' ')[1].Count() == 8) {
-                            string dateTimeStr = text.Split(' ')[1];
-                            DateTime dateTime = DateTime.ParseExact(dateTimeStr, "yyyyMMdd", CultureInfo.InvariantCulture);
-
+                        } else if (text.Split(' ')[1].Count() == 10) {
+                            DateTime dateTime = DateTime.Parse(text.Split(' ')[1]);
                             textStr = _TradingVolumeService.GetDescTradingVolumeStr(dateTime);
                             return _lineMessageService.GetListOfSingleMessage(textStr);
                         }
-                        textStr = "請重新輸入!";
+                        textStr = $"請重新輸入! 參數錯誤({text.Split(' ')[1]})";
                         return _lineMessageService.GetListOfSingleMessage(textStr);
                     case "tvv":
                         if (text == "tvv") {
@@ -231,10 +189,8 @@ namespace BL.Services {
 
                             textStr = _TradingVolumeService.GetAscTradingVolumeStrOverDays(days);
                             return _lineMessageService.GetListOfSingleMessage(textStr);
-                        } else if (text.Split(' ')[1].Count() == 8) {
-                            string dateTimeStr = text.Split(' ')[1];
-                            DateTime dateTime = DateTime.ParseExact(dateTimeStr, "yyyyMMdd", CultureInfo.InvariantCulture);
-
+                        } else if (text.Split(' ')[1].Count() == 10) {
+                            DateTime dateTime = DateTime.Parse(text.Split(' ')[1]);
                             textStr = _TradingVolumeService.GetAscTradingVolumeStr(dateTime);
                             return _lineMessageService.GetListOfSingleMessage(textStr);
                         }
