@@ -1,9 +1,11 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using BL.Services.Holiday;
 using isRock.LineBot;
 using Serilog;
 
 namespace BL.Services.Line {
+
     /// <summary>
     /// 產生需使用的Line Message
     /// </summary>
@@ -35,6 +37,87 @@ namespace BL.Services.Line {
                     GetTextMessage(errorMsg)
                 };
             }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>所有Column必須數量相同</remarks>
+        public MessageBase GetCarouselTemplateMessage() {
+            var dates = HolidayHelper.GetTheMostRecentBusinessDay(2);
+            var columns = new List<Column> {
+                new Column() {
+                    thumbnailImageUrl = new Uri("https://i.imgur.com/n82BOcq.png"),
+                    title = "買賣超彙",
+                    text = "計算外資及陸資，投信綜合買賣超彙\n" +
+                        "請設定計算區間:",
+                    actions = new List<TemplateActionBase> {
+                        new PostbackAction {
+                            label = "一天內👉",
+                            data = "tv 1",
+                            displayText = "我要查詢一天內綜合買賣超彙🙏"
+                        },
+                        new PostbackAction {
+                            label = "三天內👉",
+                            data = "tv 3",
+                            displayText = "我要查詢三天內綜合買賣超彙🙏"
+                        },
+                        new PostbackAction {
+                            label = "五天內👉",
+                            data = "tv 5",
+                            displayText = "我要查詢五天內綜合買賣超彙🙏"
+                        }
+                    }
+                },
+                new Column() {
+                    thumbnailImageUrl = new Uri("https://i.imgur.com/n82BOcq.png"),
+                    title = "買賣超彙",
+                    text = "計算外資及陸資，投信綜合買賣超彙\n" +
+                        "請選擇日期:",
+                    actions = new List<TemplateActionBase> {
+                        new PostbackAction {
+                            label = $"{dates[0]:yyyy/MM/dd}👉",
+                            data = "tv " + dates[0].ToString("yyyyMMdd"),
+                            displayText = $"我要查詢{dates[0]:yyyy/MM/dd}的綜合買賣超彙🙏"
+                        },
+                        new PostbackAction {
+                            label = $"{dates[1]:yyyy/MM/dd}👉",
+                            data = "tv " + dates[1].ToString("yyyyMMdd"),
+                            displayText = $"我要查詢{dates[1]:yyyy/MM/dd}的綜合買賣超彙🙏"
+                        },
+                        new DateTimePickerAction {
+                            label = "選擇日期👉",
+                            data = "DateTimePickerAction_data",
+                            mode = "date",
+                            initial = DateTime.UtcNow.AddHours(8).Date.ToString("yyyy-MM-dd"),
+                            max = new DateTime(2025, 12, 31).ToString("yyyy-MM-dd"),
+                            min = new DateTime(2011, 1, 1).ToString("yyyy-MM-dd")
+                        }
+                    }
+                },
+            };
+            return new TemplateMessage(new CarouselTemplate() { columns = columns });
+        }
+
+        public MessageBase GetTextMessageWithQuickReply() {
+            var quickReply = new QuickReply {
+                items = new List<QuickReplyItemBase>{
+                                    new QuickReplyMessageAction("一天內", "tv 1") {
+                                        imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
+                                    },
+                                    new QuickReplyMessageAction("三天內", "tv 3") {
+                                        imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
+                                    },
+                                    new QuickReplyMessageAction("五天內", "tv 5") {
+                                        imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
+                                    },
+                                    new QuickReplyMessageAction("查詢指定日期", "tv date") {
+                                        imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
+                                    },
+                                }
+            };
+            return new TextMessage("開始統計買賣超彙 請問計算區間為何?") { quickReply = quickReply };
         }
 
         public StickerMessage GetStickerMessage(Message stickerMessage) {

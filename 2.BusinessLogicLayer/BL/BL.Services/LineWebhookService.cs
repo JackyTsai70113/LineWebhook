@@ -98,7 +98,12 @@ namespace BL.Services {
                 }
             } else if (type == "postback") {
                 Postback postback = lineRequestModel.events.FirstOrDefault().postback;
-                messages = GetMessagesByText(postback.data);
+                Params @params = new Params();
+                if (postback.Params != null) {
+                    messages = GetMessagesByText(postback.data + @params.datetime + @params.date + @params.time);
+                } else {
+                    messages = GetMessagesByText(postback.data);
+                }
             } else {
                 string errorMsg = $"[GetReplyMessages] " +
                     $"lineRequestModel: {JsonConvert.SerializeObject(lineRequestModel)}";
@@ -147,50 +152,8 @@ namespace BL.Services {
                         int textLenth = int.Parse(text.Split(' ')[2]);
                         return GetCambridgeDictionaryMessages(vocabulary, textLenth);
                     case "tv9":
-                        var columns = new List<Column> {
-                            new Column() {
-                                thumbnailImageUrl = new Uri("https://i.imgur.com/n82BOcq.png"),
-                                title = "買賣超彙",
-                                text = "計算外資及陸資，投信綜合買賣超彙\n" +
-                                    "請設定計算區間:",
-                                actions = new List<TemplateActionBase> {
-                                    new PostbackAction {
-                                        label = "一天內👉",
-                                        data = "tv 1",
-                                        displayText = "我要查詢一天內綜合買賣超彙🙏"
-                                    },
-                                    new PostbackAction {
-                                        label = "三天內👉",
-                                        data = "tv 3",
-                                        displayText = "我要查詢三天內綜合買賣超彙🙏"
-                                    },
-                                    new PostbackAction {
-                                        label = "五天內👉",
-                                        data = "tv 5",
-                                        displayText = "我要查詢五天內綜合買賣超彙🙏"
-                                    }
-                                }
-                            },
-                            new Column() {
-                                thumbnailImageUrl = new Uri("https://i.imgur.com/n82BOcq.png"),
-                                title = "買賣超彙",
-                                text = "計算外資及陸資，投信綜合買賣超彙\n" +
-                                    "請設定計算區間:",
-                                actions = new List<TemplateActionBase> {
-                                    new DateTimePickerAction {
-                                        label = "選擇日期👉",
-                                        data = "DateTimePickerAction_data",
-                                        mode = "date",
-                                        initial = DateTime.UtcNow.AddHours(8).Date.ToString("yyyyMMdd"),
-                                        max = new DateTime(2025, 12, 31).ToString("yyyyMMdd"),
-                                        min = new DateTime(2011, 1, 1).ToString("yyyyMMdd")
-                                    }
-                                }
-                            },
-                        };
-                        var carouselTemplate = new CarouselTemplate() { columns = columns };
-                        var templateMessage = new TemplateMessage(carouselTemplate);
-                        return new List<MessageBase> { templateMessage };
+                        var carouselTemplateMessage = _lineMessageService.GetCarouselTemplateMessage();
+                        return new List<MessageBase> { carouselTemplateMessage };
                     case "tv":
                         if (text == "tv") {
                             var quickReply = new QuickReply {

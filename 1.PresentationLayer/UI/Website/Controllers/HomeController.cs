@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using BL.Services;
 using BL.Services.Cache;
 using BL.Services.Holiday;
+using BL.Services.Line;
 using BL.Services.MaskInstitution;
 using BL.Services.YahooFinance;
+using isRock.LineBot;
 using Microsoft.AspNetCore.Mvc;
 using Website.Models;
 
@@ -20,6 +23,9 @@ namespace Website.Controllers {
         }
 
         public IActionResult Test() {
+            //var m = new LineMessageService().GetCarouselTemplateMessage();
+            //new Bot(ConfigService.Line_ChannelAccessToken).PushMessage(ConfigService.Line_Jacky_userId, m);
+            new LineNotifyBotService().PushMessage_Jacky("123");
             return new OkResult();
         }
 
