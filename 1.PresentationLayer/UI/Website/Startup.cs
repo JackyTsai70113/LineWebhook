@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using BL.Services;
 using BL.Services.HostedService;
+using BL.Services.Line;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +24,22 @@ namespace Website {
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
             Configuration = builder.Build();
             ConfigService.Configuration = Configuration;
+
+            Task.Run(() => {
+                //int count = 0;
+                DateTime now = DateTime.UtcNow.AddHours(8);
+                //while (count < 10) {
+                //    DateTime now = DateTime.UtcNow.AddHours(8);
+                //    if(now.Hour == 3 && now.Minute == 17) {
+                //        new LineNotifyBotService().PushMessage_Jacky(DateTime.Now.ToString());
+                //        Thread.Sleep(3000);
+                //    }
+                //}
+                if (now.Hour == 3 && now.Minute == 17) {
+                    new LineNotifyBotService().PushMessage_Jacky(DateTime.Now.ToString());
+                    Thread.Sleep(3000);
+                }
+            });
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.

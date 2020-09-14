@@ -1,14 +1,7 @@
-﻿using BL.Services.Line;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using Serilog.Core;
 using Serilog.Events;
-using Serilog.Formatting.Compact;
-using System;
-using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Website {
 
@@ -28,13 +21,6 @@ namespace Website {
                     //.WriteTo.Seq("http://localhost:5341")
                     .CreateLogger();
             CreateHostBuilder(args).Build().Run();
-
-            Task.Run(() => {
-                for (int i = 0; i < 5; i++) {
-                    new LineNotifyBotService().PushMessage_Jacky(DateTime.Now.ToString());
-                    Thread.Sleep(3000);
-                }
-            });
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

@@ -138,7 +138,7 @@ namespace BL.Services {
                         var m = _lineMessageService.GetTextMessageWithQuickReply();
                         return new List<MessageBase> { m, m };
                     case "t2":
-                        var m2 = _lineMessageService.GetTextMessageWithQuickReply2();
+                        var m2 = _lineMessageService.GetCarouselTemplateMessage2("");
                         return new List<MessageBase> { m2 };
                     case "":
                         textStr = GetCangjieImageMessages(text.Substring(1));
