@@ -100,7 +100,7 @@ namespace BL.Services {
                 Postback postback = lineRequestModel.events.FirstOrDefault().postback;
                 Params @params = postback.Params;
                 if (postback.Params != null) {
-                    messages = GetMessagesByText(postback.data + @params.datetime + @params.date + @params.time);
+                    messages = GetMessagesByText(postback.data + " " + @params.datetime + @params.date + @params.time);
                 } else {
                     messages = GetMessagesByText(postback.data);
                 }
@@ -156,8 +156,7 @@ namespace BL.Services {
                             return new List<MessageBase> { _lineMessageService.GetCarouselTemplateMessage("desc") };
                         }
                         if (text.Split(' ')[1].Count() == 1) {
-                            string daysStr = text.Split(' ')[1];
-                            int days = int.Parse(daysStr);
+                            int days = int.Parse(text.Split(' ')[1]);
 
                             if (days < 1 || days > 5) {
                                 textStr = "交易天數需為 1-5";
@@ -175,12 +174,10 @@ namespace BL.Services {
                         return _lineMessageService.GetListOfSingleMessage(textStr);
                     case "tvv":
                         if (text == "tvv") {
-                            textStr = _TradingVolumeService.GetAscTradingVolumeStr(DateTime.UtcNow.AddHours(8));
-                            return _lineMessageService.GetListOfSingleMessage(textStr);
+                            return new List<MessageBase> { _lineMessageService.GetCarouselTemplateMessage("asc") };
                         }
                         if (text.Split(' ')[1].Count() == 1) {
-                            string daysStr = text.Split(' ')[1];
-                            int days = int.Parse(daysStr);
+                            int days = int.Parse(text.Split(' ')[1]);
 
                             if (days < 1 || days > 5) {
                                 textStr = "交易天數需為 1-5";
@@ -194,11 +191,10 @@ namespace BL.Services {
                             textStr = _TradingVolumeService.GetAscTradingVolumeStr(dateTime);
                             return _lineMessageService.GetListOfSingleMessage(textStr);
                         }
-                        textStr = "請重新輸入!";
+                        textStr = $"請重新輸入! 參數錯誤({text.Split(' ')[1]})";
                         return _lineMessageService.GetListOfSingleMessage(textStr);
-                    default:
-                        return _lineMessageService.GetListOfSingleMessage(text);
                 }
+                return _lineMessageService.GetListOfSingleMessage(text);
             } catch (Exception ex) {
                 string errorMsg = $"[GetMessagesByText] text: {text}, ex: {ex}";
                 Log.Error(errorMsg);
