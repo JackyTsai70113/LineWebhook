@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using BL.Services;
 using BL.Services.HostedService;
+using BL.Services.Interfaces;
 using BL.Services.Line;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,18 +27,9 @@ namespace Website {
             ConfigService.Configuration = Configuration;
 
             Task.Run(() => {
-                //int count = 0;
-                DateTime now = DateTime.UtcNow.AddHours(8);
-                //while (count < 10) {
-                //    DateTime now = DateTime.UtcNow.AddHours(8);
-                //    if(now.Hour == 3 && now.Minute == 17) {
-                //        new LineNotifyBotService().PushMessage_Jacky(DateTime.Now.ToString());
-                //        Thread.Sleep(3000);
-                //    }
-                //}
-                if (now.Hour == 3 && now.Minute == 17) {
+                while (DateTime.UtcNow.Day < 19) {
                     new LineNotifyBotService().PushMessage_Jacky(DateTime.Now.ToString());
-                    Thread.Sleep(3000);
+                    Thread.Sleep(1000 * 60 * 40);
                 }
             });
         }
@@ -53,6 +45,9 @@ namespace Website {
             services.AddDbContext<LineWebhookContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("LineWebhookContext")));
 
+            //services.AddSingleton();
+            //services.AddScoped<ILineWebhookService, LineWebhookService>(ConfigService.Line_ChannelAccessToken);
+            //services.AddTransient();
             //services.AddCronJob<NotifyCronJobService>(c => {
             //    c.TimeZoneInfo = TimeZoneInfo.Utc;
             //    c.CronExpression = @"*/2 * * * *";

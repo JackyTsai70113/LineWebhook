@@ -134,12 +134,6 @@ namespace BL.Services {
             string textStr;
             try {
                 switch (text.Split(' ')[0]) {
-                    case "t":
-                        var m = _lineMessageService.GetCarouselTemplateMessage("asc");
-                        return new List<MessageBase> { m, m };
-                    case "t2":
-                        var m2 = _lineMessageService.GetCarouselTemplateMessage2("");
-                        return new List<MessageBase> { m2 };
                     case "":
                         textStr = GetCangjieImageMessages(text.Substring(1));
                         return _lineMessageService.GetListOfSingleMessage(textStr);
@@ -170,7 +164,8 @@ namespace BL.Services {
                             textStr = $"以下是自{nowStr}在{days}天內的綜合買超股數:\n" +
                                 _TradingVolumeService.GetDescTradingVolumeStrOverDays(days);
                             return _lineMessageService.GetListOfSingleMessage(textStr);
-                        } else if (text.Split(' ')[1].Count() == 10) {
+                        }
+                        if (text.Split(' ')[1].Count() == 10) {
                             DateTime dateTime = DateTime.Parse(text.Split(' ')[1]);
                             textStr = $"以下是{dateTime:yyyy/MM/dd}的綜合買超股數:\n" +
                                 _TradingVolumeService.GetDescTradingVolumeStr(dateTime);
@@ -194,7 +189,8 @@ namespace BL.Services {
                             textStr = $"以下是自{nowStr}在{days}天內的綜合賣超股數:\n" +
                                 _TradingVolumeService.GetAscTradingVolumeStrOverDays(days);
                             return _lineMessageService.GetListOfSingleMessage(textStr);
-                        } else if (text.Split(' ')[1].Count() == 10) {
+                        }
+                        if (text.Split(' ')[1].Count() == 10) {
                             DateTime dateTime = DateTime.Parse(text.Split(' ')[1]);
                             textStr = $"以下是{dateTime:yyyy/MM/dd}的綜合賣超股數:\n" +
                                 _TradingVolumeService.GetAscTradingVolumeStr(dateTime);

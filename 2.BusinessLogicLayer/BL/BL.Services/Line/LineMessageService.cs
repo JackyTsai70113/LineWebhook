@@ -124,31 +124,6 @@ namespace BL.Services.Line {
             return new TextMessage("Please Select One.") { quickReply = quickReply };
         }
 
-        public MessageBase GetCarouselTemplateMessage2(string str) {
-            str = "我是誰";
-            var columns = new List<Column> {
-                new Column() {
-                    thumbnailImageUrl = new Uri("https://i.imgur.com/n82BOcq.png"),
-                    text = "請點擊查詢須查詢之文字:",
-                    actions = new List<TemplateActionBase> {
-                        new UriAction {
-                            label = str[0].ToString(),
-                            uri = new Uri("http://input.foruto.com/cjdict/Images/CJZD_JPG/A7DA.JPG")
-                        },
-                        new UriAction {
-                            label = str[1].ToString(),
-                            uri = new Uri("http://input.foruto.com/cjdict/Images/CJZD_JPG/AC4F.JPG")
-                        },
-                        new UriAction {
-                            label = str[2].ToString(),
-                            uri = new Uri("http://input.foruto.com/cjdict/Images/CJZD_JPG/BDD6.JPG")
-                        },
-                    }
-                }
-            };
-            return new TemplateMessage(new CarouselTemplate() { columns = columns });
-        }
-
         public StickerMessage GetStickerMessage(Message stickerMessage) {
             int packageId = stickerMessage.packageId;
             int stickerId = stickerMessage.stickerId;
