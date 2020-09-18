@@ -6,6 +6,7 @@ using BL.Services;
 using BL.Services.HostedService;
 using BL.Services.Interfaces;
 using BL.Services.Line;
+using BL.Services.Line.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -26,10 +27,10 @@ namespace Website {
             Configuration = builder.Build();
             ConfigService.Configuration = Configuration;
 
-            Task.Run(() => {
-                while (DateTime.UtcNow.Day < 19) {
-                    new LineNotifyBotService().PushMessage_Jacky(DateTime.Now.ToString());
-                    Thread.Sleep(1000 * 60 * 40);
+            Task task = Task.Run(() => {
+                while (DateTime.UtcNow.AddHours(8).Day < 23) {
+                    new LineNotifyBotService().PushMessage_Jacky($"[Startup] {DateTime.UtcNow.AddHours(8)}");
+                    Thread.Sleep(1000 * 60 * 10);
                 }
             });
         }
@@ -44,6 +45,11 @@ namespace Website {
 
             services.AddDbContext<LineWebhookContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("LineWebhookContext")));
+
+            services.AddMyService(Configuration);
+            //services.AddSingleton<ICacheProvider>(provider =>
+            //    RedisCacheProvider("myPrettyLocalhost:6379", provider.GetService<IMyInterface>()));
+            //services.Configure<LineNotifyBotService>();
 
             //services.AddSingleton();
             //services.AddScoped<ILineWebhookService, LineWebhookService>(ConfigService.Line_ChannelAccessToken);
@@ -84,6 +90,21 @@ namespace Website {
                     name: "default",
                     pattern: "{controller=Home}/{action=Test}/{id?}");
             });
+        }
+    }
+
+    static class ServiceExtensions {
+
+        /// <summary>
+        /// 根據微軟建議，透過延伸方法將註冊服務獨立封裝出來
+        /// </summary>
+        /// <param name="services">collection of service</param>
+        /// <param name="configuration">configuration</param>
+        /// <remarks>https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-3.1</remarks>
+        public static void AddMyService(this IServiceCollection services, IConfiguration configuration) {
+            services.AddScoped<ILineNotifyBotService, LineNotifyBotService>();
+            services.AddScoped<ILineWebhookService>(
+                lineWebhookService => new LineWebhookService(configuration["Line:ChannelAccessToken"]));
         }
     }
 }

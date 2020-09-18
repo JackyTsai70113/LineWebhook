@@ -42,15 +42,21 @@ namespace BL.Services {
             }
         }
 
+        public static string Line_NotifyBearerToken_Group {
+            get {
+                return Configuration.GetSection("Line").GetSection("NotifyBearerToken_Group").Value;
+            }
+        }
+
         public static string Line_NotifyBearerToken_Jacky {
             get {
                 return Configuration.GetSection("Line").GetSection("NotifyBearerToken_Jacky").Value;
             }
         }
 
-        public static string Line_NotifyBearerToken_Group {
+        public static string Line_NotifyBearerToken_Jessi {
             get {
-                return Configuration.GetSection("Line").GetSection("NotifyBearerToken_Group").Value;
+                return Configuration.GetSection("Line").GetSection("NotifyBearerToken_Jessi").Value;
             }
         }
 

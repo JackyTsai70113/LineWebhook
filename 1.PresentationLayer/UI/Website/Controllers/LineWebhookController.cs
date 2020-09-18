@@ -1,13 +1,16 @@
-﻿using BL.Services;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using BL.Services;
 using BL.Services.Interfaces;
+using BL.Services.Line;
+using BL.Services.Line.Interfaces;
 using isRock.LineBot;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Serilog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Website.Controllers {
 
@@ -18,11 +21,15 @@ namespace Website.Controllers {
     [Route("[controller]")]
     public class LineWebhookController : ControllerBase {
         private readonly ILogger<LineWebhookController> _logger;
-        private ILineWebhookService _LineWebhookService { get; set; }
+        private ILineNotifyBotService _lineNotifyBotService { get; set; }
+        private ILineWebhookService _lineWebhookService { get; set; }
 
-        public LineWebhookController(ILogger<LineWebhookController> logger) {
+        public LineWebhookController(ILogger<LineWebhookController> logger
+            , ILineNotifyBotService LineNotifyBotService
+            , ILineWebhookService LineWebhookService) {
             _logger = logger;
-            _LineWebhookService = new LineWebhookService(ConfigService.Line_ChannelAccessToken);
+            _lineNotifyBotService = LineNotifyBotService;
+            _lineWebhookService = LineWebhookService;
         }
 
         /// <summary>
@@ -32,6 +39,8 @@ namespace Website.Controllers {
         /// <returns></returns>
         [HttpPost]
         public IActionResult Index([FromBody] dynamic requestBody) {
+            string replyToken = string.Empty;
+            List<MessageBase> messages = null;
             try {
                 //處理requestModel
                 ReceivedMessage receivedMessage = Utility.Parsing(requestBody.ToString());
@@ -41,7 +50,7 @@ namespace Website.Controllers {
                 Log.Information($"{JsonConvert.SerializeObject(receivedMessage, Formatting.Indented)}");
                 Log.Information($"====================");
 
-                List<MessageBase> messages = _LineWebhookService.GetReplyMessages(receivedMessage);
+                messages = _lineWebhookService.GetReplyMessages(receivedMessage);
 
                 // Add 紀錄發至LineServer的requestBody
                 Log.Information($"========== TO LINE SERVER ==========");
@@ -49,10 +58,23 @@ namespace Website.Controllers {
                 Log.Information($"{JsonConvert.SerializeObject(messages, Formatting.Indented)}");
                 Log.Information($"====================");
 
-                string replyToken = receivedMessage.events.FirstOrDefault().replyToken;
-                string result = _LineWebhookService.ResponseToLineServer(replyToken, messages);
+                replyToken = receivedMessage.events.FirstOrDefault().replyToken;
+                string result = _lineWebhookService.ResponseToLineServer(replyToken, messages);
                 return Content(requestBody.ToString() + "\n" + result);
             } catch (Exception ex) {
+                if (ex.InnerException is WebException) {
+                    int responseStartIndex = ex.ToString().IndexOf("Response") + "Response:".Count();
+                    int responseEndIndex = ex.ToString().IndexOf("Endpoint");
+                    string responseStr = ex.ToString()[responseStartIndex..responseEndIndex].Trim();
+                    LineHttpPostExceptionResponse response =
+                        JsonConvert.DeserializeObject<LineHttpPostExceptionResponse>(responseStr);
+                    Log.Error(
+                        $"LineWebhookService.ResponseToLineServer 錯誤, replyToken: {replyToken},\n" +
+                        $"messages: {JsonConvert.SerializeObject(messages, Formatting.Indented)},\n" +
+                        $"response: {JsonConvert.SerializeObject(response, Formatting.Indented)}");
+                    _lineNotifyBotService.PushMessage_Jacky($"message: {response.message}, " +
+                        $"details: {JsonConvert.SerializeObject(response.details)}");
+                }
                 return Content($"Index 發生錯誤，requestBody: {requestBody}, ex: {ex}");
             }
         }

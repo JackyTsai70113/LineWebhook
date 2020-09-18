@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Text;
 using BL.Services.Base;
 using BL.Services.Interfaces;
@@ -56,18 +57,21 @@ namespace BL.Services {
                 #endregion Post到Line
                 return result;
             } catch (Exception ex) {
-                int responseStartIndex = ex.ToString().IndexOf("Response") + "Response:".Count();
-                int responseEndIndex = ex.ToString().IndexOf("Endpoint");
-                string responseStr = ex.ToString().Substring(responseStartIndex, responseEndIndex - responseStartIndex).Trim();
-                LineHttpPostExceptionResponse response = JsonConvert.DeserializeObject<LineHttpPostExceptionResponse>(responseStr);
-                Log.Error(
-                    $"LineWebhookService.ResponseToLineServer 錯誤, replyToken: {replyToken},\n" +
-                    $"messages: {JsonConvert.SerializeObject(messages, Formatting.Indented)},\n" +
-                    $"response: {JsonConvert.SerializeObject(response, Formatting.Indented)}");
-                _lineNotifyBotService.PushMessage_Jacky($"message: {response.message}, " +
-                    $"details: {JsonConvert.SerializeObject(response.details)}");
-
-                return ex.ToString();
+                if (ex.InnerException is WebException) {
+                    int responseStartIndex = ex.ToString().IndexOf("Response") + "Response:".Count();
+                    int responseEndIndex = ex.ToString().IndexOf("Endpoint");
+                    string responseStr = ex.ToString().Substring(responseStartIndex, responseEndIndex - responseStartIndex).Trim();
+                    LineHttpPostExceptionResponse response = JsonConvert.DeserializeObject<LineHttpPostExceptionResponse>(responseStr);
+                    Log.Error(
+                        $"LineWebhookService.ResponseToLineServer 錯誤, replyToken: {replyToken},\n" +
+                        $"messages: {JsonConvert.SerializeObject(messages, Formatting.Indented)},\n" +
+                        $"response: {JsonConvert.SerializeObject(response, Formatting.Indented)}");
+                    _lineNotifyBotService.PushMessage_Jacky($"message: {response.message}, " +
+                        $"details: {JsonConvert.SerializeObject(response.details)}");
+                    return ex.ToString();
+                } else {
+                    throw ex;
+                }
             }
         }
 
