@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text.Json;
 using BL.Services;
 using BL.Services.Interfaces;
 using BL.Services.Line.Interfaces;
@@ -40,10 +41,10 @@ namespace Website.Controllers {
         /// <param name="requestBodyStr">從line接收到的訊息字串</param>
         /// <returns>API 結果</returns>
         [HttpPost]
-        public IActionResult Index([FromBody] string requestBodyStr) {
+        public IActionResult Index([FromBody] JsonElement requestBody) {
             try {
                 //處理requestModel
-                ReceivedMessage receivedMessage = Utility.Parsing(requestBodyStr);
+                ReceivedMessage receivedMessage = Utility.Parsing(requestBody.ToString());
 
                 Log.Information($"========== From LINE SERVER ==========");
                 Log.Information($"requestModel:");
@@ -61,7 +62,7 @@ namespace Website.Controllers {
                 string replyToken = receivedMessage.events.FirstOrDefault().replyToken;
                 try {
                     string result = lineBot.ReplyMessage(replyToken, messages);
-                    return Content(requestBodyStr + "\n" + result);
+                    return Content(requestBody + "\n" + result);
                 } catch (Exception ex) {
                     if (ex.InnerException is WebException) {
                         int responseStartIndex = ex.ToString().IndexOf("Response") + "Response:".Count();
@@ -75,13 +76,13 @@ namespace Website.Controllers {
                             $"response: {JsonConvert.SerializeObject(response, Formatting.Indented)}");
                         _lineNotifyBotService.PushMessage_Jacky($"message: {response.message}, " +
                             $"details: {JsonConvert.SerializeObject(response.details)}");
-                        return Content($"[Index] JLineBot 無法發送，requestBody: {requestBodyStr}, ex: {ex}");
+                        return Content($"[Index] JLineBot 無法發送，requestBody: {requestBody}, ex: {ex}");
                     }
                     throw;
                 }
             } catch (Exception ex) {
-                Log.Error($"[Index] requestBody: {requestBodyStr}, ex: {ex}");
-                return Content($"Index 發生錯誤，requestBody: {requestBodyStr}, ex: {ex}");
+                Log.Error($"[Index] requestBody: {requestBody}, ex: {ex}");
+                return Content($"Index 發生錯誤，requestBody: {requestBody}, ex: {ex}");
             }
         }
 
