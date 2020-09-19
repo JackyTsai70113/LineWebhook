@@ -40,9 +40,7 @@ namespace Website.Controllers {
         /// <param name="requestBodyStr">從line接收到的訊息字串</param>
         /// <returns>API 結果</returns>
         [HttpPost]
-        public IActionResult Index(string requestBodyStr) {
-            string replyToken = string.Empty;
-            List<MessageBase> messages = null;
+        public IActionResult Index([FromBody] string requestBodyStr) {
             try {
                 //處理requestModel
                 ReceivedMessage receivedMessage = Utility.Parsing(requestBodyStr);
@@ -52,7 +50,7 @@ namespace Website.Controllers {
                 Log.Information($"{JsonConvert.SerializeObject(receivedMessage, Formatting.Indented)}");
                 Log.Information($"====================");
 
-                messages = _lineWebhookService.GetReplyMessages(receivedMessage);
+                List<MessageBase> messages = _lineWebhookService.GetReplyMessages(receivedMessage);
 
                 // Add 紀錄發至LineServer的requestBody
                 Log.Information($"========== TO LINE SERVER ==========");
@@ -60,7 +58,7 @@ namespace Website.Controllers {
                 Log.Information($"{JsonConvert.SerializeObject(messages, Formatting.Indented)}");
                 Log.Information($"====================");
 
-                replyToken = receivedMessage.events.FirstOrDefault().replyToken;
+                string replyToken = receivedMessage.events.FirstOrDefault().replyToken;
                 try {
                     string result = lineBot.ReplyMessage(replyToken, messages);
                     return Content(requestBodyStr + "\n" + result);
