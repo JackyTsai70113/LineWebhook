@@ -14,7 +14,7 @@ namespace BL.Services.Excel {
         public ExcelDataReaderService() {
         }
 
-        public DataSet GetDataSetFromUri(string uri) {
+        public DataSet GetDataSetFromUri() {
             var result = new DataSet();
             //var stream = RequestUtility.GetStreamFromGetRequest(uri);
             //using (var reader = ExcelReaderFactory.CreateCsvReader(

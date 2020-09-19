@@ -365,7 +365,7 @@ namespace Core.Domain.Utilities {
                 httpResponseMessage.EnsureSuccessStatusCode();
 
                 return httpResponseMessage.Content.ReadAsStreamAsync().Result;
-            } catch (Exception ex) {
+            } catch (Exception) {
                 return GetStreamFromGetRequest(uri);
             }
         }

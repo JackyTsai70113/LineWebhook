@@ -18,8 +18,6 @@ using DA.Managers.MaskInstitution;
 using DA.Managers.Sinopac;
 using isRock.LineBot;
 using Serilog;
-using static BL.Services.Map.MapHereHelper;
-using static BL.Services.Map.MapQuestHelper;
 
 namespace BL.Services {
 

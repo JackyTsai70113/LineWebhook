@@ -76,25 +76,25 @@ namespace BL.Services.Cache {
         }
 
         public void Test() {
-            var dd = GetKeys("*");
-            Set("valueTest", new DividendDistribution() {
-                CashDividendsFromLegalReserveAndCapitalSurplus = 2.563f
-            });
-            Set("valueTest2", new DividendDistribution() {
-                CashDividendsFromLegalReserveAndCapitalSurplus = 4.869f
-            }, new TimeSpan(0, 1, 0));
-            DividendDistribution valueTest = Get<DividendDistribution>("valueTest");
-
-            bool b1 = IsInCache("valueTest2");
-            DividendDistribution valueTest2 = Get<DividendDistribution>("valueTest2");
-            bool b2 = IsInCache("valueTest2");
-            if (b2) {
-                DividendDistribution valueTest25 = Get<DividendDistribution>("valueTest2");
-            }
-            var dd123 = GetKeys("*");
-            Remove("valueTest");
-            var dd456 = GetKeys("*");
-            bool b3 = IsInCache("valueTest2");
+            //             var dd = GetKeys("*");
+            //             Set("valueTest", new DividendDistribution() {
+            //                 CashDividendsFromLegalReserveAndCapitalSurplus = 2.563f
+            //             });
+            //             Set("valueTest2", new DividendDistribution() {
+            //                 CashDividendsFromLegalReserveAndCapitalSurplus = 4.869f
+            //             }, new TimeSpan(0, 1, 0));
+            //             DividendDistribution valueTest = Get<DividendDistribution>("valueTest");
+            // 
+            //             bool b1 = IsInCache("valueTest2");
+            //             DividendDistribution valueTest2 = Get<DividendDistribution>("valueTest2");
+            //             bool b2 = IsInCache("valueTest2");
+            //             if (b2) {
+            //                 DividendDistribution valueTest25 = Get<DividendDistribution>("valueTest2");
+            //             }
+            //             var dd123 = GetKeys("*");
+            //             Remove("valueTest");
+            //             var dd456 = GetKeys("*");
+            //             bool b3 = IsInCache("valueTest2");
         }
     }
 }

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Web;
 using Core.Domain.Utilities;
 using Newtonsoft.Json;
 
