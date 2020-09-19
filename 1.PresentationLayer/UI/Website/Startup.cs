@@ -103,8 +103,7 @@ namespace Website {
         /// <remarks>https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-3.1</remarks>
         public static void AddMyService(this IServiceCollection services, IConfiguration configuration) {
             services.AddScoped<ILineNotifyBotService, LineNotifyBotService>();
-            services.AddScoped<ILineWebhookService>(
-                lineWebhookService => new LineWebhookService(configuration["Line:ChannelAccessToken"]));
+            services.AddScoped<ILineWebhookService, LineWebhookService>();
         }
     }
 }

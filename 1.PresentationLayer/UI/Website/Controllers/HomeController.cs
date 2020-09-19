@@ -23,9 +23,6 @@ namespace Website.Controllers {
         }
 
         public IActionResult Test() {
-            //var m = new LineMessageService().GetCarouselTemplateMessage();
-            //new Bot(ConfigService.Line_ChannelAccessToken).PushMessage(ConfigService.Line_Jacky_userId, m);
-            //new LineNotifyBotService().PushMessage_Jacky("123");
             return new OkResult();
         }
 

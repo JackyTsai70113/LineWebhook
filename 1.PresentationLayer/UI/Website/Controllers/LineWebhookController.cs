@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using BL.Services;
 using BL.Services.Interfaces;
-using BL.Services.Line;
 using BL.Services.Line.Interfaces;
 using isRock.LineBot;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +19,8 @@ namespace Website.Controllers {
     [ApiController]
     [Route("[controller]")]
     public class LineWebhookController : ControllerBase {
+        private readonly Bot lineBot;
+
         private readonly ILogger<LineWebhookController> _logger;
         private ILineNotifyBotService _lineNotifyBotService { get; set; }
         private ILineWebhookService _lineWebhookService { get; set; }
@@ -27,16 +28,17 @@ namespace Website.Controllers {
         public LineWebhookController(ILogger<LineWebhookController> logger
             , ILineNotifyBotService LineNotifyBotService
             , ILineWebhookService LineWebhookService) {
+            lineBot = new Bot(ConfigService.Line_ChannelAccessToken);
             _logger = logger;
             _lineNotifyBotService = LineNotifyBotService;
             _lineWebhookService = LineWebhookService;
         }
 
         /// <summary>
-        /// LineWebhook的入口，負責解讀line的訊息。
+        /// LineWebhook的入口，解讀line的訊息並回覆訊息。
         /// </summary>
-        /// <param name="requestBody"></param>
-        /// <returns></returns>
+        /// <param name="requestBody">從line接收到的訊息字串</param>
+        /// <returns>API 結果</returns>
         [HttpPost]
         public IActionResult Index([FromBody] dynamic requestBody) {
             string replyToken = string.Empty;
@@ -59,22 +61,28 @@ namespace Website.Controllers {
                 Log.Information($"====================");
 
                 replyToken = receivedMessage.events.FirstOrDefault().replyToken;
-                string result = _lineWebhookService.ResponseToLineServer(replyToken, messages);
-                return Content(requestBody.ToString() + "\n" + result);
-            } catch (Exception ex) {
-                if (ex.InnerException is WebException) {
-                    int responseStartIndex = ex.ToString().IndexOf("Response") + "Response:".Count();
-                    int responseEndIndex = ex.ToString().IndexOf("Endpoint");
-                    string responseStr = ex.ToString()[responseStartIndex..responseEndIndex].Trim();
-                    LineHttpPostExceptionResponse response =
-                        JsonConvert.DeserializeObject<LineHttpPostExceptionResponse>(responseStr);
-                    Log.Error(
-                        $"LineWebhookService.ResponseToLineServer 錯誤, replyToken: {replyToken},\n" +
-                        $"messages: {JsonConvert.SerializeObject(messages, Formatting.Indented)},\n" +
-                        $"response: {JsonConvert.SerializeObject(response, Formatting.Indented)}");
-                    _lineNotifyBotService.PushMessage_Jacky($"message: {response.message}, " +
-                        $"details: {JsonConvert.SerializeObject(response.details)}");
+                try {
+                    string result = lineBot.ReplyMessage(replyToken, messages);
+                    return Content(requestBody.ToString() + "\n" + result);
+                } catch (Exception ex) {
+                    if (ex.InnerException is WebException) {
+                        int responseStartIndex = ex.ToString().IndexOf("Response") + "Response:".Count();
+                        int responseEndIndex = ex.ToString().IndexOf("Endpoint");
+                        string responseStr = ex.ToString()[responseStartIndex..responseEndIndex].Trim();
+                        LineHttpPostExceptionResponse response =
+                            JsonConvert.DeserializeObject<LineHttpPostExceptionResponse>(responseStr);
+                        Log.Error(
+                            $"LineWebhookService.ResponseToLineServer 錯誤, replyToken: {replyToken},\n" +
+                            $"messages: {JsonConvert.SerializeObject(messages, Formatting.Indented)},\n" +
+                            $"response: {JsonConvert.SerializeObject(response, Formatting.Indented)}");
+                        _lineNotifyBotService.PushMessage_Jacky($"message: {response.message}, " +
+                            $"details: {JsonConvert.SerializeObject(response.details)}");
+                        return Content($"[Index] JLineBot 無法發送，requestBody: {requestBody}, ex: {ex}");
+                    }
+                    throw;
                 }
+            } catch (Exception ex) {
+                Log.Error($"[Index] requestBody: {requestBody}, ex: {ex}");
                 return Content($"Index 發生錯誤，requestBody: {requestBody}, ex: {ex}");
             }
         }

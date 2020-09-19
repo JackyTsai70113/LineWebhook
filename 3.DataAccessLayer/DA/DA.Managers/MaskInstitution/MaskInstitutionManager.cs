@@ -37,6 +37,7 @@ namespace DA.Managers.MaskInstitution {
             int _count = 0;
 
             int strLength = locationSuffix.Length;
+            return maskDataList.Take(20).ToList();
             foreach (var maskData in maskDataList) {
                 if (maskData.Address.Substring(0, strLength) == locationSuffix) {
                     result.Add(maskData);

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Net;
 using System.Text;
 using BL.Services.Base;
 using BL.Services.Interfaces;
@@ -18,73 +16,37 @@ using DA.Managers.Interfaces.Sinopac;
 using DA.Managers.MaskInstitution;
 using DA.Managers.Sinopac;
 using isRock.LineBot;
-using Newtonsoft.Json;
 using Serilog;
 
 namespace BL.Services {
 
     public class LineWebhookService : BaseService, ILineWebhookService {
-        private readonly string _token;
 
-        public LineWebhookService(string token) {
+        public LineWebhookService() {
             _cambridgeDictionaryManager = new CambridgeDictionaryManager();
             _exchangeRateManager = new ExchangeRateManager();
-            _TradingVolumeService = new TradingVolumeService();
+            _geocodingService = new GeocodingService();
+            _tradingVolumeService = new TradingVolumeService();
             _lineMessageService = new LineMessageService();
-            _lineNotifyBotService = new LineNotifyBotService();
-            _token = token;
         }
 
         private ICambridgeDictionaryManager _cambridgeDictionaryManager { get; set; }
         private IExchangeRateManager _exchangeRateManager { get; set; }
 
-        private GeocodingService _GeocodingService { get; set; }
+        private GeocodingService _geocodingService { get; set; }
         private LineMessageService _lineMessageService { get; set; }
-        private LineNotifyBotService _lineNotifyBotService { get; set; }
-        private TradingVolumeService _TradingVolumeService { get; set; }
+        private TradingVolumeService _tradingVolumeService { get; set; }
 
         /// <summary>
-        /// 回覆Line Server
+        /// 依照RequestModel 判讀訊息並傳回Line回應訊息
         /// </summary>
-        /// <param name="replyToken">回覆token</param>
-        /// <param name="messages">訊息列表</param>
-        /// <returns>API結果</returns>
-        public string ResponseToLineServer(string replyToken, List<MessageBase> messages) {
-            try {
-                #region Post到Line
-                Bot bot = new Bot(_token);
-                string result = bot.ReplyMessage(replyToken, messages);
-                #endregion Post到Line
-                return result;
-            } catch (Exception ex) {
-                if (ex.InnerException is WebException) {
-                    int responseStartIndex = ex.ToString().IndexOf("Response") + "Response:".Count();
-                    int responseEndIndex = ex.ToString().IndexOf("Endpoint");
-                    string responseStr = ex.ToString().Substring(responseStartIndex, responseEndIndex - responseStartIndex).Trim();
-                    LineHttpPostExceptionResponse response = JsonConvert.DeserializeObject<LineHttpPostExceptionResponse>(responseStr);
-                    Log.Error(
-                        $"LineWebhookService.ResponseToLineServer 錯誤, replyToken: {replyToken},\n" +
-                        $"messages: {JsonConvert.SerializeObject(messages, Formatting.Indented)},\n" +
-                        $"response: {JsonConvert.SerializeObject(response, Formatting.Indented)}");
-                    _lineNotifyBotService.PushMessage_Jacky($"message: {response.message}, " +
-                        $"details: {JsonConvert.SerializeObject(response.details)}");
-                    return ex.ToString();
-                } else {
-                    throw ex;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 依照RequestModel取得Line回應訊息
-        /// </summary>
-        /// <param name="lineRequestModel"></param>
+        /// <param name="receivedMessage">從line接收到的訊息字串</param>
         /// <returns>Line回應訊息</returns>
-        public List<MessageBase> GetReplyMessages(ReceivedMessage lineRequestModel) {
+        public List<MessageBase> GetReplyMessages(ReceivedMessage receivedMessage) {
             List<MessageBase> messages;
-            string type = lineRequestModel.events.FirstOrDefault().type;
+            string type = receivedMessage.events.FirstOrDefault().type;
             if (type == "message") {
-                Message message = lineRequestModel.events.FirstOrDefault().message;
+                Message message = receivedMessage.events.FirstOrDefault().message;
                 switch (message.type) {
                     case "text":
                         messages = GetMessagesByText(message.text);
@@ -101,7 +63,7 @@ namespace BL.Services {
                         break;
                 }
             } else if (type == "postback") {
-                Postback postback = lineRequestModel.events.FirstOrDefault().postback;
+                Postback postback = receivedMessage.events.FirstOrDefault().postback;
                 Params @params = postback.Params;
                 if (postback.Params != null) {
                     messages = GetMessagesByText(postback.data + " " + @params.datetime + @params.date + @params.time);
@@ -109,10 +71,8 @@ namespace BL.Services {
                     messages = GetMessagesByText(postback.data);
                 }
             } else {
-                string errorMsg = $"[GetReplyMessages] " +
-                    $"lineRequestModel: {JsonConvert.SerializeObject(lineRequestModel)}";
-                Log.Error(errorMsg);
-                return _lineMessageService.GetListOfSingleMessage(errorMsg);
+                string errorMsg = $"[GetReplyMessages] 判讀訊息並傳回Line回應訊息 錯誤";
+                throw new ArgumentException(errorMsg);
             }
             return messages;
         }
@@ -166,13 +126,13 @@ namespace BL.Services {
                             }
                             string nowStr = DateTime.UtcNow.AddHours(8).ToString("yyyy/MM/dd");
                             textStr = $"以下是自{nowStr}在{days}天內的綜合買超股數:\n" +
-                                _TradingVolumeService.GetDescTradingVolumeStrOverDays(days);
+                                _tradingVolumeService.GetDescTradingVolumeStrOverDays(days);
                             return _lineMessageService.GetListOfSingleMessage(textStr);
                         }
                         if (text.Split(' ')[1].Count() == 10) {
                             DateTime dateTime = DateTime.Parse(text.Split(' ')[1]);
                             textStr = $"以下是{dateTime:yyyy/MM/dd}的綜合買超股數:\n" +
-                                _TradingVolumeService.GetDescTradingVolumeStr(dateTime);
+                                _tradingVolumeService.GetDescTradingVolumeStr(dateTime);
                             return _lineMessageService.GetListOfSingleMessage(textStr);
                         }
                         textStr = $"請重新輸入! 參數錯誤({text.Split(' ')[1]})";
@@ -191,13 +151,13 @@ namespace BL.Services {
 
                             string nowStr = DateTime.UtcNow.AddHours(8).ToString("yyyy/MM/dd");
                             textStr = $"以下是自{nowStr}在{days}天內的綜合賣超股數:\n" +
-                                _TradingVolumeService.GetAscTradingVolumeStrOverDays(days);
+                                _tradingVolumeService.GetAscTradingVolumeStrOverDays(days);
                             return _lineMessageService.GetListOfSingleMessage(textStr);
                         }
                         if (text.Split(' ')[1].Count() == 10) {
                             DateTime dateTime = DateTime.Parse(text.Split(' ')[1]);
                             textStr = $"以下是{dateTime:yyyy/MM/dd}的綜合賣超股數:\n" +
-                                _TradingVolumeService.GetAscTradingVolumeStr(dateTime);
+                                _tradingVolumeService.GetAscTradingVolumeStr(dateTime);
                             return _lineMessageService.GetListOfSingleMessage(textStr);
                         }
                         textStr = $"請重新輸入! 參數錯誤({text.Split(' ')[1]})";
@@ -259,7 +219,7 @@ namespace BL.Services {
                     return messages;
                 }
                 foreach (Core.Domain.DTO.MaskInstitution.MaskData maskData in topMaskDatas) {
-                    LatLng latLng = _GeocodingService.GetLatLngFromAddress(maskData.Address);
+                    LatLng latLng = _geocodingService.GetLatLngFromAddress(maskData.Address);
                     if (latLng.lat == default || latLng.lng == default) {
                         continue;
                     }
