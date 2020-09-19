@@ -66,6 +66,12 @@ namespace BL.Services {
             }
         }
 
+        public static string HereApi_Key {
+            get {
+                return Configuration.GetSection("HereApi_Key").Value;
+            }
+        }
+
         public static int TWSE_TradingVolumeNumber {
             get {
                 string numberStr = Configuration.GetSection("TWSE").GetSection("TradingVolumeNumber").Value;

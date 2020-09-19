@@ -1,4 +1,5 @@
 ﻿using Core.Domain.DTO.MaskInstitution;
+using Core.Domain.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace DA.Managers.MaskInstitution {
             return result;
         }
 
-        public static List<MaskData> GetTopMaskDatasFromLocationSuffix(string locationSuffix, int count = int.MaxValue) {
+        public static List<MaskData> GetMaskDatasFromLocationSuffix(string locationSuffix, int count = int.MaxValue) {
             if (maskDataList == null) {
                 maskDataList = MaskInstitutionSourceManager.GetList();
             }
@@ -37,7 +38,6 @@ namespace DA.Managers.MaskInstitution {
             int _count = 0;
 
             int strLength = locationSuffix.Length;
-            return maskDataList.Take(20).ToList();
             foreach (var maskData in maskDataList) {
                 if (maskData.Address.Substring(0, strLength) == locationSuffix) {
                     result.Add(maskData);
@@ -70,10 +70,9 @@ namespace DA.Managers.MaskInstitution {
             return result;
         }
 
-        public static List<MaskData> GetTopMaskDatasBySecondDivision(string location, int count = int.MaxValue) {
-            string SecondDivision = GetLocationSecondDivision(location);
-            List<MaskData> maskDataList = GetTopMaskDatasFromLocationSuffix(SecondDivision, count);
-            return maskDataList.ToList();
+        public static List<MaskData> GetMaskDatasBySecondDivision(string location, int count = int.MaxValue) {
+            string SecondDivision = AddressUtility.GetSecondDivision(location);
+            return GetMaskDatasFromLocationSuffix(SecondDivision, count);
         }
 
         public static string GetLocationFirstDivision(string address) {
@@ -91,27 +90,6 @@ namespace DA.Managers.MaskInstitution {
             }
 
             return address.Substring(0, indexOfFirstDivision + 1);
-        }
-
-        private static string GetLocationSecondDivision(string address) {
-            // 去除郵遞區號及台灣兩字
-            int indexOfTaiwan = address.IndexOf("台灣");
-            if (indexOfTaiwan != -1) {
-                address = address.Substring(indexOfTaiwan + 2);
-            }
-
-            int indexOfSecondDivision = -1;
-            if (address.Contains("區")) {
-                indexOfSecondDivision = address.IndexOf("區");
-            } else if (address.Contains("鄉")) {
-                indexOfSecondDivision = address.IndexOf("鄉");
-            } else if (address.Contains("鎮")) {
-                indexOfSecondDivision = address.IndexOf("鎮");
-            } else if (address.IndexOf("縣") != -1 && address.Contains("市")) {
-                indexOfSecondDivision = address.IndexOf("市");
-            }
-
-            return address.Substring(0, indexOfSecondDivision + 1);
         }
     }
 

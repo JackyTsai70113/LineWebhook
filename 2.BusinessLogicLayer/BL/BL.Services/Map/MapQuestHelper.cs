@@ -1,26 +1,28 @@
-﻿using Core.Domain.Utilities;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Serilog;
-using System.Collections.Generic;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Text;
 using System.Web;
+using Core.Domain.Utilities;
+using Newtonsoft.Json;
 
-namespace BL.Services.MapQuest {
+namespace BL.Services.Map {
 
     /// <summary>
     /// MapQuest服務的Map API，15000 transactions per month for free
     /// https://developer.mapquest.com/documentation/
     /// </summary>
-    public class GeocodingService {
-        private readonly string _mapQuest_Key;
+    public static class MapQuestHelper {
 
-        public GeocodingService() {
-            _mapQuest_Key = ConfigService.MapQuest_Key;
-        }
+        /// <summary>
+        /// mapQuest 的 Api key
+        /// </summary>
+        private static readonly string _mapQuest_Key = ConfigService.MapQuest_Key;
 
-        public LatLng GetLatLngFromAddress(string address) {
+        /// <summary>
+        /// 透過地址取得經緯度
+        /// </summary>
+        /// <param name="address">地址</param>
+        /// <returns>經緯度</returns>
+        public static Map.LatLng GetLatLngFromAddress(string address) {
             LatLng latLng = new LatLng();
             address = "臺灣" + address;
             var encodedAddress = HttpUtility.UrlEncode(address, Encoding.GetEncoding("UTF-8"));
@@ -42,7 +44,10 @@ namespace BL.Services.MapQuest {
                 }
             }
 
-            return latLng;
+            return new Map.LatLng {
+                lat = latLng.lat,
+                lng = latLng.lng
+            };
         }
 
         private class Response {
@@ -53,14 +58,25 @@ namespace BL.Services.MapQuest {
             public List<Location> locations { get; set; }
         }
 
+        /// <summary>
+        ///
+        /// </summary>
         private class Location {
             public string adminArea1 { get; set; }
             public LatLng latLng { get; set; }
         }
-    }
 
-    public class LatLng {
-        public float lat { get; set; }
-        public float lng { get; set; }
+        private class LatLng {
+
+            /// <summary>
+            /// 緯度
+            /// </summary>
+            public float lat { get; set; }
+
+            /// <summary>
+            /// 經度
+            /// </summary>
+            public float lng { get; set; }
+        }
     }
 }

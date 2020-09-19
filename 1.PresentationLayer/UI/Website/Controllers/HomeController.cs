@@ -7,6 +7,7 @@ using BL.Services;
 using BL.Services.Cache;
 using BL.Services.Holiday;
 using BL.Services.Line;
+using BL.Services.Map;
 using BL.Services.MaskInstitution;
 using BL.Services.YahooFinance;
 using isRock.LineBot;
@@ -23,6 +24,7 @@ namespace Website.Controllers {
         }
 
         public IActionResult Test() {
+            var maskDataList = _maskInstitutionService.GetTopMaskDatasByComputingDistance("110台灣台北市信義區虎林街132巷37號");
             return new OkResult();
         }
 

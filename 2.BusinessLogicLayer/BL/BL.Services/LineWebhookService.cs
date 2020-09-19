@@ -5,8 +5,9 @@ using System.Text;
 using BL.Services.Base;
 using BL.Services.Interfaces;
 using BL.Services.Line;
-using BL.Services.MapQuest;
+using BL.Services.Map;
 using BL.Services.TWSE_Stock;
+using Core.Domain.DTO.MaskInstitution;
 using Core.Domain.DTO.RequestDTO.CambridgeDictionary;
 using Core.Domain.DTO.Sinopac;
 using Core.Domain.Utilities;
@@ -17,6 +18,8 @@ using DA.Managers.MaskInstitution;
 using DA.Managers.Sinopac;
 using isRock.LineBot;
 using Serilog;
+using static BL.Services.Map.MapHereHelper;
+using static BL.Services.Map.MapQuestHelper;
 
 namespace BL.Services {
 
@@ -25,15 +28,12 @@ namespace BL.Services {
         public LineWebhookService() {
             _cambridgeDictionaryManager = new CambridgeDictionaryManager();
             _exchangeRateManager = new ExchangeRateManager();
-            _geocodingService = new GeocodingService();
             _tradingVolumeService = new TradingVolumeService();
             _lineMessageService = new LineMessageService();
         }
 
         private ICambridgeDictionaryManager _cambridgeDictionaryManager { get; set; }
         private IExchangeRateManager _exchangeRateManager { get; set; }
-
-        private GeocodingService _geocodingService { get; set; }
         private LineMessageService _lineMessageService { get; set; }
         private TradingVolumeService _tradingVolumeService { get; set; }
 
@@ -204,39 +204,30 @@ namespace BL.Services {
         /// <param name="address">指定地址</param>
         /// <returns>LOG紀錄</returns>
         private List<MessageBase> GetPharmacyInfoMessages(string address) {
-            List<MessageBase> messages = null;
-            try {
-                // 取得欲傳送的MaskDataList
-                var topMaskDatas = MaskInstitutionManager.GetTopMaskDatasBySecondDivision(address, 20);
+            // 取得欲傳送的MaskDataList
+            List<MaskData> topMaskDatas = MaskInstitutionManager.GetMaskDatasBySecondDivision(address);
 
-                // Set up messages to send
-                messages = new List<MessageBase>();
-                StringBuilder builder = new StringBuilder();
+            if (topMaskDatas.Count == 0) {
+                return _lineMessageService.GetListOfSingleMessage($"所在位置({address})沒有相關藥局");
+            }
 
-                if (topMaskDatas.Count == 0) {
-                    builder.Append($"所在位置({address})沒有相關藥局");
-                    messages.Add(new TextMessage(builder.ToString()));
-                    return messages;
+            List<MessageBase> messages = new List<MessageBase>();
+            foreach (Core.Domain.DTO.MaskInstitution.MaskData maskData in topMaskDatas) {
+                LatLng latLng = MapHereHelper.GetLatLngFromAddress(maskData.Address);
+                if (latLng.lat == default || latLng.lng == default) {
+                    continue;
                 }
-                foreach (Core.Domain.DTO.MaskInstitution.MaskData maskData in topMaskDatas) {
-                    LatLng latLng = _geocodingService.GetLatLngFromAddress(maskData.Address);
-                    if (latLng.lat == default || latLng.lng == default) {
-                        continue;
-                    }
-                    messages.Add(new LocationMessage(
-                        maskData.Name + "\n" +
-                        "成人: " + maskData.AdultMasks + "\n" +
-                        "兒童: " + maskData.ChildMasks,
-                        maskData.Address,
-                        latLng.lat,
-                        latLng.lng
-                    ));
-                    if (messages.Count >= 5) {
-                        break;
-                    }
+                messages.Add(new LocationMessage(
+                    maskData.Name + "\n" +
+                    "成人: " + maskData.AdultMasks + "\n" +
+                    "兒童: " + maskData.ChildMasks,
+                    maskData.Address,
+                    latLng.lat,
+                    latLng.lng
+                ));
+                if (messages.Count >= 5) {
+                    break;
                 }
-            } catch (Exception ex) {
-                Console.WriteLine($"Exception: {ex}");
             }
             return messages;
         }

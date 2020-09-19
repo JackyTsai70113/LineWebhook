@@ -30,7 +30,7 @@ namespace Website {
             Task task = Task.Run(() => {
                 while (DateTime.UtcNow.AddHours(8).Day < 23) {
                     new LineNotifyBotService().PushMessage_Jacky($"[Startup] {DateTime.UtcNow.AddHours(8)}");
-                    Thread.Sleep(1000 * 60 * 10);
+                    Thread.Sleep(1000 * 60 * 30);
                 }
             });
         }
@@ -47,10 +47,6 @@ namespace Website {
                 options.UseSqlServer(Configuration.GetConnectionString("LineWebhookContext")));
 
             services.AddMyService(Configuration);
-            //services.AddSingleton<ICacheProvider>(provider =>
-            //    RedisCacheProvider("myPrettyLocalhost:6379", provider.GetService<IMyInterface>()));
-            //services.Configure<LineNotifyBotService>();
-
             //services.AddSingleton();
             //services.AddScoped<ILineWebhookService, LineWebhookService>(ConfigService.Line_ChannelAccessToken);
             //services.AddTransient();

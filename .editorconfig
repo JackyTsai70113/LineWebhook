@@ -224,6 +224,9 @@ dotnet_diagnostic.RS0037.severity = none
 # IDE1006: 命名樣式
 dotnet_diagnostic.IDE1006.severity = none
 
+# IDE0002: 簡化成員存取
+dotnet_diagnostic.IDE0002.severity = none
+
 [src/CodeStyle/**.{cs,vb}]
 # warning RS0005: Do not use generic CodeAction.Create to create CodeAction
 dotnet_diagnostic.RS0005.severity = none
