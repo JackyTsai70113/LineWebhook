@@ -3,7 +3,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using BL.Services;
-using BL.Services.HostedService;
 using BL.Services.Interfaces;
 using BL.Services.Line;
 using BL.Services.Line.Interfaces;
@@ -46,7 +45,7 @@ namespace Website {
             services.AddDbContext<LineWebhookContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("LineWebhookContext")));
 
-            services.AddMyService(Configuration);
+            services.AddMyService();
             //services.AddSingleton();
             //services.AddScoped<ILineWebhookService, LineWebhookService>(ConfigService.Line_ChannelAccessToken);
             //services.AddTransient();
@@ -97,7 +96,7 @@ namespace Website {
         /// <param name="services">collection of service</param>
         /// <param name="configuration">configuration</param>
         /// <remarks>https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-3.1</remarks>
-        public static void AddMyService(this IServiceCollection services, IConfiguration configuration) {
+        public static void AddMyService(this IServiceCollection services) {
             services.AddScoped<ILineNotifyBotService, LineNotifyBotService>();
             services.AddScoped<ILineWebhookService, LineWebhookService>();
         }
