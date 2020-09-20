@@ -15,13 +15,6 @@ namespace DA.Managers.Sinopac {
             string url = $"https://mma.sinopac.com/ws/share/rate/ws_exchange.ashx?exchangeType=REMIT";
             string response = RequestUtility.GetStringFromGetRequest(url);
             List<ExchangeRate> exchangeRates = JsonConvert.DeserializeObject<List<ExchangeRate>>(response);
-
-            // Stream stream = RequestUtility.GetStreamFromGetRequestAsync(url).Result;
-            // // Angle Sharp Setting
-            // IConfiguration configuration = Configuration.Default;
-            // IBrowsingContext context = BrowsingContext.New(configuration);
-
-            // IDocument document = context.OpenAsync(req => req.Content(stream)).Result;
             return exchangeRates;
         }
     }
