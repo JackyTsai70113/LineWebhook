@@ -23,8 +23,8 @@ namespace Website.Controllers {
         private readonly Bot lineBot;
 
         private readonly ILogger<LineWebhookController> _logger;
-        private ILineNotifyBotService _lineNotifyBotService { get; set; }
-        private ILineWebhookService _lineWebhookService { get; set; }
+        private readonly ILineNotifyBotService _lineNotifyBotService;
+        private readonly ILineWebhookService _lineWebhookService;
 
         public LineWebhookController(ILogger<LineWebhookController> logger
             , ILineNotifyBotService LineNotifyBotService

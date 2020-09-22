@@ -1,4 +1,4 @@
-@model Core.Domain.DTO.MaskInstitution.MaskData
+@model Core.Domain.DTO.ResponseDTO.MaskInstitution
 
 @{
     ViewData["Title"] = "Create";
@@ -33,14 +33,14 @@
                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AdultMasks" class="control-label"></label>
-                <input asp-for="AdultMasks" class="form-control" />
-                <span asp-validation-for="AdultMasks" class="text-danger"></span>
+                <label asp-for="numberOfAdultMasks" class="control-label"></label>
+                <input asp-for="numberOfAdultMasks" class="form-control" />
+                <span asp-validation-for="numberOfAdultMasks" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ChildMasks" class="control-label"></label>
-                <input asp-for="ChildMasks" class="form-control" />
-                <span asp-validation-for="ChildMasks" class="text-danger"></span>
+                <label asp-for="numberOfChildMasks" class="control-label"></label>
+                <input asp-for="numberOfChildMasks" class="form-control" />
+                <span asp-validation-for="numberOfChildMasks" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="UpdateTime" class="control-label"></label>

@@ -7,14 +7,14 @@ using BL.Services.Interfaces;
 using BL.Services.Line;
 using BL.Services.Map;
 using BL.Services.TWSE_Stock;
-using Core.Domain.DTO.MaskInstitution;
+using Core.Domain.DTO.Map;
 using Core.Domain.DTO.RequestDTO.CambridgeDictionary;
+using Core.Domain.DTO.ResponseDTO;
 using Core.Domain.DTO.Sinopac;
 using Core.Domain.Utilities;
 using DA.Managers.CambridgeDictionary;
 using DA.Managers.Interfaces;
 using DA.Managers.Interfaces.Sinopac;
-using DA.Managers.MaskInstitution;
 using DA.Managers.Sinopac;
 using isRock.LineBot;
 using Serilog;
@@ -22,18 +22,21 @@ using Serilog;
 namespace BL.Services {
 
     public class LineWebhookService : BaseService, ILineWebhookService {
+        private readonly ICambridgeDictionaryManager _cambridgeDictionaryManager;
+        private readonly IExchangeRateManager _exchangeRateManager;
+        private readonly IMapHereService _mapHereService;
+        private readonly IMaskInstitutionService _maskInstitutionService;
+        private readonly LineMessageService _lineMessageService;
+        private readonly TradingVolumeService _tradingVolumeService;
 
-        public LineWebhookService() {
+        public LineWebhookService(IMapHereService mapHereService, IMaskInstitutionService maskInstitutionService) {
             _cambridgeDictionaryManager = new CambridgeDictionaryManager();
             _exchangeRateManager = new ExchangeRateManager();
-            _tradingVolumeService = new TradingVolumeService();
             _lineMessageService = new LineMessageService();
+            _maskInstitutionService = maskInstitutionService;
+            _tradingVolumeService = new TradingVolumeService();
+            _mapHereService = mapHereService;
         }
-
-        private ICambridgeDictionaryManager _cambridgeDictionaryManager { get; set; }
-        private IExchangeRateManager _exchangeRateManager { get; set; }
-        private LineMessageService _lineMessageService { get; set; }
-        private TradingVolumeService _tradingVolumeService { get; set; }
 
         /// <summary>
         /// 依照RequestModel 判讀訊息並傳回Line回應訊息
@@ -50,14 +53,14 @@ namespace BL.Services {
                         messages = GetMessagesByText(message.text);
                         break;
                     case "location":
-                        messages = GetPharmacyInfoMessages(message.address);
+                        messages = GetMaskInstitutions(message.address);
                         break;
                     case "sticker":
                         StickerMessage stickerMessage = _lineMessageService.GetStickerMessage(message);
                         messages = GetMessageBySticker(stickerMessage);
                         break;
                     default:
-                        messages = _lineMessageService.GetListOfSingleMessage("目前未支援此資料格式: " + message.type);
+                        messages = new List<MessageBase> { _lineMessageService.GetTextMessage("目前未支援此資料格式: " + message.type) };
                         break;
                 }
             } else if (type == "postback") {
@@ -98,10 +101,10 @@ namespace BL.Services {
                 switch (text.Split(' ')[0]) {
                     case "":
                         textStr = GetCangjieImageMessages(text.Substring(1));
-                        return _lineMessageService.GetListOfSingleMessage(textStr);
+                        return new List<MessageBase> { _lineMessageService.GetTextMessage(textStr) };
                     case "sp":
                         textStr = GetSinopacExchangeRateText();
-                        return _lineMessageService.GetListOfSingleMessage(textStr);
+                        return new List<MessageBase> { _lineMessageService.GetTextMessage(textStr) };
                     case "st":
                         return GetStickerMessages(text);
                     case "cd":
@@ -117,55 +120,48 @@ namespace BL.Services {
                         }
                         if (text.Split(' ')[1].Count() == 1) {
                             int days = int.Parse(text.Split(' ')[1]);
-
                             if (days < 1 || days > 5) {
                                 textStr = "交易天數需為 1-5";
-                                return _lineMessageService.GetListOfSingleMessage(textStr);
+                            } else {
+                                string nowStr = DateTime.UtcNow.AddHours(8).ToString("yyyy/MM/dd");
+                                textStr = $"以下是自{nowStr}在{days}天內的綜合買超股數:\n" +
+                                    _tradingVolumeService.GetDescTradingVolumeStrOverDays(days);
                             }
-                            string nowStr = DateTime.UtcNow.AddHours(8).ToString("yyyy/MM/dd");
-                            textStr = $"以下是自{nowStr}在{days}天內的綜合買超股數:\n" +
-                                _tradingVolumeService.GetDescTradingVolumeStrOverDays(days);
-                            return _lineMessageService.GetListOfSingleMessage(textStr);
-                        }
-                        if (text.Split(' ')[1].Count() == 10) {
+                        } else if (text.Split(' ')[1].Count() == 10) {
                             DateTime dateTime = DateTime.Parse(text.Split(' ')[1]);
                             textStr = $"以下是{dateTime:yyyy/MM/dd}的綜合買超股數:\n" +
                                 _tradingVolumeService.GetDescTradingVolumeStr(dateTime);
-                            return _lineMessageService.GetListOfSingleMessage(textStr);
+                        } else {
+                            textStr = $"請重新輸入! 參數錯誤({text.Split(' ')[1]})";
                         }
-                        textStr = $"請重新輸入! 參數錯誤({text.Split(' ')[1]})";
-                        return _lineMessageService.GetListOfSingleMessage(textStr);
+                        return new List<MessageBase> { _lineMessageService.GetTextMessage(textStr) };
                     case "tvv":
                         if (text == "tvv") {
                             return new List<MessageBase> { _lineMessageService.GetCarouselTemplateMessage("asc") };
                         }
                         if (text.Split(' ')[1].Count() == 1) {
                             int days = int.Parse(text.Split(' ')[1]);
-
                             if (days < 1 || days > 5) {
                                 textStr = "交易天數需為 1-5";
-                                return _lineMessageService.GetListOfSingleMessage(textStr);
+                            } else {
+                                string nowStr = DateTime.UtcNow.AddHours(8).ToString("yyyy/MM/dd");
+                                textStr = $"以下是自{nowStr}在{days}天內的綜合賣超股數:\n" +
+                                    _tradingVolumeService.GetAscTradingVolumeStrOverDays(days);
                             }
-
-                            string nowStr = DateTime.UtcNow.AddHours(8).ToString("yyyy/MM/dd");
-                            textStr = $"以下是自{nowStr}在{days}天內的綜合賣超股數:\n" +
-                                _tradingVolumeService.GetAscTradingVolumeStrOverDays(days);
-                            return _lineMessageService.GetListOfSingleMessage(textStr);
-                        }
-                        if (text.Split(' ')[1].Count() == 10) {
+                        } else if (text.Split(' ')[1].Count() == 10) {
                             DateTime dateTime = DateTime.Parse(text.Split(' ')[1]);
                             textStr = $"以下是{dateTime:yyyy/MM/dd}的綜合賣超股數:\n" +
                                 _tradingVolumeService.GetAscTradingVolumeStr(dateTime);
-                            return _lineMessageService.GetListOfSingleMessage(textStr);
+                        } else {
+                            textStr = $"請重新輸入! 參數錯誤({text.Split(' ')[1]})";
                         }
-                        textStr = $"請重新輸入! 參數錯誤({text.Split(' ')[1]})";
-                        return _lineMessageService.GetListOfSingleMessage(textStr);
+                        return new List<MessageBase> { _lineMessageService.GetTextMessage(textStr) };
                 }
-                return _lineMessageService.GetListOfSingleMessage(text);
+                return new List<MessageBase> { _lineMessageService.GetTextMessage(text) };
             } catch (Exception ex) {
                 string errorMsg = $"[GetMessagesByText] text: {text}, ex: {ex}";
                 Log.Error(errorMsg);
-                return _lineMessageService.GetListOfSingleMessage(errorMsg);
+                return new List<MessageBase> { _lineMessageService.GetTextMessage(errorMsg) };
             }
         }
 
@@ -201,25 +197,24 @@ namespace BL.Services {
         /// </summary>
         /// <param name="address">指定地址</param>
         /// <returns>LOG紀錄</returns>
-        private List<MessageBase> GetPharmacyInfoMessages(string address) {
-            // 取得欲傳送的MaskDataList
-            List<MaskData> topMaskDatas = MaskInstitutionManager.GetMaskDatasBySecondDivision(address);
+        private List<MessageBase> GetMaskInstitutions(string address) {
+            List<MaskInstitution> topFiveMaskInstitutions = _maskInstitutionService.GetMaskInstitutionsByComputingDistance(address, 5);
 
-            if (topMaskDatas.Count == 0) {
-                return _lineMessageService.GetListOfSingleMessage($"所在位置({address})沒有相關藥局");
+            if (topFiveMaskInstitutions.Count == 0) {
+                return new List<MessageBase> { _lineMessageService.GetTextMessage($"所在位置({address})沒有相關藥局") };
             }
 
             List<MessageBase> messages = new List<MessageBase>();
-            foreach (Core.Domain.DTO.MaskInstitution.MaskData maskData in topMaskDatas) {
-                LatLng latLng = MapHereHelper.GetLatLngFromAddress(maskData.Address);
+            foreach (MaskInstitution maskInstitution in topFiveMaskInstitutions) {
+                LatLng latLng = _mapHereService.GetLatLngFromAddress(maskInstitution.Address);
                 if (latLng.lat == default || latLng.lng == default) {
                     continue;
                 }
                 messages.Add(new LocationMessage(
-                    maskData.Name + "\n" +
-                    "成人: " + maskData.AdultMasks + "\n" +
-                    "兒童: " + maskData.ChildMasks,
-                    maskData.Address,
+                    maskInstitution.Name + "\n" +
+                    "成人: " + maskInstitution.numberOfAdultMasks + "\n" +
+                    "兒童: " + maskInstitution.numberOfChildMasks,
+                    maskInstitution.Address,
                     latLng.lat,
                     latLng.lng
                 ));

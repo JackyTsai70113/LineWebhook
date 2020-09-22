@@ -1,4 +1,6 @@
 ﻿using System;
+using BL.Services.Interfaces;
+using Core.Domain.DTO.Map;
 using Core.Domain.Utilities;
 using Newtonsoft.Json;
 
@@ -11,12 +13,19 @@ namespace BL.Services.Map {
     /// 5GB studio and data hub database storage per month for free
     /// https://developer.here.com/documentation
     /// </summary>
-    public static class MapHereHelper {
+    public class MapHereService : IMapHereService {
+
+        /// <summary>
+        /// 建構子，設定Api Key
+        /// </summary>
+        public MapHereService() {
+            _apiKey = ConfigService.HereApi_Key;
+        }
 
         /// <summary>
         /// here 的 Api key
         /// </summary>
-        private static readonly string _hereApi_Key = ConfigService.HereApi_Key;
+        private readonly string _apiKey;
 
         /// <summary>
         /// 透過兩經緯度取得距離
@@ -24,9 +33,9 @@ namespace BL.Services.Map {
         /// <param name="l1">經緯度</param>
         /// <param name="l2">經緯度</param>
         /// <returns>距離</returns>
-        public static int GetDistanceFromTwoLatLng(LatLng l1, LatLng l2) {
+        public int GetDistanceFromTwoLatLng(LatLng l1, LatLng l2) {
             string uri = "https://route.ls.hereapi.com/routing/7.2/calculateroute.json" +
-                "?apiKey=" + _hereApi_Key +
+                "?apiKey=" + _apiKey +
                 "&waypoint0=geo!" + l1.lat + "," + l1.lng +
                 "&waypoint1=geo!" + l2.lat + "," + l2.lng +
                 "&mode=fastest;pedestrian";
@@ -41,9 +50,9 @@ namespace BL.Services.Map {
         /// <param name="l1">經緯度</param>
         /// <param name="l2">經緯度</param>
         /// <returns>旅程時間(分)</returns>
-        public static int GetTravelTimeFromTwoLatLngs(LatLng l1, LatLng l2) {
+        public int GetTravelTimeFromTwoLatLngs(LatLng l1, LatLng l2) {
             string uri = "https://route.ls.hereapi.com/routing/7.2/calculateroute.json" +
-                "?apiKey=" + _hereApi_Key +
+                "?apiKey=" + _apiKey +
                 "&waypoint0=geo!" + l1.lat + "," + l1.lng +
                 "&waypoint1=geo!" + l2.lat + "," + l2.lng +
                 "&mode=fastest;pedestrian";
@@ -57,10 +66,10 @@ namespace BL.Services.Map {
         /// </summary>
         /// <param name="address">地址</param>
         /// <returns>經緯度</returns>
-        public static LatLng GetLatLngFromAddress(string address) {
+        public LatLng GetLatLngFromAddress(string address) {
             address = "臺灣" + address;
             string uri = "https://geocoder.ls.hereapi.com/6.2/geocode.json" +
-                "?apiKey=" + _hereApi_Key +
+                "?apiKey=" + _apiKey +
                 "&searchtext=" + address +
                 "&gen=9";
             string responseStr = RequestUtility.GetStringFromGetRequest(uri);

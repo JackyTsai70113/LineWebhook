@@ -6,6 +6,7 @@ using BL.Services;
 using BL.Services.Interfaces;
 using BL.Services.Line;
 using BL.Services.Line.Interfaces;
+using BL.Services.Map;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -99,6 +100,8 @@ namespace Website {
         public static void AddMyService(this IServiceCollection services) {
             services.AddScoped<ILineNotifyBotService, LineNotifyBotService>();
             services.AddScoped<ILineWebhookService, LineWebhookService>();
+            services.AddScoped<IMapHereService, MapHereService>();
+            services.AddScoped<IMaskInstitutionService, MaskInstitutionService>();
         }
     }
 }

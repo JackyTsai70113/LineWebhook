@@ -22,7 +22,7 @@ namespace BL.Services.Map {
         /// </summary>
         /// <param name="address">地址</param>
         /// <returns>經緯度</returns>
-        public static Map.LatLng GetLatLngFromAddress(string address) {
+        public static Core.Domain.DTO.Map.LatLng GetLatLngFromAddress(string address) {
             LatLng latLng = new LatLng();
             address = "臺灣" + address;
             var encodedAddress = HttpUtility.UrlEncode(address, Encoding.GetEncoding("UTF-8"));
@@ -44,7 +44,7 @@ namespace BL.Services.Map {
                 }
             }
 
-            return new Map.LatLng {
+            return new Core.Domain.DTO.Map.LatLng {
                 lat = latLng.lat,
                 lng = latLng.lng
             };

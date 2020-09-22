@@ -23,22 +23,6 @@ namespace BL.Services.Line {
             }
         }
 
-        public List<MessageBase> GetListOfSingleMessage(string text) {
-            try {
-                text = text.Replace('\'', '’').Trim();
-                return new List<MessageBase>{
-                    GetTextMessage(text)
-                };
-            } catch (Exception ex) {
-                string errorMsg = $"[GetSingleMessage] text: {text} Exception: {ex}";
-                Log.Error(errorMsg);
-                errorMsg = errorMsg.Replace('\'', '’').Trim();
-                return new List<MessageBase>{
-                    GetTextMessage(errorMsg)
-                };
-            }
-        }
-
         /// <summary>
         ///
         /// </summary>
@@ -145,7 +129,7 @@ namespace BL.Services.Line {
         /// CHOCO & Friends     11538 51626494-51626533
         /// UNIVERSTAR BT21     11539 52114110-52114149
         /// </remark>
-        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// <exception cref="ArgumentOutOfRangeException">
         /// Thrown when count is greater than 5.
         /// </exception>
         public List<MessageBase> GetStickerMessages(int packageId, int stickerId, int count = 1) {
@@ -157,7 +141,7 @@ namespace BL.Services.Line {
                 }
 
                 if (count < 1 || count > 5) {
-                    return GetListOfSingleMessage("參數錯誤！（個數必須介於1-5）");
+                    return new List<MessageBase> { GetTextMessage("參數錯誤！（個數必須介於1-5）") };
                 }
 
                 var messages = new List<MessageBase>();
@@ -170,7 +154,7 @@ namespace BL.Services.Line {
                 string errorMsg = $"[GetStickerMessages] " +
                     $"packageId: {packageId}, stickerId: {stickerId}, ex: {ex}";
                 Log.Error(errorMsg);
-                return GetListOfSingleMessage(errorMsg);
+                return new List<MessageBase> { GetTextMessage(errorMsg) };
             }
         }
     }

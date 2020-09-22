@@ -1,4 +1,4 @@
-@model IEnumerable<Core.Domain.DTO.MaskInstitution.MaskData>
+@model IEnumerable<Core.Domain.DTO.ResponseDTO.MaskInstitution>
 
 @{
     ViewData["Title"] = "List";
@@ -25,10 +25,10 @@
                 @Html.DisplayNameFor(model => model.PhoneNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AdultMasks)
+                @Html.DisplayNameFor(model => model.numberOfAdultMasks)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ChildMasks)
+                @Html.DisplayNameFor(model => model.numberOfChildMasks)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.UpdateTime)
@@ -52,10 +52,10 @@
                     @Html.DisplayFor(modelItem => item.PhoneNumber)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.AdultMasks)
+                    @Html.DisplayFor(modelItem => item.numberOfAdultMasks)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ChildMasks)
+                    @Html.DisplayFor(modelItem => item.numberOfChildMasks)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.UpdateTime)
