@@ -128,8 +128,7 @@ namespace BL.Services {
                             }
                         } else if (text.Split(' ')[1].Count() == 10) {
                             DateTime dateTime = DateTime.Parse(text.Split(' ')[1]);
-                            textStr = $"以下是{dateTime:yyyy/MM/dd}的綜合買超股數:\n" +
-                                _tradingVolumeService.GetDescTradingVolumeStr(dateTime);
+                            return _tradingVolumeService.GetTradingVolumeStr(QuerySortTypeEnum.Descending, dateTime);
                         } else {
                             textStr = $"請重新輸入! 參數錯誤({text.Split(' ')[1]})";
                         }
@@ -147,8 +146,7 @@ namespace BL.Services {
                             }
                         } else if (text.Split(' ')[1].Count() == 10) {
                             DateTime dateTime = DateTime.Parse(text.Split(' ')[1]);
-                            textStr = $"以下是{dateTime:yyyy/MM/dd}的綜合賣超股數:\n" +
-                                _tradingVolumeService.GetAscTradingVolumeStr(dateTime);
+                            return _tradingVolumeService.GetTradingVolumeStr(QuerySortTypeEnum.Ascending, dateTime);
                         } else {
                             textStr = $"請重新輸入! 參數錯誤({text.Split(' ')[1]})";
                         }

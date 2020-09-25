@@ -97,6 +97,20 @@ namespace BL.Services.TWSE_Stock {
             };
         }
 
+        public List<MessageBase> GetTradingVolumeStr(QuerySortTypeEnum querySortType, DateTime date) {
+            if (!TryGetTradingVolumeDict(date, querySortType, out Dictionary<string, int> tradingVolumeDict)) {
+                return new List<MessageBase> {
+                    new TextMessage($"{date:yyyy/MM/dd} 查無資料")
+                };
+            }
+            string differenceType = GetDifferenceTypeStr(querySortType);
+            string textStr = $"以下是{date:yyyy/MM/dd}的綜合{differenceType}股數:\n" +
+                                GetTradingVolumeStr(tradingVolumeDict);
+            return new List<MessageBase> {
+                new TextMessage(textStr)
+            };
+        }
+
         public string GetAscTradingVolumeStr(DateTime date) {
             if (!TryGetAscTradingVolumeDict(date, out Dictionary<string, int> tradingVolumeDict)) {
                 string dateStr = date.ToString("yyyy-MM-dd");
@@ -186,7 +200,18 @@ namespace BL.Services.TWSE_Stock {
                 sb.Append(kvp.Key + " ");
                 sb.Append(kvp.Value + "\n");
             }
-            return sb.ToString();
+            return sb.ToString().TrimEnd();
+        }
+
+        private string GetDifferenceTypeStr(QuerySortTypeEnum querySortType) {
+            switch (querySortType) {
+                case QuerySortTypeEnum.Ascending:
+                    return "賣超";
+                case QuerySortTypeEnum.Descending:
+                    return "買超";
+                default:
+                    throw new ArgumentException($"[GetdifferenceTypeStr] 排序類型錯誤! (querySortType: {querySortType})");
+            }
         }
 
         private bool TryGetTradingVolumeDict(DateTime dateTime, QuerySortTypeEnum querySortType, out Dictionary<string, int> tradingVolumeDict) {
