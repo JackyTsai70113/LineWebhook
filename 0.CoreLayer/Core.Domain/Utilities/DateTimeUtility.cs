@@ -17,6 +17,11 @@ namespace Core.Domain.Utilities {
         }
 
         /// <summary>
+        /// 現在日期
+        /// </summary>
+        public static DateTime NowDate { get; } = DateTime.UtcNow.AddHours(8).Date;
+
+        /// <summary>
         /// 現在月份
         /// </summary>
         public static int NowMonth { get; } = DateTime.Now.Month;

@@ -115,10 +115,14 @@ namespace BL.Services {
                         int textLenth = int.Parse(text.Split(' ')[2]);
                         return GetCambridgeDictionaryMessages(vocabulary, textLenth);
                     case "tv":
+                        if (text.Split(' ')[1].Count() == 1) {
+                            int days = int.Parse(text.Split(' ')[1]);
+                            return _tradingVolumeService.GetAscTradingVolumeStrOverDays2(days);
+                        }
                         if (text == "tv") {
                             return new List<MessageBase> { _lineMessageService.GetCarouselTemplateMessage("desc") };
                         }
-                        if (text.Split(' ')[1].Count() == 1) {
+                        if (false && text.Split(' ')[1].Count() == 1) {
                             int days = int.Parse(text.Split(' ')[1]);
                             if (days < 1 || days > 5) {
                                 textStr = "交易天數需為 1-5";

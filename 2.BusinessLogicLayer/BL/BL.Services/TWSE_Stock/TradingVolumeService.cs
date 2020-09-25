@@ -3,6 +3,7 @@ using Core.Domain.DTO.TWSE;
 using Core.Domain.Enums;
 using Core.Domain.Utilities;
 using ExcelDataReader.Log;
+using isRock.LineBot;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -56,6 +57,34 @@ namespace BL.Services.TWSE_Stock {
             _topNumber = ConfigService.TWSE_TradingVolumeNumber;
         }
 
+        public List<MessageBase> GetAscTradingVolumeStrOverDays2(int days) {
+            Dictionary<string, int> result = new Dictionary<string, int>();
+            int count = 0;
+            List<DateTime> validDates = new List<DateTime>();
+            DateTime today = DateTimeUtility.NowDate;
+            DateTime date = today;
+            while (count < days) {
+                if (!TryGetAscTradingVolumeDict(date, out Dictionary<string, int> ascTradingVolumeDict)) {
+                    date = date.AddDays(-1);
+                    continue;
+                }
+                result = GetCombinationTradingVolumeDict(result, ascTradingVolumeDict);
+                count++;
+                validDates.Add(date);
+                date = date.AddDays(-1);
+            }
+            result = result
+                .OrderBy(kvp => kvp.Value)
+                .Take(100)
+                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            string text1 = result.Count == 0 ? "" : GetValidDatesStr(today, days, QuerySortTypeEnum.Ascending, validDates);
+            string text2 = GetTradingVolumeStr(result);
+            return new List<MessageBase> {
+                new TextMessage(text1),
+                new TextMessage(text2)
+            };
+        }
+
         public string GetAscTradingVolumeStr(DateTime date) {
             if (!TryGetAscTradingVolumeDict(date, out Dictionary<string, int> tradingVolumeDict)) {
                 string dateStr = date.ToString("yyyy-MM-dd");
@@ -95,7 +124,7 @@ namespace BL.Services.TWSE_Stock {
         public string GetDescTradingVolumeStrOverDays(int days) {
             int count = 0;
             Dictionary<string, int> result = new Dictionary<string, int>();
-            DateTime date = DateTime.Today;
+            DateTime date = DateTimeUtility.NowDate;
             while (count < days) {
                 if (!TryGetDescTradingVolumeDict(date, out Dictionary<string, int> descTradingVolumeDict)) {
                     date = date.AddDays(-1);
@@ -110,6 +139,29 @@ namespace BL.Services.TWSE_Stock {
                 .Take(100)
                 .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             return GetTradingVolumeStr(result);
+        }
+
+        private string GetValidDatesStr(DateTime startDate, int days, QuerySortTypeEnum querySortType, List<DateTime> validDates) {
+            if (validDates.Count == 0) {
+                throw new Exception("[GetValidDatesStr] validDates 為空!");
+            }
+            StringBuilder sb = new StringBuilder();
+            string differenceTypeStr;
+            switch (querySortType) {
+                case QuerySortTypeEnum.Ascending:
+                    differenceTypeStr = "賣超";
+                    break;
+                case QuerySortTypeEnum.Descending:
+                    differenceTypeStr = "買超";
+                    break;
+                default:
+                    throw new ArgumentException($"[GetValidDatesStr] 排序類型錯誤! (querySortType: {querySortType})");
+            }
+            sb.Append($"計算自{startDate:yyyy/MM/dd}在{days}天內的綜合{differenceTypeStr}股數\n");
+            foreach (DateTime validDate in validDates) {
+                sb.Append($"{validDate:yyyy/MM/dd}\n");
+            }
+            return sb.ToString();
         }
 
         private string GetTradingVolumeStr(Dictionary<string, int> dict) {
@@ -132,7 +184,7 @@ namespace BL.Services.TWSE_Stock {
                 ascTradingVolumeDict = null;
                 return false;
             }
-            var tradingVolumeDictOfForeignInvestors =
+            Dictionary<string, int> tradingVolumeDictOfForeignInvestors =
                 GetTradingVolumeDictionary(tradingVolumeOfForeignInvestors, false);
             if (TryGetTradingVolume(
                     ForeignAndOtherInvestorEnum.SecuritiesInvestmentTrustCompanies, dateTime,
@@ -140,12 +192,13 @@ namespace BL.Services.TWSE_Stock {
                 ascTradingVolumeDict = null;
                 return false;
             }
-            var tradingVolumeDictOfSecuritiesInvestmentTrustCompanies =
+            Dictionary<string, int> tradingVolumeDictOfSecuritiesInvestmentTrustCompanies =
                 GetTradingVolumeDictionary(tradingVolumeOfSecuritiesInvestmentTrustCompanies, false);
-            ascTradingVolumeDict =
-                GetCombinationTradingVolumeDict(
+            Dictionary<string, int> combinationTradingVolumeDict = GetCombinationTradingVolumeDict(
                     tradingVolumeDictOfForeignInvestors,
-                    tradingVolumeDictOfSecuritiesInvestmentTrustCompanies)
+                    tradingVolumeDictOfSecuritiesInvestmentTrustCompanies);
+            ascTradingVolumeDict =
+                combinationTradingVolumeDict
                 .OrderBy(kvp => kvp.Value)
                 .Take(100)
                 .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
@@ -159,7 +212,7 @@ namespace BL.Services.TWSE_Stock {
                 descTradingVolumeDict = null;
                 return false;
             }
-            var tradingVolumeDictOfForeignInvestors =
+            Dictionary<string, int> tradingVolumeDictOfForeignInvestors =
                 GetTradingVolumeDictionary(tradingVolumeOfForeignInvestors);
             if (TryGetTradingVolume(
                     ForeignAndOtherInvestorEnum.SecuritiesInvestmentTrustCompanies, dateTime,
@@ -167,12 +220,12 @@ namespace BL.Services.TWSE_Stock {
                 descTradingVolumeDict = null;
                 return false;
             }
-            var tradingVolumeDictOfSecuritiesInvestmentTrustCompanies =
+            Dictionary<string, int> tradingVolumeDictOfSecuritiesInvestmentTrustCompanies =
                 GetTradingVolumeDictionary(tradingVolumeOfSecuritiesInvestmentTrustCompanies);
-            descTradingVolumeDict =
-                GetCombinationTradingVolumeDict(
+            Dictionary<string, int> combinationTradingVolumeDict = GetCombinationTradingVolumeDict(
                     tradingVolumeDictOfForeignInvestors,
-                    tradingVolumeDictOfSecuritiesInvestmentTrustCompanies)
+                    tradingVolumeDictOfSecuritiesInvestmentTrustCompanies);
+            descTradingVolumeDict = combinationTradingVolumeDict
                 .OrderByDescending(kvp => kvp.Value)
                 .Take(100)
                 .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
