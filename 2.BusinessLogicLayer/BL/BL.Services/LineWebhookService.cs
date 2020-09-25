@@ -11,6 +11,7 @@ using Core.Domain.DTO.Map;
 using Core.Domain.DTO.RequestDTO.CambridgeDictionary;
 using Core.Domain.DTO.ResponseDTO;
 using Core.Domain.DTO.Sinopac;
+using Core.Domain.Enums;
 using Core.Domain.Utilities;
 using DA.Managers.CambridgeDictionary;
 using DA.Managers.Interfaces;
@@ -115,21 +116,15 @@ namespace BL.Services {
                         int textLenth = int.Parse(text.Split(' ')[2]);
                         return GetCambridgeDictionaryMessages(vocabulary, textLenth);
                     case "tv":
-                        if (text.Split(' ')[1].Count() == 1) {
-                            int days = int.Parse(text.Split(' ')[1]);
-                            return _tradingVolumeService.GetAscTradingVolumeStrOverDays2(days);
-                        }
                         if (text == "tv") {
-                            return new List<MessageBase> { _lineMessageService.GetCarouselTemplateMessage("desc") };
+                            return new List<MessageBase> { _lineMessageService.GetCarouselTemplateMessage(QuerySortTypeEnum.Descending) };
                         }
-                        if (false && text.Split(' ')[1].Count() == 1) {
+                        if (text.Split(' ')[1].Count() == 1) {
                             int days = int.Parse(text.Split(' ')[1]);
                             if (days < 1 || days > 5) {
                                 textStr = "交易天數需為 1-5";
                             } else {
-                                string nowStr = DateTime.UtcNow.AddHours(8).ToString("yyyy/MM/dd");
-                                textStr = $"以下是自{nowStr}在{days}天內的綜合買超股數:\n" +
-                                    _tradingVolumeService.GetDescTradingVolumeStrOverDays(days);
+                                return _tradingVolumeService.GetTradingVolumeStrOverDays(QuerySortTypeEnum.Descending, days);
                             }
                         } else if (text.Split(' ')[1].Count() == 10) {
                             DateTime dateTime = DateTime.Parse(text.Split(' ')[1]);
@@ -141,16 +136,14 @@ namespace BL.Services {
                         return new List<MessageBase> { _lineMessageService.GetTextMessage(textStr) };
                     case "tvv":
                         if (text == "tvv") {
-                            return new List<MessageBase> { _lineMessageService.GetCarouselTemplateMessage("asc") };
+                            return new List<MessageBase> { _lineMessageService.GetCarouselTemplateMessage(QuerySortTypeEnum.Ascending) };
                         }
                         if (text.Split(' ')[1].Count() == 1) {
                             int days = int.Parse(text.Split(' ')[1]);
                             if (days < 1 || days > 5) {
                                 textStr = "交易天數需為 1-5";
                             } else {
-                                string nowStr = DateTime.UtcNow.AddHours(8).ToString("yyyy/MM/dd");
-                                textStr = $"以下是自{nowStr}在{days}天內的綜合賣超股數:\n" +
-                                    _tradingVolumeService.GetAscTradingVolumeStrOverDays(days);
+                                return _tradingVolumeService.GetTradingVolumeStrOverDays(QuerySortTypeEnum.Ascending, days);
                             }
                         } else if (text.Split(' ')[1].Count() == 10) {
                             DateTime dateTime = DateTime.Parse(text.Split(' ')[1]);

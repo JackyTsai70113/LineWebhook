@@ -2,9 +2,11 @@
 using Core.Domain.DTO.TWSE;
 using Core.Domain.Enums;
 using Core.Domain.Utilities;
-using ExcelDataReader.Log;
+
+//using ExcelDataReader.Log;
 using isRock.LineBot;
 using Newtonsoft.Json;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -57,27 +59,37 @@ namespace BL.Services.TWSE_Stock {
             _topNumber = ConfigService.TWSE_TradingVolumeNumber;
         }
 
-        public List<MessageBase> GetAscTradingVolumeStrOverDays2(int days) {
+        public List<MessageBase> GetTradingVolumeStrOverDays(QuerySortTypeEnum querySortType, int days) {
             Dictionary<string, int> result = new Dictionary<string, int>();
             int count = 0;
             List<DateTime> validDates = new List<DateTime>();
             DateTime today = DateTimeUtility.NowDate;
             DateTime date = today;
             while (count < days) {
-                if (!TryGetAscTradingVolumeDict(date, out Dictionary<string, int> ascTradingVolumeDict)) {
+                if (!TryGetTradingVolumeDict(date, querySortType, out Dictionary<string, int> tradingVolumeDict)) {
                     date = date.AddDays(-1);
                     continue;
                 }
-                result = GetCombinationTradingVolumeDict(result, ascTradingVolumeDict);
+                result = GetCombinationTradingVolumeDict(result, tradingVolumeDict);
                 count++;
                 validDates.Add(date);
                 date = date.AddDays(-1);
             }
-            result = result
-                .OrderBy(kvp => kvp.Value)
-                .Take(100)
-                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            string text1 = result.Count == 0 ? "" : GetValidDatesStr(today, days, QuerySortTypeEnum.Ascending, validDates);
+            switch (querySortType) {
+                case QuerySortTypeEnum.Ascending:
+                    result = result
+                        .OrderBy(kvp => kvp.Value)
+                        .Take(100)
+                        .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+                    break;
+                case QuerySortTypeEnum.Descending:
+                    result = result
+                        .OrderByDescending(kvp => kvp.Value)
+                        .Take(100)
+                        .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+                    break;
+            }
+            string text1 = result.Count == 0 ? "" : GetValidDatesStr(today, days, querySortType, validDates);
             string text2 = GetTradingVolumeStr(result);
             return new List<MessageBase> {
                 new TextMessage(text1),
@@ -157,11 +169,11 @@ namespace BL.Services.TWSE_Stock {
                 default:
                     throw new ArgumentException($"[GetValidDatesStr] 排序類型錯誤! (querySortType: {querySortType})");
             }
-            sb.Append($"計算自{startDate:yyyy/MM/dd}在{days}天內的綜合{differenceTypeStr}股數\n");
+            sb.Append($"計算自{startDate:yyyy/MM/dd}在{days}天內的綜合{differenceTypeStr}股數:\n");
             foreach (DateTime validDate in validDates) {
                 sb.Append($"{validDate:yyyy/MM/dd}\n");
             }
-            return sb.ToString();
+            return sb.ToString().TrimEnd();
         }
 
         private string GetTradingVolumeStr(Dictionary<string, int> dict) {
@@ -175,6 +187,47 @@ namespace BL.Services.TWSE_Stock {
                 sb.Append(kvp.Value + "\n");
             }
             return sb.ToString();
+        }
+
+        private bool TryGetTradingVolumeDict(DateTime dateTime, QuerySortTypeEnum querySortType, out Dictionary<string, int> tradingVolumeDict) {
+            if (TryGetTradingVolume(
+                    ForeignAndOtherInvestorEnum.ForeignInvestors, dateTime,
+                    out TradingVolume tradingVolumeOfForeignInvestors) == false) {
+                tradingVolumeDict = null;
+                return false;
+            }
+            Dictionary<string, int> tradingVolumeDictOfForeignInvestors =
+                GetTradingVolumeDictionary2(querySortType, tradingVolumeOfForeignInvestors);
+            if (TryGetTradingVolume(
+                    ForeignAndOtherInvestorEnum.SecuritiesInvestmentTrustCompanies, dateTime,
+                    out TradingVolume tradingVolumeOfSecuritiesInvestmentTrustCompanies) == false) {
+                tradingVolumeDict = null;
+                return false;
+            }
+            Dictionary<string, int> tradingVolumeDictOfSecuritiesInvestmentTrustCompanies =
+                GetTradingVolumeDictionary2(querySortType, tradingVolumeOfSecuritiesInvestmentTrustCompanies);
+            Dictionary<string, int> combinationTradingVolumeDict = GetCombinationTradingVolumeDict(
+                    tradingVolumeDictOfForeignInvestors,
+                    tradingVolumeDictOfSecuritiesInvestmentTrustCompanies);
+            IOrderedEnumerable<KeyValuePair<string, int>> orderedCombinationTradingVolumeDict;
+            switch (querySortType) {
+                case QuerySortTypeEnum.Ascending:
+                    tradingVolumeDict = combinationTradingVolumeDict
+                        .OrderBy(kvp => kvp.Value)
+                        .Take(100)
+                        .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+                    break;
+                case QuerySortTypeEnum.Descending:
+                    tradingVolumeDict = combinationTradingVolumeDict
+                        .OrderByDescending(kvp => kvp.Value)
+                        .Take(100)
+                        .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+                    break;
+                default:
+                    tradingVolumeDict = new Dictionary<string, int>();
+                    return false;
+            }
+            return true;
         }
 
         private bool TryGetAscTradingVolumeDict(DateTime dateTime, out Dictionary<string, int> ascTradingVolumeDict) {
@@ -242,6 +295,35 @@ namespace BL.Services.TWSE_Stock {
                 }
             }
             return result;
+        }
+
+        private Dictionary<string, int> GetTradingVolumeDictionary2(QuerySortTypeEnum querySortType, TradingVolume tradingVolume) {
+            string[][] datas;
+            switch (querySortType) {
+                case QuerySortTypeEnum.Ascending:
+                    datas = tradingVolume.data.Where(d => d[5].StartsWith("-")).ToArray();
+                    break;
+                case QuerySortTypeEnum.Descending:
+                    datas = tradingVolume.data.Where(d => !d[5].StartsWith("-")).ToArray();
+                    break;
+                default:
+                    throw new ArgumentException($"[GetValidDatesStr] 排序類型錯誤! (querySortType: {querySortType})");
+            }
+            Dictionary<string, int> dict = new Dictionary<string, int>();
+            int length = Math.Min(_topNumber, datas.Count());
+            for (int i = 0; i < length; i++) {
+                string name = datas[i][2].Trim();
+                int difference = int.Parse(datas[i][5], NumberStyles.AllowLeadingSign | NumberStyles.AllowThousands);
+
+                if (!dict.ContainsKey(name)) {
+                    dict.Add(name, difference);
+                } else {
+                    Log.Error($"[GetAscTradingVolumeDictionary] 證券名稱重複, " +
+                        $"date: {tradingVolume.date}" +
+                        $"name: {datas[i][2]}");
+                }
+            }
+            return dict;
         }
 
         private Dictionary<string, int> GetTradingVolumeDictionary(TradingVolume tradingVolume, bool isDesc = true) {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BL.Services.Holiday;
+using Core.Domain.Enums;
 using isRock.LineBot;
 using Serilog;
 
@@ -28,16 +29,19 @@ namespace BL.Services.Line {
         /// </summary>
         /// <returns></returns>
         /// <remarks>所有Column必須數量相同</remarks>
-        public MessageBase GetCarouselTemplateMessage(string ascOrDesc) {
+        public MessageBase GetCarouselTemplateMessage(QuerySortTypeEnum querySortType) {
             string chineseWord, command;
-            if (ascOrDesc == "desc") {
-                chineseWord = "買超";
-                command = "tv";
-            } else if (ascOrDesc == "asc") {
-                chineseWord = "賣超";
-                command = "tvv";
-            } else {
-                throw new ArgumentException("ascOrDesc 不合法", "ascOrDesc");
+            switch (querySortType) {
+                case QuerySortTypeEnum.Ascending:
+                    chineseWord = "賣超";
+                    command = "tvv";
+                    break;
+                case QuerySortTypeEnum.Descending:
+                    chineseWord = "買超";
+                    command = "tv";
+                    break;
+                default:
+                    throw new ArgumentException($"[GetCarouselTemplateMessage] 排序類型錯誤! (querySortType: {querySortType})");
             }
             var dates = HolidayHelper.GetTheMostRecentBusinessDay(2);
             var columns = new List<Column> {
