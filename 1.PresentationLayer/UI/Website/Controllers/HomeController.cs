@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using BL.Services;
 using BL.Services.Interfaces;
 using BL.Services.YahooFinance;
+using Core.Domain.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Website.Models;
 
@@ -19,7 +21,7 @@ namespace Website.Controllers {
 
         public IActionResult Test() {
             //var maskDataList = _maskInstitutionService.GetMaskInstitutionsByComputingDistance("110台灣台北市信義區虎林街132巷37號", 5);
-            return new OkResult();
+            return Content(DateTimeUtility.NowDate.ToString());
         }
 
         public IActionResult Index() {

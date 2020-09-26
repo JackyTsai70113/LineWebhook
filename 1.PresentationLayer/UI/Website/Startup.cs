@@ -2,14 +2,17 @@
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using AngleSharp.Io;
 using BL.Services;
 using BL.Services.Interfaces;
 using BL.Services.Line;
 using BL.Services.Line.Interfaces;
 using BL.Services.Map;
 using BL.Services.Sinopac;
+using Core.Domain.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,11 +30,11 @@ namespace Website {
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
             Configuration = builder.Build();
             ConfigService.Configuration = Configuration;
-
             Task task = Task.Run(() => {
-                while (DateTime.UtcNow.AddHours(8).Day < 23) {
-                    new LineNotifyBotService().PushMessage_Jacky($"[Startup] {DateTime.UtcNow.AddHours(8)}");
-                    Thread.Sleep(1000 * 60 * 30);
+                while (DateTime.UtcNow.AddHours(8).Day < 27) {
+                    var content = RequestUtility.GetStringFromGetRequest("https://linewebhookapp.herokuapp.com/Home/Test");
+                    new LineNotifyBotService().PushMessage_Jacky($"[Startup] {content} {DateTime.UtcNow.AddHours(8)}");
+                    Thread.Sleep(1000 * 5 * 1);
                 }
             });
         }
