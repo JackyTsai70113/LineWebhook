@@ -18,7 +18,6 @@ namespace Website.Controllers {
         }
 
         public IActionResult Test() {
-            //List<MaskData> topMaskDatas = MaskInstitutionManager.GetMaskDatasBySecondDivision("110台灣台北市信義區虎林街132巷37號");
             //var maskDataList = _maskInstitutionService.GetMaskInstitutionsByComputingDistance("110台灣台北市信義區虎林街132巷37號", 5);
             return new OkResult();
         }

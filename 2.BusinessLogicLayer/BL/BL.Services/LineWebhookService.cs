@@ -5,18 +5,15 @@ using System.Text;
 using BL.Services.Base;
 using BL.Services.Interfaces;
 using BL.Services.Line;
-using BL.Services.Map;
 using BL.Services.TWSE_Stock;
+using Core.Domain.DTO;
 using Core.Domain.DTO.Map;
 using Core.Domain.DTO.RequestDTO.CambridgeDictionary;
-using Core.Domain.DTO.ResponseDTO;
 using Core.Domain.DTO.Sinopac;
 using Core.Domain.Enums;
 using Core.Domain.Utilities;
 using DA.Managers.CambridgeDictionary;
 using DA.Managers.Interfaces;
-using DA.Managers.Interfaces.Sinopac;
-using DA.Managers.Sinopac;
 using isRock.LineBot;
 using Serilog;
 
@@ -24,15 +21,18 @@ namespace BL.Services {
 
     public class LineWebhookService : BaseService, ILineWebhookService {
         private readonly ICambridgeDictionaryManager _cambridgeDictionaryManager;
-        private readonly IExchangeRateManager _exchangeRateManager;
+        private readonly IExchangeRateService _exchangeRateService;
         private readonly IMapHereService _mapHereService;
         private readonly IMaskInstitutionService _maskInstitutionService;
         private readonly LineMessageService _lineMessageService;
         private readonly TradingVolumeService _tradingVolumeService;
 
-        public LineWebhookService(IMapHereService mapHereService, IMaskInstitutionService maskInstitutionService) {
+        public LineWebhookService(
+            IExchangeRateService exchangeRateService,
+            IMapHereService mapHereService,
+            IMaskInstitutionService maskInstitutionService) {
             _cambridgeDictionaryManager = new CambridgeDictionaryManager();
-            _exchangeRateManager = new ExchangeRateManager();
+            _exchangeRateService = exchangeRateService;
             _lineMessageService = new LineMessageService();
             _maskInstitutionService = maskInstitutionService;
             _tradingVolumeService = new TradingVolumeService();
@@ -104,8 +104,7 @@ namespace BL.Services {
                         textStr = GetCangjieImageMessages(text.Substring(1));
                         return new List<MessageBase> { _lineMessageService.GetTextMessage(textStr) };
                     case "sp":
-                        textStr = GetSinopacExchangeRateText();
-                        return new List<MessageBase> { _lineMessageService.GetTextMessage(textStr) };
+                        return _exchangeRateService.GetExchangeRateMessage();
                     case "st":
                         return GetStickerMessages(text);
                     case "cd":
@@ -128,7 +127,7 @@ namespace BL.Services {
                             }
                         } else if (text.Split(' ')[1].Count() == 10) {
                             DateTime dateTime = DateTime.Parse(text.Split(' ')[1]);
-                            return _tradingVolumeService.GetTradingVolumeStr(QuerySortTypeEnum.Descending, dateTime);
+                            return _tradingVolumeService.GetTradingVolumeStr(dateTime, QuerySortTypeEnum.Descending);
                         } else {
                             textStr = $"請重新輸入! 參數錯誤({text.Split(' ')[1]})";
                         }
@@ -146,13 +145,14 @@ namespace BL.Services {
                             }
                         } else if (text.Split(' ')[1].Count() == 10) {
                             DateTime dateTime = DateTime.Parse(text.Split(' ')[1]);
-                            return _tradingVolumeService.GetTradingVolumeStr(QuerySortTypeEnum.Ascending, dateTime);
+                            return _tradingVolumeService.GetTradingVolumeStr(dateTime, QuerySortTypeEnum.Ascending);
                         } else {
                             textStr = $"請重新輸入! 參數錯誤({text.Split(' ')[1]})";
                         }
                         return new List<MessageBase> { _lineMessageService.GetTextMessage(textStr) };
+                    default:
+                        return new List<MessageBase> { _lineMessageService.GetTextMessage(text) };
                 }
-                return new List<MessageBase> { _lineMessageService.GetTextMessage(text) };
             } catch (Exception ex) {
                 string errorMsg = $"[GetMessagesByText] text: {text}, ex: {ex}";
                 Log.Error(errorMsg);
@@ -169,22 +169,6 @@ namespace BL.Services {
 
             int count = int.Parse(text.Split(' ')[3]);
             return _lineMessageService.GetStickerMessages(packageId, stickerId, count);
-        }
-
-        private string GetSinopacExchangeRateText() {
-            List<ExchangeRate> exchangeRates = _exchangeRateManager.CrawlExchangeRate();
-            Info info = exchangeRates[0].SubInfo[0];
-            string titleInfo = exchangeRates[0].TitleInfo;
-            titleInfo = StringUtility.StripHtmlTag(titleInfo);
-            titleInfo = titleInfo.Substring(0, titleInfo.IndexOf('本'));
-            StringBuilder sb = new StringBuilder();
-            sb.Append("美金報價\n");
-            sb.Append("---------------------\n");
-            sb.Append($"({titleInfo})\n");
-            sb.Append($"銀行買入：{info.DataValue2}\n");
-            sb.Append($"銀行賣出：{info.DataValue3}");
-
-            return sb.ToString();
         }
 
         /// <summary>
@@ -270,7 +254,7 @@ namespace BL.Services {
                     }
                     // convert string to bytes
                     byte[] big5Bytes = big5.GetBytes(text.ToString());
-                    var big5Str = BitConverter.ToString(big5Bytes).Replace("-", string.Empty);
+                    string big5Str = BitConverter.ToString(big5Bytes).Replace("-", string.Empty);
                     sb.AppendLine(text + ": " + CJDomain + big5Str + ".JPG");
                 }
                 return sb.ToString();
@@ -282,7 +266,7 @@ namespace BL.Services {
         }
     }
 
-    public class LineHttpPostExceptionResponse {
+    public class LineHttpPostException {
         public string message { get; set; }
         public List<Detail> details { get; set; }
     }

@@ -68,8 +68,8 @@ namespace Website.Controllers {
                         int responseStartIndex = ex.ToString().IndexOf("Response") + "Response:".Count();
                         int responseEndIndex = ex.ToString().IndexOf("Endpoint");
                         string responseStr = ex.ToString()[responseStartIndex..responseEndIndex].Trim();
-                        LineHttpPostExceptionResponse response =
-                            JsonConvert.DeserializeObject<LineHttpPostExceptionResponse>(responseStr);
+                        LineHttpPostException response =
+                            JsonConvert.DeserializeObject<LineHttpPostException>(responseStr);
                         Log.Error(
                             $"LineWebhookService.ResponseToLineServer 錯誤, replyToken: {replyToken},\n" +
                             $"messages: {JsonConvert.SerializeObject(messages, Formatting.Indented)},\n" +

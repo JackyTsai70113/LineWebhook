@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Core.Domain.DTO.ResponseDTO;
+using Core.Domain.DTO;
 
 namespace BL.Services.Interfaces {
 

@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using BL.Services.Interfaces;
-using BL.Services.Map;
+using Core.Domain.DTO;
 using Core.Domain.DTO.Map;
-using Core.Domain.DTO.ResponseDTO;
 using Core.Domain.Utilities;
 
 namespace BL.Services {

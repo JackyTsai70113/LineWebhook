@@ -7,6 +7,7 @@ using BL.Services.Interfaces;
 using BL.Services.Line;
 using BL.Services.Line.Interfaces;
 using BL.Services.Map;
+using BL.Services.Sinopac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -98,6 +99,7 @@ namespace Website {
         /// <param name="configuration">configuration</param>
         /// <remarks>https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-3.1</remarks>
         public static void AddMyService(this IServiceCollection services) {
+            services.AddScoped<IExchangeRateService, ExchangeRateService>();
             services.AddScoped<ILineNotifyBotService, LineNotifyBotService>();
             services.AddScoped<ILineWebhookService, LineWebhookService>();
             services.AddScoped<IMapHereService, MapHereService>();

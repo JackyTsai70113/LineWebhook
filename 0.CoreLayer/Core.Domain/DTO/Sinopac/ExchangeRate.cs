@@ -2,6 +2,9 @@
 
 namespace Core.Domain.DTO.Sinopac {
 
+    /// <summary>
+    /// 匯率
+    /// </summary>
     public class ExchangeRate {
         public string TitleInfo { get; set; }
         public string QueryDate { get; set; }
@@ -14,6 +17,9 @@ namespace Core.Domain.DTO.Sinopac {
         public string Message { get; set; }
     }
 
+    /// <summary>
+    /// 匯率資訊
+    /// </summary>
     public class Info {
         public string DataValue1 { get; set; }
         public string DataValue1Img { get; set; }
