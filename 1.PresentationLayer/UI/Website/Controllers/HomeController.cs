@@ -31,7 +31,7 @@ namespace Website.Controllers {
 
         public IActionResult List() {
             // 取得 maskData 的 List
-            var maskDataList = _maskInstitutionService.GetMaskInstitutionsByComputingDistance("110台灣台北市信義區虎林街132巷37號", 5);
+            var maskDataList = _maskInstitutionService.GetMaskInstitutionsByComputingDistance("110台灣台北市信義區虎林街132巷37號");
             StringBuilder builder = new StringBuilder();
             foreach (var maskData in maskDataList) {
                 builder.AppendLine($"{maskData.Name}: 成人({maskData.numberOfAdultMasks})/兒童({maskData.numberOfChildMasks})");
