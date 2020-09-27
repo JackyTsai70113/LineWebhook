@@ -4,11 +4,51 @@ on:
   push:
     branches:
     - master
-    - release/*
+
+env: 
+  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+  APP_NAME: ${{ 'linewebhookapp' }}
+  LINE_NOTIFY: ${{ secrets.LINE_NOTIFY_BEARER_TOKEN }}
+  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+  TELEGRAM_JACKY_CHAT_ID: ${{secrets.TELEGRAM_JACKY_CHAT_ID}} 
+  
+  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  RUN_REGION: asia-east1
+  SERVICE_NAME: ${{ secrets.GCP_SERVICE_NAME }}
 
 jobs:
+  gcp-setup-build-deploy:
+    name: Setup, Build, and Deploy
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    
+    - name: Setup GCP Service Account
+      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      with:
+        service_account_email: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
+        service_account_key: ${{ secrets.GCP_SERVICE_APPLICATION_CREDENTIALS }}
+        export_default_credentials: true
+    
+    - name: Configure Docker to use Google Cloud Platform
+      run: "gcloud auth configure-docker --quiet"
+           
+    - name: Push image to Google Cloud Container Registry
+      run: docker push gcr.io/$PROJECT_ID/$SERVICE_NAME
+        
+    - name: Deploy image to Cloud Run
+      run: |-
+        gcloud run deploy "$SERVICE_NAME" \
+          --quiet \
+          --region "$RUN_REGION" \
+          --image "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA" \
+          --project $PROJECT_ID \
+          --platform "managed" \
+          --allow-unauthenticated
   build_linewebhook2:
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
     - name: Set current date as env variable
@@ -16,12 +56,6 @@ jobs:
     - name: Set top commit message as env variable
       run: echo "::set-env name=TOP_COMMIT_MESSAGE::$(git log --pretty=format:"%s" -1)"
     - name: Build and deploy the Docker image
-      env: 
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        APP_NAME: ${{ 'linewebhookapp' }}
-        LINE_NOTIFY: ${{ secrets.LINE_NOTIFY_BEARER_TOKEN }}
-        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-        TELEGRAM_JACKY_CHAT_ID: ${{secrets.TELEGRAM_JACKY_CHAT_ID}}  
       run: |
         cd .
         docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
