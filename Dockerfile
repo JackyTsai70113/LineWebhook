@@ -13,7 +13,7 @@ RUN dotnet restore
 
 # Copy everything else and build
 ADD . ./
-RUN dotnet publish -c Release -o ./output
+RUN dotnet publish --runtime alpine-x64 -c Release --self-contained true /p:PublishTrimmed=true -o ./output
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/core/aspnet:$VERSION
