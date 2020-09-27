@@ -15,8 +15,6 @@ env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   RUN_REGION: asia-east1
   SERVICE_NAME: ${{ secrets.GCP_SERVICE_NAME }}
-  ACCOUNT_EMAIL: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
-  APPLICATION_CREDENTIALS: ${{ secrets.GCP_SERVICE_APPLICATION_CREDENTIALS }} 
 
 jobs:
   gcp-setup-build-deploy:
@@ -30,22 +28,22 @@ jobs:
     - name: Setup GCP Service Account
       uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
-        version: '290.0.1'
+        service_account_email: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
         service_account_key: ${{ secrets.GCP_SERVICE_APPLICATION_CREDENTIALS }}
-        project_id: ${{ secrets.RUN_PROJECT }}
-
-    - name: Build and push image to Google Container Registry
-      run: |-
-        gcloud builds submit \
-          --quiet \
-          --tag "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA"
-
+    
+    - name: Configure Docker to use Google Cloud Platform
+      run: "gcloud auth configure-docker --quiet"
+           
+    - name: Push image to Google Cloud Container Registry
+      run: docker push gcr.io/$PROJECT_ID/$SERVICE_NAME
+        
     - name: Deploy image to Cloud Run
       run: |-
         gcloud run deploy "$SERVICE_NAME" \
           --quiet \
           --region "$RUN_REGION" \
           --image "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA" \
+          --project $PROJECT_ID \
           --platform "managed" \
           --allow-unauthenticated
   build_linewebhook2:
