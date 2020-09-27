@@ -19,13 +19,13 @@ RUN dotnet publish -c Release -o ./output
 FROM mcr.microsoft.com/dotnet/core/aspnet:$VERSION
 WORKDIR /app
 COPY --from=build-env /app/output .
-ENV DOTNET_RUNNING_IN_CONTAINER=true ASPNETCORE_URLS=http://+:8080
+#ENV DOTNET_RUNNING_IN_CONTAINER=true ASPNETCORE_URLS=http://+:8080
 
 ###  
-EXPOSE 8080
-ENTRYPOINT ["dotnet", "Website.dll"]
+#EXPOSE 8080
+#ENTRYPOINT ["dotnet", "Website.dll"]
 #
 
 ### heroku uses the following
-# CMD ASPNETCORE_URLS=http://*:$PORT dotnet Website.dll
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet Website.dll
 #
