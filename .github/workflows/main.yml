@@ -4,11 +4,17 @@ on:
   push:
     branches:
     - master
-    - release/*
+
+env: 
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        APP_NAME: ${{ 'linewebhookapp' }}
+        LINE_NOTIFY: ${{ secrets.LINE_NOTIFY_BEARER_TOKEN }}
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        TELEGRAM_JACKY_CHAT_ID: ${{secrets.TELEGRAM_JACKY_CHAT_ID}}    
 
 jobs:
   build_linewebhook2:
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
     - name: Set current date as env variable
@@ -16,12 +22,6 @@ jobs:
     - name: Set top commit message as env variable
       run: echo "::set-env name=TOP_COMMIT_MESSAGE::$(git log --pretty=format:"%s" -1)"
     - name: Build and deploy the Docker image
-      env: 
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        APP_NAME: ${{ 'linewebhookapp' }}
-        LINE_NOTIFY: ${{ secrets.LINE_NOTIFY_BEARER_TOKEN }}
-        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-        TELEGRAM_JACKY_CHAT_ID: ${{secrets.TELEGRAM_JACKY_CHAT_ID}}  
       run: |
         cd .
         docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
