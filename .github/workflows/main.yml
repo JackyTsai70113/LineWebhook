@@ -31,17 +31,23 @@ jobs:
       uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
         version: 'latest'
-        service_account_email: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
         service_account_key: ${{ secrets.GCP_SERVICE_APPLICATION_CREDENTIALS }}
-        export_default_credentials: true
+        project_id: ${{ secrets.RUN_PROJECT }}
 
     - name: Build and push image to Google Container Registry
-      run: |
-        gcloud builds submit --tag gcr.io/$PROJECT_ID/$SERVICE_NAME
+      run: |-
+        gcloud builds submit \
+          --quiet \
+          --tag "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA"
 
     - name: Deploy image to Cloud Run
       run: |-
-        gcloud run deploy --image gcr.io/$PROJECT_ID/$SERVICE_NAME --platform managed
+        gcloud run deploy "$SERVICE_NAME" \
+          --quiet \
+          --region "$RUN_REGION" \
+          --image "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA" \
+          --platform "managed" \
+          --allow-unauthenticated
   build_linewebhook2:
     runs-on: ubuntu-latest
     steps:
