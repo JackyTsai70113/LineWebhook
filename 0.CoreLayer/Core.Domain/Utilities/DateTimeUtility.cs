@@ -19,19 +19,24 @@ namespace Core.Domain.Utilities {
         /// <summary>
         /// 現在日期
         /// </summary>
-        public static DateTime NowDate { get; } = DateTime.UtcNow.AddHours(8).Date;
+        public static DateTime Now { get; } = DateTime.UtcNow.AddHours(8);
+
+        /// <summary>
+        /// 現在日期
+        /// </summary>
+        public static DateTime NowDate { get; } = Now.Date;
 
         /// <summary>
         /// 現在月份
         /// </summary>
-        public static int NowMonth { get; } = DateTime.Now.Month;
+        public static int NowMonth { get; } = Now.Month;
 
         /// <summary>
         /// 現在年份
         /// </summary>
-        public static int NowYear { get; } = DateTime.Now.Year;
+        public static int NowYear { get; } = Now.Year;
 
-        public static int NowROCYear { get; } = DateTime.Now.Year - 1911;
+        public static int NowROCYear { get; } = Now.Year - 1911;
 
         public static bool IsWeekend(this DateTime dateTime) {
             return dateTime.DayOfWeek == DayOfWeek.Saturday
@@ -134,14 +139,14 @@ namespace Core.Domain.Utilities {
         /// <returns>從時間取得整月的DateTimeRange</returns>
         public static DateTimeRange GetDateTimeRangeByYearBeforeNow(this int year) {
             DateTimeRange dateTimeRange;
-            if (year > DateTime.Now.Year) {
+            if (year > Now.Year) {
                 throw new Exception("GetDateTimeRangeByYearBeforeNow Input錯誤: 年份不可大於現在年分");
             }
 
-            if (year < DateTime.Now.Year) {
+            if (year < Now.Year) {
                 dateTimeRange = new DateTimeRange(year.GetFirstDateOfYear(), year.GetLastDateOfYear());
             } else {
-                dateTimeRange = new DateTimeRange(year.GetFirstDateOfYear(), DateTime.Now);
+                dateTimeRange = new DateTimeRange(year.GetFirstDateOfYear(), Now);
             }
 
             return dateTimeRange;

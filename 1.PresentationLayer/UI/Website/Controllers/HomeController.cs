@@ -20,8 +20,7 @@ namespace Website.Controllers {
         }
 
         public IActionResult Test() {
-            //var maskDataList = _maskInstitutionService.GetMaskInstitutionsByComputingDistance("110台灣台北市信義區虎林街132巷37號", 5);
-            return Content(DateTimeUtility.NowDate.ToString());
+            return Content(DateTimeUtility.Now.ToString());
         }
 
         public IActionResult Index() {

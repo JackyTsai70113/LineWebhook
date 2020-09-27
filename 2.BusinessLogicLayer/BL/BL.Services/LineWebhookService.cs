@@ -61,7 +61,7 @@ namespace BL.Services {
                         messages = GetMessageBySticker(stickerMessage);
                         break;
                     default:
-                        messages = new List<MessageBase> { _lineMessageService.GetTextMessage("目前未支援此資料格式: " + message.type) };
+                        messages = new List<MessageBase> { new TextMessage("目前未支援此資料格式: " + message.type) };
                         break;
                 }
             } else if (type == "postback") {
