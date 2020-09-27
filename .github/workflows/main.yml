@@ -30,7 +30,7 @@ jobs:
     - name: Setup GCP Service Account
       uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
-        version: 'latest'
+        version: '290.0.1'
         service_account_key: ${{ secrets.GCP_SERVICE_APPLICATION_CREDENTIALS }}
         project_id: ${{ secrets.RUN_PROJECT }}
 
