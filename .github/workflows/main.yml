@@ -32,24 +32,23 @@ jobs:
         service_account_key: ${{ secrets.GCP_SERVICE_APPLICATION_CREDENTIALS }}
         export_default_credentials: true
     
-    # Configure gcloud CLI
-    - name: gcloud Set up
-      run: |
-          gcloud config set project $PROJECT_ID
+    - name: auth configure-docker
+      run: gcloud auth configure-docker
 
-    # Build and push image to Google Container Registry
     - name: Build
-      run: |
-          gcloud builds submit -t gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
-        
+      run: docker build gcr.io/$PROJECT_ID/webhook:latest .
+    
+    - name: Push
+      run: docker push gcr.io/$PROJECT_ID/webhook:latest
+
     - name: Deploy image to Cloud Run
       run: |-
-        gcloud run deploy "$SERVICE_NAME" \
+        gcloud run deploy $SERVICE_NAME \
           --quiet \
-          --region "$RUN_REGION" \
-          --image "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA" \
+          --region $RUN_REGION \
+          --image gcr.io/$PROJECT_ID/$SERVICE_NAME \
           --project $PROJECT_ID \
-          --platform "managed" \
+          --platform managed \
           --allow-unauthenticated
   build_linewebhook2:
     runs-on: ubuntu-latest
