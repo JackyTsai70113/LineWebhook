@@ -37,10 +37,10 @@ jobs:
     
     # Build and push image to Google Container Registry
     - name: Build
-      run: docker build gcr.io/$PROJECT_ID/webhook:latest
+      run: docker build gcr.io/${{ secrets.GCP_PROJECT_ID }}/webhook:latest
     
     - name: Push
-      run: docker push gcr.io/$PROJECT_ID/webhook:latest
+      run: docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/webhook:latest
 
     - name: Deploy image to Cloud Run
       run: |-
