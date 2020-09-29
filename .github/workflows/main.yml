@@ -37,7 +37,7 @@ jobs:
     
     # Build and push image to Google Container Registry
     - name: Build
-      run: docker build https://gcr.io/webhook-20200806/webhook:lastest .
+      run: docker build .
   #build_linewebhook2:
   #  runs-on: ubuntu-latest
   #  steps:
