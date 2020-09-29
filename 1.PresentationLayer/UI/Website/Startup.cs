@@ -29,7 +29,7 @@ namespace Website {
             Configuration = builder.Build();
             ConfigService.Configuration = Configuration;
             Task task = Task.Run(() => {
-                while (DateTime.UtcNow.AddHours(8).Day > 21) {
+                while (DateTime.UtcNow.AddHours(8).Day > 22) {
                     var content = RequestUtility.GetStringFromGetRequest("https://linewebhookapp.herokuapp.com/Home/Test");
                     new LineNotifyBotService().PushMessage_Jacky($"[Startup] {content} {DateTime.UtcNow.AddHours(8)}");
                     Thread.Sleep(1000 * 60 * 20);
