@@ -37,34 +37,21 @@ jobs:
     
     # Build and push image to Google Container Registry
     - name: Build
-      run: docker build gcr.io/webhook-20200806/webhook
-    
-    - name: Push
-      run: docker push gcr.io/webhook-20200806/webhook
-
-    - name: Deploy image to Cloud Run
-      run: |-
-        gcloud run deploy $SERVICE_NAME \
-          --quiet \
-          --region $RUN_REGION \
-          --image gcr.io/$PROJECT_ID/$SERVICE_NAME \
-          --project $PROJECT_ID \
-          --platform managed \
-          --allow-unauthenticated
-  build_linewebhook2:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v1
-    - name: Set current date as env variable
-      run: echo "::set-env name=NOW::$(date +'%Y-%m-%dT%H:%M:%S')"
-    - name: Set top commit message as env variable
-      run: echo "::set-env name=TOP_COMMIT_MESSAGE::$(git log --pretty=format:"%s" -1)"
-    - name: Build and deploy the Docker image
-      run: |
-        cd .
-        docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
-        heroku container:push web -a $APP_NAME
-        heroku container:release web -a $APP_NAME
-        curl -X GET "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage?chat_id=$TELEGRAM_JACKY_CHAT_ID&text=佈版完成 ($NOW) $TOP_COMMIT_MESSAGE"
-        curl -H "Authorization: Bearer $LINE_NOTIFY" -d "message=佈版完成 ($NOW) $TOP_COMMIT_MESSAGE" https://notify-api.line.me/api/notify
+      run: docker run busybox date
+  #build_linewebhook2:
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #  - uses: actions/checkout@v1
+  #  - name: Set current date as env variable
+  #    run: echo "::set-env name=NOW::$(date +'%Y-%m-%dT%H:%M:%S')"
+  #  - name: Set top commit message as env variable
+  #    run: echo "::set-env name=TOP_COMMIT_MESSAGE::$(git log --pretty=format:"%s" -1)"
+  #  - name: Build and deploy the Docker image
+  #    run: |
+  #      cd .
+  #      docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+  #      heroku container:push web -a $APP_NAME
+  #      heroku container:release web -a $APP_NAME
+  #      curl -X GET "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage?chat_id=$TELEGRAM_JACKY_CHAT_ID&text=佈版完成 ($NOW) $TOP_COMMIT_MESSAGE"
+  #      curl -H "Authorization: Bearer $LINE_NOTIFY" -d "message=佈版完成 ($NOW) $TOP_COMMIT_MESSAGE" https://notify-api.line.me/api/notify
         
