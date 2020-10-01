@@ -50,13 +50,17 @@ jobs:
           --image "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA" \
           --platform "managed" \
           --allow-unauthenticated
-     
+           
+    - name: Set current date as env variable
+      run: echo "::set-env name=NOW::$(date +'%Y-%m-%dT%H:%M:%S')"
+  
+    - name: Set top commit message as env variable
+      run: echo "::set-env name=TOP_COMMIT_MESSAGE::$(git log --pretty=format:"%s" -1)"
+    
     - name: Line Notice
       run: |
-        echo "::set-env name=NOW::$(date +'%Y-%m-%dT%H:%M:%S')"
-        echo "::set-env name=TOP_COMMIT_MESSAGE::$(git log --pretty=format:"%s" -1)"
         curl -H "Authorization: Bearer $LINE_NOTIFY" \
-             -d "message=[$NOW][$GITHUB_SHA]佈版完成 $TOP_COMMIT_MESSAGE" \
+             -d "message=[$NOW][$GITHUB_SHA::8]佈版完成 $TOP_COMMIT_MESSAGE" \
              https://notify-api.line.me/api/notify
 
   #build_linewebhook2:
