@@ -50,6 +50,12 @@ jobs:
           --image "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA" \
           --platform "managed" \
           --allow-unauthenticated
+     
+    - name: Line Notice
+      run: |
+        curl -H "Authorization: Bearer $LINE_NOTIFY" \
+             -d "message=[$NOW][$GITHUB_SHA]佈版完成 $TOP_COMMIT_MESSAGE" \
+             https://notify-api.line.me/api/notify
 
   #build_linewebhook2:
   #  runs-on: ubuntu-latest
