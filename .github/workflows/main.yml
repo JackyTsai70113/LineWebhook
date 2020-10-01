@@ -52,7 +52,7 @@ jobs:
           --allow-unauthenticated
            
     - name: Set current date as env variable
-      run: echo "::set-env name=NOW::$(date +'%Y-%m-%dT%H:%M:%S')"
+      run: echo "::set-env name=NOW::$(date +'%Y%m%d%H%M%S')"
   
     - name: Set top commit message as env variable
       run: echo "::set-env name=TOP_COMMIT_MESSAGE::$(git log --pretty=format:"%s" -1)"
