@@ -25,6 +25,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v1
     
+    - name: Build Docker image
+      run: |
+          docker build . --tag gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
+          
     - name: Setup gcloud CLI
       uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
