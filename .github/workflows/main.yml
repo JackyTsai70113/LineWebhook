@@ -15,7 +15,6 @@ env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   RUN_REGION: asia-east1
   SERVICE_NAME: ${{ secrets.GCP_SERVICE_NAME }}
-  NOW: $(date +'%Y-%m-%dT%H:%M:%S')
 
 jobs: 
   gcp-setup-build-deploy:
@@ -54,6 +53,8 @@ jobs:
      
     - name: Line Notice
       run: |
+        echo "::set-env name=NOW::$(date +'%Y-%m-%dT%H:%M:%S')"
+        echo "::set-env name=TOP_COMMIT_MESSAGE::$(git log --pretty=format:"%s" -1)"
         curl -H "Authorization: Bearer $LINE_NOTIFY" \
              -d "message=[$NOW][$GITHUB_SHA]佈版完成 $TOP_COMMIT_MESSAGE" \
              https://notify-api.line.me/api/notify
