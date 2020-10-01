@@ -39,7 +39,7 @@ jobs:
       run: "gcloud auth configure-docker --quiet"
    
     - name: Push image to Google Cloud Container Registry
-      run: docker push gcr.io/gcr.io/webhook-20200806/webhook
+      run: docker push gcr.io/webhook-20200806/webhook
     
     - name: Install beta commands and deploy on cloud run
       run: |
