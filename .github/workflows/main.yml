@@ -16,7 +16,7 @@ env:
   RUN_REGION: asia-east1
   SERVICE_NAME: ${{ secrets.GCP_SERVICE_NAME }}
 
-jobs: 
+jobs:  
   gcp-setup-build-deploy:
     name: Setup, Build, and Deploy
     runs-on: ubuntu-latest
