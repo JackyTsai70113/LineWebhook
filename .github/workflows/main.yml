@@ -30,26 +30,22 @@ jobs:
       with:
         service_account_email: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
         service_account_key: ${{ secrets.GCP_SERVICE_APPLICATION_CREDENTIALS }}
-    
-    - name: Build Docker image
-      run: |
-          docker build . --tag gcr.io/webhook-20200806/webhook
-    
-    - name: Configure Docker to use Google Cloud Platform
-      run: "gcloud auth configure-docker --quiet"
-   
-    - name: Push image to Google Cloud Container Registry
-      run: docker push gcr.io/webhook-20200806/webhook
-    
-    - name: Install beta commands and deploy on cloud run
-      run: |
-          gcloud components install beta --quiet
-          gcloud beta run deploy $SERVICE_NAME \
-            --quiet \
-            --image gcr.io/gcr.io/webhook-20200806/webhook \
-            --project webhook-20200806 \
-            --region asia-east1 \
-            --platform managed
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+    - name: Build and push image to Google Container Registry
+      run: |-
+        gcloud builds submit \
+          --quiet \
+          --tag "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA"
+
+    - name: Deploy image to Cloud Run
+      run: |-
+        gcloud run deploy "$SERVICE_NAME" \
+          --quiet \
+          --region "$RUN_REGION" \
+          --image "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA" \
+          --platform "managed" \
+          --allow-unauthenticated
 
   #build_linewebhook2:
   #  runs-on: ubuntu-latest
