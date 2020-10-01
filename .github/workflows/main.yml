@@ -3,66 +3,65 @@ name: Build and Deploy to Cloud Run
 on:
   push:
     branches:
-    - master
+      - master
 
 env:
   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
   APP_NAME: ${{ 'linewebhookapp' }}
   LINE_NOTIFY: ${{ secrets.LINE_NOTIFY_BEARER_TOKEN }}
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-  TELEGRAM_JACKY_CHAT_ID: ${{secrets.TELEGRAM_JACKY_CHAT_ID}} 
-  
+  TELEGRAM_JACKY_CHAT_ID: ${{secrets.TELEGRAM_JACKY_CHAT_ID}}
+
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   RUN_REGION: asia-east1
   SERVICE_NAME: ${{ secrets.GCP_SERVICE_NAME }}
 
-jobs: 
+jobs:
   gcp-setup-build-deploy:
     name: Setup, Build, and Deploy
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout
-      uses: actions/checkout@v1
-    
-    - name: Build Docker image
-      run: |
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Build Docker image
+        run: |
           docker build . --tag gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
-          
-    - name: Setup gcloud CLI
-      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
-      with:
-        service_account_email: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
-        service_account_key: ${{ secrets.GCP_SERVICE_APPLICATION_CREDENTIALS }}
-        project_id: ${{ secrets.GCP_PROJECT_ID }}
 
-    - name: Configure Docker to use Google Cloud Platform
-      run: "gcloud auth configure-docker --quiet"
-     
-    - name: Push image to Google Cloud Container Registry
-      run: docker push gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
-    
-    - name: Deploy image to Cloud Run
-      run: |-
-        gcloud run deploy "$SERVICE_NAME" \
-          --quiet \
-          --region "$RUN_REGION" \
-          --image "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA" \
-          --platform "managed" \
-          --allow-unauthenticated
-           
-    - name: Set current date as env variable
-      run: echo "::set-env name=NOW::$(date +'%Y%m%d%H%M%S')"
-  
-    - name: Set top commit message as env variable
-      run: echo "::set-env name=TOP_COMMIT_MESSAGE::$(git log --pretty=format:"%s" -1)"
-    
-    - name: Line Notice
-      run: |
-        curl -H "Authorization: Bearer $LINE_NOTIFY" \
-             -d "message=[$NOW][${GITHUB_SHA::8}]佈版完成 $TOP_COMMIT_MESSAGE" \
-             https://notify-api.line.me/api/notify
+      - name: Setup gcloud CLI
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          service_account_email: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
+          service_account_key: ${{ secrets.GCP_SERVICE_APPLICATION_CREDENTIALS }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
 
+      - name: Configure Docker to use Google Cloud Platform
+        run: 'gcloud auth configure-docker --quiet'
+
+      - name: Push image to Google Cloud Container Registry
+        run: docker push gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
+
+      - name: Deploy image to Cloud Run
+        run: |-
+          gcloud run deploy "$SERVICE_NAME" \
+            --quiet \
+            --region "$RUN_REGION" \
+            --image "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA" \
+            --platform "managed" \
+            --allow-unauthenticated
+
+      - name: Set current date as env variable
+        run: echo "::set-env name=NOW::$(date +'%Y/%m/%d %H:%M')"
+
+      - name: Set top commit message as env variable
+        run: echo "::set-env name=TOP_COMMIT_MESSAGE::$(git log --pretty=format:"%s" -1)"
+
+      - name: Line Notice
+        run: |
+          curl -H "Authorization: Bearer $LINE_NOTIFY" \
+               -d "message=[$NOW][${GITHUB_SHA::8}]佈版完成 $TOP_COMMIT_MESSAGE" \
+               https://notify-api.line.me/api/notify
   #build_linewebhook2:
   #  runs-on: ubuntu-latest
   #  steps:
@@ -78,4 +77,4 @@ jobs:
   #      heroku container:push web -a $APP_NAME
   #      heroku container:release web -a $APP_NAME
   #      curl -X GET "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage?chat_id=$TELEGRAM_JACKY_CHAT_ID&text=佈版完成 ($NOW) $TOP_COMMIT_MESSAGE"
-  #      curl -H "Authorization: Bearer $LINE_NOTIFY" -d "message=佈版完成 ($NOW) $TOP_COMMIT_MESSAGE" https://notify-api.line.me/api/notify 
+  #      curl -H "Authorization: Bearer $LINE_NOTIFY" -d "message=佈版完成 ($NOW) $TOP_COMMIT_MESSAGE" https://notify-api.line.me/api/notify
