@@ -1,4 +1,4 @@
-name: CI
+name: Build and Deploy to Cloud Run
 
 on:
   push:
@@ -25,19 +25,31 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     
-    - name: Setup GCP Service Account
+    - name: Setup gcloud CLI
       uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
         service_account_email: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
         service_account_key: ${{ secrets.GCP_SERVICE_APPLICATION_CREDENTIALS }}
-        export_default_credentials: true
    
-    - name: Authorize docker1
+    - name: Setup gcloud  project
       run: |
         gcloud config set project webhook-20200806
-    - name: Authorize docker2
+        
+    # Build and push image to Google Container Registry
+    - name: Build
       run: |
-        gcloud builds submit --tag gcr.io/webhook-20200806/webhook
+        gcloud builds submit \
+          --quiet \
+          --tag "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA"
+    # Deploy image to Cloud Run
+    - name: Deploy
+      run: |-
+        gcloud run deploy "$SERVICE_NAME" \
+          --quiet \
+          --region "$RUN_REGION" \
+          --image "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA" \
+          --platform "managed" \
+          --allow-unauthenticated
   #build_linewebhook2:
   #  runs-on: ubuntu-latest
   #  steps:
@@ -53,5 +65,4 @@ jobs:
   #      heroku container:push web -a $APP_NAME
   #      heroku container:release web -a $APP_NAME
   #      curl -X GET "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage?chat_id=$TELEGRAM_JACKY_CHAT_ID&text=佈版完成 ($NOW) $TOP_COMMIT_MESSAGE"
-  #      curl -H "Authorization: Bearer $LINE_NOTIFY" -d "message=佈版完成 ($NOW) $TOP_COMMIT_MESSAGE" https://notify-api.line.me/api/notify
-        
+  #      curl -H "Authorization: Bearer $LINE_NOTIFY" -d "message=佈版完成 ($NOW) $TOP_COMMIT_MESSAGE" https://notify-api.line.me/api/notify 
