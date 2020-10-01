@@ -31,8 +31,11 @@ jobs:
         service_account_email: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
         service_account_key: ${{ secrets.GCP_SERVICE_APPLICATION_CREDENTIALS }}
         export_default_credentials: true
-
-    - name: Authorize docker
+   
+    - name: Authorize docker1
+      run: |
+        gcloud config set project webhook-20200806
+    - name: Authorize docker2
       run: |
         gcloud builds submit --tag gcr.io/webhook-20200806/webhook
   #build_linewebhook2:
