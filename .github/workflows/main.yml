@@ -5,7 +5,7 @@ on:
     branches:
     - master
 
-env: 
+env:
   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
   APP_NAME: ${{ 'linewebhookapp' }}
   LINE_NOTIFY: ${{ secrets.LINE_NOTIFY_BEARER_TOKEN }}
