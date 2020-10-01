@@ -20,7 +20,7 @@ namespace Website.Controllers {
         }
 
         public IActionResult Test() {
-            return Content(DateTimeUtility.Now.ToString());
+            return Content(DateTime.UtcNow.AddHours(8).ToString());
         }
 
         public IActionResult Index() {
