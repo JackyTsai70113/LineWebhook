@@ -60,7 +60,7 @@ jobs:
     - name: Line Notice
       run: |
         curl -H "Authorization: Bearer $LINE_NOTIFY" \
-             -d "message=[$NOW][$GITHUB_SHA::8]佈版完成 $TOP_COMMIT_MESSAGE" \
+             -d "message=[$NOW][${GITHUB_SHA::8}]佈版完成 $TOP_COMMIT_MESSAGE" \
              https://notify-api.line.me/api/notify
 
   #build_linewebhook2:
