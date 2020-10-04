@@ -56,7 +56,7 @@ namespace BL.Services.Holiday {
         }
 
         private static List<Holiday> GetHolidaysFromRedis() {
-            return new RedisCacheProvider().Get<List<Holiday>>("Holidays_2020");
+            return new RedisCacheService().Get<List<Holiday>>("Holidays_2020");
         }
     }
 

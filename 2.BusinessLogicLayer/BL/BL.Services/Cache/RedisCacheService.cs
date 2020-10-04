@@ -8,14 +8,14 @@ using System.Net;
 
 namespace BL.Services.Cache {
 
-    public class RedisCacheProvider : ICacheService {
+    public class RedisCacheService : ICacheService {
         private static readonly string _endpoint = ConfigService.Redis_Endpoint;
         private static readonly string _password = ConfigService.Redis_Password;
         private static readonly ConnectionMultiplexer _redis = ConnectionMultiplexer.Connect(_endpoint + ",password=" + _password);
         private static readonly IDatabase _db = _redis.GetDatabase();
         private static readonly IServer _server = _redis.GetServer(_endpoint);
 
-        public RedisCacheProvider() {
+        public RedisCacheService() {
         }
 
         public void Set<T>(string key, T value) {

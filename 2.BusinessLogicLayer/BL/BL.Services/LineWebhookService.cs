@@ -18,7 +18,6 @@ using isRock.LineBot;
 using Serilog;
 
 namespace BL.Services {
-
     public class LineWebhookService : BaseService, ILineWebhookService {
         private readonly ICambridgeDictionaryManager _cambridgeDictionaryManager;
         private readonly IExchangeRateService _exchangeRateService;

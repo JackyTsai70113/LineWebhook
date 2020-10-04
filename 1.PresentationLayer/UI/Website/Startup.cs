@@ -3,6 +3,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using BL.Services;
+using BL.Services.Cache;
 using BL.Services.Interfaces;
 using BL.Services.Line;
 using BL.Services.Line.Interfaces;
@@ -105,6 +106,7 @@ namespace Website {
             services.AddScoped<ILineWebhookService, LineWebhookService>();
             services.AddScoped<IMapHereService, MapHereService>();
             services.AddScoped<IMaskInstitutionService, MaskInstitutionService>();
+            services.AddScoped<ICacheService, RedisCacheService>();
         }
     }
 }

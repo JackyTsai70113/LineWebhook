@@ -25,12 +25,17 @@ namespace Website {
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) {
-            string port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
-            string url = string.Concat("http://0.0.0.0:", port);
+            // string port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+            // string url = string.Concat("https://0.0.0.0:", port);
+            // return Host.CreateDefaultBuilder(args)
+            //     .UseSerilog()
+            //     .ConfigureWebHostDefaults(webBuilder => {
+            //         webBuilder.UseStartup<Startup>().UseUrls(url);
+            //     });
             return Host.CreateDefaultBuilder(args)
                 .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder => {
-                    webBuilder.UseStartup<Startup>().UseUrls(url);
+                    webBuilder.UseStartup<Startup>();
                 });
         }
     }

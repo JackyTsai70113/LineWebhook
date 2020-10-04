@@ -10,6 +10,13 @@ namespace BL.Services.Cache {
 
         void Set<T>(string key, T value, TimeSpan timeout);
 
+        /// <summary>
+        /// 透過pattern取得所有符合的key (*: 任意字串)
+        /// </summary>
+        /// <param name="pattern">欲符合的pattern</param>
+        /// <returns>key列表</returns>
+        List<string> GetKeys(string pattern);
+
         T Get<T>(string key);
 
         bool Remove(string key);
