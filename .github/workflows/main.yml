@@ -52,7 +52,9 @@ jobs:
             --allow-unauthenticated
 
       - name: Set current date as env variable
-        run: echo "::set-env name=NOW::$(date +'%Y/%m/%d %H:%M')"
+        run: |
+          echo 'JSON_RESPONSE<<NOW' >> $GITHUB_ENV
+          curl $(date +'%Y/%m/%d %H:%M') >> $GITHUB_ENV
 
       - name: Set top commit message as env variable
         run: echo "::set-env name=TOP_COMMIT_MESSAGE::$(git log --pretty=format:"%s" -1)"
