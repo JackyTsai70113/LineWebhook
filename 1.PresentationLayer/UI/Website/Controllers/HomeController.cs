@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
-using BL.Services;
 using BL.Services.Interfaces;
 using BL.Services.YahooFinance;
-using Core.Domain.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Website.Models;
 

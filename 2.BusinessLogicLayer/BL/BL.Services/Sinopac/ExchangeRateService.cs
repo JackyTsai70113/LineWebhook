@@ -4,7 +4,6 @@ using BL.Services.Interfaces;
 using Core.Domain.DTO.Sinopac;
 using Core.Domain.Utilities;
 using isRock.LineBot;
-using Newtonsoft.Json;
 
 namespace BL.Services.Sinopac {
 
@@ -23,9 +22,9 @@ namespace BL.Services.Sinopac {
             StringBuilder sb = new StringBuilder();
             sb.Append("美金報價\n");
             sb.Append("---------------------\n");
-            sb.Append($"({titleInfo})\n");
             sb.Append($"銀行買入：{info.DataValue2}\n");
             sb.Append($"銀行賣出：{info.DataValue3}");
+            sb.Append($"({titleInfo})\n");
 
             return new List<MessageBase> {
                 new TextMessage(sb.ToString())
@@ -39,7 +38,7 @@ namespace BL.Services.Sinopac {
         private List<ExchangeRate> GetExchangeRate() {
             string url = $"https://mma.sinopac.com/ws/share/rate/ws_exchange.ashx?exchangeType=REMIT";
             string response = RequestUtility.GetStringFromGetRequest(url);
-            List<ExchangeRate> exchangeRates = JsonConvert.DeserializeObject<List<ExchangeRate>>(response);
+            List<ExchangeRate> exchangeRates = JsonUtility.Deserialize<List<ExchangeRate>>(response);
             return exchangeRates;
         }
     }

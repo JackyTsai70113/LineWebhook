@@ -121,18 +121,18 @@ namespace BL.Services.Line {
         /// <summary>
         /// 取得貼圖訊息
         /// </summary>
-        /// <remark>
-        /// https://developers.line.biz/media/messaging-api/sticker_list.pdf
-        /// https://devdocs.line.me/files/sticker_list.pdf
-        /// 範圍包含：
-        /// Moon James              1              1-17    21 100-139 401-430
-        /// Brown Cony              2             18-20 22-47 140-179 501-527
-        /// Cherry coco             3           180-259
-        /// Daily Life              4           260-307 601-632
-        /// Brown, Cony & Sally 11537 52002734-52002773
-        /// CHOCO & Friends     11538 51626494-51626533
-        /// UNIVERSTAR BT21     11539 52114110-52114149
-        /// </remark>
+        /// <remarks>
+        /// https://developers.line.biz/media/messaging-api/sticker_list.pdf <br/>
+        /// https://devdocs.line.me/files/sticker_list.pdf <br/>
+        /// 範圍包含： <br/>
+        /// Moon James: {packageId: 1, stickerIds: 1-17, 21, 100-139, 401-430} <br/>
+        /// Brown Cony: {packageId: 2, stickerIds: 18-20, 22-47, 140-179, 501-527} <br/>
+        /// Cherry coco: {packageId: 3, stickerIds: 180-259}<br/>
+        /// Daily Life: {packageId: 4, stickerIds: 260-307, 601-632}<br/>
+        /// Brown, Cony &amp; Sally: {packageId: 11537, stickerIds: 52002734-52002773} <br/>
+        /// CHOCO &amp; Friends: {packageId: 11538, stickerIds: 51626494-51626533} <br/>
+        /// UNIVERSTAR BT21: {packageId: 11539, stickerIds: 52114110-52114149} <br/>
+        /// </remarks>
         /// <exception cref="ArgumentOutOfRangeException">
         /// Thrown when count is greater than 5.
         /// </exception>

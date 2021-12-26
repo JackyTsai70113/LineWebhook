@@ -1,15 +1,10 @@
-﻿using BL.Services.Excel;
-using Core.Domain.DTO.TWSE;
+﻿using Core.Domain.DTO.TWSE;
 using Core.Domain.Enums;
 using Core.Domain.Utilities;
-
-//using ExcelDataReader.Log;
 using isRock.LineBot;
-using Newtonsoft.Json;
 using Serilog;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -235,7 +230,7 @@ namespace BL.Services.TWSE_Stock {
             string dateStr = dateTime.ToString("yyyyMMdd");
             string uri = twseUri + "?response=json&date=" + dateStr;
             string responseBody = RequestUtility.GetStringFromGetRequest(uri);
-            tradingVolume = JsonConvert.DeserializeObject<TradingVolume>(responseBody);
+            tradingVolume = JsonUtility.Deserialize<TradingVolume>(responseBody);
 
             if (tradingVolume.stat != "OK") {
                 Serilog.Log.Debug(

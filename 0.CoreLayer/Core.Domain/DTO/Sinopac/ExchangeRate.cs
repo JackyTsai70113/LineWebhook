@@ -8,8 +8,6 @@ namespace Core.Domain.DTO.Sinopac {
     public class ExchangeRate {
         public string TitleInfo { get; set; }
         public string QueryDate { get; set; }
-
-        //public string HeadInfo { get; set; }
         public List<Info> SubInfo { get; set; }
 
         public string MemoUrl { get; set; }
