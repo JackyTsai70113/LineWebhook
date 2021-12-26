@@ -12,9 +12,9 @@ env:
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
   TELEGRAM_JACKY_CHAT_ID: ${{secrets.TELEGRAM_JACKY_CHAT_ID}}
 
-  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-  RUN_REGION: us-west1
-  SERVICE_NAME: ${{ secrets.GCP_SERVICE_NAME }}
+#   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+#   RUN_REGION: us-west1
+#   SERVICE_NAME: ${{ secrets.GCP_SERVICE_NAME }}
 
 jobs:
   gcp-setup-build-deploy:
@@ -29,27 +29,27 @@ jobs:
         run: |
           docker build . --tag gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
 
-      - name: Setup gcloud CLI
-        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
-        with:
-          service_account_email: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
-          service_account_key: ${{ secrets.GCP_SERVICE_APPLICATION_CREDENTIALS }}
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
+#       - name: Setup gcloud CLI
+#         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+#         with:
+#           service_account_email: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
+#           service_account_key: ${{ secrets.GCP_SERVICE_APPLICATION_CREDENTIALS }}
+#           project_id: ${{ secrets.GCP_PROJECT_ID }}
 
-      - name: Configure Docker to use Google Cloud Platform
-        run: 'gcloud auth configure-docker --quiet'
+#       - name: Configure Docker to use Google Cloud Platform
+#         run: 'gcloud auth configure-docker --quiet'
 
-      - name: Push image to Google Cloud Container Registry
-        run: docker push gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
+#       - name: Push image to Google Cloud Container Registry
+#         run: docker push gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
 
-      - name: Deploy image to Cloud Run
-        run: |-
-          gcloud run deploy "$SERVICE_NAME" \
-            --quiet \
-            --region "$RUN_REGION" \
-            --image "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA" \
-            --platform "managed" \
-            --allow-unauthenticated
+#       - name: Deploy image to Cloud Run
+#         run: |-
+#           gcloud run deploy "$SERVICE_NAME" \
+#             --quiet \
+#             --region "$RUN_REGION" \
+#             --image "gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA" \
+#             --platform "managed" \
+#             --allow-unauthenticated
 
       - name: Set current date as env variable
         run: echo "NOW=$(date +'%Y/%m/%d %H:%M')" >> $GITHUB_ENV
