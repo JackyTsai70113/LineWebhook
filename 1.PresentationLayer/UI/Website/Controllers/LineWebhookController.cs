@@ -8,10 +8,9 @@ using BL.Services.Line.Interfaces;
 using isRock.LineBot;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Serilog;
-using System.Threading;
-using System.Threading.Tasks;
+using Core.Domain.Utilities;
+using System.Text;
 
 namespace Website.Controllers {
 
@@ -51,7 +50,7 @@ namespace Website.Controllers {
 
                 Log.Information($"========== From LINE SERVER ==========");
                 Log.Information($"requestModel:");
-                Log.Information($"{JsonConvert.SerializeObject(receivedMessage, Formatting.Indented)}");
+                Log.Information($"{JsonUtility.Serialize(receivedMessage, isIndented:true)}");
                 Log.Information($"====================");
 
                 List<MessageBase> messages = _lineWebhookService.GetReplyMessages(receivedMessage);
@@ -59,7 +58,7 @@ namespace Website.Controllers {
                 // Add 紀錄發至LineServer的requestBody
                 Log.Information($"========== TO LINE SERVER ==========");
                 Log.Information($"messages:");
-                Log.Information($"{JsonConvert.SerializeObject(messages, Formatting.Indented)}");
+                Log.Information($"{JsonUtility.Serialize(messages, isIndented:true)}");
                 Log.Information($"====================");
 
                 string replyToken = receivedMessage.events.FirstOrDefault().replyToken;
@@ -71,12 +70,11 @@ namespace Website.Controllers {
                         int responseStartIndex = ex.ToString().IndexOf("Response") + "Response:".Count();
                         int responseEndIndex = ex.ToString().IndexOf("Endpoint");
                         string responseStr = ex.ToString()[responseStartIndex..responseEndIndex].Trim();
-                        LineHttpPostException response =
-                            JsonConvert.DeserializeObject<LineHttpPostException>(responseStr);
+                        LineHttpPostException response = JsonUtility.Deserialize<LineHttpPostException>(responseStr);
                         Log.Error(
                             $"LineWebhookService.ResponseToLineServer 錯誤, replyToken: {replyToken},\n" +
-                            $"messages: {JsonConvert.SerializeObject(messages, Formatting.Indented)},\n" +
-                            $"response: {JsonConvert.SerializeObject(response, Formatting.Indented)}");
+                            $"messages: {JsonUtility.Serialize(messages, isIndented:true)},\n" +
+                            $"response: {JsonUtility.Serialize(response, isIndented:true)}");
                         // _lineNotifyBotService.PushMessage_Jacky($"message: {response.message}, " +
                         //     $"details: {JsonConvert.SerializeObject(response.details)}");
                         return Content($"[Index] JLineBot 無法發送，requestBody: {requestBody}, ex: {ex}");
@@ -90,51 +88,30 @@ namespace Website.Controllers {
         }
 
         [HttpPost]
-        [Route("index2")]
-        public IActionResult Index2(dynamic requestBody) {
-//             try {
-//                 //處理requestModel
-//                 ReceivedMessage receivedMessage = Utility.Parsing(requestBody.ToString());
-// 
-//                 Log.Information($"========== From LINE SERVER ==========");
-//                 Log.Information($"requestModel:");
-//                 Log.Information($"{JsonConvert.SerializeObject(receivedMessage, Formatting.Indented)}");
-//                 Log.Information($"====================");
-// 
-//                 List<MessageBase> messages = _lineWebhookService.GetReplyMessages(receivedMessage);
-// 
-//                 // Add 紀錄發至LineServer的requestBody
-//                 Log.Information($"========== TO LINE SERVER ==========");
-//                 Log.Information($"messages:");
-//                 Log.Information($"{JsonConvert.SerializeObject(messages, Formatting.Indented)}");
-//                 Log.Information($"====================");
-// 
-//                 string replyToken = receivedMessage.events.FirstOrDefault().replyToken;
-//                 try {
-//                     string result = lineBot.ReplyMessage(replyToken, messages);
-//                     return Content(requestBody + "\n" + result);
-//                 } catch (Exception ex) {
-//                     if (ex.InnerException is WebException) {
-//                         int responseStartIndex = ex.ToString().IndexOf("Response") + "Response:".Count();
-//                         int responseEndIndex = ex.ToString().IndexOf("Endpoint");
-//                         string responseStr = ex.ToString()[responseStartIndex..responseEndIndex].Trim();
-//                         LineHttpPostException response =
-//                             JsonConvert.DeserializeObject<LineHttpPostException>(responseStr);
-//                         Log.Error(
-//                             $"LineWebhookService.ResponseToLineServer 錯誤, replyToken: {replyToken},\n" +
-//                             $"messages: {JsonConvert.SerializeObject(messages, Formatting.Indented)},\n" +
-//                             $"response: {JsonConvert.SerializeObject(response, Formatting.Indented)}");
-//                         // _lineNotifyBotService.PushMessage_Jacky($"message: {response.message}, " +
-//                         //     $"details: {JsonConvert.SerializeObject(response.details)}");
-//                         return Content($"[Index] JLineBot 無法發送，requestBody: {requestBody}, ex: {ex}");
-//                     }
-//                     throw;
-//                 }
-//             } catch (Exception ex) {
-//                 Log.Error($"[Index] requestBody: {requestBody}, ex: {ex}");
-//                 return Content($"Index 發生錯誤，requestBody: {requestBody}, ex: {ex}");
-//             }
-            return Content($"Index 發生錯誤，requestBody: {requestBody}");
+        [Route("TestForRequest")]
+        public IActionResult TestForRequest(dynamic requestBody) {
+            try {
+                //處理requestModel
+                ReceivedMessage receivedMessage = Utility.Parsing(requestBody.ToString());
+
+                StringBuilder sb = new StringBuilder();
+                sb.Append($"========== From LINE SERVER ==========");
+                sb.Append($"requestModel:");
+                sb.Append($"{JsonUtility.Serialize(receivedMessage, isIndented:true, isIgnorezNullValue:true)}");
+                sb.Append($"====================");
+
+                List<MessageBase> messages = _lineWebhookService.GetReplyMessages(receivedMessage);
+
+                // Add 紀錄發至LineServer的requestBody
+                sb.Append($"========== TO LINE SERVER ==========");
+                sb.Append($"messages:");
+                sb.Append($"{JsonUtility.Serialize(messages, isIndented:true, isIgnorezNullValue:true)}");
+                sb.Append($"====================");
+                return Ok(sb.ToString());
+            } catch (Exception ex) {
+                Log.Error($"[Index] requestBody: {requestBody}, ex: {ex}");
+                return Content($"Index 發生錯誤，requestBody: {requestBody}, ex: {ex}");
+            }
         }
 
         [HttpPost]
@@ -143,7 +120,7 @@ namespace Website.Controllers {
             string requestBodyStr = requestBody.ToString();
             // _logger.LogInformation("================================");
             // _logger.LogInformation(requestBodyStr);
-            return Ok();
+            return Ok(requestBodyStr);
         }
 
         [HttpGet]
