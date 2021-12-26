@@ -20,7 +20,8 @@ namespace Website.Controllers {
         }
 
         public IActionResult Test() {
-            return Content(DateTime.UtcNow.AddHours(8).ToString());
+            string s = $"網站正常運作中，時間: {DateTime.UtcNow.AddHours(8)}";
+            return Content(s);
         }
 
         public IActionResult Index() {
