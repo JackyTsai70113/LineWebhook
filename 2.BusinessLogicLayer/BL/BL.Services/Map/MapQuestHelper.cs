@@ -15,7 +15,7 @@ namespace BL.Services.Map {
         /// <summary>
         /// mapQuest 的 Api key
         /// </summary>
-        private static readonly string _mapQuest_Key = ConfigService.MapQuest_Key;
+        private static readonly string mapQuest_Key = ConfigService.MapQuest_Key;
 
         /// <summary>
         /// 透過地址取得經緯度
@@ -27,7 +27,7 @@ namespace BL.Services.Map {
             address = "臺灣" + address;
             var encodedAddress = HttpUtility.UrlEncode(address, Encoding.GetEncoding("UTF-8"));
             string uri = "http://www.mapquestapi.com/geocoding/v1/address?" +
-                "key=" + _mapQuest_Key + "&" +
+                "key=" + mapQuest_Key + "&" +
                 "inFormat=kvp&" +
                 "outFormat=json&" +
                 "location=" + encodedAddress + "&" +

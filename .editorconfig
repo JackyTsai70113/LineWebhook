@@ -222,7 +222,7 @@ csharp_preserve_single_line_statements = true
 dotnet_diagnostic.RS0037.severity = none
 
 # IDE1006: 命名樣式
-dotnet_diagnostic.IDE1006.severity = false
+dotnet_diagnostic.IDE1006.severity = none
 
 # IDE0002: 簡化成員存取
 dotnet_diagnostic.IDE0002.severity = none

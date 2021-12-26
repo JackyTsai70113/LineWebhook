@@ -16,7 +16,7 @@ env:
   RUN_REGION: us-west1
   SERVICE_NAME: ${{ secrets.GCP_SERVICE_NAME }}
 
-jobs: 
+jobs:
   gcp-setup-build-deploy:
     name: Setup, Build, and Deploy
     runs-on: ubuntu-latest
@@ -68,6 +68,6 @@ jobs:
           docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
           heroku container:push web -a $APP_NAME
           heroku container:release web -a $APP_NAME
+
 #          curl -X GET "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage?chat_id=$TELEGRAM_JACKY_CHAT_ID&text=佈版完成 ($NOW) $TOP_COMMIT_MESSAGE"
 #          curl -H "Authorization: Bearer $LINE_NOTIFY" -d "message=佈版完成 ($NOW) $TOP_COMMIT_MESSAGE" https://notify-api.line.me/api/notify
-  
