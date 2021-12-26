@@ -43,8 +43,12 @@ namespace BL.Services.Line {
                 default:
                     throw new ArgumentException($"[GetCarouselTemplateMessage] 排序類型錯誤! (querySortType: {querySortType})");
             }
-            var dates = HolidayHelper.GetTheMostRecentBusinessDay(2);
-            var columns = new List<Column> {
+            //var dates = HolidayHelper.GetTheMostRecentBusinessDay(2);
+            List<DateTime> dates = new List<DateTime>{
+                new DateTime(2021, 12, 21),
+                new DateTime(2021, 12, 22)
+            };
+            List<Column> columns = new List<Column> {
                 new Column() {
                     thumbnailImageUrl = new Uri("https://i.imgur.com/n82BOcq.png"),
                     title = $"計算外資及陸資，投信綜合{chineseWord}股數",
