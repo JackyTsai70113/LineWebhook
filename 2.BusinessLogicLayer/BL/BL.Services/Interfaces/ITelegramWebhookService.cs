@@ -10,11 +10,6 @@
         string Response();
 
         /// <summary>
-        /// 測試
-        /// </summary>
-        void Test();
-
-        /// <summary>
         /// 通知
         /// </summary>
         /// <param name="message">通知訊息</param>
