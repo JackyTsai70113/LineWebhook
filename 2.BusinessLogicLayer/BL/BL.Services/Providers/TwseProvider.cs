@@ -32,7 +32,11 @@ namespace BL.Services.Providers {
             CultureInfo culture = new CultureInfo("zh-TW");
             culture.DateTimeFormat.Calendar = new TaiwanCalendar();
             List<DateTime> holidayDates =
-                holidaySchedules.Select(s => DateTime.ParseExact(s.Date.PadLeft(8, '0'), "yMMdd", culture)).ToList();
+                holidaySchedules.Select(s => 
+                    new DateTime(1911 + int.Parse(s.Date.Substring(0, 3)), 
+                                int.Parse(s.Date.Substring(3, 2)),
+                                int.Parse(s.Date.Substring(5, 2))))
+                                .ToList();
             return holidayDates;
         }
     }
