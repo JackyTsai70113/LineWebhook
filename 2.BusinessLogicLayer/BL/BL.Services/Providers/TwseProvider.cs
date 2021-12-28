@@ -29,7 +29,7 @@ namespace BL.Services.Providers {
             List<HolidaySchedule> holidaySchedules = 
                 JsonUtility.Deserialize<List<HolidaySchedule>>(apiResult);
 
-            CultureInfo culture = new CultureInfo("zh-TW", true);
+            CultureInfo culture = new CultureInfo("zh-TW");
             culture.DateTimeFormat.Calendar = new TaiwanCalendar();
             List<DateTime> holidayDates =
                 holidaySchedules.Select(s => DateTime.ParseExact(s.Date.PadLeft(8, '0'), "yMMdd", culture)).ToList();
