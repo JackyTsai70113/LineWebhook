@@ -67,6 +67,7 @@ namespace Website.Controllers {
         [HttpGet]
         [Route("test")]
         public ActionResult Test() {
+            telegramWebhookService.Test();
             return Ok();
         }
     }

@@ -1,3 +1,5 @@
+using System;
+
 namespace Website.Models {
     public class ErrorViewModel {
         public string RequestId { get; set; }

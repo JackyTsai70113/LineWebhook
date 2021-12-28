@@ -118,13 +118,14 @@ namespace Website.Controllers {
         [Route("notify")]
         public IActionResult Notify(dynamic requestBody) {
             string requestBodyStr = requestBody.ToString();
+            // _logger.LogInformation("================================");
+            // _logger.LogInformation(requestBodyStr);
             return Ok(requestBodyStr);
         }
 
         [HttpGet]
         [Route("test")]
         public IActionResult Test() {
-            _lineNotifyBotService.PushMessage_Jacky("test");
             return Ok("test");
         }
     }
