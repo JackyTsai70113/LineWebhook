@@ -20,7 +20,7 @@ namespace BL.Services.Holiday {
             List<DateTime> theMostRecentBusinessDays = new List<DateTime>();
             DateTime currentDateTime = new DateTime();
             if(startDateTime == new DateTime()){
-                startDateTime = DateTime.UtcNow.AddHours(8);
+                currentDateTime = DateTime.UtcNow.AddHours(8);
             }
             List<DateTime> holidays = TwseProvider.GetHolidaySchedule();
             while(theMostRecentBusinessDays.Count < count){
