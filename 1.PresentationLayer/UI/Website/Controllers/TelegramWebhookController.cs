@@ -22,7 +22,6 @@ namespace Website.Controllers {
         /// <summary>
         /// TelegramWebhook的入口，負責解讀line的訊息。
         /// </summary>
-        /// <param name="requestBody"></param>
         /// <returns></returns>
         [HttpGet]
         [Route("index2")]

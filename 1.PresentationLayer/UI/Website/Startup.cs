@@ -47,17 +47,29 @@ namespace Website {
                 options.UseSqlServer(Configuration.GetConnectionString("LineWebhookContext")));
 
             services.AddMyService();
-            //services.AddSingleton();
-            //services.AddScoped<ILineWebhookService, LineWebhookService>(ConfigService.Line_ChannelAccessToken);
-            //services.AddTransient();
-            //services.AddCronJob<NotifyCronJobService>(c => {
-            //    c.TimeZoneInfo = TimeZoneInfo.Utc;
-            //    c.CronExpression = @"*/2 * * * *";
-            //});
-            //services.AddCronJob<NotifyCronJobService>(c => {
-            //    c.TimeZoneInfo = TimeZoneInfo.Utc;
-            //    c.CronExpression = @"4 17 * * *";
-            //});
+
+            // Register the Swagger services
+            services.AddSwaggerDocument(config =>
+            {
+                config.PostProcess = document =>
+                {
+                    document.Info.Version = "v1";
+                    document.Info.Title = "LineWebhook API";
+                    document.Info.Description = "A simple ASP.NET Core web API";
+                    document.Info.TermsOfService = "None";
+                    document.Info.Contact = new NSwag.OpenApiContact
+                    {
+                        Name = "Jacky Tsai",
+                        Email = string.Empty,
+                        Url = string.Empty
+                    };
+                    document.Info.License = new NSwag.OpenApiLicense
+                    {
+                        Name = string.Empty,
+                        Url = string.Empty
+                    };
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,6 +81,10 @@ namespace Website {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            // Register the Swagger generator and the Swagger UI middlewares
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
 
             app.UseSerilogRequestLogging();
 
@@ -95,7 +111,6 @@ namespace Website {
         /// 根據微軟建議，透過延伸方法將註冊服務獨立封裝出來
         /// </summary>
         /// <param name="services">collection of service</param>
-        /// <param name="configuration">configuration</param>
         /// <remarks>https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-3.1</remarks>
         public static void AddMyService(this IServiceCollection services) {
             services.AddScoped<IExchangeRateService, ExchangeRateService>();

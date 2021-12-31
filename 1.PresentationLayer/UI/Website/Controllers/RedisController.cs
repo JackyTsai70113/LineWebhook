@@ -299,11 +299,11 @@ namespace Website.Controllers {
     /// </summary>
     public class KeyValue{
         /// <summary>
-        /// key
+        /// 鍵
         /// </summary>
         public string key { get; set; }
         /// <summary>
-        /// value
+        /// 值
         /// </summary>
         public string value { get; set; }
     }

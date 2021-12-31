@@ -39,7 +39,7 @@ namespace Website.Controllers {
         /// <summary>
         /// LineWebhook的入口，解讀line的訊息並回覆訊息。
         /// </summary>
-        /// <param name="requestBodyStr">從line接收到的訊息字串</param>
+        /// <param name="requestBody">從line接收到的訊息字串</param>
         /// <returns>API 結果</returns>
         [HttpPost]
         [Route("index")]
