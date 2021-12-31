@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace BL.Services.Cache {
 
     public interface ICacheService {
 
-        void Set<T>(string key, T value);
+        bool Set<T>(string key, T value);
 
-        void Set<T>(string key, T value, TimeSpan timeout);
+        bool Set<T>(string key, T value, TimeSpan timeout);
 
         /// <summary>
         /// 透過pattern取得所有符合的key (*: 任意字串)
@@ -19,8 +18,8 @@ namespace BL.Services.Cache {
 
         T Get<T>(string key);
 
-        bool Remove(string key);
+        bool Delete(string key);
 
-        bool IsInCache(string key);
+        bool ExistKeyValue(string key);
     }
 }

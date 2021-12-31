@@ -1,15 +1,12 @@
-﻿using System;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Text;
 using BL.Services;
 using BL.Services.Cache;
+using BL.Services.Cache.Redis;
 using BL.Services.Interfaces;
 using BL.Services.Line;
 using BL.Services.Line.Interfaces;
 using BL.Services.Map;
 using BL.Services.Sinopac;
-using Core.Domain.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
