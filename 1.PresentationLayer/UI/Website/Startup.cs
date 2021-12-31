@@ -70,6 +70,10 @@ namespace Website {
                     };
                 };
             });
+
+            services.AddLogging(builder => {
+                builder.AddSerilog();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -86,7 +90,7 @@ namespace Website {
             app.UseOpenApi();
             app.UseSwaggerUi3();
 
-            app.UseSerilogRequestLogging();
+            // app.UseSerilogRequestLogging();
 
             // 強迫將 HTTP 全部轉向 HTTPS
             app.UseHttpsRedirection();

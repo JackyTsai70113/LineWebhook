@@ -126,6 +126,7 @@ namespace Website.Controllers {
         [HttpGet]
         [Route("test")]
         public IActionResult Test() {
+            _logger.LogInformation("123");
             return Ok("test");
         }
     }
