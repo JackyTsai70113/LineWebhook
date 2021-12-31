@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using System;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -8,23 +10,12 @@ namespace Website {
     public class Program {
 
         public static void Main(string[] args) {
-            //Serilog
-            //不要印出Method Name -> 吃資源
-            //string template = "{Timestamp:HH:mm:ss fff} [{Level:u3}] [{SourceContext}] {Message}{NewLine}{Exception}";
             IConfigurationRoot configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
+                .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", true)
                 .Build();
 
-            // Log.Logger = new LoggerConfiguration()
-            //         .MinimumLevel.Verbose()
-            //         .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-            //         .Enrich.FromLogContext()
-            //         .WriteTo.Console()
-            //         //.ReadFrom.AppSettings()
-            //         //.WriteTo.File("Logs/.txt", rollingInterval: RollingInterval.Day, outputTemplate: template)
-            //         .WriteTo.File("Logs/123.txt")
-            //         //.WriteTo.Seq("http://localhost:5341")
-            //         .CreateLogger();
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)
                 .CreateLogger();
