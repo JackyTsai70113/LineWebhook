@@ -118,15 +118,18 @@ namespace Website.Controllers {
         [Route("notify")]
         public IActionResult Notify(dynamic requestBody) {
             string requestBodyStr = requestBody.ToString();
-            // _logger.LogInformation("================================");
-            // _logger.LogInformation(requestBodyStr);
             return Ok(requestBodyStr);
         }
 
         [HttpGet]
         [Route("test")]
         public IActionResult Test() {
-            _logger.LogInformation("1234");
+            _logger.LogInformation("Info!");
+            _logger.LogWarning("Warning!");
+            _logger.LogTrace("Trace!");
+            _logger.LogDebug("Debug");
+            _logger.LogCritical("Critical");
+            _logger.LogError("Error");
             return Ok("test");
         }
     }

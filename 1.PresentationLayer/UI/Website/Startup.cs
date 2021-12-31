@@ -90,10 +90,10 @@ namespace Website {
             app.UseOpenApi();
             app.UseSwaggerUi3();
 
-            // app.UseSerilogRequestLogging();
 
             // 強迫將 HTTP 全部轉向 HTTPS
             app.UseHttpsRedirection();
+            app.UseSerilogRequestLogging();
             // 服務靜態檔案傳輸
             app.UseStaticFiles();
 

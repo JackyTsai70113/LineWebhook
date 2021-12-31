@@ -17,6 +17,7 @@ namespace Website {
                 .Build();
 
             Log.Logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
                 .ReadFrom.Configuration(configuration)
                 .CreateLogger();
             CreateHostBuilder(args).Build().Run();
@@ -24,7 +25,7 @@ namespace Website {
 
         public static IHostBuilder CreateHostBuilder(string[] args) {
             return Host.CreateDefaultBuilder(args)
-                // .UseSerilog()
+                .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder => {
                     webBuilder.UseStartup<Startup>();
                 });
