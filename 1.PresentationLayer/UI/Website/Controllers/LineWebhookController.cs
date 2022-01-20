@@ -124,6 +124,7 @@ namespace Website.Controllers {
         [HttpGet]
         [Route("test")]
         public IActionResult Test() {
+            _logger.LogInformation("Hello, {Name}!", Environment.UserName);
             _logger.LogInformation("Info!");
             _logger.LogWarning("Warning!");
             _logger.LogTrace("Trace!");
