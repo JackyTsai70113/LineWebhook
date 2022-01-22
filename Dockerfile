@@ -16,8 +16,8 @@ COPY . ./
 RUN dotnet publish -c Release -o ./output
 
 # Build runtime image
-#FROM mcr.microsoft.com/dotnet/core/aspnet:$VERSION AS runtime
-WORKDIR /app
+FROM mcr.microsoft.com/dotnet/core/aspnet:$VERSION AS runtime
+WORKDIR /apps
 COPY --from=build /app/output .
 #ENV DOTNET_RUNNING_IN_CONTAINER=true ASPNETCORE_URLS=http://+:8080
 
