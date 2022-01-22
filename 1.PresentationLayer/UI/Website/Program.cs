@@ -16,10 +16,10 @@ namespace Website {
                 .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", true)
                 .Build();
 
-            string seqServerUrl = configuration.GetSection("Seq").GetSection("ServerUrl").Value;
+            //string seqServerUrl = configuration.GetSection("Seq").GetSection("ServerUrl").Value;
             
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.Seq(seqServerUrl)
+                //.WriteTo.Seq(seqServerUrl)
                 .Enrich.FromLogContext()
                 .ReadFrom.Configuration(configuration)
                 .CreateLogger();
