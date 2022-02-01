@@ -3,28 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using BL.Services.Interfaces;
 using Core.Domain.DTO;
-using Core.Domain.DTO.Map;
 using Core.Domain.Utilities;
 
 namespace BL.Services {
 
     public class MaskInstitutionService : IMaskInstitutionService {
-        private readonly IMapHereService _mapHereService;
 
-        public MaskInstitutionService(IMapHereService mapHereService) {
-            _mapHereService = mapHereService;
+        public MaskInstitutionService() {
+
         }
 
         /// <summary>
-        /// 取得 距離最短的口罩機構列表
+        /// 取得 口罩機構列表
         /// </summary>
         /// <param name="address">起始地址</param>
-        /// <param name="number">給定數量</param>
         /// <returns>口罩機構列表</returns>
-        public List<MaskInstitution> GetMaskInstitutionsByComputingDistance(string address, int number = int.MaxValue) {
+        public List<MaskInstitution> GetMaskInstitutions(string address) {
             string addressSecondDivision = AddressUtility.GetSecondDivision(address);
-            var allMaskInstitutions = GetMaskInstitutionsFromAddressSuffix(addressSecondDivision);
-            return GetMaskInstitutionsByComputingRelaticeDistance(address, allMaskInstitutions, number);
+            List<MaskInstitution> allMaskInstitutions =
+                GetMaskInstitutionsFromAddressSuffix(addressSecondDivision);
+            return allMaskInstitutions;
         }
 
         /// <summary>
@@ -44,15 +42,19 @@ namespace BL.Services {
         /// <param name="number">給定數量</param>
         /// <returns>口罩機構列表</returns>
         private List<MaskInstitution> GetMaskInstitutionsFromAddressSuffix(string addressSuffix, int number = int.MaxValue) {
-            IEnumerable<MaskInstitution> maskDataList = GetMaskInstitutions();
-
+            IEnumerable<MaskInstitution> maskDatas = GetMaskInstitutions();
             List<MaskInstitution> result = new List<MaskInstitution>();
             int count = 0;
 
             int strLength = addressSuffix.Length;
             addressSuffix = addressSuffix.Replace("台", "臺");
-            foreach (var maskData in maskDataList) {
-                string maskDataAddressSuffix = maskData.Address.Substring(0, strLength).Replace("台", "臺");
+            string maskDataAddressSuffix;
+            foreach (var maskData in maskDatas) {
+                if (strLength == 3) {
+                    maskDataAddressSuffix = maskData.Address.Substring(3, strLength).Replace("台", "臺");
+                } else {
+                    maskDataAddressSuffix = maskData.Address.Substring(0, strLength).Replace("台", "臺");
+                }
                 if (addressSuffix == maskDataAddressSuffix) {
                     result.Add(maskData);
                     count++;
@@ -65,31 +67,13 @@ namespace BL.Services {
         }
 
         /// <summary>
-        /// 根據距離，取得給定數量的口罩資訊
-        /// </summary>
-        /// <param name="sourceAddress">起始地址</param>
-        /// <param name="maskInstitutions">口罩機構列表</param>
-        /// <param name="count">給定數量</param>
-        /// <returns>口罩機構列表</returns>
-        private List<MaskInstitution> GetMaskInstitutionsByComputingRelaticeDistance(
-            string sourceAddress, List<MaskInstitution> maskInstitutions, int count = int.MaxValue) {
-            LatLng sourceLatLng = _mapHereService.GetLatLngFromAddress(sourceAddress);
-            List<MaskInstitution> result = new List<MaskInstitution>();
-            result = maskInstitutions.OrderBy(mask => {
-                LatLng targetLatLng = _mapHereService.GetLatLngFromAddress(mask.Address);
-                return _mapHereService.GetTravelTimeFromTwoLatLngs(sourceLatLng, targetLatLng);
-            }).Take(count).ToList();
-            return result;
-        }
-
-        /// <summary>
         /// 以Api取得口罩機構迭代器
         /// </summary>
         /// <returns>口罩機構迭代器</returns>
         private IEnumerable<MaskInstitution> GetMaskInstitutions() {
-            string uri = "http://data.nhi.gov.tw/Datasets/Download.ashx?rid=A21030000I-D50001-001&l=https://data.nhi.gov.tw/resource/mask/maskdata.csv";
-            var maskDataStr = RequestUtility.GetStringFromGetRequest(uri);
-            var maskDataStrArr = maskDataStr.Split('\n');
+            string uri = "https://data.nhi.gov.tw/Datasets/Download.ashx?rid=A21030000I-D50001-001&l=https://data.nhi.gov.tw/resource/mask/maskdata.csv";
+            string maskDataStr = RequestUtility.GetStringFromGetRequest(uri);
+            string[] maskDataStrArr = maskDataStr.Split('\n');
             for (int i = 1; i < maskDataStrArr.Length - 1; i++) {
                 yield return ConvertToMaskInstitution(maskDataStrArr[i]);
             }

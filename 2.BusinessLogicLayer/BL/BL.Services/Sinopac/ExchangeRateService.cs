@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using BL.Services.Interfaces;
 using Core.Domain.DTO.Sinopac;
@@ -10,25 +11,23 @@ namespace BL.Services.Sinopac {
     public class ExchangeRateService : IExchangeRateService {
 
         /// <summary>
-        /// 取得LINE訊息列表
+        /// 取得換匯資訊
         /// </summary>
-        /// <returns>LINE訊息列表</returns>
-        public List<MessageBase> GetExchangeRateMessage() {
+        /// <param name="bankBuyingRate">銀行買入匯率</param>
+        /// <param name="bankSellingRate">銀行賣出匯率</param>
+        /// <param name="quotedDateTime">報價時間</param>
+        public void GetExchangeRate(out double bankBuyingRate, out double bankSellingRate,
+            out DateTime quotedDateTime) {
+
             List<ExchangeRate> exchangeRates = GetExchangeRate();
             Info info = exchangeRates[0].SubInfo[0];
+            bankBuyingRate = double.Parse(info.DataValue2);
+            bankSellingRate = double.Parse(info.DataValue3);
+
             string titleInfo = exchangeRates[0].TitleInfo;
             titleInfo = StringUtility.StripHtmlTag(titleInfo);
-            titleInfo = titleInfo.Substring(0, titleInfo.IndexOf('本'));
-            StringBuilder sb = new StringBuilder();
-            sb.Append("美金報價\n");
-            sb.Append("---------------------\n");
-            sb.Append($"銀行買入：{info.DataValue2}\n");
-            sb.Append($"銀行賣出：{info.DataValue3}");
-            sb.Append($"({titleInfo})\n");
-
-            return new List<MessageBase> {
-                new TextMessage(sb.ToString())
-            };
+            string quoteDatetimeStr = titleInfo.Substring(5, 19);
+            quotedDateTime = DateTime.Parse(quoteDatetimeStr);
         }
 
         /// <summary>

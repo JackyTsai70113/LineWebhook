@@ -5,13 +5,12 @@ using System.Text;
 using BL.Services.Base;
 using BL.Services.Interfaces;
 using BL.Services.Line;
+using BL.Services.Sinopac;
 using BL.Services.TWSE_Stock;
 using Core.Domain.DTO;
 using Core.Domain.DTO.Map;
 using Core.Domain.DTO.RequestDTO.CambridgeDictionary;
-using Core.Domain.DTO.Sinopac;
 using Core.Domain.Enums;
-using Core.Domain.Utilities;
 using DA.Managers.CambridgeDictionary;
 using DA.Managers.Interfaces;
 using isRock.LineBot;
@@ -24,17 +23,17 @@ namespace BL.Services {
         private readonly IMapHereService _mapHereService;
         private readonly IMaskInstitutionService _maskInstitutionService;
         private readonly LineMessageService _lineMessageService;
-        private readonly TradingVolumeService _tradingVolumeService;
+        private readonly ITradingVolumeService _tradingVolumeService;
 
         public LineWebhookService(
             IExchangeRateService exchangeRateService,
-            IMapHereService mapHereService,
-            IMaskInstitutionService maskInstitutionService) {
+            IMapHereService mapHereService, ITradingVolumeService tradingVolumeService) {
+
             _cambridgeDictionaryManager = new CambridgeDictionaryManager();
             _exchangeRateService = exchangeRateService;
             _lineMessageService = new LineMessageService();
-            _maskInstitutionService = maskInstitutionService;
-            _tradingVolumeService = new TradingVolumeService();
+            _maskInstitutionService = new MaskInstitutionService();
+            _tradingVolumeService = tradingVolumeService;
             _mapHereService = mapHereService;
         }
 
@@ -45,9 +44,9 @@ namespace BL.Services {
         /// <returns>Line回應訊息</returns>
         public List<MessageBase> GetReplyMessages(ReceivedMessage receivedMessage) {
             List<MessageBase> messages;
-            string type = receivedMessage.events.FirstOrDefault().type;
+            string type = receivedMessage.events[0].type;
             if (type == "message") {
-                Message message = receivedMessage.events.FirstOrDefault().message;
+                Message message = receivedMessage.events[0].message;
                 switch (message.type) {
                     case "text":
                         messages = GetMessagesByText(message.text);
@@ -64,7 +63,47 @@ namespace BL.Services {
                         break;
                 }
             } else if (type == "postback") {
-                Postback postback = receivedMessage.events.FirstOrDefault().postback;
+                Postback postback = receivedMessage.events[0].postback;
+                Params @params = postback.Params;
+                if (postback.Params != null) {
+                    messages = GetMessagesByText(postback.data + " " + @params.datetime + @params.date + @params.time);
+                } else {
+                    messages = GetMessagesByText(postback.data);
+                }
+            } else {
+                string errorMsg = $"[GetReplyMessages] 判讀訊息並傳回Line回應訊息 錯誤";
+                throw new ArgumentException(errorMsg);
+            }
+            return messages;
+        }
+
+        /// <summary>
+        /// 依照RequestModel 判讀訊息並傳回Line回應訊息
+        /// </summary>
+        /// <param name="receivedMessage">從line接收到的訊息字串</param>
+        /// <returns>Line回應訊息</returns>
+        public List<MessageBase> GetCommendTypeAndText(ReceivedMessage receivedMessage) {
+            List<MessageBase> messages;
+            string type = receivedMessage.events[0].type;
+            if (type == "message") {
+                Message message = receivedMessage.events[0].message;
+                switch (message.type) {
+                    case "text":
+                        messages = GetMessagesByText(message.text);
+                        break;
+                    case "location":
+                        messages = GetMaskInstitutions(message.address);
+                        break;
+                    case "sticker":
+                        StickerMessage stickerMessage = _lineMessageService.GetStickerMessage(message);
+                        messages = GetMessageBySticker(stickerMessage);
+                        break;
+                    default:
+                        messages = new List<MessageBase> { new TextMessage("目前未支援此資料格式: " + message.type) };
+                        break;
+                }
+            } else if (type == "postback") {
+                Postback postback = receivedMessage.events[0].postback;
                 Params @params = postback.Params;
                 if (postback.Params != null) {
                     messages = GetMessagesByText(postback.data + " " + @params.datetime + @params.date + @params.time);
@@ -95,15 +134,25 @@ namespace BL.Services {
         /// </summary>
         /// <param name="text">字串內容</param>
         /// <returns>回應結果</returns>
-        private List<MessageBase> GetMessagesByText(string text) {
+        public List<MessageBase> GetMessagesByText(string text) {
             string textStr;
             try {
                 switch (text.Split(' ')[0]) {
-                    case "":
-                        textStr = GetCangjieImageMessages(text.Substring(1));
+                    case "cj":
+                        textStr = GetCangjieImageMessages(text.Substring(3));
                         return new List<MessageBase> { _lineMessageService.GetTextMessage(textStr) };
                     case "sp":
-                        return _exchangeRateService.GetExchangeRateMessage();
+                        _exchangeRateService.GetExchangeRate(
+                            out double buyingRate, out double sellingRate,
+                            out DateTime quotedDateTime);
+
+                        textStr = _lineMessageService.ConvertToExchangeRateTextMessage(
+                            buyingRate, sellingRate, quotedDateTime
+                        );
+
+                        var textMessage = _lineMessageService.GetTextMessage(textStr);
+
+                        return new List<MessageBase> { textMessage };
                     case "st":
                         return GetStickerMessages(text);
                     case "cd":
@@ -159,6 +208,76 @@ namespace BL.Services {
             }
         }
 
+        public string GetReplyTextByText(string text) {
+            string textStr;
+            try {
+                switch (text.Split(' ')[0]) {
+                    case "cj":
+                        textStr = GetCangjieImageMessages(text.Substring(3));
+                        return textStr;
+                    case "sp":
+                        _exchangeRateService.GetExchangeRate(
+                            out double buyingRate, out double sellingRate,
+                            out DateTime quotedDateTime);
+
+                        textStr = _lineMessageService.ConvertToExchangeRateTextMessage(
+                            buyingRate, sellingRate, quotedDateTime
+                        );
+
+                        return textStr;
+                    default:
+                        return text;
+                }
+            } catch (Exception ex) {
+                string errorMsg = $"[GetReplyTextByText] text: {text}, ex: {ex}";
+                Log.Error(errorMsg);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// 依照字串內容分析命令類型及參數
+        /// </summary>
+        /// <param name="text">字串內容</param>
+        /// <param name="commandType">命令類型</param>
+        /// <param name="commandArgs">命令參數array</param>
+        private void GetCommandTypeAndArgsByText(string text, out LineWebhookCommandTypeEnum commandType, out string[] commandArgs) {
+            try {
+                commandArgs = text.Substring(3).Split(' ');
+                switch (text.Split(' ')[0]) {
+                    case "cj":
+                        commandType = LineWebhookCommandTypeEnum.Empty;
+                        break;
+                    case "cd":
+                        commandType = LineWebhookCommandTypeEnum.CambridgeDictionary;
+                        break;
+                    case "cdd":
+                        commandType = LineWebhookCommandTypeEnum.CambridgeDictionary;
+                        break;
+                    case "sp":
+                        commandType = LineWebhookCommandTypeEnum.SinoPac;
+                        break;
+                    case "st":
+                        commandType = LineWebhookCommandTypeEnum.Sticker;
+                        break;
+                    case "tv":
+                        commandType = LineWebhookCommandTypeEnum.TradingVolume;
+                        break;
+                    case "tvv":
+                        commandType = LineWebhookCommandTypeEnum.TradingVolume;
+                        break;
+                    default:
+                        commandType = LineWebhookCommandTypeEnum.None;
+                        commandArgs = text.Split(' ');
+                        break;
+                }
+            } catch (Exception ex) {
+                string errorMsg = $"[GetCommandTypeAndArgsByText] text: {text}, ex: {ex}";
+                Log.Error(errorMsg);
+                throw;
+            }
+        }
+
         private List<MessageBase> GetStickerMessages(string text) {
             int packageId = int.Parse(text.Split(' ')[1]);
             int stickerId = int.Parse(text.Split(' ')[2]);
@@ -176,7 +295,16 @@ namespace BL.Services {
         /// <param name="address">指定地址</param>
         /// <returns>LOG紀錄</returns>
         private List<MessageBase> GetMaskInstitutions(string address) {
-            List<MaskInstitution> topFiveMaskInstitutions = _maskInstitutionService.GetMaskInstitutionsByComputingDistance(address, 5);
+            List<MaskInstitution> maskInstitutions = _maskInstitutionService.GetMaskInstitutions(address);
+
+            Dictionary<string, MaskInstitution> maskInstitutionDict = maskInstitutions.ToDictionary(m => m.Address);
+
+            List<string> orderedAddress = _mapHereService.GetAddressInOrder(address, maskInstitutionDict.Keys.ToList());
+
+            List<MaskInstitution> topFiveMaskInstitutions = new List<MaskInstitution>();
+            for (int i = 0; i < 5 && i < orderedAddress.Count(); i++) {
+                topFiveMaskInstitutions.Add(maskInstitutionDict[orderedAddress[i]]);
+            }
 
             if (topFiveMaskInstitutions.Count == 0) {
                 return new List<MessageBase> { _lineMessageService.GetTextMessage($"所在位置({address})沒有相關藥局") };
@@ -241,7 +369,7 @@ namespace BL.Services {
             }
         }
 
-        private string GetCangjieImageMessages(string texts) {
+        public string GetCangjieImageMessages(string texts) {
             try {
                 Encoding big5 = Encoding.GetEncoding("big5");
                 var CJDomain = "http://input.foruto.com/cjdict/Images/CJZD_JPG/";

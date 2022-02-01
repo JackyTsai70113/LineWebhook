@@ -1,7 +1,9 @@
-﻿using Core.Domain.DTO.TWSE;
+﻿using BL.Services.Interfaces;
+using Core.Domain.DTO.TWSE;
 using Core.Domain.Enums;
 using Core.Domain.Utilities;
 using isRock.LineBot;
+using Microsoft.Extensions.Configuration;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -11,7 +13,7 @@ using System.Text;
 
 namespace BL.Services.TWSE_Stock {
 
-    public class TradingVolumeService {
+    public class TradingVolumeService : ITradingVolumeService {
         /*
         private readonly string[] ignoreStockName = {
             "富邦VIX",
@@ -51,7 +53,11 @@ namespace BL.Services.TWSE_Stock {
         private readonly int _topNumber;
 
         public TradingVolumeService() {
-            _topNumber = ConfigService.TWSE_TradingVolumeNumber;
+            _topNumber = 100;
+        }
+
+        public TradingVolumeService(IConfiguration configuration) {
+            _topNumber = int.Parse(configuration.GetSection("TWSE").GetSection("TradingVolumeNumber").Value);
         }
 
         public List<MessageBase> GetTradingVolumeStrOverDays(QuerySortTypeEnum querySortType, int days) {

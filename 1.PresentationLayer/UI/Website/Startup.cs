@@ -7,6 +7,7 @@ using BL.Services.Line;
 using BL.Services.Line.Interfaces;
 using BL.Services.Map;
 using BL.Services.Sinopac;
+using BL.Services.TWSE_Stock;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -123,6 +124,7 @@ namespace Website {
             services.AddScoped<IMapHereService, MapHereService>();
             services.AddScoped<IMaskInstitutionService, MaskInstitutionService>();
             services.AddScoped<ICacheService, RedisCacheService>();
+            services.AddScoped<ITradingVolumeService, TradingVolumeService>();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using BL.Services.Holiday;
 using Core.Domain.Enums;
 using isRock.LineBot;
@@ -94,6 +95,28 @@ namespace BL.Services.Line {
                 }
             };
             return new TemplateMessage(new CarouselTemplate() { columns = columns });
+        }
+
+        /// <summary>
+        /// 將 換匯資訊 轉換成 字串
+        /// </summary>
+        /// <param name="bankBuyingRate">銀行買入匯率</param>
+        /// <param name="bankSellingRate">銀行賣出匯率</param>
+        /// <param name="quotedDateTime">報價時間</param>
+        /// <returns>字串</returns>
+        public string ConvertToExchangeRateTextMessage(double bankBuyingRate, double bankSellingRate,
+            DateTime quotedDateTime) {
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("美金報價\n");
+            sb.Append("---------------------\n");
+            sb.Append($"銀行買入：{bankBuyingRate: 0.0000}\n");
+            sb.Append($"銀行賣出：{bankSellingRate: 0.0000}\n");
+            sb.Append($"報價時間：{quotedDateTime: yyyy-MM-dd HH:mm:ss}");
+
+            string result = sb.ToString();
+
+            return result;
         }
 
         public MessageBase GetTextMessageWithQuickReply() {

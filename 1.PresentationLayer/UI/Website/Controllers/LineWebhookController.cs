@@ -20,8 +20,7 @@ namespace Website.Controllers {
     [ApiController]
     [Route("[controller]")]
     public class LineWebhookController : ControllerBase {
-        private readonly Bot lineBot;
-
+        private readonly Bot Bot;
         private readonly ILogger<LineWebhookController> _logger;
         private readonly ILineNotifyBotService _lineNotifyBotService;
         private readonly ILineWebhookService _lineWebhookService;
@@ -30,7 +29,7 @@ namespace Website.Controllers {
             , ILineNotifyBotService LineNotifyBotService
             , ILineWebhookService LineWebhookService
             ) {
-            lineBot = new Bot(ConfigService.Line_ChannelAccessToken);
+            Bot = new Bot(ConfigService.Line_ChannelAccessToken);
             _logger = logger;
             _lineNotifyBotService = LineNotifyBotService;
             _lineWebhookService = LineWebhookService;
@@ -50,7 +49,7 @@ namespace Website.Controllers {
 
                 Log.Information($"========== From LINE SERVER ==========");
                 Log.Information($"requestModel:");
-                Log.Information($"{JsonUtility.Serialize(receivedMessage, isIndented:true)}");
+                Log.Information($"{JsonUtility.Serialize(receivedMessage, isIndented: true)}");
                 Log.Information($"====================");
 
                 List<MessageBase> messages = _lineWebhookService.GetReplyMessages(receivedMessage);
@@ -58,12 +57,12 @@ namespace Website.Controllers {
                 // Add 紀錄發至LineServer的requestBody
                 Log.Information($"========== TO LINE SERVER ==========");
                 Log.Information($"messages:");
-                Log.Information($"{JsonUtility.Serialize(messages, isIndented:true)}");
+                Log.Information($"{JsonUtility.Serialize(messages, isIndented: true)}");
                 Log.Information($"====================");
 
-                string replyToken = receivedMessage.events.FirstOrDefault().replyToken;
+                string replyToken = receivedMessage.events[0].replyToken;
                 try {
-                    string result = lineBot.ReplyMessage(replyToken, messages);
+                    string result = Bot.ReplyMessage(replyToken, messages);
                     return Content(requestBody + "\n" + result);
                 } catch (Exception ex) {
                     if (ex.InnerException is WebException) {
@@ -73,8 +72,8 @@ namespace Website.Controllers {
                         LineHttpPostException response = JsonUtility.Deserialize<LineHttpPostException>(responseStr);
                         Log.Error(
                             $"LineWebhookService.ResponseToLineServer 錯誤, replyToken: {replyToken},\n" +
-                            $"messages: {JsonUtility.Serialize(messages, isIndented:true)},\n" +
-                            $"response: {JsonUtility.Serialize(response, isIndented:true)}");
+                            $"messages: {JsonUtility.Serialize(messages, isIndented: true)},\n" +
+                            $"response: {JsonUtility.Serialize(response, isIndented: true)}");
                         // _lineNotifyBotService.PushMessage_Jacky($"message: {response.message}, " +
                         //     $"details: {JsonConvert.SerializeObject(response.details)}");
                         return Content($"[Index] JLineBot 無法發送，requestBody: {requestBody}, ex: {ex}");
@@ -95,17 +94,17 @@ namespace Website.Controllers {
                 ReceivedMessage receivedMessage = Utility.Parsing(requestBody.ToString());
 
                 StringBuilder sb = new StringBuilder();
-                sb.Append($"========== From LINE SERVER ==========");
-                sb.Append($"requestModel:");
-                sb.Append($"{JsonUtility.Serialize(receivedMessage, isIndented:true, isIgnorezNullValue:true)}");
-                sb.Append($"====================");
+                sb.Append($"========== From LINE SERVER ==========\n");
+                sb.Append($"requestModel:\n");
+                sb.Append($"{JsonUtility.Serialize(receivedMessage, isIndented: true, isIgnorezNullValue: true)}\n");
+                sb.Append($"====================\n");
 
                 List<MessageBase> messages = _lineWebhookService.GetReplyMessages(receivedMessage);
 
                 // Add 紀錄發至LineServer的requestBody
-                sb.Append($"========== TO LINE SERVER ==========");
-                sb.Append($"messages:");
-                sb.Append($"{JsonUtility.Serialize(messages, isIndented:true, isIgnorezNullValue:true)}");
+                sb.Append($"========== TO LINE SERVER ==========\n");
+                sb.Append($"messages:\n");
+                sb.Append($"{JsonUtility.Serialize(messages, isIndented: true, isIgnorezNullValue: true)}\n");
                 sb.Append($"====================");
                 return Ok(sb.ToString());
             } catch (Exception ex) {

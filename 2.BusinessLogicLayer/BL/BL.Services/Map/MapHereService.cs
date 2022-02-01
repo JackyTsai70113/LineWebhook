@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using BL.Services.Interfaces;
 using Core.Domain.DTO.Map;
 using Core.Domain.Utilities;
@@ -7,7 +9,7 @@ using Newtonsoft.Json;
 namespace BL.Services.Map {
 
     /// <summary>
-    /// here服務的 API [Freemium 2020-09-19]
+    /// here服務的 API [Project Name: Freemium 2020-09-19]
     /// 25000 transactions per month for free
     /// 2.5GB data hub data tranfer per month for free
     /// 5GB studio and data hub database storage per month for free
@@ -28,12 +30,27 @@ namespace BL.Services.Map {
         private readonly string _apiKey;
 
         /// <summary>
+        /// 將 目標地址列表 依 來源地址的遠近 排序，越近越前面
+        /// </summary>
+        /// <param name="sourceAddress">來源地址</param>
+        /// <param name="targetAddresses">目標地址列表</param>
+        /// <returns>地址列表</returns>
+        public List<string> GetAddressInOrder(string sourceAddress, List<string> targetAddresses) {
+            LatLng sourceLatLng = GetLatLngFromAddress(sourceAddress);
+            List<string> orderedAddresses = targetAddresses.OrderBy(target => {
+                LatLng targetLatLng = GetLatLngFromAddress(target);
+                return GetTravelTimeFromTwoLatLngs(sourceLatLng, targetLatLng);
+            }).ToList();
+            return orderedAddresses;
+        }
+
+        /// <summary>
         /// 透過兩經緯度取得距離
         /// </summary>
         /// <param name="l1">經緯度</param>
         /// <param name="l2">經緯度</param>
         /// <returns>距離</returns>
-        public int GetDistanceFromTwoLatLng(LatLng l1, LatLng l2) {
+        public int GetDistanceFromTwoLatLngs(LatLng l1, LatLng l2) {
             string uri = "https://route.ls.hereapi.com/routing/7.2/calculateroute.json" +
                 "?apiKey=" + _apiKey +
                 "&waypoint0=geo!" + l1.lat + "," + l1.lng +
@@ -67,20 +84,24 @@ namespace BL.Services.Map {
         /// <param name="address">地址</param>
         /// <returns>經緯度</returns>
         public LatLng GetLatLngFromAddress(string address) {
-            address = "臺灣" + address;
+            string addressWithCountry = "臺灣" + address;
+
             string uri = "https://geocoder.ls.hereapi.com/6.2/geocode.json" +
                 "?apiKey=" + _apiKey +
-                "&searchtext=" + address +
+                "&searchtext=" + addressWithCountry +
                 "&gen=9";
             string responseStr = RequestUtility.GetStringFromGetRequest(uri);
-            var rootobject = JsonConvert.DeserializeObject<Rootobject>(responseStr);
-            return new LatLng {
-                lat = rootobject.Response.View[0].Result[0].Location.DisplayPosition.Latitude,
-                lng = rootobject.Response.View[0].Result[0].Location.DisplayPosition.Longitude
+            RootObject rootObject = JsonConvert.DeserializeObject<RootObject>(responseStr);
+
+            LatLng latLng = new LatLng {
+                lat = rootObject.Response.View[0].Result[0].Location.DisplayPosition.Latitude,
+                lng = rootObject.Response.View[0].Result[0].Location.DisplayPosition.Longitude
             };
+
+            return latLng;
         }
 
-        private class Rootobject {
+        private class RootObject {
             public Response Response { get; set; }
         }
 

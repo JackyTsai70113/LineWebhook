@@ -1,14 +1,16 @@
-﻿using System.Collections.Generic;
-using isRock.LineBot;
+﻿using System;
 
 namespace BL.Services.Interfaces {
 
     public interface IExchangeRateService {
 
         /// <summary>
-        /// 取得LINE訊息列表
+        /// 取得換匯資訊
         /// </summary>
-        /// <returns>LINE訊息列表</returns>
-        List<MessageBase> GetExchangeRateMessage();
+        /// <param name="bankBuyingRate">銀行買入匯率</param>
+        /// <param name="bankSellingRate">銀行賣出匯率</param>
+        /// <param name="quotedDateTime">報價時間</param>
+        void GetExchangeRate(out double bankBuyingRate, out double bankSellingRate,
+            out DateTime quotedDateTime);
     }
 }
