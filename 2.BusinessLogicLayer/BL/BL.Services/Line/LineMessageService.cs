@@ -13,12 +13,17 @@ namespace BL.Services.Line {
     /// </summary>
     public class LineMessageService {
 
+        /// <summary>
+        /// 將文字轉成 Line文字訊息
+        /// </summary>
+        /// <param name="text">文字</param>
+        /// <returns>Line文字訊息</returns>
         public MessageBase GetTextMessage(string text) {
             try {
                 text = text.Replace('\'', '’').Trim();
                 return new TextMessage(text);
             } catch (Exception ex) {
-                string errorMsg = $"[GetSingleMessage] text: {text} Exception: {ex}";
+                string errorMsg = $"[GetTextMessage] text: {text}, ex: {ex}";
                 Log.Error(errorMsg);
                 errorMsg = errorMsg.Replace('\'', '’').Trim();
                 return new TextMessage(errorMsg);
@@ -26,9 +31,11 @@ namespace BL.Services.Line {
         }
 
         /// <summary>
-        ///
+        /// 轉換成 Line滑動訊息 By 搜尋排序類型
         /// </summary>
-        /// <returns></returns>
+        /// <param name="querySortType">搜尋排序類型</param>
+        /// <returns>Line滑動訊息</returns>
+        /// <exception cref="ArgumentException">搜尋排序類型錯誤</exception>
         /// <remarks>所有Column必須數量相同</remarks>
         public MessageBase GetCarouselTemplateMessage(QuerySortTypeEnum querySortType) {
             string chineseWord, command;
@@ -171,7 +178,7 @@ namespace BL.Services.Line {
                     return new List<MessageBase> { GetTextMessage("參數錯誤！（個數必須介於1-5）") };
                 }
 
-                var messages = new List<MessageBase>();
+                List<MessageBase> messages = new List<MessageBase>();
                 for (int i = 0; i < count; i++) {
                     messages.Add(new StickerMessage(packageId, stickerId++));
                 }

@@ -5,8 +5,6 @@ using System.Text;
 using BL.Services.Base;
 using BL.Services.Interfaces;
 using BL.Services.Line;
-using BL.Services.Sinopac;
-using BL.Services.TWSE_Stock;
 using Core.Domain.DTO;
 using Core.Domain.DTO.Map;
 using Core.Domain.DTO.RequestDTO.CambridgeDictionary;

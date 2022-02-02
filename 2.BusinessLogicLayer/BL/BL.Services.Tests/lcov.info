@@ -1,0 +1,4845 @@
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/3.DataAccessLayer/DA/DA.Repositories/TWSE_Stock/DailyQuoteRepository.cs
+FN:17,System.Int32 DA.Repositories.TWSE_Stock.DailyQuoteRepository::InsertDailyQuoteList(System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote>)
+FNDA:0,System.Int32 DA.Repositories.TWSE_Stock.DailyQuoteRepository::InsertDailyQuoteList(System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote>)
+DA:18,0
+DA:19,0
+DA:20,0
+DA:23,0
+DA:24,0
+DA:25,0
+DA:26,0
+DA:27,0
+DA:31,0
+DA:32,0
+DA:33,0
+DA:34,0
+DA:35,0
+DA:36,0
+DA:37,0
+DA:38,0
+DA:39,0
+DA:40,0
+DA:41,0
+DA:42,0
+DA:43,0
+DA:44,0
+DA:45,0
+DA:46,0
+DA:47,0
+DA:48,0
+DA:49,0
+DA:50,0
+DA:51,0
+DA:52,0
+DA:53,0
+DA:54,0
+DA:55,0
+DA:56,0
+DA:57,0
+DA:58,0
+DA:59,0
+DA:60,0
+DA:61,0
+DA:62,0
+DA:63,0
+DA:64,0
+DA:65,0
+DA:66,0
+DA:67,0
+DA:68,0
+DA:69,0
+DA:70,0
+DA:71,0
+DA:75,0
+DA:76,0
+DA:77,0
+DA:78,0
+DA:79,0
+DA:81,0
+FN:87,System.Int32 DA.Repositories.TWSE_Stock.DailyQuoteRepository::SaveDailyQuoteList(System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote>)
+FNDA:0,System.Int32 DA.Repositories.TWSE_Stock.DailyQuoteRepository::SaveDailyQuoteList(System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote>)
+DA:88,0
+DA:89,0
+DA:90,0
+DA:92,0
+DA:93,0
+DA:94,0
+DA:95,0
+DA:96,0
+DA:100,0
+DA:101,0
+DA:102,0
+DA:103,0
+DA:104,0
+DA:105,0
+DA:106,0
+DA:107,0
+DA:108,0
+DA:109,0
+DA:110,0
+DA:111,0
+DA:112,0
+DA:113,0
+DA:114,0
+DA:115,0
+DA:116,0
+DA:117,0
+DA:118,0
+DA:119,0
+DA:120,0
+DA:121,0
+DA:122,0
+DA:123,0
+DA:124,0
+DA:125,0
+DA:126,0
+DA:127,0
+DA:128,0
+DA:129,0
+DA:130,0
+DA:131,0
+DA:132,0
+DA:133,0
+DA:134,0
+DA:135,0
+DA:136,0
+DA:137,0
+DA:138,0
+DA:139,0
+DA:140,0
+DA:141,0
+DA:142,0
+DA:143,0
+DA:144,0
+DA:145,0
+DA:146,0
+DA:147,0
+DA:148,0
+DA:149,0
+DA:150,0
+DA:151,0
+DA:152,0
+DA:153,0
+DA:154,0
+DA:155,0
+DA:156,0
+DA:157,0
+DA:158,0
+DA:159,0
+DA:160,0
+DA:161,0
+DA:162,0
+DA:163,0
+DA:167,0
+DA:168,0
+DA:169,0
+DA:170,0
+DA:171,0
+DA:173,0
+FN:179,Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote DA.Repositories.TWSE_Stock.DailyQuoteRepository::SelectFirstDailyQuoteByDate(System.DateTime)
+FNDA:0,Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote DA.Repositories.TWSE_Stock.DailyQuoteRepository::SelectFirstDailyQuoteByDate(System.DateTime)
+DA:180,0
+DA:183,0
+DA:184,0
+DA:185,0
+DA:186,0
+DA:187,0
+DA:188,0
+DA:190,0
+DA:191,0
+FN:198,Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote DA.Repositories.TWSE_Stock.DailyQuoteRepository::SelectFirstDailyQuoteByDateAndStockCode(System.DateTime,System.String)
+FNDA:0,Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote DA.Repositories.TWSE_Stock.DailyQuoteRepository::SelectFirstDailyQuoteByDateAndStockCode(System.DateTime,System.String)
+DA:199,0
+DA:202,0
+DA:203,0
+DA:204,0
+DA:205,0
+DA:206,0
+DA:207,0
+DA:209,0
+DA:210,0
+DA:211,0
+DA:212,0
+DA:214,0
+DA:215,0
+FN:221,System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote> DA.Repositories.TWSE_Stock.DailyQuoteRepository::SelectDailyQuoteByDate(System.DateTime)
+FNDA:0,System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote> DA.Repositories.TWSE_Stock.DailyQuoteRepository::SelectDailyQuoteByDate(System.DateTime)
+DA:222,0
+DA:225,0
+DA:226,0
+DA:227,0
+DA:228,0
+DA:229,0
+DA:230,0
+DA:231,0
+LF:163
+LH:0
+BRF:0
+BRH:0
+FNF:5
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/3.DataAccessLayer/DA/DA.Repositories/TWSE_Stock/DividendDistributionRepository.cs
+FN:17,System.Int32 DA.Repositories.TWSE_Stock.DividendDistributionRepository::SaveDividendDistributionList(System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.DividendDistribution>)
+FNDA:0,System.Int32 DA.Repositories.TWSE_Stock.DividendDistributionRepository::SaveDividendDistributionList(System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.DividendDistribution>)
+DA:18,0
+DA:19,0
+DA:20,0
+DA:23,0
+DA:24,0
+DA:25,0
+DA:26,0
+DA:27,0
+DA:31,0
+DA:32,0
+DA:33,0
+DA:34,0
+DA:35,0
+DA:36,0
+DA:37,0
+DA:38,0
+DA:39,0
+DA:40,0
+DA:41,0
+DA:42,0
+DA:43,0
+DA:44,0
+DA:45,0
+DA:46,0
+DA:47,0
+DA:48,0
+DA:49,0
+DA:50,0
+DA:51,0
+DA:52,0
+DA:53,0
+DA:54,0
+DA:55,0
+DA:56,0
+DA:57,0
+DA:58,0
+DA:59,0
+DA:60,0
+DA:61,0
+DA:62,0
+DA:63,0
+DA:64,0
+DA:68,0
+DA:69,0
+DA:70,0
+DA:71,0
+DA:72,0
+DA:74,0
+LF:48
+LH:0
+BRF:0
+BRH:0
+FNF:1
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/3.DataAccessLayer/DA/DA.Repositories/TWSE_Stock/StockValueEstimationRepository.cs
+FN:17,System.Int32 DA.Repositories.TWSE_Stock.StockValueEstimationRepository::SaveStockValueEstimation(Core.Domain.Entities.TWSE_Stock.StockValueEstimation)
+FNDA:0,System.Int32 DA.Repositories.TWSE_Stock.StockValueEstimationRepository::SaveStockValueEstimation(Core.Domain.Entities.TWSE_Stock.StockValueEstimation)
+DA:18,0
+DA:19,0
+DA:20,0
+DA:23,0
+DA:24,0
+DA:28,0
+DA:29,0
+DA:30,0
+DA:31,0
+DA:32,0
+DA:33,0
+DA:34,0
+DA:35,0
+DA:36,0
+DA:37,0
+DA:38,0
+DA:39,0
+DA:40,0
+DA:41,0
+DA:42,0
+DA:43,0
+DA:44,0
+DA:45,0
+DA:46,0
+DA:47,0
+DA:48,0
+DA:49,0
+DA:50,0
+DA:51,0
+DA:52,0
+DA:53,0
+DA:54,0
+DA:55,0
+DA:56,0
+DA:57,0
+DA:58,0
+DA:59,0
+DA:60,0
+DA:61,0
+DA:62,0
+DA:63,0
+DA:64,0
+DA:65,0
+DA:66,0
+DA:67,0
+DA:68,0
+DA:69,0
+DA:70,0
+DA:71,0
+DA:72,0
+DA:73,0
+DA:74,0
+DA:75,0
+DA:76,0
+DA:77,0
+DA:78,0
+DA:79,0
+DA:80,0
+DA:81,0
+DA:82,0
+DA:83,0
+DA:84,0
+DA:85,0
+DA:86,0
+DA:87,0
+DA:88,0
+DA:89,0
+DA:90,0
+DA:91,0
+DA:92,0
+DA:93,0
+DA:94,0
+DA:95,0
+DA:96,0
+DA:97,0
+DA:98,0
+DA:99,0
+DA:100,0
+DA:101,0
+DA:102,0
+DA:103,0
+DA:104,0
+DA:105,0
+DA:106,0
+DA:107,0
+DA:108,0
+DA:112,0
+DA:113,0
+DA:114,0
+DA:115,0
+DA:116,0
+DA:118,0
+LF:92
+LH:0
+BRF:0
+BRH:0
+FNF:1
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/3.DataAccessLayer/DA/DA.Repositories/TWSE_Stock/YearlyTradingInformationRepository.cs
+FN:17,System.Int32 DA.Repositories.TWSE_Stock.YearlyTradingInformationRepository::SaveYearlyTradingInformationList(System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation>)
+FNDA:0,System.Int32 DA.Repositories.TWSE_Stock.YearlyTradingInformationRepository::SaveYearlyTradingInformationList(System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation>)
+DA:18,0
+DA:19,0
+DA:20,0
+DA:23,0
+DA:24,0
+DA:25,0
+DA:26,0
+DA:27,0
+DA:31,0
+DA:32,0
+DA:33,0
+DA:34,0
+DA:35,0
+DA:36,0
+DA:37,0
+DA:38,0
+DA:39,0
+DA:40,0
+DA:41,0
+DA:42,0
+DA:43,0
+DA:44,0
+DA:45,0
+DA:46,0
+DA:47,0
+DA:48,0
+DA:49,0
+DA:50,0
+DA:51,0
+DA:52,0
+DA:53,0
+DA:54,0
+DA:55,0
+DA:56,0
+DA:57,0
+DA:58,0
+DA:59,0
+DA:60,0
+DA:61,0
+DA:62,0
+DA:63,0
+DA:64,0
+DA:65,0
+DA:66,0
+DA:67,0
+DA:68,0
+DA:69,0
+DA:70,0
+DA:71,0
+DA:72,0
+DA:73,0
+DA:74,0
+DA:75,0
+DA:76,0
+DA:80,0
+DA:81,0
+DA:82,0
+DA:83,0
+DA:84,0
+DA:86,0
+LF:60
+LH:0
+BRF:0
+BRH:0
+FNF:1
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/3.DataAccessLayer/DA/DA.Repositories/Base/BaseRepository.cs
+FN:11,T DA.Repositories.Base.BaseRepository`1::get_TObject()
+FNDA:0,T DA.Repositories.Base.BaseRepository`1::get_TObject()
+DA:12,0
+FN:16,System.Boolean DA.Repositories.Base.BaseRepository`1::get_IsAutoCloseConnection()
+FNDA:0,System.Boolean DA.Repositories.Base.BaseRepository`1::get_IsAutoCloseConnection()
+DA:17,0
+FN:21,System.Data.SqlClient.SqlConnection DA.Repositories.Base.BaseRepository`1::get_SqlConnection()
+FNDA:0,System.Data.SqlClient.SqlConnection DA.Repositories.Base.BaseRepository`1::get_SqlConnection()
+DA:22,0
+FN:27,System.Data.SqlClient.SqlConnection DA.Repositories.Base.BaseRepository`1::GetSqlConnection()
+FNDA:0,System.Data.SqlClient.SqlConnection DA.Repositories.Base.BaseRepository`1::GetSqlConnection()
+DA:28,0
+DA:29,0
+DA:30,0
+FN:36,System.Void DA.Repositories.Base.BaseRepository`1::SetSqlConnection(System.String,System.Boolean)
+FNDA:0,System.Void DA.Repositories.Base.BaseRepository`1::SetSqlConnection(System.String,System.Boolean)
+DA:37,0
+DA:38,0
+DA:39,0
+DA:40,0
+FN:41,System.Void DA.Repositories.Base.BaseRepository`1::OpenSqlConnection()
+FNDA:0,System.Void DA.Repositories.Base.BaseRepository`1::OpenSqlConnection()
+DA:42,0
+DA:43,0
+DA:44,0
+DA:45,0
+DA:46,0
+BRDA:43,19,0,0
+BRDA:43,19,1,0
+FN:47,System.Void DA.Repositories.Base.BaseRepository`1::CloseConnection()
+FNDA:0,System.Void DA.Repositories.Base.BaseRepository`1::CloseConnection()
+DA:48,0
+DA:49,0
+DA:50,0
+DA:51,0
+DA:52,0
+BRDA:49,16,0,0
+BRDA:49,16,1,0
+FN:53,System.Void DA.Repositories.Base.BaseRepository`1::AutoOpenConnection()
+FNDA:0,System.Void DA.Repositories.Base.BaseRepository`1::AutoOpenConnection()
+DA:54,0
+DA:55,0
+DA:56,0
+DA:57,0
+DA:58,0
+BRDA:55,8,0,0
+BRDA:55,8,1,0
+FN:59,System.Void DA.Repositories.Base.BaseRepository`1::AutoCloseConnection()
+FNDA:0,System.Void DA.Repositories.Base.BaseRepository`1::AutoCloseConnection()
+DA:60,0
+DA:61,0
+DA:62,0
+DA:63,0
+DA:64,0
+BRDA:61,8,0,0
+BRDA:61,8,1,0
+FN:65,System.Int32 DA.Repositories.Base.BaseRepository`1::Execute(System.String,System.Object)
+FNDA:0,System.Int32 DA.Repositories.Base.BaseRepository`1::Execute(System.String,System.Object)
+DA:66,0
+DA:67,0
+DA:68,0
+DA:69,0
+DA:70,0
+DA:71,0
+DA:72,0
+DA:73,0
+DA:74,0
+DA:75,0
+DA:76,0
+DA:77,0
+DA:78,0
+DA:79,0
+DA:80,0
+DA:81,0
+FN:82,T DA.Repositories.Base.BaseRepository`1::QueryFirst(System.String)
+FNDA:0,T DA.Repositories.Base.BaseRepository`1::QueryFirst(System.String)
+DA:83,0
+DA:84,0
+DA:86,0
+DA:88,0
+DA:89,0
+DA:90,0
+DA:92,0
+DA:93,0
+DA:94,0
+DA:95,0
+DA:96,0
+DA:97,0
+DA:98,0
+DA:99,0
+DA:100,0
+DA:101,0
+DA:102,0
+FN:103,T DA.Repositories.Base.BaseRepository`1::QueryFirst(System.String,System.Object)
+FNDA:0,T DA.Repositories.Base.BaseRepository`1::QueryFirst(System.String,System.Object)
+DA:104,0
+DA:105,0
+DA:107,0
+DA:109,0
+DA:111,0
+DA:112,0
+DA:113,0
+DA:114,0
+DA:115,0
+DA:116,0
+DA:117,0
+DA:118,0
+DA:119,0
+DA:120,0
+DA:121,0
+FN:128,System.Collections.Generic.IEnumerable`1<T> DA.Repositories.Base.BaseRepository`1::QueryEnumerable(System.String,System.Object)
+FNDA:0,System.Collections.Generic.IEnumerable`1<T> DA.Repositories.Base.BaseRepository`1::QueryEnumerable(System.String,System.Object)
+DA:129,0
+DA:130,0
+DA:132,0
+DA:134,0
+DA:136,0
+DA:137,0
+DA:138,0
+DA:139,0
+DA:140,0
+DA:141,0
+DA:142,0
+DA:143,0
+DA:144,0
+DA:145,0
+DA:146,0
+FN:149,T DA.Repositories.Base.BaseRepository`1::MapSqlDataReader(System.Data.IDataReader)
+FNDA:0,T DA.Repositories.Base.BaseRepository`1::MapSqlDataReader(System.Data.IDataReader)
+DA:150,0
+DA:151,0
+DA:152,0
+DA:153,0
+DA:154,0
+DA:155,0
+DA:156,0
+DA:157,0
+DA:158,0
+DA:160,0
+DA:161,0
+BRDA:152,16,0,0
+BRDA:154,102,1,0
+BRDA:154,102,0,0
+BRDA:152,16,1,0
+FN:162,System.Object DA.Repositories.Base.BaseRepository`1::ParseToGetValue(System.Object)
+FNDA:0,System.Object DA.Repositories.Base.BaseRepository`1::ParseToGetValue(System.Object)
+DA:163,0
+DA:164,0
+DA:165,0
+DA:166,0
+DA:168,0
+DA:171,0
+DA:174,0
+DA:177,0
+DA:180,0
+DA:183,0
+DA:186,0
+DA:188,0
+DA:189,0
+DA:190,0
+DA:192,0
+BRDA:166,29,0,0
+BRDA:166,42,0,0
+BRDA:166,55,0,0
+BRDA:166,68,0,0
+BRDA:166,81,0,0
+BRDA:166,29,1,0
+BRDA:166,42,1,0
+BRDA:166,55,1,0
+BRDA:166,68,1,0
+BRDA:166,81,1,0
+BRDA:166,94,1,0
+BRDA:166,94,0,0
+LF:119
+LH:0
+BRF:24
+BRH:0
+FNF:15
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/.nuget/packages/microsoft.net.test.sdk/17.0.0/build/netcoreapp2.1/Microsoft.NET.Test.Sdk.Program.cs
+FN:3,System.Void AutoGeneratedProgram::Main(System.String[])
+FNDA:0,System.Void AutoGeneratedProgram::Main(System.String[])
+DA:4,0
+LF:1
+LH:0
+BRF:0
+BRH:0
+FNF:1
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services.Tests/TWSE_Stock/FakeExchangeRateService.cs
+FN:20,System.Void BL.Services.Sinopac.FakeExchangeRateService::GetExchangeRate(System.Double&,System.Double&,System.DateTime&)
+FNDA:1,System.Void BL.Services.Sinopac.FakeExchangeRateService::GetExchangeRate(System.Double&,System.Double&,System.DateTime&)
+DA:21,1
+DA:23,1
+DA:24,1
+DA:25,1
+DA:26,1
+LF:5
+LH:5
+BRF:0
+BRH:0
+FNF:1
+FNH:1
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services.Tests/UnitTest1.cs
+FN:11,BL.Services.LineWebhookService BL.Services.Tests.Tests::get_LineWebhookService()
+FNDA:4,BL.Services.LineWebhookService BL.Services.Tests.Tests::get_LineWebhookService()
+DA:12,4
+FN:14,System.Void BL.Services.Tests.Tests::Setup()
+FNDA:2,System.Void BL.Services.Tests.Tests::Setup()
+DA:15,2
+DA:16,2
+DA:17,2
+DA:18,2
+DA:19,2
+DA:20,2
+DA:21,2
+FN:25,System.Void BL.Services.Tests.Tests::Test1(System.String,System.String)
+FNDA:2,System.Void BL.Services.Tests.Tests::Test1(System.String,System.String)
+DA:26,2
+DA:28,2
+DA:31,2
+DA:34,2
+DA:35,2
+LF:13
+LH:13
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services.Tests/Map/FakeMapHereService.cs
+FN:27,System.Collections.Generic.List`1<System.String> BL.Services.Tests.Map.FakeMapHereService::GetAddressInOrder(System.String,System.Collections.Generic.List`1<System.String>)
+FNDA:0,System.Collections.Generic.List`1<System.String> BL.Services.Tests.Map.FakeMapHereService::GetAddressInOrder(System.String,System.Collections.Generic.List`1<System.String>)
+DA:28,0
+DA:29,0
+DA:30,0
+FN:37,System.Int32 BL.Services.Tests.Map.FakeMapHereService::GetTravelTimeFromTwoLatLngs(Core.Domain.DTO.Map.LatLng,Core.Domain.DTO.Map.LatLng)
+FNDA:0,System.Int32 BL.Services.Tests.Map.FakeMapHereService::GetTravelTimeFromTwoLatLngs(Core.Domain.DTO.Map.LatLng,Core.Domain.DTO.Map.LatLng)
+DA:38,0
+DA:39,0
+DA:40,0
+FN:46,Core.Domain.DTO.Map.LatLng BL.Services.Tests.Map.FakeMapHereService::GetLatLngFromAddress(System.String)
+FNDA:0,Core.Domain.DTO.Map.LatLng BL.Services.Tests.Map.FakeMapHereService::GetLatLngFromAddress(System.String)
+DA:47,0
+DA:49,0
+DA:50,0
+DA:51,0
+DA:52,0
+DA:54,0
+DA:55,0
+FN:18,System.Void BL.Services.Tests.Map.FakeMapHereService::.ctor()
+FNDA:4,System.Void BL.Services.Tests.Map.FakeMapHereService::.ctor()
+DA:19,4
+DA:20,2
+LF:15
+LH:2
+BRF:0
+BRH:0
+FNF:4
+FNH:1
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/0.CoreLayer/Core.Domain/Utilities/AddressUtility.cs
+FN:4,System.String Core.Domain.Utilities.AddressUtility::GetSecondDivision(System.String)
+FNDA:0,System.String Core.Domain.Utilities.AddressUtility::GetSecondDivision(System.String)
+DA:5,0
+DA:7,0
+DA:8,0
+DA:9,0
+DA:10,0
+DA:12,0
+DA:13,0
+DA:14,0
+DA:15,0
+DA:16,0
+DA:17,0
+DA:18,0
+DA:19,0
+DA:20,0
+DA:21,0
+DA:23,0
+DA:24,0
+BRDA:8,22,0,0
+BRDA:8,22,1,0
+BRDA:13,52,0,0
+BRDA:13,52,1,0
+BRDA:15,85,0,0
+BRDA:15,85,1,0
+BRDA:17,118,0,0
+BRDA:17,118,1,0
+BRDA:19,148,0,0
+BRDA:19,148,1,0
+BRDA:19,168,0,0
+BRDA:19,168,1,0
+LF:17
+LH:0
+BRF:12
+BRH:0
+FNF:1
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/0.CoreLayer/Core.Domain/Utilities/ConfigurationUtility.cs
+FN:5,Microsoft.Extensions.Configuration.IConfiguration Core.Domain.Utilities.ConfigurationUtility::get_Configuration()
+FNDA:0,Microsoft.Extensions.Configuration.IConfiguration Core.Domain.Utilities.ConfigurationUtility::get_Configuration()
+DA:6,0
+FN:7,System.String Core.Domain.Utilities.ConfigurationUtility::GetSqlConnectionString(System.String)
+FNDA:0,System.String Core.Domain.Utilities.ConfigurationUtility::GetSqlConnectionString(System.String)
+DA:8,0
+DA:9,0
+DA:10,0
+FN:12,System.String Core.Domain.Utilities.ConfigurationUtility::get_RedisConfig()
+FNDA:0,System.String Core.Domain.Utilities.ConfigurationUtility::get_RedisConfig()
+DA:13,0
+DA:14,0
+DA:15,0
+LF:7
+LH:0
+BRF:0
+BRH:0
+FNF:3
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/0.CoreLayer/Core.Domain/Utilities/DateTimeUtility.cs
+FN:13,System.DateTime Core.Domain.Utilities.DateTimeUtility::get_Unix_Epoch_StartTime()
+FNDA:0,System.DateTime Core.Domain.Utilities.DateTimeUtility::get_Unix_Epoch_StartTime()
+DA:14,0
+DA:15,0
+DA:16,0
+FN:21,System.DateTime Core.Domain.Utilities.DateTimeUtility::get_Now()
+FNDA:0,System.DateTime Core.Domain.Utilities.DateTimeUtility::get_Now()
+DA:22,0
+FN:26,System.DateTime Core.Domain.Utilities.DateTimeUtility::get_NowDate()
+FNDA:0,System.DateTime Core.Domain.Utilities.DateTimeUtility::get_NowDate()
+DA:27,0
+FN:31,System.Int32 Core.Domain.Utilities.DateTimeUtility::get_NowMonth()
+FNDA:0,System.Int32 Core.Domain.Utilities.DateTimeUtility::get_NowMonth()
+DA:32,0
+FN:36,System.Int32 Core.Domain.Utilities.DateTimeUtility::get_NowYear()
+FNDA:0,System.Int32 Core.Domain.Utilities.DateTimeUtility::get_NowYear()
+DA:37,0
+FN:38,System.Int32 Core.Domain.Utilities.DateTimeUtility::get_NowROCYear()
+FNDA:0,System.Int32 Core.Domain.Utilities.DateTimeUtility::get_NowROCYear()
+DA:39,0
+FN:40,System.Boolean Core.Domain.Utilities.DateTimeUtility::IsWeekend(System.DateTime)
+FNDA:0,System.Boolean Core.Domain.Utilities.DateTimeUtility::IsWeekend(System.DateTime)
+DA:41,0
+DA:42,0
+DA:43,0
+DA:44,0
+BRDA:42,9,0,0
+BRDA:42,9,1,0
+FN:50,System.Int32 Core.Domain.Utilities.DateTimeUtility::ToADYear(System.Int32)
+FNDA:0,System.Int32 Core.Domain.Utilities.DateTimeUtility::ToADYear(System.Int32)
+DA:51,0
+DA:52,0
+DA:53,0
+FN:57,System.Int64 Core.Domain.Utilities.DateTimeUtility::get_NowMilliseconds()
+FNDA:0,System.Int64 Core.Domain.Utilities.DateTimeUtility::get_NowMilliseconds()
+DA:58,0
+FN:63,System.DateTime Core.Domain.Utilities.DateTimeUtility::GetFirstDateOfMonth(System.DateTime,System.Int32)
+FNDA:0,System.DateTime Core.Domain.Utilities.DateTimeUtility::GetFirstDateOfMonth(System.DateTime,System.Int32)
+DA:64,0
+DA:65,0
+DA:66,0
+FN:71,System.DateTime Core.Domain.Utilities.DateTimeUtility::GetLastDateOfMonth(System.DateTime,System.Int32)
+FNDA:0,System.DateTime Core.Domain.Utilities.DateTimeUtility::GetLastDateOfMonth(System.DateTime,System.Int32)
+DA:72,0
+DA:73,0
+DA:74,0
+FN:80,System.DateTime Core.Domain.Utilities.DateTimeUtility::GetFirstDateOfYear(System.Int32)
+FNDA:0,System.DateTime Core.Domain.Utilities.DateTimeUtility::GetFirstDateOfYear(System.Int32)
+DA:81,0
+DA:82,0
+DA:83,0
+FN:89,System.DateTime Core.Domain.Utilities.DateTimeUtility::GetLastDateOfYear(System.Int32)
+FNDA:0,System.DateTime Core.Domain.Utilities.DateTimeUtility::GetLastDateOfYear(System.Int32)
+DA:90,0
+DA:91,0
+DA:92,0
+FN:98,Core.Domain.Utilities.DateTimeRange Core.Domain.Utilities.DateTimeUtility::GetDateTimeRangeByMonth(System.DateTime)
+FNDA:0,Core.Domain.Utilities.DateTimeRange Core.Domain.Utilities.DateTimeUtility::GetDateTimeRangeByMonth(System.DateTime)
+DA:99,0
+DA:100,0
+DA:101,0
+FN:107,Core.Domain.Utilities.DateTimeRange Core.Domain.Utilities.DateTimeUtility::GetDateTimeEnumerableByMonthBeforeNow(System.DateTime)
+FNDA:0,Core.Domain.Utilities.DateTimeRange Core.Domain.Utilities.DateTimeUtility::GetDateTimeEnumerableByMonthBeforeNow(System.DateTime)
+DA:108,0
+DA:111,0
+DA:112,0
+DA:115,0
+DA:117,0
+DA:118,0
+DA:120,0
+DA:121,0
+DA:123,0
+DA:124,0
+BRDA:111,13,0,0
+BRDA:111,27,0,0
+BRDA:111,27,1,0
+BRDA:111,13,1,0
+BRDA:111,51,0,0
+BRDA:111,51,1,0
+BRDA:115,77,0,0
+BRDA:115,77,1,0
+BRDA:115,98,0,0
+BRDA:115,98,1,0
+FN:130,Core.Domain.Utilities.DateTimeRange Core.Domain.Utilities.DateTimeUtility::GetDateTimeRangeByYear(System.Int32)
+FNDA:0,Core.Domain.Utilities.DateTimeRange Core.Domain.Utilities.DateTimeUtility::GetDateTimeRangeByYear(System.Int32)
+DA:131,0
+DA:132,0
+DA:133,0
+FN:139,Core.Domain.Utilities.DateTimeRange Core.Domain.Utilities.DateTimeUtility::GetDateTimeRangeByYearBeforeNow(System.Int32)
+FNDA:0,Core.Domain.Utilities.DateTimeRange Core.Domain.Utilities.DateTimeUtility::GetDateTimeRangeByYearBeforeNow(System.Int32)
+DA:140,0
+DA:142,0
+DA:143,0
+DA:146,0
+DA:147,0
+DA:148,0
+DA:149,0
+DA:150,0
+DA:152,0
+DA:153,0
+BRDA:142,19,0,0
+BRDA:142,19,1,0
+BRDA:146,51,0,0
+BRDA:146,51,1,0
+LF:54
+LH:0
+BRF:16
+BRH:0
+FNF:17
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/0.CoreLayer/Core.Domain/Utilities/JsonUtility.cs
+FN:15,T Core.Domain.Utilities.JsonUtility::Deserialize(System.String)
+FNDA:0,T Core.Domain.Utilities.JsonUtility::Deserialize(System.String)
+DA:16,0
+DA:17,0
+DA:18,0
+DA:19,0
+FN:26,System.String Core.Domain.Utilities.JsonUtility::Serialize(System.Object,System.Boolean,System.Boolean)
+FNDA:0,System.String Core.Domain.Utilities.JsonUtility::Serialize(System.Object,System.Boolean,System.Boolean)
+DA:27,0
+DA:31,0
+DA:32,0
+DA:33,0
+DA:34,0
+DA:35,0
+DA:36,0
+DA:37,0
+DA:38,0
+DA:39,0
+DA:40,0
+DA:41,0
+DA:42,0
+DA:43,0
+DA:44,0
+DA:45,0
+DA:46,0
+DA:47,0
+DA:48,0
+DA:49,0
+DA:51,0
+DA:52,0
+BRDA:31,4,0,0
+BRDA:32,10,0,0
+BRDA:32,10,1,0
+BRDA:31,4,1,0
+BRDA:41,58,0,0
+BRDA:41,58,1,0
+LF:26
+LH:0
+BRF:6
+BRH:0
+FNF:2
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/0.CoreLayer/Core.Domain/Utilities/NumberUtility.cs
+FN:7,System.Int32 Core.Domain.Utilities.NumberUtility::ThousandToInt(System.String)
+FNDA:0,System.Int32 Core.Domain.Utilities.NumberUtility::ThousandToInt(System.String)
+DA:8,0
+DA:9,0
+DA:10,0
+DA:11,0
+DA:13,0
+DA:14,0
+DA:15,0
+DA:16,0
+DA:18,0
+BRDA:10,10,0,0
+BRDA:10,10,1,0
+FN:19,System.Single Core.Domain.Utilities.NumberUtility::ThousandToFloat(System.String)
+FNDA:0,System.Single Core.Domain.Utilities.NumberUtility::ThousandToFloat(System.String)
+DA:20,0
+DA:21,0
+DA:22,0
+DA:23,0
+DA:25,0
+DA:26,0
+DA:27,0
+DA:28,0
+DA:30,0
+BRDA:22,10,0,0
+BRDA:22,10,1,0
+FN:31,System.Single Core.Domain.Utilities.NumberUtility::ToFloat(System.String)
+FNDA:0,System.Single Core.Domain.Utilities.NumberUtility::ToFloat(System.String)
+DA:32,0
+DA:33,0
+DA:34,0
+DA:37,0
+DA:38,0
+BRDA:33,9,0,0
+BRDA:33,9,1,0
+LF:23
+LH:0
+BRF:6
+BRH:0
+FNF:3
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/0.CoreLayer/Core.Domain/Utilities/RangeUtility.cs
+FN:19,System.DateTime Core.Domain.Utilities.DateTimeRange::get_Start()
+FNDA:0,System.DateTime Core.Domain.Utilities.DateTimeRange::get_Start()
+DA:20,0
+FN:20,System.DateTime Core.Domain.Utilities.DateTimeRange::get_End()
+FNDA:0,System.DateTime Core.Domain.Utilities.DateTimeRange::get_End()
+DA:21,0
+FN:27,System.Boolean Core.Domain.Utilities.DateTimeRange::Includes(System.DateTime)
+FNDA:0,System.Boolean Core.Domain.Utilities.DateTimeRange::Includes(System.DateTime)
+DA:28,0
+DA:29,0
+DA:30,0
+BRDA:29,13,0,0
+BRDA:29,13,1,0
+FN:36,System.Boolean Core.Domain.Utilities.DateTimeRange::Includes(Core.Domain.Utilities.Interfaces.IRange`1<System.DateTime>)
+FNDA:0,System.Boolean Core.Domain.Utilities.DateTimeRange::Includes(Core.Domain.Utilities.Interfaces.IRange`1<System.DateTime>)
+DA:37,0
+DA:38,0
+DA:39,0
+BRDA:38,18,0,0
+BRDA:38,18,1,0
+FN:14,System.Void Core.Domain.Utilities.DateTimeRange::.ctor(System.DateTime,System.DateTime)
+FNDA:0,System.Void Core.Domain.Utilities.DateTimeRange::.ctor(System.DateTime,System.DateTime)
+DA:15,0
+DA:16,0
+DA:17,0
+DA:18,0
+FN:45,System.Boolean Core.Domain.Utilities.DateTimeRange/<EachDay>d__11::MoveNext()
+FNDA:0,System.Boolean Core.Domain.Utilities.DateTimeRange/<EachDay>d__11::MoveNext()
+DA:46,0
+DA:47,0
+DA:48,0
+DA:49,0
+DA:50,0
+BRDA:47,136,1,0
+BRDA:47,136,0,0
+FN:70,System.Boolean Core.Domain.Utilities.DateTimeRange/<EachWeekendDay>d__13::MoveNext()
+FNDA:0,System.Boolean Core.Domain.Utilities.DateTimeRange/<EachWeekendDay>d__13::MoveNext()
+DA:71,0
+DA:72,0
+DA:73,0
+DA:74,0
+DA:75,0
+DA:76,0
+DA:77,0
+BRDA:72,153,1,0
+BRDA:73,65,0,0
+BRDA:73,65,1,0
+BRDA:72,153,0,0
+FN:56,System.Boolean Core.Domain.Utilities.DateTimeRange/<EachWorkDay>d__12::MoveNext()
+FNDA:0,System.Boolean Core.Domain.Utilities.DateTimeRange/<EachWorkDay>d__12::MoveNext()
+DA:57,0
+DA:58,0
+DA:59,0
+DA:60,0
+DA:62,0
+DA:63,0
+DA:64,0
+BRDA:58,154,1,0
+BRDA:59,65,0,0
+BRDA:59,65,1,0
+BRDA:58,154,0,0
+LF:31
+LH:0
+BRF:14
+BRH:0
+FNF:8
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/0.CoreLayer/Core.Domain/Utilities/RequestUtility.cs
+FN:310,System.Byte[] Core.Domain.Utilities.RequestUtility::GetByteArrayFromGetRequest(System.String)
+FNDA:0,System.Byte[] Core.Domain.Utilities.RequestUtility::GetByteArrayFromGetRequest(System.String)
+DA:311,0
+DA:312,0
+DA:313,0
+DA:316,0
+DA:319,0
+DA:321,0
+DA:322,0
+DA:323,0
+DA:324,0
+DA:325,0
+DA:327,0
+FN:333,System.String Core.Domain.Utilities.RequestUtility::GetStringFromGetRequest(System.String)
+FNDA:0,System.String Core.Domain.Utilities.RequestUtility::GetStringFromGetRequest(System.String)
+DA:334,0
+DA:335,0
+DA:336,0
+DA:339,0
+DA:344,0
+DA:345,0
+DA:346,0
+DA:347,0
+DA:348,0
+DA:350,0
+FN:356,System.IO.Stream Core.Domain.Utilities.RequestUtility::GetStreamFromGetRequest(System.String)
+FNDA:0,System.IO.Stream Core.Domain.Utilities.RequestUtility::GetStreamFromGetRequest(System.String)
+DA:357,0
+DA:358,0
+DA:359,0
+DA:362,0
+DA:365,0
+DA:367,0
+DA:368,0
+DA:369,0
+DA:371,0
+FN:397,System.Net.Http.HttpClient Core.Domain.Utilities.RequestUtility::GetNewHttpClient()
+FNDA:0,System.Net.Http.HttpClient Core.Domain.Utilities.RequestUtility::GetNewHttpClient()
+DA:398,0
+DA:400,0
+DA:401,0
+DA:402,0
+DA:403,0
+DA:404,0
+DA:406,0
+DA:407,0
+DA:408,0
+DA:409,0
+DA:410,0
+FN:414,System.Void Core.Domain.Utilities.RequestUtility::AddUriIndex()
+FNDA:0,System.Void Core.Domain.Utilities.RequestUtility::AddUriIndex()
+DA:415,0
+DA:416,0
+DA:417,0
+DA:418,0
+DA:419,0
+DA:420,0
+FN:11,System.Void Core.Domain.Utilities.RequestUtility::.cctor()
+FNDA:0,System.Void Core.Domain.Utilities.RequestUtility::.cctor()
+DA:12,0
+DA:13,0
+DA:14,0
+DA:15,0
+DA:16,0
+DA:17,0
+DA:18,0
+DA:19,0
+DA:20,0
+DA:21,0
+DA:22,0
+DA:23,0
+DA:24,0
+DA:25,0
+DA:26,0
+DA:27,0
+DA:28,0
+DA:29,0
+DA:30,0
+DA:31,0
+DA:32,0
+DA:33,0
+DA:34,0
+DA:35,0
+DA:36,0
+DA:37,0
+DA:38,0
+DA:39,0
+DA:40,0
+DA:41,0
+DA:42,0
+DA:43,0
+DA:44,0
+DA:45,0
+DA:46,0
+DA:47,0
+DA:48,0
+DA:49,0
+DA:50,0
+DA:51,0
+DA:52,0
+DA:53,0
+DA:54,0
+DA:55,0
+DA:56,0
+DA:57,0
+DA:58,0
+DA:59,0
+DA:60,0
+DA:61,0
+DA:62,0
+DA:63,0
+DA:64,0
+DA:65,0
+DA:66,0
+DA:67,0
+DA:68,0
+DA:69,0
+DA:70,0
+DA:71,0
+DA:72,0
+DA:73,0
+DA:74,0
+DA:75,0
+DA:76,0
+DA:77,0
+DA:78,0
+DA:79,0
+DA:80,0
+DA:81,0
+DA:82,0
+DA:83,0
+DA:84,0
+DA:85,0
+DA:86,0
+DA:87,0
+DA:88,0
+DA:89,0
+DA:90,0
+DA:91,0
+DA:92,0
+DA:93,0
+DA:94,0
+DA:95,0
+DA:96,0
+DA:97,0
+DA:98,0
+DA:99,0
+DA:100,0
+DA:101,0
+DA:102,0
+DA:103,0
+DA:104,0
+DA:105,0
+DA:106,0
+DA:107,0
+DA:108,0
+DA:109,0
+DA:110,0
+DA:111,0
+DA:112,0
+DA:113,0
+DA:114,0
+DA:115,0
+DA:116,0
+DA:117,0
+DA:118,0
+DA:119,0
+DA:120,0
+DA:121,0
+DA:122,0
+DA:123,0
+DA:124,0
+DA:125,0
+DA:126,0
+DA:127,0
+DA:128,0
+DA:129,0
+DA:130,0
+DA:131,0
+DA:132,0
+DA:133,0
+DA:134,0
+DA:135,0
+DA:136,0
+DA:137,0
+DA:138,0
+DA:139,0
+DA:140,0
+DA:141,0
+DA:142,0
+DA:143,0
+DA:144,0
+DA:145,0
+DA:146,0
+DA:147,0
+DA:148,0
+DA:149,0
+DA:150,0
+DA:151,0
+DA:152,0
+DA:153,0
+DA:154,0
+DA:155,0
+DA:156,0
+DA:157,0
+DA:158,0
+DA:159,0
+DA:160,0
+DA:161,0
+DA:162,0
+DA:163,0
+DA:164,0
+DA:165,0
+DA:166,0
+DA:167,0
+DA:168,0
+DA:169,0
+DA:170,0
+DA:171,0
+DA:172,0
+DA:173,0
+DA:174,0
+DA:175,0
+DA:176,0
+DA:177,0
+DA:178,0
+DA:179,0
+DA:180,0
+DA:181,0
+DA:182,0
+DA:183,0
+DA:184,0
+DA:185,0
+DA:186,0
+DA:187,0
+DA:188,0
+DA:189,0
+DA:190,0
+DA:191,0
+DA:192,0
+DA:193,0
+DA:194,0
+DA:195,0
+DA:196,0
+DA:197,0
+DA:198,0
+DA:199,0
+DA:200,0
+DA:201,0
+DA:202,0
+DA:203,0
+DA:204,0
+DA:205,0
+DA:206,0
+DA:207,0
+DA:208,0
+DA:209,0
+DA:210,0
+DA:211,0
+DA:212,0
+DA:213,0
+DA:214,0
+DA:215,0
+DA:216,0
+DA:217,0
+DA:218,0
+DA:219,0
+DA:220,0
+DA:221,0
+DA:222,0
+DA:223,0
+DA:224,0
+DA:225,0
+DA:226,0
+DA:227,0
+DA:228,0
+DA:229,0
+DA:230,0
+DA:231,0
+DA:232,0
+DA:233,0
+DA:234,0
+DA:235,0
+DA:236,0
+DA:237,0
+DA:238,0
+DA:239,0
+DA:240,0
+DA:241,0
+DA:242,0
+DA:243,0
+DA:244,0
+DA:245,0
+DA:246,0
+DA:247,0
+DA:248,0
+DA:249,0
+DA:250,0
+DA:251,0
+DA:252,0
+DA:253,0
+DA:254,0
+DA:255,0
+DA:256,0
+DA:257,0
+DA:258,0
+DA:259,0
+DA:260,0
+DA:261,0
+DA:262,0
+DA:263,0
+DA:264,0
+DA:265,0
+DA:266,0
+DA:267,0
+DA:268,0
+DA:269,0
+DA:270,0
+DA:271,0
+DA:272,0
+DA:273,0
+DA:274,0
+DA:275,0
+DA:276,0
+DA:277,0
+DA:278,0
+DA:279,0
+DA:280,0
+DA:281,0
+DA:282,0
+DA:283,0
+DA:284,0
+DA:285,0
+DA:286,0
+DA:287,0
+DA:288,0
+DA:289,0
+DA:290,0
+DA:291,0
+DA:292,0
+DA:293,0
+DA:294,0
+DA:295,0
+DA:296,0
+DA:297,0
+DA:298,0
+DA:299,0
+DA:300,0
+DA:301,0
+DA:303,0
+DA:304,0
+FN:377,System.Void Core.Domain.Utilities.RequestUtility/<GetStreamFromGetRequestAsync>d__6::MoveNext()
+FNDA:0,System.Void Core.Domain.Utilities.RequestUtility/<GetStreamFromGetRequestAsync>d__6::MoveNext()
+DA:378,0
+DA:379,0
+DA:380,0
+DA:383,0
+DA:386,0
+DA:388,0
+DA:389,0
+DA:390,0
+DA:391,0
+DA:392,0
+DA:393,0
+DA:394,0
+LF:351
+LH:0
+BRF:0
+BRH:0
+FNF:7
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/0.CoreLayer/Core.Domain/Utilities/StringParserUtility.cs
+FN:12,System.Boolean Core.Domain.Utilities.StringParserUtility::IsValidString(System.String)
+FNDA:0,System.Boolean Core.Domain.Utilities.StringParserUtility::IsValidString(System.String)
+DA:13,0
+DA:15,0
+DA:16,0
+DA:19,0
+DA:20,0
+DA:23,0
+DA:24,0
+BRDA:15,9,0,0
+BRDA:15,9,1,0
+BRDA:19,29,0,0
+BRDA:19,29,1,0
+FN:31,System.Boolean Core.Domain.Utilities.StringParserUtility::TryParse(System.String,System.Int16&)
+FNDA:0,System.Boolean Core.Domain.Utilities.StringParserUtility::TryParse(System.String,System.Int16&)
+DA:32,0
+DA:35,0
+DA:37,0
+DA:38,0
+DA:39,0
+DA:42,0
+DA:43,0
+DA:44,0
+DA:45,0
+DA:46,0
+DA:47,0
+DA:48,0
+DA:49,0
+DA:50,0
+BRDA:38,16,0,0
+BRDA:38,16,1,0
+FN:57,System.Boolean Core.Domain.Utilities.StringParserUtility::TryParse(System.String,System.Int32&)
+FNDA:0,System.Boolean Core.Domain.Utilities.StringParserUtility::TryParse(System.String,System.Int32&)
+DA:58,0
+DA:61,0
+DA:63,0
+DA:64,0
+DA:65,0
+DA:68,0
+DA:69,0
+DA:70,0
+DA:71,0
+DA:72,0
+DA:73,0
+DA:74,0
+DA:75,0
+DA:76,0
+BRDA:64,16,0,0
+BRDA:64,16,1,0
+FN:83,System.Boolean Core.Domain.Utilities.StringParserUtility::TryParse(System.String,System.Int64&)
+FNDA:0,System.Boolean Core.Domain.Utilities.StringParserUtility::TryParse(System.String,System.Int64&)
+DA:84,0
+DA:87,0
+DA:89,0
+DA:90,0
+DA:91,0
+DA:94,0
+DA:95,0
+DA:96,0
+DA:97,0
+DA:98,0
+DA:99,0
+DA:100,0
+DA:101,0
+DA:102,0
+BRDA:90,17,0,0
+BRDA:90,17,1,0
+FN:109,System.Boolean Core.Domain.Utilities.StringParserUtility::TryParse(System.String,System.Single&)
+FNDA:0,System.Boolean Core.Domain.Utilities.StringParserUtility::TryParse(System.String,System.Single&)
+DA:110,0
+DA:113,0
+DA:115,0
+DA:116,0
+DA:117,0
+DA:120,0
+DA:121,0
+DA:122,0
+DA:123,0
+DA:124,0
+DA:125,0
+DA:126,0
+DA:127,0
+DA:128,0
+BRDA:116,20,0,0
+BRDA:116,20,1,0
+FN:141,System.Boolean Core.Domain.Utilities.StringParserUtility::TryParse(System.String,System.DateTime&)
+FNDA:0,System.Boolean Core.Domain.Utilities.StringParserUtility::TryParse(System.String,System.DateTime&)
+DA:142,0
+DA:145,0
+DA:146,0
+DA:147,0
+DA:148,0
+DA:149,0
+DA:150,0
+DA:151,0
+DA:152,0
+DA:153,0
+DA:154,0
+DA:155,0
+DA:156,0
+DA:157,0
+DA:160,0
+DA:161,0
+DA:162,0
+DA:163,0
+DA:164,0
+DA:165,0
+DA:166,0
+DA:167,0
+DA:168,0
+BRDA:156,87,0,0
+BRDA:156,87,1,0
+LF:86
+LH:0
+BRF:14
+BRH:0
+FNF:6
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/0.CoreLayer/Core.Domain/Utilities/StringUtility.cs
+FN:15,System.String Core.Domain.Utilities.StringUtility::StripHtmlTag(System.String)
+FNDA:0,System.String Core.Domain.Utilities.StringUtility::StripHtmlTag(System.String)
+DA:16,0
+DA:17,0
+DA:18,0
+FN:24,System.String Core.Domain.Utilities.StringUtility::StripHtmlSpace(System.String)
+FNDA:0,System.String Core.Domain.Utilities.StringUtility::StripHtmlSpace(System.String)
+DA:25,0
+DA:26,0
+DA:27,0
+DA:28,0
+FN:35,System.String Core.Domain.Utilities.StringUtility::HtmlEncode(System.String)
+FNDA:0,System.String Core.Domain.Utilities.StringUtility::HtmlEncode(System.String)
+DA:36,0
+DA:37,0
+DA:38,0
+FN:45,System.String Core.Domain.Utilities.StringUtility::HtmlDecode(System.String)
+FNDA:0,System.String Core.Domain.Utilities.StringUtility::HtmlDecode(System.String)
+DA:46,0
+DA:47,0
+DA:48,0
+DA:49,0
+DA:50,0
+FN:51,System.String Core.Domain.Utilities.StringUtility::TrimEnd(System.String,System.String)
+FNDA:0,System.String Core.Domain.Utilities.StringUtility::TrimEnd(System.String,System.String)
+DA:52,0
+DA:53,0
+DA:54,0
+DA:55,0
+LF:19
+LH:0
+BRF:0
+BRH:0
+FNF:5
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/0.CoreLayer/Core.Domain/Enums/StockCodeEnum.cs
+FN:253,System.String Core.Domain.Enums.Extensions::ToStockCode(Core.Domain.Enums.StockCodeEnum)
+FNDA:0,System.String Core.Domain.Enums.Extensions::ToStockCode(Core.Domain.Enums.StockCodeEnum)
+DA:254,0
+DA:255,0
+DA:256,0
+FN:257,System.String[] Core.Domain.Enums.Extensions::GetNames()
+FNDA:0,System.String[] Core.Domain.Enums.Extensions::GetNames()
+DA:258,0
+DA:259,0
+DA:260,0
+LF:6
+LH:0
+BRF:0
+BRH:0
+FNF:2
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/0.CoreLayer/Core.Domain/Enums/StockDirectionEnum.cs
+FN:16,Core.Domain.Enums.StockDirectionEnum Core.Domain.Enums.StockDirection::ToStockDirectionEnum(System.String)
+FNDA:0,Core.Domain.Enums.StockDirectionEnum Core.Domain.Enums.StockDirection::ToStockDirectionEnum(System.String)
+DA:17,0
+DA:18,0
+DA:20,0
+DA:23,0
+DA:26,0
+DA:29,0
+DA:32,0
+DA:34,0
+BRDA:18,16,0,0
+BRDA:18,29,0,0
+BRDA:18,42,0,0
+BRDA:18,16,1,0
+BRDA:18,29,1,0
+BRDA:18,42,1,0
+BRDA:18,55,1,0
+BRDA:18,55,0,0
+LF:8
+LH:0
+BRF:8
+BRH:0
+FNF:1
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/0.CoreLayer/Core.Domain/Entities/TWSE_Stock/DividendDistribution.cs
+FN:24,System.String Core.Domain.Entities.TWSE_Stock.DividendDistribution::get_StockCode()
+FNDA:0,System.String Core.Domain.Entities.TWSE_Stock.DividendDistribution::get_StockCode()
+DA:25,0
+FN:32,System.Int16 Core.Domain.Entities.TWSE_Stock.DividendDistribution::get_Year()
+FNDA:0,System.Int16 Core.Domain.Entities.TWSE_Stock.DividendDistribution::get_Year()
+DA:33,0
+FN:37,System.Single Core.Domain.Entities.TWSE_Stock.DividendDistribution::get_CashDividendsToBeDistributedFromRetainedEarnings()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.DividendDistribution::get_CashDividendsToBeDistributedFromRetainedEarnings()
+DA:38,0
+FN:42,System.Single Core.Domain.Entities.TWSE_Stock.DividendDistribution::get_CashDividendsFromLegalReserveAndCapitalSurplus()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.DividendDistribution::get_CashDividendsFromLegalReserveAndCapitalSurplus()
+DA:43,0
+FN:47,System.Single Core.Domain.Entities.TWSE_Stock.DividendDistribution::get_SharesDistributedFromEarnings()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.DividendDistribution::get_SharesDistributedFromEarnings()
+DA:48,0
+FN:52,System.Single Core.Domain.Entities.TWSE_Stock.DividendDistribution::get_SharesDistributedFromLegalReserveAndCapitalSurplus()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.DividendDistribution::get_SharesDistributedFromLegalReserveAndCapitalSurplus()
+DA:53,0
+FN:59,System.Single Core.Domain.Entities.TWSE_Stock.DividendDistribution::get_Dividends()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.DividendDistribution::get_Dividends()
+DA:60,0
+DA:61,0
+DA:62,0
+DA:63,0
+DA:64,0
+DA:65,0
+FN:67,System.Single Core.Domain.Entities.TWSE_Stock.DividendDistribution::GetZeroIfNotValid(System.Single)
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.DividendDistribution::GetZeroIfNotValid(System.Single)
+DA:68,0
+DA:69,0
+DA:70,0
+DA:72,0
+DA:73,0
+BRDA:69,11,0,0
+BRDA:69,11,1,0
+FN:16,System.Void Core.Domain.Entities.TWSE_Stock.DividendDistribution::.ctor()
+FNDA:0,System.Void Core.Domain.Entities.TWSE_Stock.DividendDistribution::.ctor()
+DA:17,0
+DA:18,0
+LF:19
+LH:0
+BRF:2
+BRH:0
+FNF:9
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/0.CoreLayer/Core.Domain/Entities/TWSE_Stock/StockValueEstimation.cs
+FN:19,System.String Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_StockCode()
+FNDA:0,System.String Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_StockCode()
+DA:20,0
+FN:27,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_RecentDividends()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_RecentDividends()
+DA:28,0
+FN:33,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_DividendsIn5Years()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_DividendsIn5Years()
+DA:34,0
+FN:39,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_DividendsIn10Years()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_DividendsIn10Years()
+DA:40,0
+FN:46,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_CheapPriceByRecentDividends()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_CheapPriceByRecentDividends()
+DA:47,0
+DA:48,0
+DA:49,0
+FN:56,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_ReasonablePriceByRecentDividends()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_ReasonablePriceByRecentDividends()
+DA:57,0
+DA:58,0
+DA:59,0
+FN:66,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_ExpensivePriceByRecentDividends()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_ExpensivePriceByRecentDividends()
+DA:67,0
+DA:68,0
+DA:69,0
+FN:76,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_CheapPriceByDividendsIn5Years()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_CheapPriceByDividendsIn5Years()
+DA:77,0
+DA:78,0
+DA:79,0
+FN:86,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_ReasonablePriceByDividendsIn5Years()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_ReasonablePriceByDividendsIn5Years()
+DA:87,0
+DA:88,0
+DA:89,0
+FN:96,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_ExpensivePriceByDividendsIn5Years()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_ExpensivePriceByDividendsIn5Years()
+DA:97,0
+DA:98,0
+DA:99,0
+FN:106,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_CheapPriceByDividendsIn10Years()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_CheapPriceByDividendsIn10Years()
+DA:107,0
+DA:108,0
+DA:109,0
+FN:116,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_ReasonablePriceByDividendsIn10Years()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_ReasonablePriceByDividendsIn10Years()
+DA:117,0
+DA:118,0
+DA:119,0
+FN:126,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_ExpensivePriceByDividendsIn10Years()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_ExpensivePriceByDividendsIn10Years()
+DA:127,0
+DA:128,0
+DA:129,0
+FN:139,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_CheapPriceByStockPriceOver10Years()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_CheapPriceByStockPriceOver10Years()
+DA:140,0
+FN:145,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_ReasonablePriceByStockPriceOver10Years()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_ReasonablePriceByStockPriceOver10Years()
+DA:146,0
+FN:151,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_ExpensivePriceByStockPriceOver10Years()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.StockValueEstimation::get_ExpensivePriceByStockPriceOver10Years()
+DA:152,0
+LF:34
+LH:0
+BRF:0
+BRH:0
+FNF:16
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/0.CoreLayer/Core.Domain/Entities/TWSE_Stock/Exchange/DailyQuote.cs
+FN:25,System.DateTime Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_Date()
+FNDA:0,System.DateTime Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_Date()
+DA:26,0
+FN:32,System.String Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_StockCode()
+FNDA:0,System.String Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_StockCode()
+DA:33,0
+FN:40,System.Int32 Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_TradeVolume()
+FNDA:0,System.Int32 Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_TradeVolume()
+DA:41,0
+FN:46,System.Int32 Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_Transaction()
+FNDA:0,System.Int32 Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_Transaction()
+DA:47,0
+FN:52,System.Int64 Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_TradeValue()
+FNDA:0,System.Int64 Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_TradeValue()
+DA:53,0
+FN:58,System.Single Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_OpeningPrice()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_OpeningPrice()
+DA:59,0
+FN:64,System.Single Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_HighestPrice()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_HighestPrice()
+DA:65,0
+FN:70,System.Single Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_LowestPrice()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_LowestPrice()
+DA:71,0
+FN:76,System.Single Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_ClosingPrice()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_ClosingPrice()
+DA:77,0
+FN:82,Core.Domain.Enums.StockDirectionEnum Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_Direction()
+FNDA:0,Core.Domain.Enums.StockDirectionEnum Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_Direction()
+DA:83,0
+FN:88,System.Single Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_Change()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_Change()
+DA:89,0
+FN:98,System.Single Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_LastBestBidPrice()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_LastBestBidPrice()
+DA:99,0
+FN:104,System.Int32 Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_LastBestBidVolume()
+FNDA:0,System.Int32 Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_LastBestBidVolume()
+DA:105,0
+FN:110,System.Single Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_LastBestAskPrice()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_LastBestAskPrice()
+DA:111,0
+FN:116,System.Int32 Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_LastBestAskVolume()
+FNDA:0,System.Int32 Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_LastBestAskVolume()
+DA:117,0
+FN:123,System.Single Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_PriceEarningRatio()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::get_PriceEarningRatio()
+DA:124,0
+FN:17,System.Void Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::.ctor()
+FNDA:0,System.Void Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote::.ctor()
+DA:18,0
+DA:19,0
+LF:18
+LH:0
+BRF:0
+BRH:0
+FNF:17
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/0.CoreLayer/Core.Domain/Entities/TWSE_Stock/Exchange/YearlyTradingInformation.cs
+FN:23,System.Int16 Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation::get_Year()
+FNDA:0,System.Int16 Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation::get_Year()
+DA:24,0
+FN:31,System.String Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation::get_StockCode()
+FNDA:0,System.String Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation::get_StockCode()
+DA:32,0
+FN:37,System.Int64 Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation::get_TradeVolume()
+FNDA:0,System.Int64 Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation::get_TradeVolume()
+DA:38,0
+FN:43,System.Int64 Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation::get_TradeValue()
+FNDA:0,System.Int64 Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation::get_TradeValue()
+DA:44,0
+FN:49,System.Int32 Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation::get_Transaction()
+FNDA:0,System.Int32 Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation::get_Transaction()
+DA:50,0
+FN:55,System.Single Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation::get_HighestPrice()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation::get_HighestPrice()
+DA:56,0
+FN:63,System.DateTime Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation::get_HighestPriceDate()
+FNDA:0,System.DateTime Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation::get_HighestPriceDate()
+DA:64,0
+FN:69,System.Single Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation::get_LowestPrice()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation::get_LowestPrice()
+DA:70,0
+FN:77,System.DateTime Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation::get_LowestPriceDate()
+FNDA:0,System.DateTime Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation::get_LowestPriceDate()
+DA:78,0
+FN:83,System.Single Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation::get_AverageClosingPrice()
+FNDA:0,System.Single Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation::get_AverageClosingPrice()
+DA:84,0
+FN:14,System.Void Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation::.ctor()
+FNDA:0,System.Void Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation::.ctor()
+DA:15,0
+DA:16,0
+LF:12
+LH:0
+BRF:0
+BRH:0
+FNF:11
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/0.CoreLayer/Core.Domain/Entities/Base/EntityBase.cs
+FN:17,System.DateTime Core.Domain.Entities.Base.EntityBase::get_CreateDateTime()
+FNDA:0,System.DateTime Core.Domain.Entities.Base.EntityBase::get_CreateDateTime()
+DA:18,0
+FN:22,System.DateTime Core.Domain.Entities.Base.EntityBase::get_UpdateDateTime()
+FNDA:0,System.DateTime Core.Domain.Entities.Base.EntityBase::get_UpdateDateTime()
+DA:23,0
+FN:9,System.Void Core.Domain.Entities.Base.EntityBase::.ctor()
+FNDA:0,System.Void Core.Domain.Entities.Base.EntityBase::.ctor()
+DA:10,0
+DA:11,0
+DA:12,0
+DA:13,0
+LF:6
+LH:0
+BRF:0
+BRH:0
+FNF:3
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/0.CoreLayer/Core.Domain/DTO/MaskInstitution.cs
+FN:10,System.String Core.Domain.DTO.MaskInstitution::get_Id()
+FNDA:0,System.String Core.Domain.DTO.MaskInstitution::get_Id()
+DA:11,0
+FN:16,System.Void Core.Domain.DTO.MaskInstitution::set_Name(System.String)
+FNDA:0,System.Void Core.Domain.DTO.MaskInstitution::set_Name(System.String)
+DA:17,0
+FN:22,System.String Core.Domain.DTO.MaskInstitution::get_Address()
+FNDA:0,System.String Core.Domain.DTO.MaskInstitution::get_Address()
+DA:23,0
+FN:28,System.Void Core.Domain.DTO.MaskInstitution::set_PhoneNumber(System.String)
+FNDA:0,System.Void Core.Domain.DTO.MaskInstitution::set_PhoneNumber(System.String)
+DA:29,0
+FN:34,System.Int32 Core.Domain.DTO.MaskInstitution::get_numberOfAdultMasks()
+FNDA:0,System.Int32 Core.Domain.DTO.MaskInstitution::get_numberOfAdultMasks()
+DA:35,0
+FN:40,System.Void Core.Domain.DTO.MaskInstitution::set_numberOfChildMasks(System.Int32)
+FNDA:0,System.Void Core.Domain.DTO.MaskInstitution::set_numberOfChildMasks(System.Int32)
+DA:41,0
+FN:46,System.DateTime Core.Domain.DTO.MaskInstitution::get_UpdateTime()
+FNDA:0,System.DateTime Core.Domain.DTO.MaskInstitution::get_UpdateTime()
+DA:47,0
+LF:7
+LH:0
+BRF:0
+BRH:0
+FNF:7
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/0.CoreLayer/Core.Domain/DTO/TWSE/HolidaySchedule.cs
+FN:11,System.String Core.Domain.DTO.TWSE.HolidaySchedule::get_Name()
+FNDA:0,System.String Core.Domain.DTO.TWSE.HolidaySchedule::get_Name()
+DA:12,0
+FN:15,System.String Core.Domain.DTO.TWSE.HolidaySchedule::get_Date()
+FNDA:0,System.String Core.Domain.DTO.TWSE.HolidaySchedule::get_Date()
+DA:16,0
+FN:19,System.String Core.Domain.DTO.TWSE.HolidaySchedule::get_Day()
+FNDA:0,System.String Core.Domain.DTO.TWSE.HolidaySchedule::get_Day()
+DA:20,0
+FN:23,System.String Core.Domain.DTO.TWSE.HolidaySchedule::get_Description()
+FNDA:0,System.String Core.Domain.DTO.TWSE.HolidaySchedule::get_Description()
+DA:24,0
+LF:4
+LH:0
+BRF:0
+BRH:0
+FNF:4
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/0.CoreLayer/Core.Domain/DTO/TWSE/TradingVolume.cs
+FN:3,System.String Core.Domain.DTO.TWSE.TradingVolume::get_stat()
+FNDA:0,System.String Core.Domain.DTO.TWSE.TradingVolume::get_stat()
+DA:4,0
+FN:4,System.String Core.Domain.DTO.TWSE.TradingVolume::get_date()
+FNDA:0,System.String Core.Domain.DTO.TWSE.TradingVolume::get_date()
+DA:5,0
+FN:5,System.String Core.Domain.DTO.TWSE.TradingVolume::get_title()
+FNDA:0,System.String Core.Domain.DTO.TWSE.TradingVolume::get_title()
+DA:6,0
+FN:6,System.String[] Core.Domain.DTO.TWSE.TradingVolume::get_fields()
+FNDA:0,System.String[] Core.Domain.DTO.TWSE.TradingVolume::get_fields()
+DA:7,0
+FN:7,System.String[][] Core.Domain.DTO.TWSE.TradingVolume::get_data()
+FNDA:0,System.String[][] Core.Domain.DTO.TWSE.TradingVolume::get_data()
+DA:8,0
+FN:8,System.String[] Core.Domain.DTO.TWSE.TradingVolume::get_notes()
+FNDA:0,System.String[] Core.Domain.DTO.TWSE.TradingVolume::get_notes()
+DA:9,0
+FN:9,Core.Domain.DTO.TWSE.Group[] Core.Domain.DTO.TWSE.TradingVolume::get_groups()
+FNDA:0,Core.Domain.DTO.TWSE.Group[] Core.Domain.DTO.TWSE.TradingVolume::get_groups()
+DA:10,0
+FN:13,System.Int32 Core.Domain.DTO.TWSE.Group::get_start()
+FNDA:0,System.Int32 Core.Domain.DTO.TWSE.Group::get_start()
+DA:14,0
+FN:14,System.Int32 Core.Domain.DTO.TWSE.Group::get_span()
+FNDA:0,System.Int32 Core.Domain.DTO.TWSE.Group::get_span()
+DA:15,0
+FN:15,System.String Core.Domain.DTO.TWSE.Group::get_title()
+FNDA:0,System.String Core.Domain.DTO.TWSE.Group::get_title()
+DA:16,0
+LF:10
+LH:0
+BRF:0
+BRH:0
+FNF:10
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/0.CoreLayer/Core.Domain/DTO/Sinopac/ExchangeRate.cs
+FN:8,System.String Core.Domain.DTO.Sinopac.ExchangeRate::get_TitleInfo()
+FNDA:0,System.String Core.Domain.DTO.Sinopac.ExchangeRate::get_TitleInfo()
+DA:9,0
+FN:9,System.String Core.Domain.DTO.Sinopac.ExchangeRate::get_QueryDate()
+FNDA:0,System.String Core.Domain.DTO.Sinopac.ExchangeRate::get_QueryDate()
+DA:10,0
+FN:10,System.Collections.Generic.List`1<Core.Domain.DTO.Sinopac.Info> Core.Domain.DTO.Sinopac.ExchangeRate::get_SubInfo()
+FNDA:0,System.Collections.Generic.List`1<Core.Domain.DTO.Sinopac.Info> Core.Domain.DTO.Sinopac.ExchangeRate::get_SubInfo()
+DA:11,0
+FN:12,System.String Core.Domain.DTO.Sinopac.ExchangeRate::get_MemoUrl()
+FNDA:0,System.String Core.Domain.DTO.Sinopac.ExchangeRate::get_MemoUrl()
+DA:13,0
+FN:13,System.String Core.Domain.DTO.Sinopac.ExchangeRate::get_Header()
+FNDA:0,System.String Core.Domain.DTO.Sinopac.ExchangeRate::get_Header()
+DA:14,0
+FN:14,System.String Core.Domain.DTO.Sinopac.ExchangeRate::get_Message()
+FNDA:0,System.String Core.Domain.DTO.Sinopac.ExchangeRate::get_Message()
+DA:15,0
+FN:21,System.String Core.Domain.DTO.Sinopac.Info::get_DataValue1()
+FNDA:0,System.String Core.Domain.DTO.Sinopac.Info::get_DataValue1()
+DA:22,0
+FN:22,System.String Core.Domain.DTO.Sinopac.Info::get_DataValue1Img()
+FNDA:0,System.String Core.Domain.DTO.Sinopac.Info::get_DataValue1Img()
+DA:23,0
+FN:23,System.String Core.Domain.DTO.Sinopac.Info::get_DataValue2()
+FNDA:0,System.String Core.Domain.DTO.Sinopac.Info::get_DataValue2()
+DA:24,0
+FN:24,System.String Core.Domain.DTO.Sinopac.Info::get_DataValue3()
+FNDA:0,System.String Core.Domain.DTO.Sinopac.Info::get_DataValue3()
+DA:25,0
+FN:25,System.String Core.Domain.DTO.Sinopac.Info::get_DataValue4()
+FNDA:0,System.String Core.Domain.DTO.Sinopac.Info::get_DataValue4()
+DA:26,0
+LF:11
+LH:0
+BRF:0
+BRH:0
+FNF:11
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/0.CoreLayer/Core.Domain/DTO/RequestDTO/CambridgeDictionary/Translation.cs
+FN:17,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_Name()
+FNDA:0,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_Name()
+DA:18,0
+FN:22,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_Speech()
+FNDA:0,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_Speech()
+DA:23,0
+FN:27,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_UkType()
+FNDA:0,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_UkType()
+DA:28,0
+FN:32,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_Uk_KKPhonetic()
+FNDA:0,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_Uk_KKPhonetic()
+DA:33,0
+FN:37,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_UsType()
+FNDA:0,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_UsType()
+DA:38,0
+FN:42,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_Us_KKPhonetic()
+FNDA:0,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_Us_KKPhonetic()
+DA:43,0
+FN:47,System.Collections.Generic.List`1<Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean> Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_Means()
+FNDA:0,System.Collections.Generic.List`1<Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean> Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_Means()
+DA:48,0
+FN:53,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_TranslationStr()
+FNDA:0,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_TranslationStr()
+DA:54,0
+DA:55,0
+DA:56,0
+DA:57,0
+DA:58,0
+FN:10,System.Void Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::.ctor()
+FNDA:0,System.Void Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::.ctor()
+DA:11,0
+DA:12,0
+DA:13,0
+FN:73,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean::get_English()
+FNDA:0,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean::get_English()
+DA:74,0
+FN:78,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean::get_Chinese()
+FNDA:0,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean::get_Chinese()
+DA:79,0
+FN:83,System.Collections.Generic.List`1<Core.Domain.DTO.RequestDTO.CambridgeDictionary.SentenceExample> Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean::get_SentenceExamples()
+FNDA:0,System.Collections.Generic.List`1<Core.Domain.DTO.RequestDTO.CambridgeDictionary.SentenceExample> Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean::get_SentenceExamples()
+DA:84,0
+FN:89,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean::get_MeanStr()
+FNDA:0,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean::get_MeanStr()
+DA:90,0
+DA:91,0
+DA:92,0
+DA:93,0
+DA:94,0
+DA:95,0
+DA:96,0
+BRDA:91,13,0,0
+BRDA:91,13,1,0
+FN:66,System.Void Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean::.ctor()
+FNDA:0,System.Void Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean::.ctor()
+DA:67,0
+DA:68,0
+DA:69,0
+FN:107,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.SentenceExample::get_English()
+FNDA:0,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.SentenceExample::get_English()
+DA:108,0
+FN:112,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.SentenceExample::get_Chinese()
+FNDA:0,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.SentenceExample::get_Chinese()
+DA:113,0
+FN:115,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.SentenceExample::get_SentenceExampleStr()
+FNDA:0,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.SentenceExample::get_SentenceExampleStr()
+DA:116,0
+DA:117,0
+DA:118,0
+LF:33
+LH:0
+BRF:2
+BRH:0
+FNF:17
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/0.CoreLayer/Core.Domain/DTO/Map/LatLng.cs
+FN:10,System.Single Core.Domain.DTO.Map.LatLng::get_lat()
+FNDA:0,System.Single Core.Domain.DTO.Map.LatLng::get_lat()
+DA:11,0
+FN:15,System.Single Core.Domain.DTO.Map.LatLng::get_lng()
+FNDA:0,System.Single Core.Domain.DTO.Map.LatLng::get_lng()
+DA:16,0
+LF:2
+LH:0
+BRF:0
+BRH:0
+FNF:2
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/3.DataAccessLayer/DA/DA.Managers/TWSE_Stock/DailyQuoteManager.cs
+FN:26,System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote> DA.Managers.TWSE_Stock.DailyQuoteManager::CrawlDailyQuoteListByDate(System.DateTime,Core.Domain.Enums.StockCategoryEnum)
+FNDA:0,System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote> DA.Managers.TWSE_Stock.DailyQuoteManager::CrawlDailyQuoteListByDate(System.DateTime,Core.Domain.Enums.StockCategoryEnum)
+DA:27,0
+DA:28,0
+DA:29,0
+DA:30,0
+DA:32,0
+DA:33,0
+FN:43,System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote> DA.Managers.TWSE_Stock.DailyQuoteManager::CrawlDailyQuoteListByMonth(System.DateTime,Core.Domain.Enums.StockCategoryEnum)
+FNDA:0,System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote> DA.Managers.TWSE_Stock.DailyQuoteManager::CrawlDailyQuoteListByMonth(System.DateTime,Core.Domain.Enums.StockCategoryEnum)
+DA:44,0
+DA:45,0
+DA:47,0
+DA:48,0
+DA:49,0
+DA:50,0
+DA:51,0
+DA:52,0
+DA:53,0
+DA:55,0
+DA:56,0
+DA:57,0
+DA:58,0
+DA:59,0
+DA:61,0
+DA:62,0
+DA:63,0
+DA:64,0
+DA:65,0
+DA:66,0
+DA:67,0
+DA:68,0
+DA:69,0
+DA:70,0
+BRDA:51,87,1,0
+BRDA:51,87,0,0
+BRDA:56,230,1,0
+BRDA:58,145,0,0
+BRDA:58,145,1,0
+BRDA:56,230,0,0
+FN:80,System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote> DA.Managers.TWSE_Stock.DailyQuoteManager::CrawlDailyQuoteListByYear(System.Int32,Core.Domain.Enums.StockCategoryEnum)
+FNDA:0,System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote> DA.Managers.TWSE_Stock.DailyQuoteManager::CrawlDailyQuoteListByYear(System.Int32,Core.Domain.Enums.StockCategoryEnum)
+DA:81,0
+DA:82,0
+DA:84,0
+DA:85,0
+DA:86,0
+DA:87,0
+DA:88,0
+DA:90,0
+DA:91,0
+DA:92,0
+DA:93,0
+DA:94,0
+DA:96,0
+DA:97,0
+DA:98,0
+DA:99,0
+DA:100,0
+DA:101,0
+DA:102,0
+DA:103,0
+DA:105,0
+DA:106,0
+BRDA:86,74,1,0
+BRDA:86,74,0,0
+BRDA:91,215,1,0
+BRDA:93,130,0,0
+BRDA:93,130,1,0
+BRDA:91,215,0,0
+FN:112,System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote> DA.Managers.TWSE_Stock.DailyQuoteManager::GetDailyQuoteListFromBytes(System.Byte[])
+FNDA:0,System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote> DA.Managers.TWSE_Stock.DailyQuoteManager::GetDailyQuoteListFromBytes(System.Byte[])
+DA:113,0
+DA:114,0
+DA:116,0
+DA:117,0
+DA:119,0
+DA:121,0
+DA:124,0
+DA:125,0
+DA:127,0
+DA:128,0
+DA:129,0
+DA:130,0
+DA:131,0
+DA:132,0
+DA:134,0
+DA:135,0
+BRDA:119,77,0,0
+BRDA:119,77,1,0
+BRDA:128,222,1,0
+BRDA:128,222,0,0
+FN:160,System.Byte[] DA.Managers.TWSE_Stock.DailyQuoteManager::BytesFromDailyQuotesAPI(System.DateTime,Core.Domain.Enums.StockCategoryEnum)
+FNDA:0,System.Byte[] DA.Managers.TWSE_Stock.DailyQuoteManager::BytesFromDailyQuotesAPI(System.DateTime,Core.Domain.Enums.StockCategoryEnum)
+DA:161,0
+DA:163,0
+DA:164,0
+DA:165,0
+DA:166,0
+DA:167,0
+DA:168,0
+DA:169,0
+DA:170,0
+DA:171,0
+DA:173,0
+DA:176,0
+DA:178,0
+DA:179,0
+DA:180,0
+DA:181,0
+DA:182,0
+DA:184,0
+DA:185,0
+DA:186,0
+DA:188,0
+DA:189,0
+DA:190,0
+DA:191,0
+DA:192,0
+DA:193,0
+DA:194,0
+DA:195,0
+DA:196,0
+DA:197,0
+DA:198,0
+DA:199,0
+DA:201,0
+DA:202,0
+BRDA:176,122,0,0
+BRDA:176,122,1,0
+BRDA:180,167,0,0
+BRDA:180,167,1,0
+BRDA:184,205,0,0
+BRDA:184,205,1,0
+BRDA:188,243,0,0
+BRDA:188,243,1,0
+FN:257,Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote DA.Managers.TWSE_Stock.DailyQuoteManager::GetDailyQuote(System.Text.Json.JsonElement,System.DateTime)
+FNDA:0,Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote DA.Managers.TWSE_Stock.DailyQuoteManager::GetDailyQuote(System.Text.Json.JsonElement,System.DateTime)
+DA:258,0
+DA:259,0
+DA:261,0
+DA:262,0
+DA:263,0
+DA:264,0
+DA:265,0
+DA:266,0
+DA:267,0
+DA:268,0
+DA:269,0
+DA:270,0
+DA:272,0
+DA:273,0
+DA:274,0
+DA:275,0
+DA:276,0
+DA:277,0
+DA:278,0
+DA:279,0
+DA:280,0
+DA:281,0
+DA:282,0
+DA:283,0
+DA:284,0
+DA:285,0
+DA:286,0
+DA:287,0
+DA:288,0
+DA:289,0
+DA:290,0
+DA:292,0
+DA:293,0
+DA:294,0
+DA:295,0
+DA:296,0
+DA:297,0
+DA:299,0
+DA:300,0
+DA:301,0
+DA:302,0
+DA:303,0
+DA:304,0
+DA:306,0
+DA:307,0
+DA:308,0
+DA:309,0
+DA:310,0
+DA:311,0
+DA:312,0
+DA:313,0
+DA:314,0
+DA:315,0
+DA:316,0
+DA:317,0
+DA:318,0
+DA:319,0
+DA:320,0
+DA:321,0
+DA:323,0
+DA:324,0
+BRDA:262,68,0,0
+BRDA:262,68,1,0
+BRDA:265,151,0,0
+BRDA:265,151,1,0
+BRDA:268,234,0,0
+BRDA:268,234,1,0
+BRDA:272,317,0,0
+BRDA:272,317,1,0
+BRDA:275,400,0,0
+BRDA:275,400,1,0
+BRDA:278,483,0,0
+BRDA:278,483,1,0
+BRDA:281,566,0,0
+BRDA:281,566,1,0
+BRDA:285,686,0,0
+BRDA:285,686,1,0
+BRDA:288,771,0,0
+BRDA:288,771,1,0
+BRDA:292,856,0,0
+BRDA:292,856,1,0
+BRDA:295,941,0,0
+BRDA:295,941,1,0
+BRDA:299,1026,0,0
+BRDA:299,1026,1,0
+BRDA:302,1111,0,0
+BRDA:302,1111,1,0
+FN:208,System.Void DA.Managers.TWSE_Stock.DailyQuoteManager/<BytesFromDailyQuotesAPIAsync>d__5::MoveNext()
+FNDA:0,System.Void DA.Managers.TWSE_Stock.DailyQuoteManager/<BytesFromDailyQuotesAPIAsync>d__5::MoveNext()
+DA:209,0
+DA:210,0
+DA:211,0
+DA:212,0
+DA:213,0
+DA:214,0
+DA:215,0
+DA:216,0
+DA:219,0
+DA:220,0
+DA:221,0
+DA:222,0
+DA:224,0
+DA:226,0
+DA:227,0
+DA:228,0
+DA:230,0
+DA:231,0
+DA:232,0
+DA:234,0
+DA:235,0
+DA:236,0
+DA:237,0
+DA:238,0
+DA:239,0
+DA:240,0
+DA:241,0
+DA:242,0
+DA:243,0
+DA:244,0
+DA:245,0
+DA:247,0
+DA:248,0
+BRDA:222,384,0,0
+BRDA:222,384,1,0
+BRDA:226,552,0,0
+BRDA:226,552,1,0
+BRDA:230,727,0,0
+BRDA:230,727,1,0
+BRDA:234,902,0,0
+BRDA:234,902,1,0
+LF:196
+LH:0
+BRF:58
+BRH:0
+FNF:7
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/3.DataAccessLayer/DA/DA.Managers/TWSE_Stock/DividendDistributionManager.cs
+FN:19,System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.DividendDistribution> DA.Managers.TWSE_Stock.DividendDistributionManager::CrawlDividendDistribution(Core.Domain.Enums.StockCodeEnum)
+FNDA:0,System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.DividendDistribution> DA.Managers.TWSE_Stock.DividendDistributionManager::CrawlDividendDistribution(Core.Domain.Enums.StockCodeEnum)
+DA:20,0
+DA:21,0
+DA:22,0
+DA:23,0
+FN:24,System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.DividendDistribution> DA.Managers.TWSE_Stock.DividendDistributionManager::CrawlDividendDistribution(Core.Domain.Enums.StockCodeEnum[])
+FNDA:0,System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.DividendDistribution> DA.Managers.TWSE_Stock.DividendDistributionManager::CrawlDividendDistribution(Core.Domain.Enums.StockCodeEnum[])
+DA:25,0
+DA:26,0
+DA:28,0
+DA:29,0
+DA:30,0
+DA:31,0
+DA:32,0
+DA:33,0
+DA:34,0
+DA:35,0
+DA:37,0
+DA:38,0
+BRDA:29,55,1,0
+BRDA:29,55,0,0
+BRDA:33,108,1,0
+BRDA:33,108,0,0
+FN:114,System.Void DA.Managers.TWSE_Stock.DividendDistributionManager/<>c__DisplayClass2_0::<CrawlDividendDistributionListIn10YearsAsync>b__0(AngleSharp.Io.VirtualResponse)
+FNDA:0,System.Void DA.Managers.TWSE_Stock.DividendDistributionManager/<>c__DisplayClass2_0::<CrawlDividendDistributionListIn10YearsAsync>b__0(AngleSharp.Io.VirtualResponse)
+DA:115,0
+FN:121,System.Void DA.Managers.TWSE_Stock.DividendDistributionManager/<>c__DisplayClass2_0::<CrawlDividendDistributionListIn10YearsAsync>b__1(AngleSharp.Io.VirtualResponse)
+FNDA:0,System.Void DA.Managers.TWSE_Stock.DividendDistributionManager/<>c__DisplayClass2_0::<CrawlDividendDistributionListIn10YearsAsync>b__1(AngleSharp.Io.VirtualResponse)
+DA:122,0
+FN:94,System.Void DA.Managers.TWSE_Stock.DividendDistributionManager/<CrawlDividendDistributionListIn10YearsAsync>d__2::MoveNext()
+FNDA:0,System.Void DA.Managers.TWSE_Stock.DividendDistributionManager/<CrawlDividendDistributionListIn10YearsAsync>d__2::MoveNext()
+DA:95,0
+DA:97,0
+DA:100,0
+DA:101,0
+DA:103,0
+DA:104,0
+DA:105,0
+DA:106,0
+DA:107,0
+DA:108,0
+DA:110,0
+DA:112,0
+DA:113,0
+DA:118,0
+DA:119,0
+DA:120,0
+DA:121,0
+DA:123,0
+DA:124,0
+DA:125,0
+DA:129,0
+DA:131,0
+DA:132,0
+DA:133,0
+DA:134,0
+DA:135,0
+DA:136,0
+DA:137,0
+DA:138,0
+DA:139,0
+DA:140,0
+DA:141,0
+DA:142,0
+DA:143,0
+DA:144,0
+DA:145,0
+DA:146,0
+DA:147,0
+DA:148,0
+DA:149,0
+DA:158,0
+DA:159,0
+DA:176,0
+DA:177,0
+BRDA:131,1479,1,0
+BRDA:135,1078,0,0
+BRDA:135,1078,1,0
+BRDA:137,1137,0,0
+BRDA:137,1137,1,0
+BRDA:131,1460,0,0
+BRDA:131,1460,1,0
+BRDA:131,1479,0,0
+LF:62
+LH:0
+BRF:12
+BRH:0
+FNF:5
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/3.DataAccessLayer/DA/DA.Managers/TWSE_Stock/YearlyTradingInformationManager.cs
+FN:21,System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation> DA.Managers.TWSE_Stock.YearlyTradingInformationManager::CrawlYearlyTradingInformation(Core.Domain.Enums.StockCodeEnum)
+FNDA:0,System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation> DA.Managers.TWSE_Stock.YearlyTradingInformationManager::CrawlYearlyTradingInformation(Core.Domain.Enums.StockCodeEnum)
+DA:22,0
+DA:23,0
+DA:25,0
+DA:26,0
+DA:27,0
+DA:28,0
+DA:29,0
+DA:30,0
+DA:31,0
+DA:33,0
+DA:35,0
+DA:36,0
+DA:38,0
+DA:39,0
+DA:42,0
+DA:43,0
+DA:44,0
+DA:45,0
+DA:46,0
+DA:47,0
+DA:49,0
+DA:50,0
+DA:51,0
+DA:53,0
+DA:54,0
+BRDA:38,167,0,0
+BRDA:38,167,1,0
+BRDA:43,280,1,0
+BRDA:46,230,0,0
+BRDA:46,230,1,0
+BRDA:43,280,0,0
+FN:61,Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation DA.Managers.TWSE_Stock.YearlyTradingInformationManager::GetYearlyTradingInformation(System.Text.Json.JsonElement)
+FNDA:0,Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation DA.Managers.TWSE_Stock.YearlyTradingInformationManager::GetYearlyTradingInformation(System.Text.Json.JsonElement)
+DA:62,0
+DA:63,0
+DA:65,0
+DA:66,0
+DA:67,0
+DA:69,0
+DA:70,0
+DA:71,0
+DA:72,0
+DA:75,0
+DA:76,0
+DA:77,0
+DA:78,0
+DA:79,0
+DA:80,0
+DA:81,0
+DA:82,0
+DA:83,0
+DA:86,0
+DA:87,0
+DA:88,0
+DA:89,0
+DA:90,0
+DA:91,0
+DA:92,0
+DA:93,0
+DA:94,0
+DA:95,0
+DA:96,0
+DA:97,0
+DA:98,0
+DA:99,0
+DA:100,0
+DA:102,0
+DA:103,0
+DA:104,0
+DA:105,0
+DA:106,0
+DA:107,0
+DA:108,0
+DA:109,0
+DA:110,0
+DA:112,0
+DA:113,0
+BRDA:65,44,0,0
+BRDA:65,44,1,0
+BRDA:70,108,0,0
+BRDA:70,108,1,0
+BRDA:75,167,0,0
+BRDA:75,167,1,0
+BRDA:78,244,0,0
+BRDA:78,244,1,0
+BRDA:81,321,0,0
+BRDA:81,321,1,0
+BRDA:86,398,0,0
+BRDA:86,398,1,0
+BRDA:89,492,0,0
+BRDA:89,492,1,0
+BRDA:92,569,0,0
+BRDA:92,569,1,0
+BRDA:95,663,0,0
+BRDA:95,663,1,0
+BRDA:98,740,0,0
+BRDA:98,740,1,0
+LF:69
+LH:0
+BRF:26
+BRH:0
+FNF:2
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/3.DataAccessLayer/DA/DA.Managers/CambridgeDictionary/CambridgeDictionaryManager.cs
+FN:16,System.Collections.Generic.List`1<Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation> DA.Managers.CambridgeDictionary.CambridgeDictionaryManager::CrawlCambridgeDictionary(System.String)
+FNDA:0,System.Collections.Generic.List`1<Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation> DA.Managers.CambridgeDictionary.CambridgeDictionaryManager::CrawlCambridgeDictionary(System.String)
+DA:17,0
+DA:18,0
+DA:20,0
+DA:22,0
+DA:23,0
+DA:25,0
+DA:27,0
+DA:29,0
+DA:30,0
+DA:31,0
+DA:35,0
+DA:36,0
+DA:37,0
+DA:39,0
+DA:40,0
+DA:41,0
+DA:43,0
+DA:44,0
+DA:45,0
+DA:51,0
+DA:52,0
+DA:53,0
+DA:54,0
+DA:56,0
+DA:57,0
+DA:58,0
+DA:60,0
+DA:61,0
+DA:62,0
+DA:64,0
+DA:65,0
+DA:66,0
+DA:67,0
+DA:68,0
+DA:69,0
+DA:70,0
+DA:71,0
+DA:72,0
+DA:73,0
+DA:74,0
+DA:75,0
+DA:76,0
+DA:80,0
+DA:81,0
+DA:83,0
+DA:84,0
+BRDA:30,731,1,0
+BRDA:53,693,1,0
+BRDA:56,408,0,0
+BRDA:56,408,1,0
+BRDA:60,456,0,0
+BRDA:60,456,1,0
+BRDA:65,650,1,0
+BRDA:67,550,0,0
+BRDA:67,550,1,0
+BRDA:70,598,0,0
+BRDA:70,598,1,0
+BRDA:65,650,0,0
+BRDA:53,693,0,0
+BRDA:30,731,0,0
+LF:46
+LH:0
+BRF:14
+BRH:0
+FNF:1
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/ConfigService.cs
+FN:8,Microsoft.Extensions.Configuration.IConfiguration BL.Services.ConfigService::get_Configuration()
+FNDA:0,Microsoft.Extensions.Configuration.IConfiguration BL.Services.ConfigService::get_Configuration()
+DA:9,0
+FN:10,System.String BL.Services.ConfigService::GetSqlConnectionString(System.String)
+FNDA:0,System.String BL.Services.ConfigService::GetSqlConnectionString(System.String)
+DA:11,0
+DA:12,0
+DA:13,0
+FN:15,System.String BL.Services.ConfigService::get_Redis_Endpoint()
+FNDA:0,System.String BL.Services.ConfigService::get_Redis_Endpoint()
+DA:16,0
+DA:17,0
+DA:18,0
+FN:21,System.String BL.Services.ConfigService::get_Redis_Password()
+FNDA:0,System.String BL.Services.ConfigService::get_Redis_Password()
+DA:22,0
+DA:23,0
+DA:24,0
+FN:27,System.String BL.Services.ConfigService::get_Line_ChannelAccessToken()
+FNDA:0,System.String BL.Services.ConfigService::get_Line_ChannelAccessToken()
+DA:28,0
+DA:29,0
+DA:30,0
+FN:33,System.String BL.Services.ConfigService::get_Line_Jacky_userId()
+FNDA:0,System.String BL.Services.ConfigService::get_Line_Jacky_userId()
+DA:34,0
+DA:35,0
+DA:36,0
+FN:39,System.String BL.Services.ConfigService::get_Line_Jessi_userId()
+FNDA:0,System.String BL.Services.ConfigService::get_Line_Jessi_userId()
+DA:40,0
+DA:41,0
+DA:42,0
+FN:45,System.String BL.Services.ConfigService::get_Line_NotifyBearerToken_Group()
+FNDA:0,System.String BL.Services.ConfigService::get_Line_NotifyBearerToken_Group()
+DA:46,0
+DA:47,0
+DA:48,0
+FN:51,System.String BL.Services.ConfigService::get_Line_NotifyBearerToken_Jacky()
+FNDA:0,System.String BL.Services.ConfigService::get_Line_NotifyBearerToken_Jacky()
+DA:52,0
+DA:53,0
+DA:54,0
+FN:57,System.String BL.Services.ConfigService::get_Line_NotifyBearerToken_Jessi()
+FNDA:0,System.String BL.Services.ConfigService::get_Line_NotifyBearerToken_Jessi()
+DA:58,0
+DA:59,0
+DA:60,0
+FN:63,System.String BL.Services.ConfigService::get_MapQuest_Key()
+FNDA:0,System.String BL.Services.ConfigService::get_MapQuest_Key()
+DA:64,0
+DA:65,0
+DA:66,0
+FN:69,System.String BL.Services.ConfigService::get_HereApi_Key()
+FNDA:0,System.String BL.Services.ConfigService::get_HereApi_Key()
+DA:70,0
+DA:71,0
+DA:72,0
+FN:75,System.Int32 BL.Services.ConfigService::get_TWSE_TradingVolumeNumber()
+FNDA:0,System.Int32 BL.Services.ConfigService::get_TWSE_TradingVolumeNumber()
+DA:76,0
+DA:77,0
+DA:78,0
+DA:79,0
+LF:38
+LH:0
+BRF:0
+BRH:0
+FNF:13
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/DailyQuoteService.cs
+FN:23,DA.Managers.Interfaces.TWSE_Stock.IDailyQuoteManager BL.Services.DailyQuoteService::get_DailyQuoteManager()
+FNDA:0,DA.Managers.Interfaces.TWSE_Stock.IDailyQuoteManager BL.Services.DailyQuoteService::get_DailyQuoteManager()
+DA:24,0
+FN:28,DA.Repositories.Interfaces.TWSE_Stock.IDailyQuoteRepository BL.Services.DailyQuoteService::get_DailyQuoteRepository()
+FNDA:0,DA.Repositories.Interfaces.TWSE_Stock.IDailyQuoteRepository BL.Services.DailyQuoteService::get_DailyQuoteRepository()
+DA:29,0
+FN:36,System.Int32 BL.Services.DailyQuoteService::CrawlDailyQuoteListAndUpdateByDate(System.DateTime,Core.Domain.Enums.StockCategoryEnum)
+FNDA:0,System.Int32 BL.Services.DailyQuoteService::CrawlDailyQuoteListAndUpdateByDate(System.DateTime,Core.Domain.Enums.StockCategoryEnum)
+DA:37,0
+DA:40,0
+DA:41,0
+DA:42,0
+DA:44,0
+DA:45,0
+FN:52,System.Int32 BL.Services.DailyQuoteService::CrawlDailyQuoteListAndInsertByMonth(System.DateTime,Core.Domain.Enums.StockCategoryEnum)
+FNDA:0,System.Int32 BL.Services.DailyQuoteService::CrawlDailyQuoteListAndInsertByMonth(System.DateTime,Core.Domain.Enums.StockCategoryEnum)
+DA:53,0
+DA:56,0
+DA:57,0
+DA:58,0
+DA:60,0
+DA:61,0
+FN:68,System.Int32 BL.Services.DailyQuoteService::CrawlDailyQuoteListAndInsertByYear(System.Int32,Core.Domain.Enums.StockCategoryEnum)
+FNDA:0,System.Int32 BL.Services.DailyQuoteService::CrawlDailyQuoteListAndInsertByYear(System.Int32,Core.Domain.Enums.StockCategoryEnum)
+DA:69,0
+DA:72,0
+DA:73,0
+DA:74,0
+DA:76,0
+DA:77,0
+FN:84,Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote BL.Services.DailyQuoteService::GetFirstDailyQuoteByDateAndStockCode(System.DateTime,System.String)
+FNDA:0,Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote BL.Services.DailyQuoteService::GetFirstDailyQuoteByDateAndStockCode(System.DateTime,System.String)
+DA:85,0
+DA:86,0
+DA:87,0
+DA:88,0
+DA:89,0
+DA:90,0
+DA:91,0
+DA:92,0
+DA:93,0
+BRDA:89,39,0,0
+BRDA:89,39,1,0
+FN:99,System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote> BL.Services.DailyQuoteService::GetDailyQuoteByDate(System.DateTime)
+FNDA:0,System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.Exchange.DailyQuote> BL.Services.DailyQuoteService::GetDailyQuoteByDate(System.DateTime)
+DA:100,0
+DA:101,0
+DA:102,0
+DA:103,0
+DA:104,0
+DA:105,0
+DA:106,0
+DA:107,0
+BRDA:103,33,0,0
+BRDA:103,33,1,0
+BRDA:103,49,0,0
+BRDA:103,49,1,0
+FN:15,System.Void BL.Services.DailyQuoteService::.ctor()
+FNDA:0,System.Void BL.Services.DailyQuoteService::.ctor()
+DA:16,0
+DA:17,0
+DA:18,0
+DA:19,0
+LF:41
+LH:0
+BRF:6
+BRH:0
+FNF:8
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/DividendDistributionService.cs
+FN:20,DA.Managers.Interfaces.TWSE_Stock.IDividendDistributionManager BL.Services.DividendDistributionService::get_DividendDistributionManager()
+FNDA:0,DA.Managers.Interfaces.TWSE_Stock.IDividendDistributionManager BL.Services.DividendDistributionService::get_DividendDistributionManager()
+DA:21,0
+FN:22,System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.DividendDistribution> BL.Services.DividendDistributionService::CrawlDividendDistributionListByStockCodeEnumArray(System.Array)
+FNDA:0,System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.DividendDistribution> BL.Services.DividendDistributionService::CrawlDividendDistributionListByStockCodeEnumArray(System.Array)
+DA:23,0
+DA:24,0
+DA:25,0
+DA:26,0
+DA:27,0
+DA:28,0
+DA:29,0
+DA:30,0
+FN:13,System.Void BL.Services.DividendDistributionService::.ctor()
+FNDA:0,System.Void BL.Services.DividendDistributionService::.ctor()
+DA:14,0
+DA:15,0
+DA:16,0
+LF:12
+LH:0
+BRF:0
+BRH:0
+FNF:3
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/LineWebhookService.cs
+FN:42,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetReplyMessages(isRock.LineBot.ReceivedMessage)
+FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetReplyMessages(isRock.LineBot.ReceivedMessage)
+DA:43,0
+DA:45,0
+DA:46,0
+DA:47,0
+DA:48,0
+DA:50,0
+DA:51,0
+DA:53,0
+DA:54,0
+DA:56,0
+DA:57,0
+DA:58,0
+DA:60,0
+DA:61,0
+DA:63,0
+DA:64,0
+DA:65,0
+DA:66,0
+DA:67,0
+DA:68,0
+DA:69,0
+DA:70,0
+DA:71,0
+DA:72,0
+DA:73,0
+DA:75,0
+DA:76,0
+BRDA:46,32,0,0
+BRDA:48,80,0,0
+BRDA:48,94,0,0
+BRDA:48,80,1,0
+BRDA:48,94,1,0
+BRDA:48,108,1,0
+BRDA:48,108,0,0
+BRDA:46,32,1,0
+BRDA:63,224,0,0
+BRDA:66,272,0,0
+BRDA:66,272,1,0
+BRDA:63,224,1,0
+FN:82,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetCommendTypeAndText(isRock.LineBot.ReceivedMessage)
+FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetCommendTypeAndText(isRock.LineBot.ReceivedMessage)
+DA:83,0
+DA:85,0
+DA:86,0
+DA:87,0
+DA:88,0
+DA:90,0
+DA:91,0
+DA:93,0
+DA:94,0
+DA:96,0
+DA:97,0
+DA:98,0
+DA:100,0
+DA:101,0
+DA:103,0
+DA:104,0
+DA:105,0
+DA:106,0
+DA:107,0
+DA:108,0
+DA:109,0
+DA:110,0
+DA:111,0
+DA:112,0
+DA:113,0
+DA:115,0
+DA:116,0
+BRDA:86,32,0,0
+BRDA:88,80,0,0
+BRDA:88,94,0,0
+BRDA:88,80,1,0
+BRDA:88,94,1,0
+BRDA:88,108,1,0
+BRDA:88,108,0,0
+BRDA:86,32,1,0
+BRDA:103,224,0,0
+BRDA:106,272,0,0
+BRDA:106,272,1,0
+BRDA:103,224,1,0
+FN:117,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetMessageBySticker(isRock.LineBot.StickerMessage)
+FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetMessageBySticker(isRock.LineBot.StickerMessage)
+DA:118,0
+DA:119,0
+DA:120,0
+DA:121,0
+DA:122,0
+DA:123,0
+DA:124,0
+DA:125,0
+DA:126,0
+DA:127,0
+DA:128,0
+FN:134,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetMessagesByText(System.String)
+FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetMessagesByText(System.String)
+DA:135,0
+DA:137,0
+DA:138,0
+DA:140,0
+DA:141,0
+DA:143,0
+DA:144,0
+DA:145,0
+DA:147,0
+DA:148,0
+DA:149,0
+DA:151,0
+DA:153,0
+DA:155,0
+DA:157,0
+DA:158,0
+DA:160,0
+DA:161,0
+DA:162,0
+DA:164,0
+DA:165,0
+DA:167,0
+DA:168,0
+DA:169,0
+DA:170,0
+DA:171,0
+DA:172,0
+DA:174,0
+DA:175,0
+DA:176,0
+DA:177,0
+DA:178,0
+DA:179,0
+DA:180,0
+DA:182,0
+DA:183,0
+DA:185,0
+DA:186,0
+DA:187,0
+DA:188,0
+DA:189,0
+DA:190,0
+DA:192,0
+DA:193,0
+DA:194,0
+DA:195,0
+DA:196,0
+DA:197,0
+DA:198,0
+DA:200,0
+DA:202,0
+DA:203,0
+DA:204,0
+DA:205,0
+DA:207,0
+BRDA:138,43,0,0
+BRDA:138,52,0,0
+BRDA:138,63,0,0
+BRDA:138,43,1,0
+BRDA:138,91,0,0
+BRDA:138,100,0,0
+BRDA:138,91,1,0
+BRDA:138,125,0,0
+BRDA:138,111,1,0
+BRDA:138,52,1,0
+BRDA:138,77,1,0
+BRDA:138,100,1,0
+BRDA:138,139,1,0
+BRDA:138,63,1,0
+BRDA:138,125,1,0
+BRDA:138,158,1,0
+BRDA:138,180,1,0
+BRDA:138,202,1,0
+BRDA:138,224,1,0
+BRDA:138,246,1,0
+BRDA:138,268,1,0
+BRDA:164,543,0,0
+BRDA:164,543,1,0
+BRDA:167,608,0,0
+BRDA:169,640,0,0
+BRDA:169,640,1,0
+BRDA:169,654,0,0
+BRDA:169,654,1,0
+BRDA:167,608,1,0
+BRDA:174,723,0,0
+BRDA:174,723,1,0
+BRDA:138,290,1,0
+BRDA:182,856,0,0
+BRDA:182,856,1,0
+BRDA:185,921,0,0
+BRDA:187,953,0,0
+BRDA:187,953,1,0
+BRDA:187,967,0,0
+BRDA:187,967,1,0
+BRDA:185,921,1,0
+BRDA:192,1036,0,0
+BRDA:192,1036,1,0
+BRDA:138,77,0,0
+BRDA:138,111,0,0
+BRDA:138,139,0,0
+BRDA:138,158,0,0
+BRDA:138,180,0,0
+BRDA:138,202,0,0
+BRDA:138,224,0,0
+BRDA:138,246,0,0
+BRDA:138,268,0,0
+BRDA:138,290,0,0
+FN:208,System.String BL.Services.LineWebhookService::GetReplyTextByText(System.String)
+FNDA:2,System.String BL.Services.LineWebhookService::GetReplyTextByText(System.String)
+DA:209,2
+DA:211,2
+DA:212,2
+DA:214,1
+DA:215,1
+DA:217,1
+DA:218,1
+DA:219,1
+DA:221,1
+DA:222,1
+DA:223,1
+DA:225,1
+DA:227,0
+DA:229,0
+DA:230,0
+DA:231,0
+DA:232,0
+DA:234,2
+BRDA:212,39,0,1
+BRDA:212,39,1,1
+BRDA:212,53,1,1
+BRDA:212,53,0,0
+FN:241,System.Void BL.Services.LineWebhookService::GetCommandTypeAndArgsByText(System.String,Core.Domain.Enums.LineWebhookCommandTypeEnum&,System.String[]&)
+FNDA:0,System.Void BL.Services.LineWebhookService::GetCommandTypeAndArgsByText(System.String,Core.Domain.Enums.LineWebhookCommandTypeEnum&,System.String[]&)
+DA:242,0
+DA:243,0
+DA:244,0
+DA:245,0
+DA:247,0
+DA:248,0
+DA:250,0
+DA:251,0
+DA:253,0
+DA:254,0
+DA:256,0
+DA:257,0
+DA:259,0
+DA:260,0
+DA:262,0
+DA:263,0
+DA:265,0
+DA:266,0
+DA:268,0
+DA:269,0
+DA:270,0
+DA:272,0
+DA:273,0
+DA:274,0
+DA:275,0
+DA:277,0
+BRDA:245,62,0,0
+BRDA:245,70,0,0
+BRDA:245,80,0,0
+BRDA:245,62,1,0
+BRDA:245,106,0,0
+BRDA:245,114,0,0
+BRDA:245,106,1,0
+BRDA:245,137,0,0
+BRDA:245,124,1,0
+BRDA:245,114,1,0
+BRDA:245,147,1,0
+BRDA:245,70,1,0
+BRDA:245,93,1,0
+BRDA:245,80,1,0
+BRDA:245,137,1,0
+BRDA:245,165,1,0
+BRDA:245,180,1,0
+BRDA:245,195,1,0
+BRDA:245,210,1,0
+BRDA:245,225,1,0
+BRDA:245,240,1,0
+BRDA:245,255,1,0
+BRDA:245,93,0,0
+BRDA:245,124,0,0
+BRDA:245,147,0,0
+BRDA:245,165,0,0
+BRDA:245,180,0,0
+BRDA:245,195,0,0
+BRDA:245,210,0,0
+BRDA:245,225,0,0
+BRDA:245,240,0,0
+BRDA:245,255,0,0
+FN:278,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetStickerMessages(System.String)
+FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetStickerMessages(System.String)
+DA:279,0
+DA:280,0
+DA:281,0
+DA:282,0
+DA:283,0
+DA:286,0
+DA:287,0
+DA:288,0
+BRDA:282,78,0,0
+BRDA:282,78,1,0
+FN:294,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetMaskInstitutions(System.String)
+FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetMaskInstitutions(System.String)
+DA:295,0
+DA:296,0
+DA:298,0
+DA:300,0
+DA:302,0
+DA:303,0
+DA:304,0
+DA:305,0
+DA:307,0
+DA:308,0
+DA:311,0
+DA:312,0
+DA:313,0
+DA:314,0
+DA:315,0
+DA:317,0
+DA:318,0
+DA:319,0
+DA:320,0
+DA:321,0
+DA:322,0
+DA:323,0
+DA:324,0
+DA:325,0
+DA:326,0
+DA:328,0
+DA:329,0
+DA:330,0
+BRDA:303,138,1,0
+BRDA:303,119,0,0
+BRDA:303,119,1,0
+BRDA:303,138,0,0
+BRDA:307,153,0,0
+BRDA:307,153,1,0
+BRDA:312,437,1,0
+BRDA:314,265,0,0
+BRDA:314,265,1,0
+BRDA:314,288,0,0
+BRDA:314,288,1,0
+BRDA:325,424,0,0
+BRDA:325,424,1,0
+BRDA:312,437,0,0
+FN:336,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetCambridgeDictionaryMessages(System.String,System.Int32)
+FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetCambridgeDictionaryMessages(System.String,System.Int32)
+DA:337,0
+DA:338,0
+DA:339,0
+DA:340,0
+DA:341,0
+DA:342,0
+DA:343,0
+DA:346,0
+DA:347,0
+DA:348,0
+DA:351,0
+DA:352,0
+DA:354,0
+DA:355,0
+DA:356,0
+DA:357,0
+DA:358,0
+DA:359,0
+DA:360,0
+DA:361,0
+DA:362,0
+DA:363,0
+DA:364,0
+DA:365,0
+DA:366,0
+DA:368,0
+BRDA:341,32,0,0
+BRDA:341,32,1,0
+BRDA:346,78,0,0
+BRDA:346,78,1,0
+BRDA:351,256,1,0
+BRDA:354,136,0,0
+BRDA:355,157,0,0
+BRDA:355,157,1,0
+BRDA:354,136,1,0
+BRDA:358,203,0,0
+BRDA:358,203,1,0
+BRDA:351,256,0,0
+FN:369,System.String BL.Services.LineWebhookService::GetCangjieImageMessages(System.String)
+FNDA:1,System.String BL.Services.LineWebhookService::GetCangjieImageMessages(System.String)
+DA:370,1
+DA:371,1
+DA:372,1
+DA:373,1
+DA:375,1
+DA:376,9
+DA:377,2
+DA:378,0
+DA:381,2
+DA:382,2
+DA:383,2
+DA:384,2
+DA:385,1
+DA:386,0
+DA:387,0
+DA:388,0
+DA:389,0
+DA:391,1
+BRDA:376,166,1,2
+BRDA:377,54,0,0
+BRDA:377,54,1,2
+BRDA:376,166,0,1
+FN:25,System.Void BL.Services.LineWebhookService::.ctor(BL.Services.Interfaces.IExchangeRateService,BL.Services.Interfaces.IMapHereService,BL.Services.Interfaces.ITradingVolumeService)
+FNDA:2,System.Void BL.Services.LineWebhookService::.ctor(BL.Services.Interfaces.IExchangeRateService,BL.Services.Interfaces.IMapHereService,BL.Services.Interfaces.ITradingVolumeService)
+DA:26,2
+DA:27,2
+DA:28,4
+DA:30,2
+DA:31,2
+DA:32,2
+DA:33,2
+DA:34,2
+DA:35,2
+DA:36,2
+FN:394,System.String BL.Services.LineHttpPostException::get_message()
+FNDA:0,System.String BL.Services.LineHttpPostException::get_message()
+DA:395,0
+FN:395,System.Collections.Generic.List`1<BL.Services.Detail> BL.Services.LineHttpPostException::get_details()
+FNDA:0,System.Collections.Generic.List`1<BL.Services.Detail> BL.Services.LineHttpPostException::get_details()
+DA:396,0
+FN:399,System.String BL.Services.Detail::get_message()
+FNDA:0,System.String BL.Services.Detail::get_message()
+DA:400,0
+FN:400,System.String BL.Services.Detail::get_property()
+FNDA:0,System.String BL.Services.Detail::get_property()
+DA:401,0
+LF:258
+LH:36
+BRF:144
+BRH:6
+FNF:15
+FNH:3
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/MaskInstitution/MaskInstitutionService.cs
+FN:20,System.Collections.Generic.List`1<Core.Domain.DTO.MaskInstitution> BL.Services.MaskInstitutionService::GetMaskInstitutions(System.String)
+FNDA:0,System.Collections.Generic.List`1<Core.Domain.DTO.MaskInstitution> BL.Services.MaskInstitutionService::GetMaskInstitutions(System.String)
+DA:21,0
+DA:22,0
+DA:23,0
+DA:24,0
+DA:25,0
+DA:26,0
+FN:31,System.Int32 BL.Services.MaskInstitutionService::GetMaskInstitutionCount()
+FNDA:0,System.Int32 BL.Services.MaskInstitutionService::GetMaskInstitutionCount()
+DA:32,0
+DA:33,0
+DA:34,0
+DA:35,0
+DA:36,0
+FN:43,System.Collections.Generic.List`1<Core.Domain.DTO.MaskInstitution> BL.Services.MaskInstitutionService::GetMaskInstitutionsFromAddressSuffix(System.String,System.Int32)
+FNDA:0,System.Collections.Generic.List`1<Core.Domain.DTO.MaskInstitution> BL.Services.MaskInstitutionService::GetMaskInstitutionsFromAddressSuffix(System.String,System.Int32)
+DA:44,0
+DA:45,0
+DA:46,0
+DA:47,0
+DA:49,0
+DA:50,0
+DA:52,0
+DA:53,0
+DA:54,0
+DA:55,0
+DA:56,0
+DA:57,0
+DA:58,0
+DA:59,0
+DA:60,0
+DA:61,0
+DA:62,0
+DA:64,0
+DA:65,0
+DA:66,0
+DA:67,0
+BRDA:52,193,1,0
+BRDA:53,73,0,0
+BRDA:53,73,1,0
+BRDA:58,155,0,0
+BRDA:61,179,0,0
+BRDA:61,179,1,0
+BRDA:58,155,1,0
+BRDA:52,193,0,0
+FN:86,Core.Domain.DTO.MaskInstitution BL.Services.MaskInstitutionService::ConvertToMaskInstitution(System.String)
+FNDA:0,Core.Domain.DTO.MaskInstitution BL.Services.MaskInstitutionService::ConvertToMaskInstitution(System.String)
+DA:87,0
+DA:88,0
+DA:89,0
+DA:90,0
+DA:91,0
+DA:92,0
+DA:93,0
+DA:94,0
+DA:95,0
+DA:96,0
+DA:97,0
+DA:98,0
+DA:99,0
+DA:100,0
+DA:101,0
+DA:102,0
+DA:103,0
+DA:104,0
+DA:105,0
+DA:106,0
+DA:107,0
+DA:108,0
+DA:109,0
+DA:110,0
+BRDA:89,36,0,0
+BRDA:89,36,1,0
+BRDA:93,87,0,0
+BRDA:93,87,1,0
+BRDA:97,138,0,0
+BRDA:97,138,1,0
+FN:11,System.Void BL.Services.MaskInstitutionService::.ctor()
+FNDA:4,System.Void BL.Services.MaskInstitutionService::.ctor()
+DA:12,4
+DA:14,2
+FN:72,System.Boolean BL.Services.MaskInstitutionService/<GetMaskInstitutions>d__4::MoveNext()
+FNDA:0,System.Boolean BL.Services.MaskInstitutionService/<GetMaskInstitutions>d__4::MoveNext()
+DA:73,0
+DA:74,0
+DA:75,0
+DA:76,0
+DA:77,0
+DA:78,0
+DA:79,0
+DA:80,0
+BRDA:77,181,1,0
+BRDA:77,181,0,0
+LF:66
+LH:2
+BRF:16
+BRH:0
+FNF:6
+FNH:1
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/StockValueEstimationService.cs
+FN:30,DA.Managers.Interfaces.TWSE_Stock.IDividendDistributionManager BL.Services.StockValueEstimationService::get_DividendDistributionManager()
+FNDA:0,DA.Managers.Interfaces.TWSE_Stock.IDividendDistributionManager BL.Services.StockValueEstimationService::get_DividendDistributionManager()
+DA:31,0
+FN:32,DA.Managers.Interfaces.TWSE_Stock.IYearlyTradingInformationManager BL.Services.StockValueEstimationService::get_YearlyTradingInformationManager()
+FNDA:0,DA.Managers.Interfaces.TWSE_Stock.IYearlyTradingInformationManager BL.Services.StockValueEstimationService::get_YearlyTradingInformationManager()
+DA:33,0
+FN:34,DA.Repositories.Interfaces.TWSE_Stock.IDividendDistributionRepository BL.Services.StockValueEstimationService::get_DividendDistributionRepository()
+FNDA:0,DA.Repositories.Interfaces.TWSE_Stock.IDividendDistributionRepository BL.Services.StockValueEstimationService::get_DividendDistributionRepository()
+DA:35,0
+FN:36,DA.Repositories.Interfaces.TWSE_Stock.IStockValueEstimationRepository BL.Services.StockValueEstimationService::get_StockValueEstimationRepository()
+FNDA:0,DA.Repositories.Interfaces.TWSE_Stock.IStockValueEstimationRepository BL.Services.StockValueEstimationService::get_StockValueEstimationRepository()
+DA:37,0
+FN:37,DA.Repositories.Interfaces.TWSE_Stock.IYearlyTradingInformationRepository BL.Services.StockValueEstimationService::get_YearlyTradingInformationRepository()
+FNDA:0,DA.Repositories.Interfaces.TWSE_Stock.IYearlyTradingInformationRepository BL.Services.StockValueEstimationService::get_YearlyTradingInformationRepository()
+DA:38,0
+FN:46,System.Int32 BL.Services.StockValueEstimationService::CrawlForStockValueEstimationIn10YearsAndSave(Core.Domain.Enums.StockCodeEnum)
+FNDA:0,System.Int32 BL.Services.StockValueEstimationService::CrawlForStockValueEstimationIn10YearsAndSave(Core.Domain.Enums.StockCodeEnum)
+DA:47,0
+DA:48,0
+DA:51,0
+DA:53,0
+DA:54,0
+DA:57,0
+DA:59,0
+DA:60,0
+DA:62,0
+DA:63,0
+DA:64,0
+DA:66,0
+DA:67,0
+FN:73,System.Int32 BL.Services.StockValueEstimationService::CrawlForStockValueEstimationIn10YearsAndSave(System.Collections.Generic.IEnumerable`1<Core.Domain.Enums.StockCodeEnum>)
+FNDA:0,System.Int32 BL.Services.StockValueEstimationService::CrawlForStockValueEstimationIn10YearsAndSave(System.Collections.Generic.IEnumerable`1<Core.Domain.Enums.StockCodeEnum>)
+DA:74,0
+DA:75,0
+DA:76,0
+DA:77,0
+DA:78,0
+DA:80,0
+DA:81,0
+BRDA:76,38,1,0
+BRDA:76,38,0,0
+FN:83,Core.Domain.Entities.TWSE_Stock.StockValueEstimation BL.Services.StockValueEstimationService::GetStockValueEstimationList(System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.DividendDistribution>,System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation>)
+FNDA:0,Core.Domain.Entities.TWSE_Stock.StockValueEstimation BL.Services.StockValueEstimationService::GetStockValueEstimationList(System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.DividendDistribution>,System.Collections.Generic.List`1<Core.Domain.Entities.TWSE_Stock.Exchange.YearlyTradingInformation>)
+DA:84,0
+DA:85,0
+DA:88,0
+DA:89,0
+DA:90,0
+DA:92,0
+DA:96,0
+DA:97,0
+DA:98,0
+DA:104,0
+DA:105,0
+DA:106,0
+DA:110,0
+DA:111,0
+FN:17,System.Void BL.Services.StockValueEstimationService::.ctor()
+FNDA:0,System.Void BL.Services.StockValueEstimationService::.ctor()
+DA:18,0
+DA:20,0
+DA:22,0
+DA:24,0
+DA:26,0
+DA:28,0
+DA:29,0
+LF:46
+LH:0
+BRF:2
+BRH:0
+FNF:9
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/TelegramWebhookService.cs
+FN:25,System.String BL.Services.TelegramWebhookService::Response()
+FNDA:0,System.String BL.Services.TelegramWebhookService::Response()
+DA:26,0
+DA:27,0
+DA:28,0
+FN:33,System.Void BL.Services.TelegramWebhookService::NotifyByMessage(System.String)
+FNDA:0,System.Void BL.Services.TelegramWebhookService::NotifyByMessage(System.String)
+DA:34,0
+DA:35,0
+DA:36,0
+DA:37,0
+FN:41,System.Void BL.Services.TelegramWebhookService::Test()
+FNDA:0,System.Void BL.Services.TelegramWebhookService::Test()
+DA:42,0
+DA:59,0
+FN:71,System.String BL.Services.TelegramWebhookService::GetMe()
+FNDA:0,System.String BL.Services.TelegramWebhookService::GetMe()
+DA:72,0
+DA:73,0
+DA:74,0
+DA:75,0
+DA:76,0
+DA:77,0
+DA:78,0
+FN:17,System.Void BL.Services.TelegramWebhookService::.ctor()
+FNDA:0,System.Void BL.Services.TelegramWebhookService::.ctor()
+DA:18,0
+DA:19,0
+LF:18
+LH:0
+BRF:0
+BRH:0
+FNF:5
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/Yahoo/StockService.cs
+FN:8,System.Collections.Generic.List`1<System.Object[]> BL.Services.YahooFinance.StockService::GetSubCandles()
+FNDA:0,System.Collections.Generic.List`1<System.Object[]> BL.Services.YahooFinance.StockService::GetSubCandles()
+DA:9,0
+DA:11,0
+DA:12,0
+DA:13,0
+DA:14,0
+DA:15,0
+DA:16,0
+DA:17,0
+DA:18,0
+DA:19,0
+DA:20,0
+DA:21,0
+DA:22,0
+DA:23,0
+DA:24,0
+DA:25,0
+DA:26,0
+DA:27,0
+DA:29,0
+DA:30,0
+DA:31,0
+DA:32,0
+DA:34,0
+BRDA:15,213,1,0
+BRDA:15,213,0,0
+FN:37,System.DateTime BL.Services.YahooFinance.SubCandle::get_Date()
+FNDA:0,System.DateTime BL.Services.YahooFinance.SubCandle::get_Date()
+DA:38,0
+FN:38,System.Decimal BL.Services.YahooFinance.SubCandle::get_Open()
+FNDA:0,System.Decimal BL.Services.YahooFinance.SubCandle::get_Open()
+DA:39,0
+FN:39,System.Decimal BL.Services.YahooFinance.SubCandle::get_High()
+FNDA:0,System.Decimal BL.Services.YahooFinance.SubCandle::get_High()
+DA:40,0
+FN:40,System.Decimal BL.Services.YahooFinance.SubCandle::get_Low()
+FNDA:0,System.Decimal BL.Services.YahooFinance.SubCandle::get_Low()
+DA:41,0
+FN:41,System.Decimal BL.Services.YahooFinance.SubCandle::get_Close()
+FNDA:0,System.Decimal BL.Services.YahooFinance.SubCandle::get_Close()
+DA:42,0
+FN:42,System.Int64 BL.Services.YahooFinance.SubCandle::get_Value()
+FNDA:0,System.Int64 BL.Services.YahooFinance.SubCandle::get_Value()
+DA:43,0
+LF:29
+LH:0
+BRF:2
+BRH:0
+FNF:7
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/TWSE_Stock/TradingVolumeService.cs
+FN:62,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.TWSE_Stock.TradingVolumeService::GetTradingVolumeStrOverDays(Core.Domain.Enums.QuerySortTypeEnum,System.Int32)
+FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.TWSE_Stock.TradingVolumeService::GetTradingVolumeStrOverDays(Core.Domain.Enums.QuerySortTypeEnum,System.Int32)
+DA:63,0
+DA:64,0
+DA:65,0
+DA:66,0
+DA:67,0
+DA:68,0
+DA:69,0
+DA:70,0
+DA:71,0
+DA:72,0
+DA:74,0
+DA:75,0
+DA:76,0
+DA:77,0
+DA:78,0
+DA:79,0
+DA:81,0
+DA:82,0
+DA:83,0
+DA:84,0
+DA:85,0
+DA:87,0
+DA:88,0
+DA:89,0
+DA:90,0
+DA:91,0
+DA:93,0
+DA:94,0
+DA:95,0
+DA:96,0
+DA:97,0
+DA:98,0
+DA:99,0
+BRDA:69,118,1,0
+BRDA:70,45,0,0
+BRDA:70,45,1,0
+BRDA:69,118,0,0
+BRDA:79,129,0,0
+BRDA:79,129,1,0
+BRDA:79,136,1,0
+BRDA:79,136,0,0
+BRDA:93,377,0,0
+BRDA:93,377,1,0
+FN:100,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.TWSE_Stock.TradingVolumeService::GetTradingVolumeStr(System.DateTime,Core.Domain.Enums.QuerySortTypeEnum)
+FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.TWSE_Stock.TradingVolumeService::GetTradingVolumeStr(System.DateTime,Core.Domain.Enums.QuerySortTypeEnum)
+DA:101,0
+DA:102,0
+DA:103,0
+DA:104,0
+DA:105,0
+DA:107,0
+DA:108,0
+DA:109,0
+DA:110,0
+DA:111,0
+DA:112,0
+DA:113,0
+BRDA:102,16,0,0
+BRDA:102,16,1,0
+FN:114,System.String BL.Services.TWSE_Stock.TradingVolumeService::GetValidDatesStr(System.DateTime,System.Int32,Core.Domain.Enums.QuerySortTypeEnum,System.Collections.Generic.List`1<System.DateTime>)
+FNDA:0,System.String BL.Services.TWSE_Stock.TradingVolumeService::GetValidDatesStr(System.DateTime,System.Int32,Core.Domain.Enums.QuerySortTypeEnum,System.Collections.Generic.List`1<System.DateTime>)
+DA:115,0
+DA:116,0
+DA:117,0
+DA:119,0
+DA:120,0
+DA:121,0
+DA:122,0
+DA:123,0
+DA:124,0
+DA:125,0
+DA:126,0
+BRDA:116,13,0,0
+BRDA:116,13,1,0
+BRDA:122,124,1,0
+BRDA:122,124,0,0
+FN:127,System.String BL.Services.TWSE_Stock.TradingVolumeService::GetTradingVolumeStr(System.Collections.Generic.Dictionary`2<System.String,System.Int32>)
+FNDA:0,System.String BL.Services.TWSE_Stock.TradingVolumeService::GetTradingVolumeStr(System.Collections.Generic.Dictionary`2<System.String,System.Int32>)
+DA:128,0
+DA:129,0
+DA:130,0
+DA:132,0
+DA:133,0
+DA:134,0
+DA:135,0
+DA:136,0
+DA:137,0
+DA:138,0
+DA:139,0
+BRDA:129,12,0,0
+BRDA:129,12,1,0
+BRDA:134,128,1,0
+BRDA:134,128,0,0
+FN:140,System.String BL.Services.TWSE_Stock.TradingVolumeService::GetDifferenceTypeStr(Core.Domain.Enums.QuerySortTypeEnum)
+FNDA:0,System.String BL.Services.TWSE_Stock.TradingVolumeService::GetDifferenceTypeStr(Core.Domain.Enums.QuerySortTypeEnum)
+DA:141,0
+DA:142,0
+DA:144,0
+DA:146,0
+DA:148,0
+DA:150,0
+BRDA:142,6,0,0
+BRDA:142,6,1,0
+BRDA:142,12,1,0
+BRDA:142,12,0,0
+FN:151,System.Boolean BL.Services.TWSE_Stock.TradingVolumeService::TryGetTradingVolumeDict(System.DateTime,Core.Domain.Enums.QuerySortTypeEnum,System.Collections.Generic.Dictionary`2<System.String,System.Int32>&)
+FNDA:0,System.Boolean BL.Services.TWSE_Stock.TradingVolumeService::TryGetTradingVolumeDict(System.DateTime,Core.Domain.Enums.QuerySortTypeEnum,System.Collections.Generic.Dictionary`2<System.String,System.Int32>&)
+DA:152,0
+DA:153,0
+DA:154,0
+DA:155,0
+DA:156,0
+DA:157,0
+DA:159,0
+DA:160,0
+DA:161,0
+DA:162,0
+DA:163,0
+DA:164,0
+DA:165,0
+DA:167,0
+DA:168,0
+DA:169,0
+DA:170,0
+DA:171,0
+DA:172,0
+DA:174,0
+DA:175,0
+DA:176,0
+DA:177,0
+DA:178,0
+DA:180,0
+DA:181,0
+DA:182,0
+DA:183,0
+DA:184,0
+DA:186,0
+DA:187,0
+DA:189,0
+DA:190,0
+BRDA:153,18,0,0
+BRDA:153,18,1,0
+BRDA:161,58,0,0
+BRDA:161,58,1,0
+BRDA:172,100,0,0
+BRDA:172,100,1,0
+BRDA:172,107,1,0
+BRDA:172,107,0,0
+FN:191,System.Collections.Generic.Dictionary`2<System.String,System.Int32> BL.Services.TWSE_Stock.TradingVolumeService::GetCombinationTradingVolumeDict(System.Collections.Generic.Dictionary`2<System.String,System.Int32>,System.Collections.Generic.Dictionary`2<System.String,System.Int32>)
+FNDA:0,System.Collections.Generic.Dictionary`2<System.String,System.Int32> BL.Services.TWSE_Stock.TradingVolumeService::GetCombinationTradingVolumeDict(System.Collections.Generic.Dictionary`2<System.String,System.Int32>,System.Collections.Generic.Dictionary`2<System.String,System.Int32>)
+DA:192,0
+DA:193,0
+DA:194,0
+DA:195,0
+DA:196,0
+DA:197,0
+DA:198,0
+DA:199,0
+DA:200,0
+DA:201,0
+DA:202,0
+BRDA:194,118,1,0
+BRDA:195,42,0,0
+BRDA:195,42,1,0
+BRDA:194,118,0,0
+FN:203,System.Collections.Generic.Dictionary`2<System.String,System.Int32> BL.Services.TWSE_Stock.TradingVolumeService::GetTradingVolumeDictionary(Core.Domain.Enums.QuerySortTypeEnum,Core.Domain.DTO.TWSE.TradingVolume)
+FNDA:0,System.Collections.Generic.Dictionary`2<System.String,System.Int32> BL.Services.TWSE_Stock.TradingVolumeService::GetTradingVolumeDictionary(Core.Domain.Enums.QuerySortTypeEnum,Core.Domain.DTO.TWSE.TradingVolume)
+DA:204,0
+DA:206,0
+DA:208,0
+DA:209,0
+DA:211,0
+DA:212,0
+DA:214,0
+DA:216,0
+DA:217,0
+DA:218,0
+DA:219,0
+DA:220,0
+DA:222,0
+DA:223,0
+DA:224,0
+DA:225,0
+DA:226,0
+DA:227,0
+DA:228,0
+DA:229,0
+DA:230,0
+DA:231,0
+BRDA:206,8,0,0
+BRDA:206,8,1,0
+BRDA:206,14,1,0
+BRDA:206,14,0,0
+BRDA:218,281,1,0
+BRDA:222,213,0,0
+BRDA:222,213,1,0
+BRDA:218,281,0,0
+FN:233,System.Boolean BL.Services.TWSE_Stock.TradingVolumeService::TryGetTradingVolume(Core.Domain.Enums.ForeignAndOtherInvestorEnum,System.DateTime,Core.Domain.DTO.TWSE.TradingVolume&)
+FNDA:0,System.Boolean BL.Services.TWSE_Stock.TradingVolumeService::TryGetTradingVolume(Core.Domain.Enums.ForeignAndOtherInvestorEnum,System.DateTime,Core.Domain.DTO.TWSE.TradingVolume&)
+DA:234,0
+DA:235,0
+DA:236,0
+DA:237,0
+DA:238,0
+DA:239,0
+DA:241,0
+DA:242,0
+DA:243,0
+DA:244,0
+DA:246,0
+DA:247,0
+BRDA:241,71,0,0
+BRDA:241,71,1,0
+FN:253,System.String BL.Services.TWSE_Stock.TradingVolumeService::GetTWSEUrl(Core.Domain.Enums.ForeignAndOtherInvestorEnum)
+FNDA:0,System.String BL.Services.TWSE_Stock.TradingVolumeService::GetTWSEUrl(Core.Domain.Enums.ForeignAndOtherInvestorEnum)
+DA:254,0
+DA:256,0
+DA:258,0
+DA:259,0
+DA:261,0
+DA:262,0
+DA:264,0
+DA:265,0
+DA:267,0
+DA:269,0
+DA:270,0
+BRDA:256,6,2,0
+BRDA:256,6,3,0
+BRDA:256,6,1,0
+BRDA:256,6,0,0
+FN:54,System.Void BL.Services.TWSE_Stock.TradingVolumeService::.ctor()
+FNDA:4,System.Void BL.Services.TWSE_Stock.TradingVolumeService::.ctor()
+DA:55,4
+DA:56,2
+DA:57,2
+FN:58,System.Void BL.Services.TWSE_Stock.TradingVolumeService::.ctor(Microsoft.Extensions.Configuration.IConfiguration)
+FNDA:0,System.Void BL.Services.TWSE_Stock.TradingVolumeService::.ctor(Microsoft.Extensions.Configuration.IConfiguration)
+DA:59,0
+DA:60,0
+DA:61,0
+LF:168
+LH:3
+BRF:50
+BRH:0
+FNF:12
+FNH:1
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/Sinopac/ExchangeRateService.cs
+FN:19,System.Void BL.Services.Sinopac.ExchangeRateService::GetExchangeRate(System.Double&,System.Double&,System.DateTime&)
+FNDA:0,System.Void BL.Services.Sinopac.ExchangeRateService::GetExchangeRate(System.Double&,System.Double&,System.DateTime&)
+DA:20,0
+DA:22,0
+DA:23,0
+DA:24,0
+DA:25,0
+DA:27,0
+DA:28,0
+DA:29,0
+DA:30,0
+DA:31,0
+FN:36,System.Collections.Generic.List`1<Core.Domain.DTO.Sinopac.ExchangeRate> BL.Services.Sinopac.ExchangeRateService::GetExchangeRate()
+FNDA:0,System.Collections.Generic.List`1<Core.Domain.DTO.Sinopac.ExchangeRate> BL.Services.Sinopac.ExchangeRateService::GetExchangeRate()
+DA:37,0
+DA:38,0
+DA:39,0
+DA:40,0
+DA:41,0
+DA:42,0
+LF:16
+LH:0
+BRF:0
+BRH:0
+FNF:2
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/Providers/TwseProvider.cs
+FN:17,System.Collections.Generic.List`1<System.DateTime> BL.Services.Providers.TwseProvider::GetHolidaySchedule()
+FNDA:0,System.Collections.Generic.List`1<System.DateTime> BL.Services.Providers.TwseProvider::GetHolidaySchedule()
+DA:18,0
+DA:19,0
+DA:20,0
+DA:22,0
+DA:23,0
+DA:25,0
+DA:26,0
+DA:27,0
+DA:28,0
+DA:29,0
+DA:30,0
+DA:31,0
+DA:32,0
+LF:13
+LH:0
+BRF:0
+BRH:0
+FNF:1
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/Map/CalculateRouteRootobject.cs
+FN:7,BL.Services.Map.Response BL.Services.Map.CalculateRouteRootobject::get_response()
+FNDA:0,BL.Services.Map.Response BL.Services.Map.CalculateRouteRootobject::get_response()
+DA:8,0
+FN:11,BL.Services.Map.Metainfo BL.Services.Map.Response::get_metaInfo()
+FNDA:0,BL.Services.Map.Metainfo BL.Services.Map.Response::get_metaInfo()
+DA:12,0
+FN:12,BL.Services.Map.Route[] BL.Services.Map.Response::get_route()
+FNDA:0,BL.Services.Map.Route[] BL.Services.Map.Response::get_route()
+DA:13,0
+FN:13,System.String BL.Services.Map.Response::get_language()
+FNDA:0,System.String BL.Services.Map.Response::get_language()
+DA:14,0
+FN:17,System.DateTime BL.Services.Map.Metainfo::get_timestamp()
+FNDA:0,System.DateTime BL.Services.Map.Metainfo::get_timestamp()
+DA:18,0
+FN:18,System.String BL.Services.Map.Metainfo::get_mapVersion()
+FNDA:0,System.String BL.Services.Map.Metainfo::get_mapVersion()
+DA:19,0
+FN:19,System.String BL.Services.Map.Metainfo::get_moduleVersion()
+FNDA:0,System.String BL.Services.Map.Metainfo::get_moduleVersion()
+DA:20,0
+FN:20,System.String BL.Services.Map.Metainfo::get_interfaceVersion()
+FNDA:0,System.String BL.Services.Map.Metainfo::get_interfaceVersion()
+DA:21,0
+FN:21,System.String[] BL.Services.Map.Metainfo::get_availableMapVersion()
+FNDA:0,System.String[] BL.Services.Map.Metainfo::get_availableMapVersion()
+DA:22,0
+FN:25,BL.Services.Map.Waypoint[] BL.Services.Map.Route::get_waypoint()
+FNDA:0,BL.Services.Map.Waypoint[] BL.Services.Map.Route::get_waypoint()
+DA:26,0
+FN:26,BL.Services.Map.Mode BL.Services.Map.Route::get_mode()
+FNDA:0,BL.Services.Map.Mode BL.Services.Map.Route::get_mode()
+DA:27,0
+FN:27,BL.Services.Map.Leg[] BL.Services.Map.Route::get_leg()
+FNDA:0,BL.Services.Map.Leg[] BL.Services.Map.Route::get_leg()
+DA:28,0
+FN:28,BL.Services.Map.Summary BL.Services.Map.Route::get_summary()
+FNDA:0,BL.Services.Map.Summary BL.Services.Map.Route::get_summary()
+DA:29,0
+FN:32,System.String BL.Services.Map.Mode::get_type()
+FNDA:0,System.String BL.Services.Map.Mode::get_type()
+DA:33,0
+FN:33,System.String[] BL.Services.Map.Mode::get_transportModes()
+FNDA:0,System.String[] BL.Services.Map.Mode::get_transportModes()
+DA:34,0
+FN:34,System.String BL.Services.Map.Mode::get_trafficMode()
+FNDA:0,System.String BL.Services.Map.Mode::get_trafficMode()
+DA:35,0
+FN:35,System.Object[] BL.Services.Map.Mode::get_feature()
+FNDA:0,System.Object[] BL.Services.Map.Mode::get_feature()
+DA:36,0
+FN:39,System.Int32 BL.Services.Map.Summary::get_distance()
+FNDA:0,System.Int32 BL.Services.Map.Summary::get_distance()
+DA:40,0
+FN:40,System.Int32 BL.Services.Map.Summary::get_baseTime()
+FNDA:0,System.Int32 BL.Services.Map.Summary::get_baseTime()
+DA:41,0
+FN:41,System.String[] BL.Services.Map.Summary::get_flags()
+FNDA:0,System.String[] BL.Services.Map.Summary::get_flags()
+DA:42,0
+FN:42,System.String BL.Services.Map.Summary::get_text()
+FNDA:0,System.String BL.Services.Map.Summary::get_text()
+DA:43,0
+FN:43,System.Int32 BL.Services.Map.Summary::get_travelTime()
+FNDA:0,System.Int32 BL.Services.Map.Summary::get_travelTime()
+DA:44,0
+FN:44,System.String BL.Services.Map.Summary::get__type()
+FNDA:0,System.String BL.Services.Map.Summary::get__type()
+DA:45,0
+FN:48,System.String BL.Services.Map.Waypoint::get_linkId()
+FNDA:0,System.String BL.Services.Map.Waypoint::get_linkId()
+DA:49,0
+FN:49,BL.Services.Map.Mappedposition BL.Services.Map.Waypoint::get_mappedPosition()
+FNDA:0,BL.Services.Map.Mappedposition BL.Services.Map.Waypoint::get_mappedPosition()
+DA:50,0
+FN:50,BL.Services.Map.Originalposition BL.Services.Map.Waypoint::get_originalPosition()
+FNDA:0,BL.Services.Map.Originalposition BL.Services.Map.Waypoint::get_originalPosition()
+DA:51,0
+FN:51,System.String BL.Services.Map.Waypoint::get_type()
+FNDA:0,System.String BL.Services.Map.Waypoint::get_type()
+DA:52,0
+FN:52,System.Single BL.Services.Map.Waypoint::get_spot()
+FNDA:0,System.Single BL.Services.Map.Waypoint::get_spot()
+DA:53,0
+FN:53,System.String BL.Services.Map.Waypoint::get_sideOfStreet()
+FNDA:0,System.String BL.Services.Map.Waypoint::get_sideOfStreet()
+DA:54,0
+FN:54,System.String BL.Services.Map.Waypoint::get_mappedRoadName()
+FNDA:0,System.String BL.Services.Map.Waypoint::get_mappedRoadName()
+DA:55,0
+FN:55,System.String BL.Services.Map.Waypoint::get_label()
+FNDA:0,System.String BL.Services.Map.Waypoint::get_label()
+DA:56,0
+FN:56,System.Int32 BL.Services.Map.Waypoint::get_shapeIndex()
+FNDA:0,System.Int32 BL.Services.Map.Waypoint::get_shapeIndex()
+DA:57,0
+FN:57,System.String BL.Services.Map.Waypoint::get_source()
+FNDA:0,System.String BL.Services.Map.Waypoint::get_source()
+DA:58,0
+FN:61,System.Single BL.Services.Map.Mappedposition::get_latitude()
+FNDA:0,System.Single BL.Services.Map.Mappedposition::get_latitude()
+DA:62,0
+FN:62,System.Single BL.Services.Map.Mappedposition::get_longitude()
+FNDA:0,System.Single BL.Services.Map.Mappedposition::get_longitude()
+DA:63,0
+FN:66,System.Single BL.Services.Map.Originalposition::get_latitude()
+FNDA:0,System.Single BL.Services.Map.Originalposition::get_latitude()
+DA:67,0
+FN:67,System.Single BL.Services.Map.Originalposition::get_longitude()
+FNDA:0,System.Single BL.Services.Map.Originalposition::get_longitude()
+DA:68,0
+FN:71,BL.Services.Map.Start BL.Services.Map.Leg::get_start()
+FNDA:0,BL.Services.Map.Start BL.Services.Map.Leg::get_start()
+DA:72,0
+FN:72,BL.Services.Map.End BL.Services.Map.Leg::get_end()
+FNDA:0,BL.Services.Map.End BL.Services.Map.Leg::get_end()
+DA:73,0
+FN:73,System.Int32 BL.Services.Map.Leg::get_length()
+FNDA:0,System.Int32 BL.Services.Map.Leg::get_length()
+DA:74,0
+FN:74,System.Int32 BL.Services.Map.Leg::get_travelTime()
+FNDA:0,System.Int32 BL.Services.Map.Leg::get_travelTime()
+DA:75,0
+FN:75,BL.Services.Map.Maneuver[] BL.Services.Map.Leg::get_maneuver()
+FNDA:0,BL.Services.Map.Maneuver[] BL.Services.Map.Leg::get_maneuver()
+DA:76,0
+FN:79,System.String BL.Services.Map.Start::get_linkId()
+FNDA:0,System.String BL.Services.Map.Start::get_linkId()
+DA:80,0
+FN:80,BL.Services.Map.Mappedposition1 BL.Services.Map.Start::get_mappedPosition()
+FNDA:0,BL.Services.Map.Mappedposition1 BL.Services.Map.Start::get_mappedPosition()
+DA:81,0
+FN:81,BL.Services.Map.Originalposition1 BL.Services.Map.Start::get_originalPosition()
+FNDA:0,BL.Services.Map.Originalposition1 BL.Services.Map.Start::get_originalPosition()
+DA:82,0
+FN:82,System.String BL.Services.Map.Start::get_type()
+FNDA:0,System.String BL.Services.Map.Start::get_type()
+DA:83,0
+FN:83,System.Single BL.Services.Map.Start::get_spot()
+FNDA:0,System.Single BL.Services.Map.Start::get_spot()
+DA:84,0
+FN:84,System.String BL.Services.Map.Start::get_sideOfStreet()
+FNDA:0,System.String BL.Services.Map.Start::get_sideOfStreet()
+DA:85,0
+FN:85,System.String BL.Services.Map.Start::get_mappedRoadName()
+FNDA:0,System.String BL.Services.Map.Start::get_mappedRoadName()
+DA:86,0
+FN:86,System.String BL.Services.Map.Start::get_label()
+FNDA:0,System.String BL.Services.Map.Start::get_label()
+DA:87,0
+FN:87,System.Int32 BL.Services.Map.Start::get_shapeIndex()
+FNDA:0,System.Int32 BL.Services.Map.Start::get_shapeIndex()
+DA:88,0
+FN:88,System.String BL.Services.Map.Start::get_source()
+FNDA:0,System.String BL.Services.Map.Start::get_source()
+DA:89,0
+FN:92,System.Single BL.Services.Map.Mappedposition1::get_latitude()
+FNDA:0,System.Single BL.Services.Map.Mappedposition1::get_latitude()
+DA:93,0
+FN:93,System.Single BL.Services.Map.Mappedposition1::get_longitude()
+FNDA:0,System.Single BL.Services.Map.Mappedposition1::get_longitude()
+DA:94,0
+FN:97,System.Single BL.Services.Map.Originalposition1::get_latitude()
+FNDA:0,System.Single BL.Services.Map.Originalposition1::get_latitude()
+DA:98,0
+FN:98,System.Single BL.Services.Map.Originalposition1::get_longitude()
+FNDA:0,System.Single BL.Services.Map.Originalposition1::get_longitude()
+DA:99,0
+FN:102,System.String BL.Services.Map.End::get_linkId()
+FNDA:0,System.String BL.Services.Map.End::get_linkId()
+DA:103,0
+FN:103,BL.Services.Map.Mappedposition2 BL.Services.Map.End::get_mappedPosition()
+FNDA:0,BL.Services.Map.Mappedposition2 BL.Services.Map.End::get_mappedPosition()
+DA:104,0
+FN:104,BL.Services.Map.Originalposition2 BL.Services.Map.End::get_originalPosition()
+FNDA:0,BL.Services.Map.Originalposition2 BL.Services.Map.End::get_originalPosition()
+DA:105,0
+FN:105,System.String BL.Services.Map.End::get_type()
+FNDA:0,System.String BL.Services.Map.End::get_type()
+DA:106,0
+FN:106,System.Single BL.Services.Map.End::get_spot()
+FNDA:0,System.Single BL.Services.Map.End::get_spot()
+DA:107,0
+FN:107,System.String BL.Services.Map.End::get_sideOfStreet()
+FNDA:0,System.String BL.Services.Map.End::get_sideOfStreet()
+DA:108,0
+FN:108,System.String BL.Services.Map.End::get_mappedRoadName()
+FNDA:0,System.String BL.Services.Map.End::get_mappedRoadName()
+DA:109,0
+FN:109,System.String BL.Services.Map.End::get_label()
+FNDA:0,System.String BL.Services.Map.End::get_label()
+DA:110,0
+FN:110,System.Int32 BL.Services.Map.End::get_shapeIndex()
+FNDA:0,System.Int32 BL.Services.Map.End::get_shapeIndex()
+DA:111,0
+FN:111,System.String BL.Services.Map.End::get_source()
+FNDA:0,System.String BL.Services.Map.End::get_source()
+DA:112,0
+FN:115,System.Single BL.Services.Map.Mappedposition2::get_latitude()
+FNDA:0,System.Single BL.Services.Map.Mappedposition2::get_latitude()
+DA:116,0
+FN:116,System.Single BL.Services.Map.Mappedposition2::get_longitude()
+FNDA:0,System.Single BL.Services.Map.Mappedposition2::get_longitude()
+DA:117,0
+FN:120,System.Single BL.Services.Map.Originalposition2::get_latitude()
+FNDA:0,System.Single BL.Services.Map.Originalposition2::get_latitude()
+DA:121,0
+FN:121,System.Single BL.Services.Map.Originalposition2::get_longitude()
+FNDA:0,System.Single BL.Services.Map.Originalposition2::get_longitude()
+DA:122,0
+FN:125,BL.Services.Map.Position BL.Services.Map.Maneuver::get_position()
+FNDA:0,BL.Services.Map.Position BL.Services.Map.Maneuver::get_position()
+DA:126,0
+FN:126,System.String BL.Services.Map.Maneuver::get_instruction()
+FNDA:0,System.String BL.Services.Map.Maneuver::get_instruction()
+DA:127,0
+FN:127,System.Int32 BL.Services.Map.Maneuver::get_travelTime()
+FNDA:0,System.Int32 BL.Services.Map.Maneuver::get_travelTime()
+DA:128,0
+FN:128,System.Int32 BL.Services.Map.Maneuver::get_length()
+FNDA:0,System.Int32 BL.Services.Map.Maneuver::get_length()
+DA:129,0
+FN:129,System.String BL.Services.Map.Maneuver::get_id()
+FNDA:0,System.String BL.Services.Map.Maneuver::get_id()
+DA:130,0
+FN:130,System.String BL.Services.Map.Maneuver::get__type()
+FNDA:0,System.String BL.Services.Map.Maneuver::get__type()
+DA:131,0
+FN:134,System.Single BL.Services.Map.Position::get_latitude()
+FNDA:0,System.Single BL.Services.Map.Position::get_latitude()
+DA:135,0
+FN:135,System.Single BL.Services.Map.Position::get_longitude()
+FNDA:0,System.Single BL.Services.Map.Position::get_longitude()
+DA:136,0
+LF:78
+LH:0
+BRF:0
+BRH:0
+FNF:78
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/Map/MapHereService.cs
+FN:37,System.Collections.Generic.List`1<System.String> BL.Services.Map.MapHereService::GetAddressInOrder(System.String,System.Collections.Generic.List`1<System.String>)
+FNDA:0,System.Collections.Generic.List`1<System.String> BL.Services.Map.MapHereService::GetAddressInOrder(System.String,System.Collections.Generic.List`1<System.String>)
+DA:38,0
+DA:39,0
+DA:40,0
+DA:41,0
+DA:42,0
+DA:43,0
+DA:44,0
+DA:45,0
+FN:52,System.Int32 BL.Services.Map.MapHereService::GetDistanceFromTwoLatLngs(Core.Domain.DTO.Map.LatLng,Core.Domain.DTO.Map.LatLng)
+FNDA:0,System.Int32 BL.Services.Map.MapHereService::GetDistanceFromTwoLatLngs(Core.Domain.DTO.Map.LatLng,Core.Domain.DTO.Map.LatLng)
+DA:53,0
+DA:54,0
+DA:55,0
+DA:56,0
+DA:57,0
+DA:58,0
+DA:59,0
+DA:60,0
+DA:61,0
+DA:62,0
+FN:69,System.Int32 BL.Services.Map.MapHereService::GetTravelTimeFromTwoLatLngs(Core.Domain.DTO.Map.LatLng,Core.Domain.DTO.Map.LatLng)
+FNDA:0,System.Int32 BL.Services.Map.MapHereService::GetTravelTimeFromTwoLatLngs(Core.Domain.DTO.Map.LatLng,Core.Domain.DTO.Map.LatLng)
+DA:70,0
+DA:71,0
+DA:72,0
+DA:73,0
+DA:74,0
+DA:75,0
+DA:76,0
+DA:77,0
+DA:78,0
+DA:79,0
+FN:85,Core.Domain.DTO.Map.LatLng BL.Services.Map.MapHereService::GetLatLngFromAddress(System.String)
+FNDA:0,Core.Domain.DTO.Map.LatLng BL.Services.Map.MapHereService::GetLatLngFromAddress(System.String)
+DA:86,0
+DA:87,0
+DA:89,0
+DA:90,0
+DA:91,0
+DA:92,0
+DA:93,0
+DA:94,0
+DA:96,0
+DA:97,0
+DA:98,0
+DA:99,0
+DA:101,0
+DA:102,0
+FN:22,System.Void BL.Services.Map.MapHereService::.ctor()
+FNDA:0,System.Void BL.Services.Map.MapHereService::.ctor()
+DA:23,0
+DA:24,0
+DA:25,0
+FN:104,BL.Services.Map.MapHereService/Response BL.Services.Map.MapHereService/RootObject::get_Response()
+FNDA:0,BL.Services.Map.MapHereService/Response BL.Services.Map.MapHereService/RootObject::get_Response()
+DA:105,0
+FN:108,BL.Services.Map.MapHereService/Metainfo BL.Services.Map.MapHereService/Response::get_MetaInfo()
+FNDA:0,BL.Services.Map.MapHereService/Metainfo BL.Services.Map.MapHereService/Response::get_MetaInfo()
+DA:109,0
+FN:109,BL.Services.Map.MapHereService/View[] BL.Services.Map.MapHereService/Response::get_View()
+FNDA:0,BL.Services.Map.MapHereService/View[] BL.Services.Map.MapHereService/Response::get_View()
+DA:110,0
+FN:113,System.DateTime BL.Services.Map.MapHereService/Metainfo::get_Timestamp()
+FNDA:0,System.DateTime BL.Services.Map.MapHereService/Metainfo::get_Timestamp()
+DA:114,0
+FN:117,System.String BL.Services.Map.MapHereService/View::get__type()
+FNDA:0,System.String BL.Services.Map.MapHereService/View::get__type()
+DA:118,0
+FN:118,System.Int32 BL.Services.Map.MapHereService/View::get_ViewId()
+FNDA:0,System.Int32 BL.Services.Map.MapHereService/View::get_ViewId()
+DA:119,0
+FN:119,BL.Services.Map.MapHereService/Result[] BL.Services.Map.MapHereService/View::get_Result()
+FNDA:0,BL.Services.Map.MapHereService/Result[] BL.Services.Map.MapHereService/View::get_Result()
+DA:120,0
+FN:123,System.Single BL.Services.Map.MapHereService/Result::get_Relevance()
+FNDA:0,System.Single BL.Services.Map.MapHereService/Result::get_Relevance()
+DA:124,0
+FN:124,System.String BL.Services.Map.MapHereService/Result::get_MatchLevel()
+FNDA:0,System.String BL.Services.Map.MapHereService/Result::get_MatchLevel()
+DA:125,0
+FN:125,BL.Services.Map.MapHereService/Matchquality BL.Services.Map.MapHereService/Result::get_MatchQuality()
+FNDA:0,BL.Services.Map.MapHereService/Matchquality BL.Services.Map.MapHereService/Result::get_MatchQuality()
+DA:126,0
+FN:126,System.String BL.Services.Map.MapHereService/Result::get_MatchType()
+FNDA:0,System.String BL.Services.Map.MapHereService/Result::get_MatchType()
+DA:127,0
+FN:127,BL.Services.Map.MapHereService/Location BL.Services.Map.MapHereService/Result::get_Location()
+FNDA:0,BL.Services.Map.MapHereService/Location BL.Services.Map.MapHereService/Result::get_Location()
+DA:128,0
+FN:131,System.Single BL.Services.Map.MapHereService/Matchquality::get_Country()
+FNDA:0,System.Single BL.Services.Map.MapHereService/Matchquality::get_Country()
+DA:132,0
+FN:132,System.Single BL.Services.Map.MapHereService/Matchquality::get_City()
+FNDA:0,System.Single BL.Services.Map.MapHereService/Matchquality::get_City()
+DA:133,0
+FN:133,System.Single BL.Services.Map.MapHereService/Matchquality::get_District()
+FNDA:0,System.Single BL.Services.Map.MapHereService/Matchquality::get_District()
+DA:134,0
+FN:134,System.Single[] BL.Services.Map.MapHereService/Matchquality::get_Street()
+FNDA:0,System.Single[] BL.Services.Map.MapHereService/Matchquality::get_Street()
+DA:135,0
+FN:135,System.Single BL.Services.Map.MapHereService/Matchquality::get_HouseNumber()
+FNDA:0,System.Single BL.Services.Map.MapHereService/Matchquality::get_HouseNumber()
+DA:136,0
+FN:136,System.Single BL.Services.Map.MapHereService/Matchquality::get_PostalCode()
+FNDA:0,System.Single BL.Services.Map.MapHereService/Matchquality::get_PostalCode()
+DA:137,0
+FN:140,System.String BL.Services.Map.MapHereService/Location::get_LocationId()
+FNDA:0,System.String BL.Services.Map.MapHereService/Location::get_LocationId()
+DA:141,0
+FN:141,System.String BL.Services.Map.MapHereService/Location::get_LocationType()
+FNDA:0,System.String BL.Services.Map.MapHereService/Location::get_LocationType()
+DA:142,0
+FN:142,BL.Services.Map.MapHereService/Displayposition BL.Services.Map.MapHereService/Location::get_DisplayPosition()
+FNDA:0,BL.Services.Map.MapHereService/Displayposition BL.Services.Map.MapHereService/Location::get_DisplayPosition()
+DA:143,0
+FN:143,BL.Services.Map.MapHereService/Navigationposition[] BL.Services.Map.MapHereService/Location::get_NavigationPosition()
+FNDA:0,BL.Services.Map.MapHereService/Navigationposition[] BL.Services.Map.MapHereService/Location::get_NavigationPosition()
+DA:144,0
+FN:144,BL.Services.Map.MapHereService/Mapview BL.Services.Map.MapHereService/Location::get_MapView()
+FNDA:0,BL.Services.Map.MapHereService/Mapview BL.Services.Map.MapHereService/Location::get_MapView()
+DA:145,0
+FN:145,BL.Services.Map.MapHereService/Address BL.Services.Map.MapHereService/Location::get_Address()
+FNDA:0,BL.Services.Map.MapHereService/Address BL.Services.Map.MapHereService/Location::get_Address()
+DA:146,0
+FN:149,System.Single BL.Services.Map.MapHereService/Displayposition::get_Latitude()
+FNDA:0,System.Single BL.Services.Map.MapHereService/Displayposition::get_Latitude()
+DA:150,0
+FN:150,System.Single BL.Services.Map.MapHereService/Displayposition::get_Longitude()
+FNDA:0,System.Single BL.Services.Map.MapHereService/Displayposition::get_Longitude()
+DA:151,0
+FN:154,BL.Services.Map.MapHereService/Topleft BL.Services.Map.MapHereService/Mapview::get_TopLeft()
+FNDA:0,BL.Services.Map.MapHereService/Topleft BL.Services.Map.MapHereService/Mapview::get_TopLeft()
+DA:155,0
+FN:155,BL.Services.Map.MapHereService/Bottomright BL.Services.Map.MapHereService/Mapview::get_BottomRight()
+FNDA:0,BL.Services.Map.MapHereService/Bottomright BL.Services.Map.MapHereService/Mapview::get_BottomRight()
+DA:156,0
+FN:159,System.Single BL.Services.Map.MapHereService/Topleft::get_Latitude()
+FNDA:0,System.Single BL.Services.Map.MapHereService/Topleft::get_Latitude()
+DA:160,0
+FN:160,System.Single BL.Services.Map.MapHereService/Topleft::get_Longitude()
+FNDA:0,System.Single BL.Services.Map.MapHereService/Topleft::get_Longitude()
+DA:161,0
+FN:164,System.Single BL.Services.Map.MapHereService/Bottomright::get_Latitude()
+FNDA:0,System.Single BL.Services.Map.MapHereService/Bottomright::get_Latitude()
+DA:165,0
+FN:165,System.Single BL.Services.Map.MapHereService/Bottomright::get_Longitude()
+FNDA:0,System.Single BL.Services.Map.MapHereService/Bottomright::get_Longitude()
+DA:166,0
+FN:169,System.String BL.Services.Map.MapHereService/Address::get_Label()
+FNDA:0,System.String BL.Services.Map.MapHereService/Address::get_Label()
+DA:170,0
+FN:170,System.String BL.Services.Map.MapHereService/Address::get_Country()
+FNDA:0,System.String BL.Services.Map.MapHereService/Address::get_Country()
+DA:171,0
+FN:171,System.String BL.Services.Map.MapHereService/Address::get_County()
+FNDA:0,System.String BL.Services.Map.MapHereService/Address::get_County()
+DA:172,0
+FN:172,System.String BL.Services.Map.MapHereService/Address::get_City()
+FNDA:0,System.String BL.Services.Map.MapHereService/Address::get_City()
+DA:173,0
+FN:173,System.String BL.Services.Map.MapHereService/Address::get_District()
+FNDA:0,System.String BL.Services.Map.MapHereService/Address::get_District()
+DA:174,0
+FN:174,System.String BL.Services.Map.MapHereService/Address::get_Street()
+FNDA:0,System.String BL.Services.Map.MapHereService/Address::get_Street()
+DA:175,0
+FN:175,System.String BL.Services.Map.MapHereService/Address::get_HouseNumber()
+FNDA:0,System.String BL.Services.Map.MapHereService/Address::get_HouseNumber()
+DA:176,0
+FN:176,System.String BL.Services.Map.MapHereService/Address::get_PostalCode()
+FNDA:0,System.String BL.Services.Map.MapHereService/Address::get_PostalCode()
+DA:177,0
+FN:177,BL.Services.Map.MapHereService/Additionaldata[] BL.Services.Map.MapHereService/Address::get_AdditionalData()
+FNDA:0,BL.Services.Map.MapHereService/Additionaldata[] BL.Services.Map.MapHereService/Address::get_AdditionalData()
+DA:178,0
+FN:181,System.String BL.Services.Map.MapHereService/Additionaldata::get_value()
+FNDA:0,System.String BL.Services.Map.MapHereService/Additionaldata::get_value()
+DA:182,0
+FN:182,System.String BL.Services.Map.MapHereService/Additionaldata::get_key()
+FNDA:0,System.String BL.Services.Map.MapHereService/Additionaldata::get_key()
+DA:183,0
+FN:186,System.Single BL.Services.Map.MapHereService/Navigationposition::get_Latitude()
+FNDA:0,System.Single BL.Services.Map.MapHereService/Navigationposition::get_Latitude()
+DA:187,0
+FN:187,System.Single BL.Services.Map.MapHereService/Navigationposition::get_Longitude()
+FNDA:0,System.Single BL.Services.Map.MapHereService/Navigationposition::get_Longitude()
+DA:188,0
+LF:90
+LH:0
+BRF:0
+BRH:0
+FNF:50
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/Map/MapQuestHelper.cs
+FN:24,Core.Domain.DTO.Map.LatLng BL.Services.Map.MapQuestHelper::GetLatLngFromAddress(System.String)
+FNDA:0,Core.Domain.DTO.Map.LatLng BL.Services.Map.MapQuestHelper::GetLatLngFromAddress(System.String)
+DA:25,0
+DA:26,0
+DA:27,0
+DA:28,0
+DA:29,0
+DA:30,0
+DA:31,0
+DA:32,0
+DA:33,0
+DA:34,0
+DA:35,0
+DA:36,0
+DA:38,0
+DA:39,0
+DA:40,0
+DA:41,0
+DA:42,0
+DA:43,0
+DA:45,0
+DA:47,0
+DA:48,0
+DA:49,0
+DA:50,0
+DA:51,0
+BRDA:39,241,1,0
+BRDA:40,159,0,0
+BRDA:40,159,1,0
+BRDA:40,190,0,0
+BRDA:40,190,1,0
+BRDA:39,241,0,0
+FN:17,System.Void BL.Services.Map.MapQuestHelper::.cctor()
+FNDA:0,System.Void BL.Services.Map.MapQuestHelper::.cctor()
+DA:18,0
+FN:53,System.Collections.Generic.List`1<BL.Services.Map.MapQuestHelper/Result> BL.Services.Map.MapQuestHelper/Response::get_results()
+FNDA:0,System.Collections.Generic.List`1<BL.Services.Map.MapQuestHelper/Result> BL.Services.Map.MapQuestHelper/Response::get_results()
+DA:54,0
+FN:57,System.Collections.Generic.List`1<BL.Services.Map.MapQuestHelper/Location> BL.Services.Map.MapQuestHelper/Result::get_locations()
+FNDA:0,System.Collections.Generic.List`1<BL.Services.Map.MapQuestHelper/Location> BL.Services.Map.MapQuestHelper/Result::get_locations()
+DA:58,0
+FN:64,System.String BL.Services.Map.MapQuestHelper/Location::get_adminArea1()
+FNDA:0,System.String BL.Services.Map.MapQuestHelper/Location::get_adminArea1()
+DA:65,0
+FN:65,BL.Services.Map.MapQuestHelper/LatLng BL.Services.Map.MapQuestHelper/Location::get_latLng()
+FNDA:0,BL.Services.Map.MapQuestHelper/LatLng BL.Services.Map.MapQuestHelper/Location::get_latLng()
+DA:66,0
+FN:73,System.Single BL.Services.Map.MapQuestHelper/LatLng::get_lat()
+FNDA:0,System.Single BL.Services.Map.MapQuestHelper/LatLng::get_lat()
+DA:74,0
+FN:78,System.Single BL.Services.Map.MapQuestHelper/LatLng::get_lng()
+FNDA:0,System.Single BL.Services.Map.MapQuestHelper/LatLng::get_lng()
+DA:79,0
+LF:31
+LH:0
+BRF:6
+BRH:0
+FNF:8
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/Line/LineMessageService.cs
+FN:20,isRock.LineBot.MessageBase BL.Services.Line.LineMessageService::GetTextMessage(System.String)
+FNDA:0,isRock.LineBot.MessageBase BL.Services.Line.LineMessageService::GetTextMessage(System.String)
+DA:21,0
+DA:22,0
+DA:23,0
+DA:24,0
+DA:25,0
+DA:26,0
+DA:27,0
+DA:28,0
+DA:29,0
+DA:31,0
+FN:39,isRock.LineBot.MessageBase BL.Services.Line.LineMessageService::GetCarouselTemplateMessage(Core.Domain.Enums.QuerySortTypeEnum)
+FNDA:0,isRock.LineBot.MessageBase BL.Services.Line.LineMessageService::GetCarouselTemplateMessage(Core.Domain.Enums.QuerySortTypeEnum)
+DA:40,0
+DA:42,0
+DA:44,0
+DA:45,0
+DA:46,0
+DA:48,0
+DA:49,0
+DA:50,0
+DA:52,0
+DA:54,0
+DA:55,0
+DA:56,0
+DA:57,0
+DA:58,0
+DA:59,0
+DA:60,0
+DA:61,0
+DA:62,0
+DA:63,0
+DA:64,0
+DA:65,0
+DA:66,0
+DA:67,0
+DA:68,0
+DA:69,0
+DA:70,0
+DA:71,0
+DA:72,0
+DA:73,0
+DA:74,0
+DA:75,0
+DA:76,0
+DA:77,0
+DA:78,0
+DA:79,0
+DA:80,0
+DA:81,0
+DA:82,0
+DA:83,0
+DA:84,0
+DA:85,0
+DA:86,0
+DA:87,0
+DA:88,0
+DA:89,0
+DA:90,0
+DA:91,0
+DA:92,0
+DA:93,0
+DA:94,0
+DA:95,0
+DA:96,0
+DA:97,0
+DA:98,0
+DA:99,0
+DA:100,0
+DA:101,0
+DA:102,0
+DA:103,0
+DA:104,0
+DA:105,0
+BRDA:42,10,0,0
+BRDA:42,10,1,0
+BRDA:42,17,1,0
+BRDA:42,17,0,0
+FN:114,System.String BL.Services.Line.LineMessageService::ConvertToExchangeRateTextMessage(System.Double,System.Double,System.DateTime)
+FNDA:1,System.String BL.Services.Line.LineMessageService::ConvertToExchangeRateTextMessage(System.Double,System.Double,System.DateTime)
+DA:115,1
+DA:117,1
+DA:118,1
+DA:119,1
+DA:120,1
+DA:121,1
+DA:122,1
+DA:124,1
+DA:126,1
+DA:127,1
+FN:128,isRock.LineBot.MessageBase BL.Services.Line.LineMessageService::GetTextMessageWithQuickReply()
+FNDA:0,isRock.LineBot.MessageBase BL.Services.Line.LineMessageService::GetTextMessageWithQuickReply()
+DA:129,0
+DA:130,0
+DA:131,0
+DA:132,0
+DA:133,0
+DA:134,0
+DA:135,0
+DA:136,0
+DA:137,0
+DA:138,0
+DA:139,0
+DA:140,0
+DA:141,0
+DA:142,0
+DA:143,0
+FN:144,isRock.LineBot.StickerMessage BL.Services.Line.LineMessageService::GetStickerMessage(isRock.LineBot.Message)
+FNDA:0,isRock.LineBot.StickerMessage BL.Services.Line.LineMessageService::GetStickerMessage(isRock.LineBot.Message)
+DA:145,0
+DA:146,0
+DA:147,0
+DA:148,0
+DA:149,0
+FN:168,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.Line.LineMessageService::GetStickerMessages(System.Int32,System.Int32,System.Int32)
+FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.Line.LineMessageService::GetStickerMessages(System.Int32,System.Int32,System.Int32)
+DA:169,0
+DA:170,0
+DA:171,0
+DA:172,0
+DA:173,0
+DA:174,0
+DA:177,0
+DA:178,0
+DA:181,0
+DA:182,0
+DA:183,0
+DA:184,0
+DA:186,0
+DA:187,0
+DA:188,0
+DA:189,0
+DA:190,0
+DA:191,0
+DA:193,0
+BRDA:171,8,0,0
+BRDA:171,8,1,0
+BRDA:177,38,0,0
+BRDA:177,38,1,0
+BRDA:177,49,0,0
+BRDA:177,49,1,0
+BRDA:182,125,1,0
+BRDA:182,125,0,0
+LF:120
+LH:10
+BRF:12
+BRH:0
+FNF:6
+FNH:1
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/Line/LineNotifyBotService.cs
+FN:26,System.Boolean BL.Services.Line.LineNotifyBotService::PushMessage_Group(System.String)
+FNDA:0,System.Boolean BL.Services.Line.LineNotifyBotService::PushMessage_Group(System.String)
+DA:27,0
+DA:28,0
+DA:29,0
+FN:35,System.Boolean BL.Services.Line.LineNotifyBotService::PushMessage_Jacky(System.String)
+FNDA:0,System.Boolean BL.Services.Line.LineNotifyBotService::PushMessage_Jacky(System.String)
+DA:36,0
+DA:37,0
+DA:38,0
+FN:44,System.Boolean BL.Services.Line.LineNotifyBotService::PushMessage_Jessi(System.String)
+FNDA:0,System.Boolean BL.Services.Line.LineNotifyBotService::PushMessage_Jessi(System.String)
+DA:45,0
+DA:46,0
+DA:47,0
+FN:54,System.Boolean BL.Services.Line.LineNotifyBotService::PushMessage(System.String,System.String)
+FNDA:0,System.Boolean BL.Services.Line.LineNotifyBotService::PushMessage(System.String,System.String)
+DA:55,0
+DA:56,0
+DA:58,0
+DA:59,0
+DA:60,0
+DA:61,0
+DA:62,0
+DA:63,0
+DA:64,0
+DA:66,0
+DA:67,0
+DA:68,0
+DA:69,0
+DA:70,0
+DA:72,0
+FN:13,System.Void BL.Services.Line.LineNotifyBotService::.ctor()
+FNDA:0,System.Void BL.Services.Line.LineNotifyBotService::.ctor()
+DA:14,0
+DA:16,0
+DA:17,0
+DA:18,0
+DA:19,0
+DA:20,0
+LF:30
+LH:0
+BRF:0
+BRH:0
+FNF:5
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/HostedService/BaseCronJobService.cs
+FN:31,System.Threading.Tasks.Task BL.Services.HostedService.BaseCronJobService::StartAsync(System.Threading.CancellationToken)
+FNDA:0,System.Threading.Tasks.Task BL.Services.HostedService.BaseCronJobService::StartAsync(System.Threading.CancellationToken)
+DA:32,0
+DA:33,0
+DA:34,0
+FN:66,System.Threading.Tasks.Task BL.Services.HostedService.BaseCronJobService::DoWorkAsync(System.Threading.CancellationToken)
+FNDA:0,System.Threading.Tasks.Task BL.Services.HostedService.BaseCronJobService::DoWorkAsync(System.Threading.CancellationToken)
+DA:67,0
+DA:68,0
+DA:69,0
+FN:81,System.Threading.Tasks.Task BL.Services.HostedService.BaseCronJobService::StopAsync(System.Threading.CancellationToken)
+FNDA:0,System.Threading.Tasks.Task BL.Services.HostedService.BaseCronJobService::StopAsync(System.Threading.CancellationToken)
+DA:82,0
+DA:83,0
+DA:84,0
+DA:85,0
+BRDA:83,8,0,0
+BRDA:83,8,1,0
+FN:89,System.Void BL.Services.HostedService.BaseCronJobService::Dispose()
+FNDA:0,System.Void BL.Services.HostedService.BaseCronJobService::Dispose()
+DA:90,0
+DA:91,0
+DA:92,0
+BRDA:91,8,0,0
+BRDA:91,8,1,0
+FN:15,System.Void BL.Services.HostedService.BaseCronJobService::.ctor(System.String,System.TimeZoneInfo)
+FNDA:0,System.Void BL.Services.HostedService.BaseCronJobService::.ctor(System.String,System.TimeZoneInfo)
+DA:16,0
+DA:17,0
+DA:18,0
+DA:19,0
+FN:44,System.Void BL.Services.HostedService.BaseCronJobService/<>c__DisplayClass5_0/<<ScheduleJobAsync>b__0>d::MoveNext()
+FNDA:0,System.Void BL.Services.HostedService.BaseCronJobService/<>c__DisplayClass5_0/<<ScheduleJobAsync>b__0>d::MoveNext()
+DA:45,0
+DA:46,0
+DA:47,0
+DA:49,0
+DA:50,0
+DA:51,0
+DA:53,0
+DA:54,0
+DA:55,0
+DA:56,0
+BRDA:49,89,0,0
+BRDA:49,89,1,0
+BRDA:53,233,0,0
+BRDA:53,233,1,0
+FN:35,System.Void BL.Services.HostedService.BaseCronJobService/<ScheduleJobAsync>d__5::MoveNext()
+FNDA:0,System.Void BL.Services.HostedService.BaseCronJobService/<ScheduleJobAsync>d__5::MoveNext()
+DA:36,0
+DA:37,0
+DA:38,0
+DA:39,0
+DA:40,0
+DA:41,0
+DA:42,0
+DA:43,0
+DA:44,0
+DA:48,0
+DA:52,0
+DA:57,0
+DA:58,0
+DA:59,0
+DA:60,0
+BRDA:38,126,0,0
+BRDA:40,186,0,0
+BRDA:40,186,1,0
+BRDA:38,126,1,0
+FN:100,System.String BL.Services.HostedService.ScheduleConfig`1::get_CronExpression()
+FNDA:0,System.String BL.Services.HostedService.ScheduleConfig`1::get_CronExpression()
+DA:101,0
+FN:101,System.TimeZoneInfo BL.Services.HostedService.ScheduleConfig`1::get_TimeZoneInfo()
+FNDA:0,System.TimeZoneInfo BL.Services.HostedService.ScheduleConfig`1::get_TimeZoneInfo()
+DA:102,0
+FN:107,Microsoft.Extensions.DependencyInjection.IServiceCollection BL.Services.HostedService.ScheduledServiceExtensions::AddCronJob(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action`1<BL.Services.HostedService.IScheduleConfig`1<T>>)
+FNDA:0,Microsoft.Extensions.DependencyInjection.IServiceCollection BL.Services.HostedService.ScheduledServiceExtensions::AddCronJob(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action`1<BL.Services.HostedService.IScheduleConfig`1<T>>)
+DA:108,0
+DA:109,0
+DA:110,0
+DA:112,0
+DA:113,0
+DA:114,0
+DA:115,0
+DA:118,0
+DA:119,0
+DA:120,0
+DA:121,0
+BRDA:109,7,0,0
+BRDA:109,7,1,0
+BRDA:114,53,0,0
+BRDA:114,53,1,0
+LF:55
+LH:0
+BRF:16
+BRH:0
+FNF:10
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/HostedService/NotifyCronJobService.cs
+FN:19,System.Threading.Tasks.Task BL.Services.HostedService.NotifyCronJobService::StartAsync(System.Threading.CancellationToken)
+FNDA:0,System.Threading.Tasks.Task BL.Services.HostedService.NotifyCronJobService::StartAsync(System.Threading.CancellationToken)
+DA:20,0
+DA:21,0
+DA:22,0
+FN:23,System.Threading.Tasks.Task BL.Services.HostedService.NotifyCronJobService::DoWorkAsync(System.Threading.CancellationToken)
+FNDA:0,System.Threading.Tasks.Task BL.Services.HostedService.NotifyCronJobService::DoWorkAsync(System.Threading.CancellationToken)
+DA:24,0
+DA:25,0
+DA:26,0
+DA:27,0
+DA:28,0
+FN:29,System.Threading.Tasks.Task BL.Services.HostedService.NotifyCronJobService::StopAsync(System.Threading.CancellationToken)
+FNDA:0,System.Threading.Tasks.Task BL.Services.HostedService.NotifyCronJobService::StopAsync(System.Threading.CancellationToken)
+DA:30,0
+DA:31,0
+DA:32,0
+DA:33,0
+FN:14,System.Void BL.Services.HostedService.NotifyCronJobService::.ctor(BL.Services.HostedService.IScheduleConfig`1<BL.Services.HostedService.NotifyCronJobService>,Microsoft.Extensions.Logging.ILogger`1<BL.Services.HostedService.NotifyCronJobService>)
+FNDA:0,System.Void BL.Services.HostedService.NotifyCronJobService::.ctor(BL.Services.HostedService.IScheduleConfig`1<BL.Services.HostedService.NotifyCronJobService>,Microsoft.Extensions.Logging.ILogger`1<BL.Services.HostedService.NotifyCronJobService>)
+DA:15,0
+DA:16,0
+DA:17,0
+DA:18,0
+LF:16
+LH:0
+BRF:0
+BRH:0
+FNF:4
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/Holiday/HolidayHelper.cs
+FN:18,System.Collections.Generic.List`1<System.DateTime> BL.Services.Holiday.HolidayHelper::GetTheMostRecentBusinessDay(System.Int32,System.Nullable`1<System.DateTime>)
+FNDA:0,System.Collections.Generic.List`1<System.DateTime> BL.Services.Holiday.HolidayHelper::GetTheMostRecentBusinessDay(System.Int32,System.Nullable`1<System.DateTime>)
+DA:19,0
+DA:20,0
+DA:22,0
+DA:23,0
+DA:24,0
+DA:25,0
+DA:26,0
+DA:27,0
+DA:28,0
+DA:29,0
+DA:30,0
+DA:31,0
+DA:32,0
+DA:33,0
+DA:34,0
+DA:35,0
+BRDA:22,19,0,0
+BRDA:22,19,1,0
+BRDA:28,122,1,0
+BRDA:29,79,0,0
+BRDA:29,79,1,0
+BRDA:28,122,0,0
+FN:42,System.Boolean BL.Services.Holiday.HolidayHelper::IsBusinessDay(System.DateTime,System.Collections.Generic.List`1<System.DateTime>)
+FNDA:0,System.Boolean BL.Services.Holiday.HolidayHelper::IsBusinessDay(System.DateTime,System.Collections.Generic.List`1<System.DateTime>)
+DA:43,0
+DA:44,0
+DA:45,0
+DA:46,0
+DA:47,0
+DA:48,0
+BRDA:47,80,0,0
+BRDA:47,83,0,0
+BRDA:47,80,1,0
+BRDA:47,83,1,0
+LF:22
+LH:0
+BRF:10
+BRH:0
+FNF:2
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/Google/MapService.cs
+FN:15,BL.Services.Google.Geocoding BL.Services.Google.MapService::GetGeocoding(System.String)
+FNDA:0,BL.Services.Google.Geocoding BL.Services.Google.MapService::GetGeocoding(System.String)
+DA:16,0
+DA:17,0
+DA:18,0
+DA:19,0
+DA:20,0
+DA:21,0
+DA:22,0
+DA:24,0
+DA:25,0
+DA:26,0
+DA:27,0
+DA:30,0
+DA:31,0
+DA:32,0
+FN:8,System.Void BL.Services.Google.MapService::.cctor()
+FNDA:0,System.Void BL.Services.Google.MapService::.cctor()
+DA:9,0
+FN:35,System.Collections.Generic.List`1<BL.Services.Google.GeocodingResult> BL.Services.Google.Geocoding::get_results()
+FNDA:0,System.Collections.Generic.List`1<BL.Services.Google.GeocodingResult> BL.Services.Google.Geocoding::get_results()
+DA:36,0
+FN:36,System.String BL.Services.Google.Geocoding::get_status()
+FNDA:0,System.String BL.Services.Google.Geocoding::get_status()
+DA:37,0
+FN:110,System.Collections.Generic.List`1<BL.Services.Google.address_component> BL.Services.Google.GeocodingResult::get_address_components()
+FNDA:0,System.Collections.Generic.List`1<BL.Services.Google.address_component> BL.Services.Google.GeocodingResult::get_address_components()
+DA:111,0
+FN:111,System.String BL.Services.Google.GeocodingResult::get_formatted_address()
+FNDA:0,System.String BL.Services.Google.GeocodingResult::get_formatted_address()
+DA:112,0
+FN:112,BL.Services.Google.Geometry BL.Services.Google.GeocodingResult::get_geometry()
+FNDA:0,BL.Services.Google.Geometry BL.Services.Google.GeocodingResult::get_geometry()
+DA:113,0
+FN:113,System.String BL.Services.Google.GeocodingResult::get_place_id()
+FNDA:0,System.String BL.Services.Google.GeocodingResult::get_place_id()
+DA:114,0
+FN:114,BL.Services.Google.Plus_code BL.Services.Google.GeocodingResult::get_plus_code()
+FNDA:0,BL.Services.Google.Plus_code BL.Services.Google.GeocodingResult::get_plus_code()
+DA:115,0
+FN:115,System.Collections.Generic.List`1<System.String> BL.Services.Google.GeocodingResult::get_types()
+FNDA:0,System.Collections.Generic.List`1<System.String> BL.Services.Google.GeocodingResult::get_types()
+DA:116,0
+FN:184,System.String BL.Services.Google.address_component::get_long_name()
+FNDA:0,System.String BL.Services.Google.address_component::get_long_name()
+DA:185,0
+FN:185,System.String BL.Services.Google.address_component::get_short_name()
+FNDA:0,System.String BL.Services.Google.address_component::get_short_name()
+DA:186,0
+FN:186,System.Collections.Generic.List`1<System.String> BL.Services.Google.address_component::get_types()
+FNDA:0,System.Collections.Generic.List`1<System.String> BL.Services.Google.address_component::get_types()
+DA:187,0
+FN:197,BL.Services.Google.Location BL.Services.Google.Geometry::get_location()
+FNDA:0,BL.Services.Google.Location BL.Services.Google.Geometry::get_location()
+DA:198,0
+FN:198,System.String BL.Services.Google.Geometry::get_location_type()
+FNDA:0,System.String BL.Services.Google.Geometry::get_location_type()
+DA:199,0
+FN:199,BL.Services.Google.Viewport BL.Services.Google.Geometry::get_viewport()
+FNDA:0,BL.Services.Google.Viewport BL.Services.Google.Geometry::get_viewport()
+DA:200,0
+FN:222,System.String BL.Services.Google.Location::get_lat()
+FNDA:0,System.String BL.Services.Google.Location::get_lat()
+DA:223,0
+FN:223,System.String BL.Services.Google.Location::get_lng()
+FNDA:0,System.String BL.Services.Google.Location::get_lng()
+DA:224,0
+FN:233,System.String BL.Services.Google.Plus_code::get_compound_code()
+FNDA:0,System.String BL.Services.Google.Plus_code::get_compound_code()
+DA:234,0
+FN:234,System.String BL.Services.Google.Plus_code::get_global_code()
+FNDA:0,System.String BL.Services.Google.Plus_code::get_global_code()
+DA:235,0
+FN:244,BL.Services.Google.Northeast BL.Services.Google.Viewport::get_northeast()
+FNDA:0,BL.Services.Google.Northeast BL.Services.Google.Viewport::get_northeast()
+DA:245,0
+FN:245,BL.Services.Google.Southwest BL.Services.Google.Viewport::get_southwest()
+FNDA:0,BL.Services.Google.Southwest BL.Services.Google.Viewport::get_southwest()
+DA:246,0
+FN:261,System.String BL.Services.Google.Northeast::get_lat()
+FNDA:0,System.String BL.Services.Google.Northeast::get_lat()
+DA:262,0
+FN:262,System.String BL.Services.Google.Northeast::get_lng()
+FNDA:0,System.String BL.Services.Google.Northeast::get_lng()
+DA:263,0
+FN:272,System.String BL.Services.Google.Southwest::get_lat()
+FNDA:0,System.String BL.Services.Google.Southwest::get_lat()
+DA:273,0
+FN:273,System.String BL.Services.Google.Southwest::get_lng()
+FNDA:0,System.String BL.Services.Google.Southwest::get_lng()
+DA:274,0
+LF:39
+LH:0
+BRF:0
+BRH:0
+FNF:26
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/Excel/ExcelDataReaderService.cs
+FN:16,System.Data.DataSet BL.Services.Excel.ExcelDataReaderService::GetDataSetFromUri()
+FNDA:0,System.Data.DataSet BL.Services.Excel.ExcelDataReaderService::GetDataSetFromUri()
+DA:17,0
+DA:18,0
+DA:34,0
+DA:35,0
+FN:13,System.Void BL.Services.Excel.ExcelDataReaderService::.ctor()
+FNDA:0,System.Void BL.Services.Excel.ExcelDataReaderService::.ctor()
+DA:14,0
+DA:15,0
+LF:6
+LH:0
+BRF:0
+BRH:0
+FNF:2
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/Cache/Redis/RedisCacheService.cs
+FN:19,System.Boolean BL.Services.Cache.Redis.RedisCacheService::Set(System.String,T)
+FNDA:0,System.Boolean BL.Services.Cache.Redis.RedisCacheService::Set(System.String,T)
+DA:20,0
+DA:21,0
+DA:22,0
+DA:23,0
+DA:24,0
+FN:25,System.Boolean BL.Services.Cache.Redis.RedisCacheService::Set(System.String,T,System.TimeSpan)
+FNDA:0,System.Boolean BL.Services.Cache.Redis.RedisCacheService::Set(System.String,T,System.TimeSpan)
+DA:26,0
+DA:27,0
+DA:28,0
+DA:29,0
+DA:30,0
+FN:36,System.Collections.Generic.List`1<System.String> BL.Services.Cache.Redis.RedisCacheService::GetKeys(System.String)
+FNDA:0,System.Collections.Generic.List`1<System.String> BL.Services.Cache.Redis.RedisCacheService::GetKeys(System.String)
+DA:37,0
+DA:38,0
+DA:39,0
+FN:40,T BL.Services.Cache.Redis.RedisCacheService::Get(System.String)
+FNDA:0,T BL.Services.Cache.Redis.RedisCacheService::Get(System.String)
+DA:41,0
+DA:42,0
+DA:43,0
+DA:44,0
+FN:45,System.Boolean BL.Services.Cache.Redis.RedisCacheService::TryGet(System.String,T&)
+FNDA:0,System.Boolean BL.Services.Cache.Redis.RedisCacheService::TryGet(System.String,T&)
+DA:46,0
+DA:47,0
+DA:48,0
+DA:49,0
+DA:50,0
+DA:53,0
+DA:54,0
+DA:55,0
+BRDA:47,10,0,0
+BRDA:47,10,1,0
+FN:56,System.Boolean BL.Services.Cache.Redis.RedisCacheService::Delete(System.String)
+FNDA:0,System.Boolean BL.Services.Cache.Redis.RedisCacheService::Delete(System.String)
+DA:57,0
+DA:58,0
+DA:59,0
+FN:65,System.Boolean BL.Services.Cache.Redis.RedisCacheService::ExistKeyValue(System.String)
+FNDA:0,System.Boolean BL.Services.Cache.Redis.RedisCacheService::ExistKeyValue(System.String)
+DA:66,0
+DA:67,0
+DA:68,0
+FN:69,System.Net.EndPoint[] BL.Services.Cache.Redis.RedisCacheService::GetEndPoints()
+FNDA:0,System.Net.EndPoint[] BL.Services.Cache.Redis.RedisCacheService::GetEndPoints()
+DA:70,0
+DA:71,0
+DA:72,0
+FN:73,StackExchange.Redis.HashEntry[] BL.Services.Cache.Redis.RedisCacheService::GetHashEntrys(System.String)
+FNDA:0,StackExchange.Redis.HashEntry[] BL.Services.Cache.Redis.RedisCacheService::GetHashEntrys(System.String)
+DA:74,0
+DA:75,0
+DA:76,0
+FN:77,StackExchange.Redis.IServer BL.Services.Cache.Redis.RedisCacheService::GetEndPoints(System.Net.EndPoint)
+FNDA:0,StackExchange.Redis.IServer BL.Services.Cache.Redis.RedisCacheService::GetEndPoints(System.Net.EndPoint)
+DA:78,0
+DA:79,0
+DA:80,0
+FN:16,System.Void BL.Services.Cache.Redis.RedisCacheService::.ctor()
+FNDA:0,System.Void BL.Services.Cache.Redis.RedisCacheService::.ctor()
+DA:17,0
+DA:18,0
+FN:10,System.Void BL.Services.Cache.Redis.RedisCacheService::.cctor()
+FNDA:0,System.Void BL.Services.Cache.Redis.RedisCacheService::.cctor()
+DA:11,0
+DA:12,0
+DA:13,0
+DA:14,0
+DA:15,0
+LF:47
+LH:0
+BRF:2
+BRH:0
+FNF:12
+FNH:0
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/Base/BaseService.cs
+FN:6,System.Void BL.Services.Base.BaseService::.cctor()
+FNDA:0,System.Void BL.Services.Base.BaseService::.cctor()
+DA:7,0
+LF:1
+LH:0
+BRF:0
+BRH:0
+FNF:1
+FNH:0
+end_of_record

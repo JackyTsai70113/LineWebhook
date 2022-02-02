@@ -74,8 +74,8 @@ namespace Website.Controllers {
                             $"LineWebhookService.ResponseToLineServer 錯誤, replyToken: {replyToken},\n" +
                             $"messages: {JsonUtility.Serialize(messages, isIndented: true)},\n" +
                             $"response: {JsonUtility.Serialize(response, isIndented: true)}");
-                        // _lineNotifyBotService.PushMessage_Jacky($"message: {response.message}, " +
-                        //     $"details: {JsonConvert.SerializeObject(response.details)}");
+                        _lineNotifyBotService.PushMessage_Jacky($"message: {response.message},\n" +
+                            $"details: {JsonUtility.Serialize(response.details, isIndented: true)}");
                         return Content($"[Index] JLineBot 無法發送，requestBody: {requestBody}, ex: {ex}");
                     }
                     throw;
