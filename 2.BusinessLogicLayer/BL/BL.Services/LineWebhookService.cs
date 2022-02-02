@@ -54,7 +54,7 @@ namespace BL.Services {
                         break;
                     case "sticker":
                         StickerMessage stickerMessage = _lineMessageService.GetStickerMessage(message);
-                        messages = GetMessageBySticker(stickerMessage);
+                        messages = GetReplyMessagesBySticker(stickerMessage);
                         break;
                     default:
                         messages = new List<MessageBase> { new TextMessage("目前未支援此資料格式: " + message.type) };
@@ -72,58 +72,6 @@ namespace BL.Services {
                 string errorMsg = $"[GetReplyMessages] 判讀訊息並傳回Line回應訊息 錯誤";
                 throw new ArgumentException(errorMsg);
             }
-            return messages;
-        }
-
-        /// <summary>
-        /// 依照RequestModel 判讀訊息並傳回Line回應訊息
-        /// </summary>
-        /// <param name="receivedMessage">從line接收到的訊息字串</param>
-        /// <returns>Line回應訊息</returns>
-        public List<MessageBase> GetCommendTypeAndText(ReceivedMessage receivedMessage) {
-            List<MessageBase> messages;
-            string type = receivedMessage.events[0].type;
-            if (type == "message") {
-                Message message = receivedMessage.events[0].message;
-                switch (message.type) {
-                    case "text":
-                        messages = GetMessagesByText(message.text);
-                        break;
-                    case "location":
-                        messages = GetMaskInstitutions(message.address);
-                        break;
-                    case "sticker":
-                        StickerMessage stickerMessage = _lineMessageService.GetStickerMessage(message);
-                        messages = GetMessageBySticker(stickerMessage);
-                        break;
-                    default:
-                        messages = new List<MessageBase> { new TextMessage("目前未支援此資料格式: " + message.type) };
-                        break;
-                }
-            } else if (type == "postback") {
-                Postback postback = receivedMessage.events[0].postback;
-                Params @params = postback.Params;
-                if (postback.Params != null) {
-                    messages = GetMessagesByText(postback.data + " " + @params.datetime + @params.date + @params.time);
-                } else {
-                    messages = GetMessagesByText(postback.data);
-                }
-            } else {
-                string errorMsg = $"[GetReplyMessages] 判讀訊息並傳回Line回應訊息 錯誤";
-                throw new ArgumentException(errorMsg);
-            }
-            return messages;
-        }
-
-        private List<MessageBase> GetMessageBySticker(StickerMessage stickerMessage) {
-            int packageId = int.Parse(stickerMessage.packageId);
-            int stickerId = int.Parse(stickerMessage.stickerId);
-            string text = $"[StickerMessage] packageId: {packageId}, stickerId: {stickerId}";
-            TextMessage textMessage = new TextMessage(text);
-            List<MessageBase> messages = new List<MessageBase>{
-                textMessage
-            };
-            messages.AddRange(_lineMessageService.GetStickerMessages(packageId, stickerId, 4));
             return messages;
         }
 
@@ -136,30 +84,17 @@ namespace BL.Services {
             string textStr;
             try {
                 switch (text.Split(' ')[0]) {
-                    case "cj":
-                        textStr = GetCangjieImageMessages(text.Substring(3));
-                        return new List<MessageBase> { _lineMessageService.GetTextMessage(textStr) };
-                    case "sp":
-                        _exchangeRateService.GetExchangeRate(
-                            out double buyingRate, out double sellingRate,
-                            out DateTime quotedDateTime);
-
-                        textStr = _lineMessageService.ConvertToExchangeRateTextMessage(
-                            buyingRate, sellingRate, quotedDateTime
-                        );
-
-                        var textMessage = _lineMessageService.GetTextMessage(textStr);
-
-                        return new List<MessageBase> { textMessage };
-                    case "st":
-                        return GetStickerMessages(text);
                     case "cd":
                         string vocabulary = text.Split(' ')[1];
-                        return GetCambridgeDictionaryMessages(vocabulary);
-                    case "cdd":
-                        vocabulary = text.Split(' ')[1];
-                        int textLenth = int.Parse(text.Split(' ')[2]);
-                        return GetCambridgeDictionaryMessages(vocabulary, textLenth);
+                        return GetCambridgeDictionaryReplyMessages(vocabulary);
+                    case "cj":
+                        string words = text.Substring(3);
+                        return GetCangjieReplyMessages(words);
+                    case "er":
+                        return GetExchangeRateReplyMessages();
+                    case "st":
+                        string[] commandArgs = text.Substring(3).Split(' ');
+                        return GetStickerReplyMessages(commandArgs);
                     case "tv":
                         if (text == "tv") {
                             return new List<MessageBase> { _lineMessageService.GetCarouselTemplateMessage(QuerySortTypeEnum.Descending) };
@@ -208,83 +143,23 @@ namespace BL.Services {
 
         public string GetReplyTextByText(string text) {
             string textStr;
-            try {
-                switch (text.Split(' ')[0]) {
-                    case "cj":
-                        textStr = GetCangjieImageMessages(text.Substring(3));
-                        return textStr;
-                    case "sp":
-                        _exchangeRateService.GetExchangeRate(
-                            out double buyingRate, out double sellingRate,
-                            out DateTime quotedDateTime);
+            switch (text.Split(' ')[0]) {
+                case "cj":
+                    textStr = GetCangjieReplyText(text.Substring(3));
+                    return textStr;
+                case "sp":
+                    _exchangeRateService.GetExchangeRate(
+                        out double buyingRate, out double sellingRate,
+                        out DateTime quotedDateTime);
 
-                        textStr = _lineMessageService.ConvertToExchangeRateTextMessage(
-                            buyingRate, sellingRate, quotedDateTime
-                        );
+                    textStr = ConvertToExchangeRateTextMessage(
+                        buyingRate, sellingRate, quotedDateTime
+                    );
 
-                        return textStr;
-                    default:
-                        return text;
-                }
-            } catch (Exception ex) {
-                string errorMsg = $"[GetReplyTextByText] text: {text}, ex: {ex}";
-                Log.Error(errorMsg);
-                throw;
+                    return textStr;
+                default:
+                    return text;
             }
-        }
-
-        /// <summary>
-        /// 依照字串內容分析命令類型及參數
-        /// </summary>
-        /// <param name="text">字串內容</param>
-        /// <param name="commandType">命令類型</param>
-        /// <param name="commandArgs">命令參數array</param>
-        private void GetCommandTypeAndArgsByText(string text, out LineWebhookCommandTypeEnum commandType, out string[] commandArgs) {
-            try {
-                commandArgs = text.Substring(3).Split(' ');
-                switch (text.Split(' ')[0]) {
-                    case "cj":
-                        commandType = LineWebhookCommandTypeEnum.Empty;
-                        break;
-                    case "cd":
-                        commandType = LineWebhookCommandTypeEnum.CambridgeDictionary;
-                        break;
-                    case "cdd":
-                        commandType = LineWebhookCommandTypeEnum.CambridgeDictionary;
-                        break;
-                    case "sp":
-                        commandType = LineWebhookCommandTypeEnum.SinoPac;
-                        break;
-                    case "st":
-                        commandType = LineWebhookCommandTypeEnum.Sticker;
-                        break;
-                    case "tv":
-                        commandType = LineWebhookCommandTypeEnum.TradingVolume;
-                        break;
-                    case "tvv":
-                        commandType = LineWebhookCommandTypeEnum.TradingVolume;
-                        break;
-                    default:
-                        commandType = LineWebhookCommandTypeEnum.None;
-                        commandArgs = text.Split(' ');
-                        break;
-                }
-            } catch (Exception ex) {
-                string errorMsg = $"[GetCommandTypeAndArgsByText] text: {text}, ex: {ex}";
-                Log.Error(errorMsg);
-                throw;
-            }
-        }
-
-        private List<MessageBase> GetStickerMessages(string text) {
-            int packageId = int.Parse(text.Split(' ')[1]);
-            int stickerId = int.Parse(text.Split(' ')[2]);
-            if (text.Split(' ').Count() == 3) {
-                return _lineMessageService.GetStickerMessages(packageId, stickerId);
-            }
-
-            int count = int.Parse(text.Split(' ')[3]);
-            return _lineMessageService.GetStickerMessages(packageId, stickerId, count);
         }
 
         /// <summary>
@@ -330,64 +205,217 @@ namespace BL.Services {
         }
 
         /// <summary>
+        /// 取得劍橋(cd)指令的 回覆訊息列表
+        /// </summary>
+        /// <param name="vocabulary">單字</param>
+        /// <returns>訊息列表</returns>
+        private List<MessageBase> GetCambridgeDictionaryReplyMessages(string vocabulary) {
+            List<string> texts = GetCambridgeDictionaryTexts(vocabulary);
+
+            List<MessageBase> messageBases = new List<MessageBase>();
+
+            foreach (string text in texts) {
+                MessageBase messageBase = _lineMessageService.GetTextMessage(text);
+                messageBases.Add(messageBase);
+            }
+            return messageBases;
+        }
+
+        /// <summary>
         /// 取得撈取劍橋辭典(CambridgeDictionary)網站的訊息列表
         /// </summary>
         /// <param name="vocabulary">單字</param>
         /// <returns>訊息列表</returns>
-        private List<MessageBase> GetCambridgeDictionaryMessages(string vocabulary, int textLength = -1) {
-            List<MessageBase> messages = new List<MessageBase>();
+        private List<string> GetCambridgeDictionaryTexts(string vocabulary) {
+            List<string> texts = new List<string>();
             try {
-                List<Translation> translations = _cambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary);
+                List<Translation> translations =
+                    _cambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary)
+                                               .Take(5).ToList();
+
                 if (translations.Count == 0) {
-                    messages.Add(new TextMessage($"未能找到符合字詞: {vocabulary}"));
-                    return messages;
-                }
-                // 防呆: 超過5種詞性
-                if (translations.Count > 5) {
-                    translations = translations.Take(5).ToList();
+                    texts.Add($"未能找到符合字詞: {vocabulary}");
+                    return texts;
                 }
 
                 // 設定發送的訊息
                 foreach (Translation translation in translations) {
                     string translationStr = translation.TranslationStr;
                     // 防呆: 超過5000字數
-                    if (textLength == -1) {
-                        if (translationStr.Length > 5000) {
-                            translationStr = translationStr.Substring(0, 4996) + "...";
-                        }
-                    } else if (translationStr.Length > textLength) {
-                        translationStr = translationStr.Substring(0, textLength) + "...";
+                    if (translationStr.Length > 5000) {
+                        translationStr = translationStr.Substring(0, 4996) + "...";
                     }
-                    messages.Add(_lineMessageService.GetTextMessage(translationStr));
+                    texts.Add(translationStr);
                 }
-                return messages;
+                return texts;
             } catch (Exception ex) {
-                Log.Error($"vocabulary: {vocabulary}, ex: {ex}");
-                return messages;
+                Log.Error($"取得撈取劍橋辭典網站的訊息列表 錯誤, vocabulary: {vocabulary}, ex: {ex}");
+                return texts;
             }
         }
 
-        public string GetCangjieImageMessages(string texts) {
+        /// <summary>
+        /// 取得倉頡(cj)指令的 回覆訊息列表
+        /// </summary>
+        /// <param name="words">文字列表</param>
+        /// <returns>訊息列表</returns>
+        private List<MessageBase> GetCangjieReplyMessages(string words) {
+
+            string replyTextStr = GetCangjieReplyText(words);
+
+            TextMessage textMessage = _lineMessageService.GetTextMessage(replyTextStr);
+
+            return new List<MessageBase> { textMessage };
+        }
+
+        /// <summary>
+        /// 整理倉頡文字的分解方法，並回傳整理好的文字
+        /// </summary>
+        /// <param name="words">倉頡文字列表</param>
+        /// <returns>文字</returns>
+        private string GetCangjieReplyText(string words) {
             try {
                 Encoding big5 = Encoding.GetEncoding("big5");
-                var CJDomain = "http://input.foruto.com/cjdict/Images/CJZD_JPG/";
+                string cjDomain = "http://input.foruto.com/cjdict/Images/CJZD_JPG/";
 
                 StringBuilder sb = new StringBuilder();
-                foreach (var text in texts) {
-                    if (text == ' ') {
+                foreach (char word in words) {
+                    if (word == ' ') {
                         continue;
                     }
                     // convert string to bytes
-                    byte[] big5Bytes = big5.GetBytes(text.ToString());
+                    byte[] big5Bytes = big5.GetBytes(word.ToString());
                     string big5Str = BitConverter.ToString(big5Bytes).Replace("-", string.Empty);
-                    sb.AppendLine(text + ": " + CJDomain + big5Str + ".JPG");
+                    sb.AppendLine(word + ": " + cjDomain + big5Str + ".JPG");
                 }
                 return sb.ToString();
             } catch (Exception ex) {
-                string errorMsg = $"發生錯誤, 字詞：{texts}, ex: {ex}";
-                Console.WriteLine(errorMsg);
+                string errorMsg = $"GetCangjieReplyText 發生錯誤, 字詞：{words}, ex: {ex}";
+                Log.Error(errorMsg);
                 return errorMsg;
             }
+        }
+
+        /// <summary>
+        /// 取得換匯(er)指令 的 回覆訊息列表
+        /// </summary>
+        /// <returns>訊息列表</returns>
+        private List<MessageBase> GetExchangeRateReplyMessages() {
+            _exchangeRateService.GetExchangeRate(
+                out double buyingRate, out double sellingRate,
+                out DateTime quotedDateTime);
+
+            string textStr = ConvertToExchangeRateTextMessage(
+                buyingRate, sellingRate, quotedDateTime
+            );
+
+            TextMessage textMessage = _lineMessageService.GetTextMessage(textStr);
+
+            return new List<MessageBase> { textMessage };
+        }
+
+
+        /// <summary>
+        /// 將 換匯資訊 轉換成 字串
+        /// </summary>
+        /// <param name="bankBuyingRate">銀行買入匯率</param>
+        /// <param name="bankSellingRate">銀行賣出匯率</param>
+        /// <param name="quotedDateTime">報價時間</param>
+        /// <returns>字串</returns>
+        private string ConvertToExchangeRateTextMessage(double bankBuyingRate, double bankSellingRate,
+            DateTime quotedDateTime) {
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("美金報價\n");
+            sb.Append("---------------------\n");
+            sb.Append($"銀行買入：{bankBuyingRate: 0.0000}\n");
+            sb.Append($"銀行賣出：{bankSellingRate: 0.0000}\n");
+            sb.Append($"報價時間：{quotedDateTime: yyyy-MM-dd HH:mm:ss}");
+
+            string result = sb.ToString();
+
+            return result;
+        }
+
+        /// <summary>
+        /// 取得貼圖(st)指令 的 回覆訊息列表
+        /// </summary>
+        /// <param name="commandArgs">指令參數矩陣</param>
+        /// <returns>訊息列表</returns>
+        private List<MessageBase> GetStickerReplyMessages(string[] commandArgs) {
+
+            if (int.TryParse(commandArgs[0], out int packageId) == false ||
+                int.TryParse(commandArgs[1], out int stickerId) == false) {
+
+                Log.Information("GetStickerMessages 解析st指令錯誤，格式錯誤"
+                    + $"，commandArgs: {commandArgs[0]}, {commandArgs[1]}");
+                TextMessage textMessage = _lineMessageService.GetTextMessage("格式錯誤");
+                return new List<MessageBase> { textMessage };
+            }
+
+            List<MessageBase> messageBases = GetStickerReplyMessages(packageId, stickerId, 5);
+
+            return messageBases;
+        }
+
+        /// <summary>
+        /// 取得貼圖的 回覆訊息列表
+        /// </summary>
+        /// <param name="packageId">貼圖包Id</param>
+        /// <param name="stickerId">貼圖Id</param>
+        /// <param name="count">Line 訊息數量</param>
+        /// <returns>訊息列表</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// count 必須介於 1 和 5
+        /// </exception>
+        private List<MessageBase> GetStickerReplyMessages(int packageId, int stickerId, int count) {
+            if (count == 1) {
+                _lineMessageService.TryGetStickerMessage(packageId, stickerId, out MessageBase messageBase);
+                return new List<MessageBase> { messageBase };
+            }
+
+            if (count < 1 || count > 5) {
+                throw new ArgumentException("參數錯誤！個數必須介於 1 和 5。");
+            }
+
+            List<MessageBase> messages = new List<MessageBase>();
+
+            for (int i = stickerId; i < stickerId + count; ++i) {
+                _lineMessageService.TryGetStickerMessage(packageId, stickerId, out MessageBase messageBase);
+                messages.Add(messageBase);
+            }
+
+            return messages;
+        }
+
+
+        /// <summary>
+        /// 取得貼圖訊息的回覆訊息列表
+        /// </summary>
+        /// <param name="stickerMessage">貼圖訊息</param>
+        /// <returns>訊息列表</returns>
+        private List<MessageBase> GetReplyMessagesBySticker(StickerMessage stickerMessage) {
+            GetIdsBySticker(stickerMessage, out int packageId, out int stickerId);
+            string text = $"[StickerMessage] packageId: {packageId}, stickerId: {stickerId}";
+            List<MessageBase> messages = new List<MessageBase>{
+                new TextMessage(text)
+            };
+
+            List<MessageBase> stickerMessages = GetStickerReplyMessages(packageId, stickerId, 4);
+            messages.AddRange(stickerMessages);
+
+            return messages;
+        }
+
+        /// <summary>
+        /// 取得Line貼圖訊息的貼圖包Id, 貼圖Id
+        /// </summary>
+        /// <param name="stickerMessage">Line貼圖訊息</param>
+        /// <param name="packageId">貼圖包Id</param>
+        /// <param name="stickerId">貼圖Id</param>
+        private void GetIdsBySticker(StickerMessage stickerMessage, out int packageId, out int stickerId) {
+            packageId = int.Parse(stickerMessage.packageId);
+            stickerId = int.Parse(stickerMessage.stickerId);
         }
     }
 

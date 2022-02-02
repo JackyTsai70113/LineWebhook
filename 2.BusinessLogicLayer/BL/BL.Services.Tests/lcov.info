@@ -617,25 +617,25 @@ FNF:1
 FNH:1
 end_of_record
 SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services.Tests/UnitTest1.cs
-FN:11,BL.Services.LineWebhookService BL.Services.Tests.Tests::get_LineWebhookService()
-FNDA:4,BL.Services.LineWebhookService BL.Services.Tests.Tests::get_LineWebhookService()
-DA:12,4
-FN:14,System.Void BL.Services.Tests.Tests::Setup()
-FNDA:2,System.Void BL.Services.Tests.Tests::Setup()
-DA:15,2
-DA:16,2
-DA:17,2
-DA:18,2
-DA:19,2
-DA:20,2
-DA:21,2
-FN:25,System.Void BL.Services.Tests.Tests::Test1(System.String,System.String)
-FNDA:2,System.Void BL.Services.Tests.Tests::Test1(System.String,System.String)
-DA:26,2
-DA:28,2
-DA:31,2
-DA:34,2
-DA:35,2
+FN:9,BL.Services.LineWebhookService BL.Services.Tests.Tests::get_LineWebhookService()
+FNDA:6,BL.Services.LineWebhookService BL.Services.Tests.Tests::get_LineWebhookService()
+DA:10,6
+FN:12,System.Void BL.Services.Tests.Tests::Setup()
+FNDA:3,System.Void BL.Services.Tests.Tests::Setup()
+DA:13,3
+DA:14,3
+DA:15,3
+DA:16,3
+DA:17,3
+DA:18,3
+DA:19,3
+FN:24,System.Void BL.Services.Tests.Tests::Test1(System.String,System.String)
+FNDA:3,System.Void BL.Services.Tests.Tests::Test1(System.String,System.String)
+DA:25,3
+DA:27,3
+DA:30,3
+DA:33,3
+DA:34,3
 LF:13
 LH:13
 BRF:0
@@ -664,9 +664,9 @@ DA:52,0
 DA:54,0
 DA:55,0
 FN:18,System.Void BL.Services.Tests.Map.FakeMapHereService::.ctor()
-FNDA:4,System.Void BL.Services.Tests.Map.FakeMapHereService::.ctor()
-DA:19,4
-DA:20,2
+FNDA:6,System.Void BL.Services.Tests.Map.FakeMapHereService::.ctor()
+DA:19,6
+DA:20,3
 LF:15
 LH:2
 BRF:0
@@ -2794,99 +2794,117 @@ BRDA:63,224,0,0
 BRDA:66,272,0,0
 BRDA:66,272,1,0
 BRDA:63,224,1,0
-FN:82,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetCommendTypeAndText(isRock.LineBot.ReceivedMessage)
-FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetCommendTypeAndText(isRock.LineBot.ReceivedMessage)
+FN:82,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetMessagesByText(System.String)
+FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetMessagesByText(System.String)
 DA:83,0
 DA:85,0
 DA:86,0
-DA:87,0
 DA:88,0
-DA:90,0
+DA:89,0
 DA:91,0
-DA:93,0
+DA:92,0
 DA:94,0
 DA:96,0
 DA:97,0
-DA:98,0
+DA:99,0
 DA:100,0
-DA:101,0
+DA:102,0
 DA:103,0
 DA:104,0
 DA:105,0
 DA:106,0
 DA:107,0
-DA:108,0
 DA:109,0
 DA:110,0
 DA:111,0
 DA:112,0
 DA:113,0
+DA:114,0
 DA:115,0
-DA:116,0
-BRDA:86,32,0,0
-BRDA:88,80,0,0
-BRDA:88,94,0,0
-BRDA:88,80,1,0
-BRDA:88,94,1,0
-BRDA:88,108,1,0
-BRDA:88,108,0,0
-BRDA:86,32,1,0
-BRDA:103,224,0,0
-BRDA:106,272,0,0
-BRDA:106,272,1,0
-BRDA:103,224,1,0
-FN:117,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetMessageBySticker(isRock.LineBot.StickerMessage)
-FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetMessageBySticker(isRock.LineBot.StickerMessage)
+DA:117,0
 DA:118,0
-DA:119,0
 DA:120,0
 DA:121,0
 DA:122,0
 DA:123,0
 DA:124,0
 DA:125,0
-DA:126,0
 DA:127,0
 DA:128,0
-FN:134,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetMessagesByText(System.String)
-FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetMessagesByText(System.String)
+DA:129,0
+DA:130,0
+DA:131,0
+DA:132,0
+DA:133,0
 DA:135,0
 DA:137,0
 DA:138,0
+DA:139,0
 DA:140,0
-DA:141,0
-DA:143,0
-DA:144,0
-DA:145,0
-DA:147,0
-DA:148,0
-DA:149,0
-DA:151,0
-DA:153,0
-DA:155,0
-DA:157,0
-DA:158,0
-DA:160,0
-DA:161,0
-DA:162,0
-DA:164,0
-DA:165,0
-DA:167,0
-DA:168,0
-DA:169,0
+DA:142,0
+BRDA:86,39,0,0
+BRDA:86,53,0,0
+BRDA:86,67,0,0
+BRDA:86,81,0,0
+BRDA:86,95,0,0
+BRDA:86,39,1,0
+BRDA:86,53,1,0
+BRDA:86,67,1,0
+BRDA:86,81,1,0
+BRDA:86,95,1,0
+BRDA:99,244,0,0
+BRDA:99,244,1,0
+BRDA:102,309,0,0
+BRDA:104,341,0,0
+BRDA:104,341,1,0
+BRDA:104,355,0,0
+BRDA:104,355,1,0
+BRDA:102,309,1,0
+BRDA:109,424,0,0
+BRDA:109,424,1,0
+BRDA:86,112,1,0
+BRDA:117,557,0,0
+BRDA:117,557,1,0
+BRDA:120,622,0,0
+BRDA:122,654,0,0
+BRDA:122,654,1,0
+BRDA:122,668,0,0
+BRDA:122,668,1,0
+BRDA:120,622,1,0
+BRDA:127,737,0,0
+BRDA:127,737,1,0
+BRDA:86,112,0,0
+FN:143,System.String BL.Services.LineWebhookService::GetReplyTextByText(System.String)
+FNDA:3,System.String BL.Services.LineWebhookService::GetReplyTextByText(System.String)
+DA:144,3
+DA:146,3
+DA:148,1
+DA:149,1
+DA:151,1
+DA:152,1
+DA:153,1
+DA:155,1
+DA:156,1
+DA:157,1
+DA:159,1
+DA:161,1
+DA:163,3
+BRDA:146,38,0,2
+BRDA:146,38,1,1
+BRDA:146,52,1,1
+BRDA:146,52,0,1
+FN:169,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetMaskInstitutions(System.String)
+FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetMaskInstitutions(System.String)
 DA:170,0
 DA:171,0
-DA:172,0
-DA:174,0
+DA:173,0
 DA:175,0
-DA:176,0
 DA:177,0
 DA:178,0
 DA:179,0
 DA:180,0
 DA:182,0
 DA:183,0
-DA:185,0
 DA:186,0
 DA:187,0
 DA:188,0
@@ -2899,298 +2917,210 @@ DA:195,0
 DA:196,0
 DA:197,0
 DA:198,0
+DA:199,0
 DA:200,0
-DA:202,0
+DA:201,0
 DA:203,0
 DA:204,0
 DA:205,0
-DA:207,0
-BRDA:138,43,0,0
-BRDA:138,52,0,0
-BRDA:138,63,0,0
-BRDA:138,43,1,0
-BRDA:138,91,0,0
-BRDA:138,100,0,0
-BRDA:138,91,1,0
-BRDA:138,125,0,0
-BRDA:138,111,1,0
-BRDA:138,52,1,0
-BRDA:138,77,1,0
-BRDA:138,100,1,0
-BRDA:138,139,1,0
-BRDA:138,63,1,0
-BRDA:138,125,1,0
-BRDA:138,158,1,0
-BRDA:138,180,1,0
-BRDA:138,202,1,0
-BRDA:138,224,1,0
-BRDA:138,246,1,0
-BRDA:138,268,1,0
-BRDA:164,543,0,0
-BRDA:164,543,1,0
-BRDA:167,608,0,0
-BRDA:169,640,0,0
-BRDA:169,640,1,0
-BRDA:169,654,0,0
-BRDA:169,654,1,0
-BRDA:167,608,1,0
-BRDA:174,723,0,0
-BRDA:174,723,1,0
-BRDA:138,290,1,0
-BRDA:182,856,0,0
-BRDA:182,856,1,0
-BRDA:185,921,0,0
-BRDA:187,953,0,0
-BRDA:187,953,1,0
-BRDA:187,967,0,0
-BRDA:187,967,1,0
-BRDA:185,921,1,0
-BRDA:192,1036,0,0
-BRDA:192,1036,1,0
-BRDA:138,77,0,0
-BRDA:138,111,0,0
-BRDA:138,139,0,0
-BRDA:138,158,0,0
-BRDA:138,180,0,0
-BRDA:138,202,0,0
-BRDA:138,224,0,0
-BRDA:138,246,0,0
-BRDA:138,268,0,0
-BRDA:138,290,0,0
-FN:208,System.String BL.Services.LineWebhookService::GetReplyTextByText(System.String)
-FNDA:2,System.String BL.Services.LineWebhookService::GetReplyTextByText(System.String)
-DA:209,2
-DA:211,2
-DA:212,2
-DA:214,1
-DA:215,1
-DA:217,1
-DA:218,1
-DA:219,1
-DA:221,1
-DA:222,1
-DA:223,1
-DA:225,1
-DA:227,0
+BRDA:178,138,1,0
+BRDA:178,119,0,0
+BRDA:178,119,1,0
+BRDA:178,138,0,0
+BRDA:182,153,0,0
+BRDA:182,153,1,0
+BRDA:187,437,1,0
+BRDA:189,265,0,0
+BRDA:189,265,1,0
+BRDA:189,288,0,0
+BRDA:189,288,1,0
+BRDA:200,424,0,0
+BRDA:200,424,1,0
+BRDA:187,437,0,0
+FN:211,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetCambridgeDictionaryReplyMessages(System.String)
+FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetCambridgeDictionaryReplyMessages(System.String)
+DA:212,0
+DA:213,0
+DA:215,0
+DA:217,0
+DA:218,0
+DA:219,0
+DA:220,0
+DA:221,0
+DA:222,0
+BRDA:217,65,1,0
+BRDA:217,65,0,0
+FN:228,System.Collections.Generic.List`1<System.String> BL.Services.LineWebhookService::GetCambridgeDictionaryTexts(System.String)
+FNDA:0,System.Collections.Generic.List`1<System.String> BL.Services.LineWebhookService::GetCambridgeDictionaryTexts(System.String)
 DA:229,0
 DA:230,0
 DA:231,0
 DA:232,0
-DA:234,2
-BRDA:212,39,0,1
-BRDA:212,39,1,1
-BRDA:212,53,1,1
-BRDA:212,53,0,0
-FN:241,System.Void BL.Services.LineWebhookService::GetCommandTypeAndArgsByText(System.String,Core.Domain.Enums.LineWebhookCommandTypeEnum&,System.String[]&)
-FNDA:0,System.Void BL.Services.LineWebhookService::GetCommandTypeAndArgsByText(System.String,Core.Domain.Enums.LineWebhookCommandTypeEnum&,System.String[]&)
+DA:233,0
+DA:234,0
+DA:236,0
+DA:237,0
+DA:238,0
 DA:242,0
 DA:243,0
-DA:244,0
 DA:245,0
+DA:246,0
 DA:247,0
 DA:248,0
+DA:249,0
 DA:250,0
 DA:251,0
+DA:252,0
 DA:253,0
-DA:254,0
-DA:256,0
-DA:257,0
-DA:259,0
-DA:260,0
+DA:255,0
+BRDA:236,43,0,0
+BRDA:236,43,1,0
+BRDA:242,165,1,0
+BRDA:245,119,0,0
+BRDA:245,119,1,0
+BRDA:242,165,0,0
+FN:261,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetCangjieReplyMessages(System.String)
+FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetCangjieReplyMessages(System.String)
 DA:262,0
-DA:263,0
-DA:265,0
+DA:264,0
 DA:266,0
 DA:268,0
 DA:269,0
-DA:270,0
-DA:272,0
-DA:273,0
-DA:274,0
-DA:275,0
-DA:277,0
-BRDA:245,62,0,0
-BRDA:245,70,0,0
-BRDA:245,80,0,0
-BRDA:245,62,1,0
-BRDA:245,106,0,0
-BRDA:245,114,0,0
-BRDA:245,106,1,0
-BRDA:245,137,0,0
-BRDA:245,124,1,0
-BRDA:245,114,1,0
-BRDA:245,147,1,0
-BRDA:245,70,1,0
-BRDA:245,93,1,0
-BRDA:245,80,1,0
-BRDA:245,137,1,0
-BRDA:245,165,1,0
-BRDA:245,180,1,0
-BRDA:245,195,1,0
-BRDA:245,210,1,0
-BRDA:245,225,1,0
-BRDA:245,240,1,0
-BRDA:245,255,1,0
-BRDA:245,93,0,0
-BRDA:245,124,0,0
-BRDA:245,147,0,0
-BRDA:245,165,0,0
-BRDA:245,180,0,0
-BRDA:245,195,0,0
-BRDA:245,210,0,0
-BRDA:245,225,0,0
-BRDA:245,240,0,0
-BRDA:245,255,0,0
-FN:278,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetStickerMessages(System.String)
-FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetStickerMessages(System.String)
-DA:279,0
-DA:280,0
-DA:281,0
-DA:282,0
-DA:283,0
-DA:286,0
-DA:287,0
-DA:288,0
-BRDA:282,78,0,0
-BRDA:282,78,1,0
-FN:294,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetMaskInstitutions(System.String)
-FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetMaskInstitutions(System.String)
+FN:275,System.String BL.Services.LineWebhookService::GetCangjieReplyText(System.String)
+FNDA:1,System.String BL.Services.LineWebhookService::GetCangjieReplyText(System.String)
+DA:276,1
+DA:277,1
+DA:278,1
+DA:279,1
+DA:281,1
+DA:282,9
+DA:283,2
+DA:284,0
+DA:287,2
+DA:288,2
+DA:289,2
+DA:290,2
+DA:291,1
+DA:292,0
+DA:293,0
+DA:294,0
 DA:295,0
-DA:296,0
-DA:298,0
-DA:300,0
-DA:302,0
+DA:297,1
+BRDA:282,166,1,2
+BRDA:283,54,0,0
+BRDA:283,54,1,2
+BRDA:282,166,0,1
+FN:302,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetExchangeRateReplyMessages()
+FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetExchangeRateReplyMessages()
 DA:303,0
 DA:304,0
 DA:305,0
-DA:307,0
+DA:306,0
 DA:308,0
-DA:311,0
+DA:309,0
+DA:310,0
 DA:312,0
-DA:313,0
 DA:314,0
 DA:315,0
-DA:317,0
-DA:318,0
-DA:319,0
-DA:320,0
-DA:321,0
-DA:322,0
-DA:323,0
-DA:324,0
-DA:325,0
-DA:326,0
-DA:328,0
-DA:329,0
-DA:330,0
-BRDA:303,138,1,0
-BRDA:303,119,0,0
-BRDA:303,119,1,0
-BRDA:303,138,0,0
-BRDA:307,153,0,0
-BRDA:307,153,1,0
-BRDA:312,437,1,0
-BRDA:314,265,0,0
-BRDA:314,265,1,0
-BRDA:314,288,0,0
-BRDA:314,288,1,0
-BRDA:325,424,0,0
-BRDA:325,424,1,0
-BRDA:312,437,0,0
-FN:336,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetCambridgeDictionaryMessages(System.String,System.Int32)
-FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetCambridgeDictionaryMessages(System.String,System.Int32)
-DA:337,0
-DA:338,0
-DA:339,0
-DA:340,0
-DA:341,0
-DA:342,0
-DA:343,0
-DA:346,0
+FN:325,System.String BL.Services.LineWebhookService::ConvertToExchangeRateTextMessage(System.Double,System.Double,System.DateTime)
+FNDA:1,System.String BL.Services.LineWebhookService::ConvertToExchangeRateTextMessage(System.Double,System.Double,System.DateTime)
+DA:326,1
+DA:328,1
+DA:329,1
+DA:330,1
+DA:331,1
+DA:332,1
+DA:333,1
+DA:335,1
+DA:337,1
+DA:338,1
+FN:344,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetStickerReplyMessages(System.String[])
+FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetStickerReplyMessages(System.String[])
+DA:345,0
 DA:347,0
 DA:348,0
+DA:350,0
 DA:351,0
 DA:352,0
-DA:354,0
-DA:355,0
+DA:353,0
 DA:356,0
-DA:357,0
 DA:358,0
 DA:359,0
-DA:360,0
-DA:361,0
-DA:362,0
-DA:363,0
-DA:364,0
-DA:365,0
-DA:366,0
-DA:368,0
-BRDA:341,32,0,0
-BRDA:341,32,1,0
-BRDA:346,78,0,0
-BRDA:346,78,1,0
-BRDA:351,256,1,0
-BRDA:354,136,0,0
-BRDA:355,157,0,0
-BRDA:355,157,1,0
-BRDA:354,136,1,0
-BRDA:358,203,0,0
-BRDA:358,203,1,0
-BRDA:351,256,0,0
-FN:369,System.String BL.Services.LineWebhookService::GetCangjieImageMessages(System.String)
-FNDA:1,System.String BL.Services.LineWebhookService::GetCangjieImageMessages(System.String)
-DA:370,1
-DA:371,1
-DA:372,1
-DA:373,1
-DA:375,1
-DA:376,9
-DA:377,2
+BRDA:347,11,0,0
+BRDA:347,11,1,0
+BRDA:347,31,0,0
+BRDA:347,31,1,0
+FN:370,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetStickerReplyMessages(System.Int32,System.Int32,System.Int32)
+FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetStickerReplyMessages(System.Int32,System.Int32,System.Int32)
+DA:371,0
+DA:372,0
+DA:373,0
+DA:374,0
+DA:377,0
 DA:378,0
-DA:381,2
-DA:382,2
-DA:383,2
-DA:384,2
-DA:385,1
+DA:381,0
+DA:383,0
+DA:384,0
+DA:385,0
 DA:386,0
-DA:387,0
 DA:388,0
 DA:389,0
-DA:391,1
-BRDA:376,166,1,2
-BRDA:377,54,0,0
-BRDA:377,54,1,2
-BRDA:376,166,0,1
-FN:25,System.Void BL.Services.LineWebhookService::.ctor(BL.Services.Interfaces.IExchangeRateService,BL.Services.Interfaces.IMapHereService,BL.Services.Interfaces.ITradingVolumeService)
-FNDA:2,System.Void BL.Services.LineWebhookService::.ctor(BL.Services.Interfaces.IExchangeRateService,BL.Services.Interfaces.IMapHereService,BL.Services.Interfaces.ITradingVolumeService)
-DA:26,2
-DA:27,2
-DA:28,4
-DA:30,2
-DA:31,2
-DA:32,2
-DA:33,2
-DA:34,2
-DA:35,2
-DA:36,2
-FN:394,System.String BL.Services.LineHttpPostException::get_message()
-FNDA:0,System.String BL.Services.LineHttpPostException::get_message()
-DA:395,0
-FN:395,System.Collections.Generic.List`1<BL.Services.Detail> BL.Services.LineHttpPostException::get_details()
-FNDA:0,System.Collections.Generic.List`1<BL.Services.Detail> BL.Services.LineHttpPostException::get_details()
-DA:396,0
-FN:399,System.String BL.Services.Detail::get_message()
-FNDA:0,System.String BL.Services.Detail::get_message()
+BRDA:372,7,0,0
+BRDA:372,7,1,0
+BRDA:377,44,0,0
+BRDA:377,44,1,0
+BRDA:377,57,0,0
+BRDA:377,57,1,0
+BRDA:383,126,1,0
+BRDA:383,126,0,0
+FN:396,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetReplyMessagesBySticker(isRock.LineBot.StickerMessage)
+FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetReplyMessagesBySticker(isRock.LineBot.StickerMessage)
+DA:397,0
+DA:398,0
+DA:399,0
 DA:400,0
-FN:400,System.String BL.Services.Detail::get_property()
-FNDA:0,System.String BL.Services.Detail::get_property()
 DA:401,0
-LF:258
-LH:36
-BRF:144
-BRH:6
-FNF:15
-FNH:3
+DA:402,0
+DA:404,0
+DA:405,0
+DA:407,0
+DA:408,0
+FN:415,System.Void BL.Services.LineWebhookService::GetIdsBySticker(isRock.LineBot.StickerMessage,System.Int32&,System.Int32&)
+FNDA:0,System.Void BL.Services.LineWebhookService::GetIdsBySticker(isRock.LineBot.StickerMessage,System.Int32&,System.Int32&)
+DA:416,0
+DA:417,0
+DA:418,0
+DA:419,0
+FN:25,System.Void BL.Services.LineWebhookService::.ctor(BL.Services.Interfaces.IExchangeRateService,BL.Services.Interfaces.IMapHereService,BL.Services.Interfaces.ITradingVolumeService)
+FNDA:3,System.Void BL.Services.LineWebhookService::.ctor(BL.Services.Interfaces.IExchangeRateService,BL.Services.Interfaces.IMapHereService,BL.Services.Interfaces.ITradingVolumeService)
+DA:26,3
+DA:27,3
+DA:28,6
+DA:30,3
+DA:31,3
+DA:32,3
+DA:33,3
+DA:34,3
+DA:35,3
+DA:36,3
+FN:422,System.String BL.Services.LineHttpPostException::get_message()
+FNDA:0,System.String BL.Services.LineHttpPostException::get_message()
+DA:423,0
+FN:423,System.Collections.Generic.List`1<BL.Services.Detail> BL.Services.LineHttpPostException::get_details()
+FNDA:0,System.Collections.Generic.List`1<BL.Services.Detail> BL.Services.LineHttpPostException::get_details()
+DA:424,0
+FN:427,System.String BL.Services.Detail::get_message()
+FNDA:0,System.String BL.Services.Detail::get_message()
+DA:428,0
+FN:428,System.String BL.Services.Detail::get_property()
+FNDA:0,System.String BL.Services.Detail::get_property()
+DA:429,0
+LF:238
+LH:46
+BRF:86
+BRH:7
+FNF:19
+FNH:4
 end_of_record
 SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/MaskInstitution/MaskInstitutionService.cs
 FN:20,System.Collections.Generic.List`1<Core.Domain.DTO.MaskInstitution> BL.Services.MaskInstitutionService::GetMaskInstitutions(System.String)
@@ -3272,9 +3202,9 @@ BRDA:93,87,1,0
 BRDA:97,138,0,0
 BRDA:97,138,1,0
 FN:11,System.Void BL.Services.MaskInstitutionService::.ctor()
-FNDA:4,System.Void BL.Services.MaskInstitutionService::.ctor()
-DA:12,4
-DA:14,2
+FNDA:6,System.Void BL.Services.MaskInstitutionService::.ctor()
+DA:12,6
+DA:14,3
 FN:72,System.Boolean BL.Services.MaskInstitutionService/<GetMaskInstitutions>d__4::MoveNext()
 FNDA:0,System.Boolean BL.Services.MaskInstitutionService/<GetMaskInstitutions>d__4::MoveNext()
 DA:73,0
@@ -3691,10 +3621,10 @@ BRDA:256,6,3,0
 BRDA:256,6,1,0
 BRDA:256,6,0,0
 FN:54,System.Void BL.Services.TWSE_Stock.TradingVolumeService::.ctor()
-FNDA:4,System.Void BL.Services.TWSE_Stock.TradingVolumeService::.ctor()
-DA:55,4
-DA:56,2
-DA:57,2
+FNDA:6,System.Void BL.Services.TWSE_Stock.TradingVolumeService::.ctor()
+DA:55,6
+DA:56,3
+DA:57,3
 FN:58,System.Void BL.Services.TWSE_Stock.TradingVolumeService::.ctor(Microsoft.Extensions.Configuration.IConfiguration)
 FNDA:0,System.Void BL.Services.TWSE_Stock.TradingVolumeService::.ctor(Microsoft.Extensions.Configuration.IConfiguration)
 DA:59,0
@@ -4260,8 +4190,8 @@ FNF:8
 FNH:0
 end_of_record
 SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/Line/LineMessageService.cs
-FN:20,isRock.LineBot.MessageBase BL.Services.Line.LineMessageService::GetTextMessage(System.String)
-FNDA:0,isRock.LineBot.MessageBase BL.Services.Line.LineMessageService::GetTextMessage(System.String)
+FN:20,isRock.LineBot.TextMessage BL.Services.Line.LineMessageService::GetTextMessage(System.String)
+FNDA:0,isRock.LineBot.TextMessage BL.Services.Line.LineMessageService::GetTextMessage(System.String)
 DA:21,0
 DA:22,0
 DA:23,0
@@ -4339,77 +4269,138 @@ BRDA:42,10,0,0
 BRDA:42,10,1,0
 BRDA:42,17,1,0
 BRDA:42,17,0,0
-FN:114,System.String BL.Services.Line.LineMessageService::ConvertToExchangeRateTextMessage(System.Double,System.Double,System.DateTime)
-FNDA:1,System.String BL.Services.Line.LineMessageService::ConvertToExchangeRateTextMessage(System.Double,System.Double,System.DateTime)
-DA:115,1
-DA:117,1
-DA:118,1
-DA:119,1
-DA:120,1
-DA:121,1
-DA:122,1
-DA:124,1
-DA:126,1
-DA:127,1
-FN:128,isRock.LineBot.MessageBase BL.Services.Line.LineMessageService::GetTextMessageWithQuickReply()
+FN:106,isRock.LineBot.MessageBase BL.Services.Line.LineMessageService::GetTextMessageWithQuickReply()
 FNDA:0,isRock.LineBot.MessageBase BL.Services.Line.LineMessageService::GetTextMessageWithQuickReply()
-DA:129,0
-DA:130,0
-DA:131,0
-DA:132,0
-DA:133,0
-DA:134,0
-DA:135,0
-DA:136,0
-DA:137,0
-DA:138,0
+DA:107,0
+DA:108,0
+DA:109,0
+DA:110,0
+DA:111,0
+DA:112,0
+DA:113,0
+DA:114,0
+DA:115,0
+DA:116,0
+DA:117,0
+DA:118,0
+DA:119,0
+DA:120,0
+DA:121,0
+FN:122,isRock.LineBot.StickerMessage BL.Services.Line.LineMessageService::GetStickerMessage(isRock.LineBot.Message)
+FNDA:0,isRock.LineBot.StickerMessage BL.Services.Line.LineMessageService::GetStickerMessage(isRock.LineBot.Message)
+DA:123,0
+DA:124,0
+DA:125,0
+DA:126,0
+DA:127,0
+FN:138,System.Boolean BL.Services.Line.LineMessageService::TryGetStickerMessage(System.Int32,System.Int32,isRock.LineBot.MessageBase&)
+FNDA:0,System.Boolean BL.Services.Line.LineMessageService::TryGetStickerMessage(System.Int32,System.Int32,isRock.LineBot.MessageBase&)
 DA:139,0
 DA:140,0
 DA:141,0
 DA:142,0
 DA:143,0
-FN:144,isRock.LineBot.StickerMessage BL.Services.Line.LineMessageService::GetStickerMessage(isRock.LineBot.Message)
-FNDA:0,isRock.LineBot.StickerMessage BL.Services.Line.LineMessageService::GetStickerMessage(isRock.LineBot.Message)
+DA:144,0
 DA:145,0
-DA:146,0
 DA:147,0
-DA:148,0
-DA:149,0
-FN:168,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.Line.LineMessageService::GetStickerMessages(System.Int32,System.Int32,System.Int32)
-FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.Line.LineMessageService::GetStickerMessages(System.Int32,System.Int32,System.Int32)
-DA:169,0
+BRDA:140,14,0,0
+BRDA:140,14,1,0
+FN:166,System.Boolean BL.Services.Line.LineMessageService::IsValidPackageAndStickerId(System.Int32,System.Int32)
+FNDA:0,System.Boolean BL.Services.Line.LineMessageService::IsValidPackageAndStickerId(System.Int32,System.Int32)
+DA:167,0
+DA:168,0
 DA:170,0
 DA:171,0
 DA:172,0
 DA:173,0
 DA:174,0
+DA:176,0
 DA:177,0
 DA:178,0
-DA:181,0
+DA:179,0
+DA:180,0
 DA:182,0
 DA:183,0
-DA:184,0
+DA:185,0
 DA:186,0
 DA:187,0
-DA:188,0
 DA:189,0
 DA:190,0
-DA:191,0
+DA:192,0
 DA:193,0
-BRDA:171,8,0,0
-BRDA:171,8,1,0
-BRDA:177,38,0,0
-BRDA:177,38,1,0
-BRDA:177,49,0,0
-BRDA:177,49,1,0
-BRDA:182,125,1,0
-BRDA:182,125,0,0
-LF:120
-LH:10
-BRF:12
+DA:195,0
+DA:196,0
+DA:198,0
+DA:200,0
+BRDA:168,8,0,0
+BRDA:168,8,1,0
+BRDA:170,62,0,0
+BRDA:170,62,1,0
+BRDA:170,77,0,0
+BRDA:170,77,1,0
+BRDA:171,95,0,0
+BRDA:171,95,1,0
+BRDA:172,107,0,0
+BRDA:172,107,1,0
+BRDA:172,127,0,0
+BRDA:172,127,1,0
+BRDA:173,142,0,0
+BRDA:173,142,1,0
+BRDA:173,162,0,0
+BRDA:173,162,1,0
+BRDA:168,8,2,0
+BRDA:176,181,0,0
+BRDA:176,181,1,0
+BRDA:176,198,0,0
+BRDA:176,198,1,0
+BRDA:177,210,0,0
+BRDA:177,210,1,0
+BRDA:177,227,0,0
+BRDA:177,227,1,0
+BRDA:178,242,0,0
+BRDA:178,242,1,0
+BRDA:178,262,0,0
+BRDA:178,262,1,0
+BRDA:179,277,0,0
+BRDA:179,277,1,0
+BRDA:179,297,0,0
+BRDA:179,297,1,0
+BRDA:168,8,3,0
+BRDA:182,319,0,0
+BRDA:182,319,1,0
+BRDA:182,339,0,0
+BRDA:182,339,1,0
+BRDA:168,8,4,0
+BRDA:185,361,0,0
+BRDA:185,361,1,0
+BRDA:185,381,0,0
+BRDA:185,381,1,0
+BRDA:186,396,0,0
+BRDA:186,396,1,0
+BRDA:186,416,0,0
+BRDA:186,416,1,0
+BRDA:168,38,1,0
+BRDA:189,432,0,0
+BRDA:189,432,1,0
+BRDA:189,452,0,0
+BRDA:189,452,1,0
+BRDA:168,38,2,0
+BRDA:192,468,0,0
+BRDA:192,468,1,0
+BRDA:192,488,0,0
+BRDA:192,488,1,0
+BRDA:168,38,3,0
+BRDA:195,504,0,0
+BRDA:195,504,1,0
+BRDA:195,524,0,0
+BRDA:195,524,1,0
+BRDA:168,38,0,0
+LF:124
+LH:0
+BRF:69
 BRH:0
 FNF:6
-FNH:1
+FNH:0
 end_of_record
 SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/Line/LineNotifyBotService.cs
 FN:26,System.Boolean BL.Services.Line.LineNotifyBotService::PushMessage_Group(System.String)

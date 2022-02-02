@@ -18,7 +18,7 @@ namespace BL.Services.Line {
         /// </summary>
         /// <param name="text">文字</param>
         /// <returns>Line文字訊息</returns>
-        public MessageBase GetTextMessage(string text) {
+        public TextMessage GetTextMessage(string text) {
             try {
                 text = text.Replace('\'', '’').Trim();
                 return new TextMessage(text);
@@ -104,28 +104,6 @@ namespace BL.Services.Line {
             return new TemplateMessage(new CarouselTemplate() { columns = columns });
         }
 
-        /// <summary>
-        /// 將 換匯資訊 轉換成 字串
-        /// </summary>
-        /// <param name="bankBuyingRate">銀行買入匯率</param>
-        /// <param name="bankSellingRate">銀行賣出匯率</param>
-        /// <param name="quotedDateTime">報價時間</param>
-        /// <returns>字串</returns>
-        public string ConvertToExchangeRateTextMessage(double bankBuyingRate, double bankSellingRate,
-            DateTime quotedDateTime) {
-
-            StringBuilder sb = new StringBuilder();
-            sb.Append("美金報價\n");
-            sb.Append("---------------------\n");
-            sb.Append($"銀行買入：{bankBuyingRate: 0.0000}\n");
-            sb.Append($"銀行賣出：{bankSellingRate: 0.0000}\n");
-            sb.Append($"報價時間：{quotedDateTime: yyyy-MM-dd HH:mm:ss}");
-
-            string result = sb.ToString();
-
-            return result;
-        }
-
         public MessageBase GetTextMessageWithQuickReply() {
             var quickReply = new QuickReply();
             var quickReplyMessageAction = new QuickReplyMessageAction("qr", "QuickReplyButton") {
@@ -148,9 +126,32 @@ namespace BL.Services.Line {
             return new StickerMessage(packageId, stickerId);
         }
 
+        
+
+
         /// <summary>
-        /// 取得貼圖訊息
+        /// 嘗試取得 Line貼圖訊息
         /// </summary>
+        /// <param name="packageId">貼圖包Id</param>
+        /// <param name="stickerId">貼圖Id</param>
+        /// <param name="stickerMessage">Line 貼圖訊息</param>
+        /// <returns>Id是否有效</returns>
+        public bool TryGetStickerMessage(int packageId, int stickerId, out MessageBase messageBase){
+            if(!IsValidPackageAndStickerId(packageId, stickerId)){
+                messageBase = new TextMessage($"此貼圖無法顯示, {packageId}, {stickerId}");
+                return false;
+            } else {
+                messageBase = new StickerMessage(packageId, stickerId);
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// 判斷貼圖是否有效
+        /// </summary>
+        /// <param name="packageId"></param>
+        /// <param name="stickerId"></param>
+        /// <returns>是否有效</returns>
         /// <remarks>
         /// https://developers.line.biz/media/messaging-api/sticker_list.pdf <br/>
         /// https://devdocs.line.me/files/sticker_list.pdf <br/>
@@ -163,32 +164,38 @@ namespace BL.Services.Line {
         /// CHOCO &amp; Friends: {packageId: 11538, stickerIds: 51626494-51626533} <br/>
         /// UNIVERSTAR BT21: {packageId: 11539, stickerIds: 52114110-52114149} <br/>
         /// </remarks>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// Thrown when count is greater than 5.
-        /// </exception>
-        public List<MessageBase> GetStickerMessages(int packageId, int stickerId, int count = 1) {
-            try {
-                if (count == 1) {
-                    return new List<MessageBase> {
-                        new StickerMessage(packageId, stickerId)
-                    };
-                }
-
-                if (count < 1 || count > 5) {
-                    return new List<MessageBase> { GetTextMessage("參數錯誤！（個數必須介於1-5）") };
-                }
-
-                List<MessageBase> messages = new List<MessageBase>();
-                for (int i = 0; i < count; i++) {
-                    messages.Add(new StickerMessage(packageId, stickerId++));
-                }
-
-                return messages;
-            } catch (Exception ex) {
-                string errorMsg = $"[GetStickerMessages] " +
-                    $"packageId: {packageId}, stickerId: {stickerId}, ex: {ex}";
-                Log.Error(errorMsg);
-                return new List<MessageBase> { GetTextMessage(errorMsg) };
+        private bool IsValidPackageAndStickerId(int packageId, int stickerId) {
+            switch (packageId) {
+                case 1:
+                    if (1 <= stickerId && stickerId <= 17) return true;
+                    else if (stickerId == 21) return true;
+                    else if (100 <= stickerId && stickerId <= 139) return true;
+                    else if (401 <= stickerId && stickerId <= 430) return true;
+                    else return false;
+                case 2:
+                    if (18 <= stickerId && stickerId <= 20) return true;
+                    else if (22 <= stickerId && stickerId <= 47) return true;
+                    else if (140 <= stickerId && stickerId <= 179) return true;
+                    else if (501 <= stickerId && stickerId <= 527) return true;
+                    else return false;
+                case 3:
+                    if (180 <= stickerId && stickerId <= 259) return true;
+                    else return false;
+                case 4:
+                    if (260 <= stickerId && stickerId <= 307) return true;
+                    else if (601 <= stickerId && stickerId <= 632) return true;
+                    else return false;
+                case 11537:
+                    if (52002734 <= stickerId && stickerId <= 52002773) return true;
+                    else return false;
+                case 11538:
+                    if (51626494 <= stickerId && stickerId <= 51626533) return true;
+                    else return false;
+                case 11539:
+                    if (52114110 <= stickerId && stickerId <= 52114149) return true;
+                    else return false;
+                default:
+                    return false;
             }
         }
     }
