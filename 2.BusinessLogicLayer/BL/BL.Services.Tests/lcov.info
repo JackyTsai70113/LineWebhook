@@ -616,32 +616,156 @@ BRH:0
 FNF:1
 FNH:1
 end_of_record
-SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services.Tests/UnitTest1.cs
-FN:9,BL.Services.LineWebhookService BL.Services.Tests.Tests::get_LineWebhookService()
-FNDA:6,BL.Services.LineWebhookService BL.Services.Tests.Tests::get_LineWebhookService()
-DA:10,6
-FN:12,System.Void BL.Services.Tests.Tests::Setup()
-FNDA:3,System.Void BL.Services.Tests.Tests::Setup()
-DA:13,3
-DA:14,3
-DA:15,3
-DA:16,3
-DA:17,3
-DA:18,3
-DA:19,3
-FN:24,System.Void BL.Services.Tests.Tests::Test1(System.String,System.String)
-FNDA:3,System.Void BL.Services.Tests.Tests::Test1(System.String,System.String)
-DA:25,3
-DA:27,3
-DA:30,3
-DA:33,3
-DA:34,3
-LF:13
-LH:13
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services.Tests/LineWebhookServiceTests.cs
+FN:13,System.Void BL.Services.Tests.LineWebhookServiceTests::set_LineWebhookService(BL.Services.LineWebhookService)
+FNDA:14,System.Void BL.Services.Tests.LineWebhookServiceTests::set_LineWebhookService(BL.Services.LineWebhookService)
+DA:14,14
+FN:16,System.Void BL.Services.Tests.LineWebhookServiceTests::Setup()
+FNDA:7,System.Void BL.Services.Tests.LineWebhookServiceTests::Setup()
+DA:17,7
+DA:18,7
+DA:19,7
+DA:20,7
+DA:21,7
+DA:22,7
+DA:23,7
+FN:30,System.Void BL.Services.Tests.LineWebhookServiceTests::TestForValidTextInput(isRock.LineBot.Event,System.Collections.Generic.List`1<isRock.LineBot.MessageBase>)
+FNDA:5,System.Void BL.Services.Tests.LineWebhookServiceTests::TestForValidTextInput(isRock.LineBot.Event,System.Collections.Generic.List`1<isRock.LineBot.MessageBase>)
+DA:31,5
+DA:33,5
+DA:36,5
+DA:39,5
+DA:40,5
+DA:41,5
+FN:112,System.Void BL.Services.Tests.LineWebhookServiceTests::InvalidTextInput(isRock.LineBot.Event,System.Collections.Generic.List`1<isRock.LineBot.MessageBase>)
+FNDA:2,System.Void BL.Services.Tests.LineWebhookServiceTests::InvalidTextInput(isRock.LineBot.Event,System.Collections.Generic.List`1<isRock.LineBot.MessageBase>)
+DA:113,2
+DA:115,2
+DA:118,2
+DA:121,2
+DA:122,2
+DA:123,2
+FN:125,System.Boolean BL.Services.Tests.LineWebhookServiceTests/<get_InvalidTextInputs>d__10::MoveNext()
+FNDA:1,System.Boolean BL.Services.Tests.LineWebhookServiceTests/<get_InvalidTextInputs>d__10::MoveNext()
+DA:126,1
+DA:127,1
+DA:128,1
+DA:129,1
+DA:130,1
+DA:131,1
+DA:132,1
+DA:133,1
+DA:134,1
+DA:135,1
+DA:136,1
+DA:137,1
+DA:138,1
+DA:139,1
+DA:140,1
+DA:141,1
+DA:142,1
+DA:143,1
+DA:144,1
+DA:145,1
+DA:146,1
+DA:147,1
+DA:148,1
+DA:149,1
+DA:150,1
+DA:151,1
+FN:43,System.Boolean BL.Services.Tests.LineWebhookServiceTests/<get_ValidTextInputs>d__7::MoveNext()
+FNDA:1,System.Boolean BL.Services.Tests.LineWebhookServiceTests/<get_ValidTextInputs>d__7::MoveNext()
+DA:44,1
+DA:45,1
+DA:46,1
+DA:47,1
+DA:48,1
+DA:49,1
+DA:50,1
+DA:51,1
+DA:52,1
+DA:53,1
+DA:54,1
+DA:55,1
+DA:56,1
+DA:57,1
+DA:58,1
+DA:59,1
+DA:60,1
+DA:61,1
+DA:62,1
+DA:63,1
+DA:64,1
+DA:65,1
+DA:66,1
+DA:67,1
+DA:68,1
+DA:69,1
+DA:70,1
+DA:71,1
+DA:72,1
+DA:73,1
+DA:74,1
+DA:75,1
+DA:76,1
+DA:77,1
+DA:78,1
+DA:79,1
+DA:80,1
+DA:81,1
+DA:82,1
+DA:83,1
+DA:84,1
+DA:85,1
+DA:86,1
+DA:87,1
+DA:88,1
+DA:89,1
+DA:90,1
+DA:91,1
+DA:92,1
+DA:93,1
+DA:94,1
+DA:95,1
+DA:96,1
+DA:97,1
+DA:98,1
+DA:99,1
+DA:100,1
+DA:101,1
+DA:102,1
+DA:103,1
+DA:104,1
+DA:105,1
+DA:106,1
+DA:107,1
+DA:108,1
+DA:109,1
+LF:112
+LH:112
 BRF:0
 BRH:0
-FNF:3
-FNH:3
+FNF:6
+FNH:6
+end_of_record
+SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services.Tests/UnitTest1.cs
+FN:11,System.Void BL.Services.Tests.Tests::Setup()
+FNDA:1,System.Void BL.Services.Tests.Tests::Setup()
+DA:12,1
+DA:13,1
+FN:16,System.Void BL.Services.Tests.Tests::Test1(System.Int32,System.Int32)
+FNDA:1,System.Void BL.Services.Tests.Tests::Test1(System.Int32,System.Int32)
+DA:17,1
+DA:19,1
+DA:22,1
+DA:25,1
+DA:26,1
+LF:7
+LH:7
+BRF:0
+BRH:0
+FNF:2
+FNH:2
 end_of_record
 SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services.Tests/Map/FakeMapHereService.cs
 FN:27,System.Collections.Generic.List`1<System.String> BL.Services.Tests.Map.FakeMapHereService::GetAddressInOrder(System.String,System.Collections.Generic.List`1<System.String>)
@@ -664,9 +788,9 @@ DA:52,0
 DA:54,0
 DA:55,0
 FN:18,System.Void BL.Services.Tests.Map.FakeMapHereService::.ctor()
-FNDA:6,System.Void BL.Services.Tests.Map.FakeMapHereService::.ctor()
-DA:19,6
-DA:20,3
+FNDA:14,System.Void BL.Services.Tests.Map.FakeMapHereService::.ctor()
+DA:19,14
+DA:20,7
 LF:15
 LH:2
 BRF:0
@@ -854,9 +978,9 @@ DA:17,0
 DA:18,0
 DA:19,0
 FN:26,System.String Core.Domain.Utilities.JsonUtility::Serialize(System.Object,System.Boolean,System.Boolean)
-FNDA:0,System.String Core.Domain.Utilities.JsonUtility::Serialize(System.Object,System.Boolean,System.Boolean)
-DA:27,0
-DA:31,0
+FNDA:28,System.String Core.Domain.Utilities.JsonUtility::Serialize(System.Object,System.Boolean,System.Boolean)
+DA:27,28
+DA:31,28
 DA:32,0
 DA:33,0
 DA:34,0
@@ -865,30 +989,30 @@ DA:36,0
 DA:37,0
 DA:38,0
 DA:39,0
-DA:40,0
-DA:41,0
+DA:40,28
+DA:41,28
 DA:42,0
 DA:43,0
 DA:44,0
 DA:45,0
-DA:46,0
-DA:47,0
-DA:48,0
-DA:49,0
-DA:51,0
-DA:52,0
+DA:46,28
+DA:47,28
+DA:48,28
+DA:49,28
+DA:51,28
+DA:52,28
 BRDA:31,4,0,0
 BRDA:32,10,0,0
 BRDA:32,10,1,0
-BRDA:31,4,1,0
+BRDA:31,4,1,28
 BRDA:41,58,0,0
-BRDA:41,58,1,0
+BRDA:41,58,1,28
 LF:26
-LH:0
+LH:10
 BRF:6
-BRH:0
+BRH:2
 FNF:2
-FNH:0
+FNH:1
 end_of_record
 SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/0.CoreLayer/Core.Domain/Utilities/NumberUtility.cs
 FN:7,System.Int32 Core.Domain.Utilities.NumberUtility::ThousandToInt(System.String)
@@ -1355,25 +1479,25 @@ DA:301,0
 DA:303,0
 DA:304,0
 FN:377,System.Void Core.Domain.Utilities.RequestUtility/<GetStreamFromGetRequestAsync>d__6::MoveNext()
-FNDA:0,System.Void Core.Domain.Utilities.RequestUtility/<GetStreamFromGetRequestAsync>d__6::MoveNext()
-DA:378,0
-DA:379,0
-DA:380,0
-DA:383,0
-DA:386,0
-DA:388,0
-DA:389,0
+FNDA:2,System.Void Core.Domain.Utilities.RequestUtility/<GetStreamFromGetRequestAsync>d__6::MoveNext()
+DA:378,2
+DA:379,2
+DA:380,2
+DA:383,2
+DA:386,2
+DA:388,2
+DA:389,2
 DA:390,0
 DA:391,0
 DA:392,0
 DA:393,0
-DA:394,0
+DA:394,2
 LF:351
-LH:0
+LH:8
 BRF:0
 BRH:0
 FNF:7
-FNH:0
+FNH:1
 end_of_record
 SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/0.CoreLayer/Core.Domain/Utilities/StringParserUtility.cs
 FN:12,System.Boolean Core.Domain.Utilities.StringParserUtility::IsValidString(System.String)
@@ -1949,80 +2073,80 @@ FNH:0
 end_of_record
 SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/0.CoreLayer/Core.Domain/DTO/RequestDTO/CambridgeDictionary/Translation.cs
 FN:17,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_Name()
-FNDA:0,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_Name()
-DA:18,0
+FNDA:2,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_Name()
+DA:18,2
 FN:22,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_Speech()
-FNDA:0,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_Speech()
-DA:23,0
+FNDA:2,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_Speech()
+DA:23,2
 FN:27,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_UkType()
-FNDA:0,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_UkType()
-DA:28,0
+FNDA:2,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_UkType()
+DA:28,2
 FN:32,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_Uk_KKPhonetic()
-FNDA:0,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_Uk_KKPhonetic()
-DA:33,0
+FNDA:2,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_Uk_KKPhonetic()
+DA:33,2
 FN:37,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_UsType()
-FNDA:0,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_UsType()
-DA:38,0
+FNDA:2,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_UsType()
+DA:38,2
 FN:42,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_Us_KKPhonetic()
-FNDA:0,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_Us_KKPhonetic()
-DA:43,0
+FNDA:2,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_Us_KKPhonetic()
+DA:43,2
 FN:47,System.Collections.Generic.List`1<Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean> Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_Means()
-FNDA:0,System.Collections.Generic.List`1<Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean> Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_Means()
-DA:48,0
+FNDA:4,System.Collections.Generic.List`1<Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean> Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_Means()
+DA:48,4
 FN:53,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_TranslationStr()
-FNDA:0,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_TranslationStr()
-DA:54,0
-DA:55,0
-DA:56,0
-DA:57,0
-DA:58,0
+FNDA:1,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::get_TranslationStr()
+DA:54,1
+DA:55,1
+DA:56,3
+DA:57,1
+DA:58,1
 FN:10,System.Void Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::.ctor()
-FNDA:0,System.Void Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::.ctor()
-DA:11,0
-DA:12,0
-DA:13,0
+FNDA:2,System.Void Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation::.ctor()
+DA:11,2
+DA:12,1
+DA:13,1
 FN:73,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean::get_English()
-FNDA:0,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean::get_English()
-DA:74,0
+FNDA:4,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean::get_English()
+DA:74,4
 FN:78,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean::get_Chinese()
-FNDA:0,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean::get_Chinese()
-DA:79,0
+FNDA:4,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean::get_Chinese()
+DA:79,4
 FN:83,System.Collections.Generic.List`1<Core.Domain.DTO.RequestDTO.CambridgeDictionary.SentenceExample> Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean::get_SentenceExamples()
-FNDA:0,System.Collections.Generic.List`1<Core.Domain.DTO.RequestDTO.CambridgeDictionary.SentenceExample> Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean::get_SentenceExamples()
-DA:84,0
+FNDA:6,System.Collections.Generic.List`1<Core.Domain.DTO.RequestDTO.CambridgeDictionary.SentenceExample> Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean::get_SentenceExamples()
+DA:84,6
 FN:89,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean::get_MeanStr()
-FNDA:0,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean::get_MeanStr()
-DA:90,0
-DA:91,0
-DA:92,0
-DA:93,0
-DA:94,0
-DA:95,0
-DA:96,0
-BRDA:91,13,0,0
-BRDA:91,13,1,0
+FNDA:2,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean::get_MeanStr()
+DA:90,2
+DA:91,2
+DA:92,2
+DA:93,1
+DA:94,2
+DA:95,2
+DA:96,2
+BRDA:91,13,0,1
+BRDA:91,13,1,1
 FN:66,System.Void Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean::.ctor()
-FNDA:0,System.Void Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean::.ctor()
-DA:67,0
-DA:68,0
-DA:69,0
+FNDA:4,System.Void Core.Domain.DTO.RequestDTO.CambridgeDictionary.Mean::.ctor()
+DA:67,4
+DA:68,2
+DA:69,2
 FN:107,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.SentenceExample::get_English()
-FNDA:0,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.SentenceExample::get_English()
-DA:108,0
+FNDA:2,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.SentenceExample::get_English()
+DA:108,2
 FN:112,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.SentenceExample::get_Chinese()
-FNDA:0,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.SentenceExample::get_Chinese()
-DA:113,0
+FNDA:1,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.SentenceExample::get_Chinese()
+DA:113,1
 FN:115,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.SentenceExample::get_SentenceExampleStr()
-FNDA:0,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.SentenceExample::get_SentenceExampleStr()
-DA:116,0
-DA:117,0
-DA:118,0
+FNDA:1,System.String Core.Domain.DTO.RequestDTO.CambridgeDictionary.SentenceExample::get_SentenceExampleStr()
+DA:116,1
+DA:117,1
+DA:118,1
 LF:33
-LH:0
+LH:33
 BRF:2
-BRH:0
+BRH:2
 FNF:17
-FNH:0
+FNH:17
 end_of_record
 SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/0.CoreLayer/Core.Domain/DTO/Map/LatLng.cs
 FN:10,System.Single Core.Domain.DTO.Map.LatLng::get_lat()
@@ -2515,73 +2639,73 @@ FNH:0
 end_of_record
 SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/3.DataAccessLayer/DA/DA.Managers/CambridgeDictionary/CambridgeDictionaryManager.cs
 FN:16,System.Collections.Generic.List`1<Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation> DA.Managers.CambridgeDictionary.CambridgeDictionaryManager::CrawlCambridgeDictionary(System.String)
-FNDA:0,System.Collections.Generic.List`1<Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation> DA.Managers.CambridgeDictionary.CambridgeDictionaryManager::CrawlCambridgeDictionary(System.String)
-DA:17,0
-DA:18,0
-DA:20,0
-DA:22,0
-DA:23,0
-DA:25,0
-DA:27,0
-DA:29,0
-DA:30,0
-DA:31,0
-DA:35,0
-DA:36,0
-DA:37,0
-DA:39,0
-DA:40,0
-DA:41,0
-DA:43,0
-DA:44,0
-DA:45,0
-DA:51,0
-DA:52,0
-DA:53,0
-DA:54,0
-DA:56,0
-DA:57,0
-DA:58,0
-DA:60,0
-DA:61,0
-DA:62,0
-DA:64,0
-DA:65,0
-DA:66,0
-DA:67,0
-DA:68,0
-DA:69,0
-DA:70,0
+FNDA:2,System.Collections.Generic.List`1<Core.Domain.DTO.RequestDTO.CambridgeDictionary.Translation> DA.Managers.CambridgeDictionary.CambridgeDictionaryManager::CrawlCambridgeDictionary(System.String)
+DA:17,2
+DA:18,2
+DA:20,2
+DA:22,2
+DA:23,2
+DA:25,4
+DA:27,2
+DA:29,2
+DA:30,9
+DA:31,1
+DA:35,1
+DA:36,1
+DA:37,1
+DA:39,1
+DA:40,1
+DA:41,1
+DA:43,1
+DA:44,1
+DA:45,1
+DA:51,1
+DA:52,1
+DA:53,9
+DA:54,2
+DA:56,4
+DA:57,2
+DA:58,2
+DA:60,4
+DA:61,2
+DA:62,2
+DA:64,2
+DA:65,9
+DA:66,1
+DA:67,2
+DA:68,1
+DA:69,1
+DA:70,1
 DA:71,0
 DA:72,0
-DA:73,0
-DA:74,0
-DA:75,0
-DA:76,0
-DA:80,0
-DA:81,0
-DA:83,0
-DA:84,0
-BRDA:30,731,1,0
-BRDA:53,693,1,0
-BRDA:56,408,0,0
-BRDA:56,408,1,0
-BRDA:60,456,0,0
-BRDA:60,456,1,0
-BRDA:65,650,1,0
-BRDA:67,550,0,0
-BRDA:67,550,1,0
+DA:73,1
+DA:74,1
+DA:75,2
+DA:76,2
+DA:80,1
+DA:81,1
+DA:83,2
+DA:84,2
+BRDA:30,731,1,1
+BRDA:53,693,1,2
+BRDA:56,408,0,2
+BRDA:56,408,1,2
+BRDA:60,456,0,2
+BRDA:60,456,1,2
+BRDA:65,650,1,1
+BRDA:67,550,0,1
+BRDA:67,550,1,1
 BRDA:70,598,0,0
-BRDA:70,598,1,0
-BRDA:65,650,0,0
-BRDA:53,693,0,0
-BRDA:30,731,0,0
+BRDA:70,598,1,1
+BRDA:65,650,0,2
+BRDA:53,693,0,1
+BRDA:30,731,0,2
 LF:46
-LH:0
+LH:44
 BRF:14
-BRH:0
+BRH:13
 FNF:1
-FNH:0
+FNH:1
 end_of_record
 SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/ConfigService.cs
 FN:8,Microsoft.Extensions.Configuration.IConfiguration BL.Services.ConfigService::get_Configuration()
@@ -2753,15 +2877,15 @@ FNF:3
 FNH:0
 end_of_record
 SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/LineWebhookService.cs
-FN:42,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetReplyMessages(isRock.LineBot.ReceivedMessage)
-FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetReplyMessages(isRock.LineBot.ReceivedMessage)
-DA:43,0
-DA:45,0
-DA:46,0
-DA:47,0
-DA:48,0
-DA:50,0
-DA:51,0
+FN:42,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetReplyMessages(isRock.LineBot.Event)
+FNDA:7,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetReplyMessages(isRock.LineBot.Event)
+DA:43,7
+DA:45,7
+DA:46,14
+DA:47,7
+DA:48,7
+DA:50,7
+DA:51,7
 DA:53,0
 DA:54,0
 DA:56,0
@@ -2769,7 +2893,7 @@ DA:57,0
 DA:58,0
 DA:60,0
 DA:61,0
-DA:63,0
+DA:63,7
 DA:64,0
 DA:65,0
 DA:66,0
@@ -2780,32 +2904,32 @@ DA:70,0
 DA:71,0
 DA:72,0
 DA:73,0
-DA:75,0
-DA:76,0
-BRDA:46,32,0,0
-BRDA:48,80,0,0
-BRDA:48,94,0,0
-BRDA:48,80,1,0
-BRDA:48,94,1,0
-BRDA:48,108,1,0
-BRDA:48,108,0,0
-BRDA:46,32,1,0
-BRDA:63,224,0,0
-BRDA:66,272,0,0
-BRDA:66,272,1,0
-BRDA:63,224,1,0
+DA:75,7
+DA:76,7
+BRDA:46,21,0,7
+BRDA:48,58,0,0
+BRDA:48,72,0,0
+BRDA:48,58,1,7
+BRDA:48,72,1,0
+BRDA:48,86,1,0
+BRDA:48,86,0,0
+BRDA:46,21,1,0
+BRDA:63,202,0,0
+BRDA:66,236,0,0
+BRDA:66,236,1,0
+BRDA:63,202,1,0
 FN:82,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetMessagesByText(System.String)
-FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetMessagesByText(System.String)
-DA:83,0
-DA:85,0
-DA:86,0
-DA:88,0
-DA:89,0
-DA:91,0
-DA:92,0
-DA:94,0
-DA:96,0
-DA:97,0
+FNDA:7,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetMessagesByText(System.String)
+DA:83,7
+DA:85,7
+DA:86,7
+DA:88,2
+DA:89,2
+DA:91,1
+DA:92,1
+DA:94,1
+DA:96,2
+DA:97,2
 DA:99,0
 DA:100,0
 DA:102,0
@@ -2836,21 +2960,21 @@ DA:130,0
 DA:131,0
 DA:132,0
 DA:133,0
-DA:135,0
+DA:135,1
 DA:137,0
 DA:138,0
 DA:139,0
 DA:140,0
-DA:142,0
-BRDA:86,39,0,0
-BRDA:86,53,0,0
-BRDA:86,67,0,0
-BRDA:86,81,0,0
-BRDA:86,95,0,0
-BRDA:86,39,1,0
-BRDA:86,53,1,0
-BRDA:86,67,1,0
-BRDA:86,81,1,0
+DA:142,7
+BRDA:86,39,0,5
+BRDA:86,53,0,4
+BRDA:86,67,0,3
+BRDA:86,81,0,1
+BRDA:86,95,0,1
+BRDA:86,39,1,2
+BRDA:86,53,1,1
+BRDA:86,67,1,1
+BRDA:86,81,1,2
 BRDA:86,95,1,0
 BRDA:99,244,0,0
 BRDA:99,244,1,0
@@ -2873,254 +2997,236 @@ BRDA:122,668,1,0
 BRDA:120,622,1,0
 BRDA:127,737,0,0
 BRDA:127,737,1,0
-BRDA:86,112,0,0
-FN:143,System.String BL.Services.LineWebhookService::GetReplyTextByText(System.String)
-FNDA:3,System.String BL.Services.LineWebhookService::GetReplyTextByText(System.String)
-DA:144,3
-DA:146,3
-DA:148,1
-DA:149,1
-DA:151,1
-DA:152,1
-DA:153,1
-DA:155,1
-DA:156,1
-DA:157,1
-DA:159,1
-DA:161,1
-DA:163,3
-BRDA:146,38,0,2
-BRDA:146,38,1,1
-BRDA:146,52,1,1
-BRDA:146,52,0,1
-FN:169,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetMaskInstitutions(System.String)
+BRDA:86,112,0,1
+FN:148,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetMaskInstitutions(System.String)
 FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetMaskInstitutions(System.String)
-DA:170,0
+DA:149,0
+DA:150,0
+DA:152,0
+DA:154,0
+DA:156,0
+DA:157,0
+DA:158,0
+DA:159,0
+DA:161,0
+DA:162,0
+DA:165,0
+DA:166,0
+DA:167,0
+DA:168,0
+DA:169,0
 DA:171,0
+DA:172,0
 DA:173,0
+DA:174,0
 DA:175,0
+DA:176,0
 DA:177,0
 DA:178,0
 DA:179,0
 DA:180,0
 DA:182,0
 DA:183,0
-DA:186,0
-DA:187,0
-DA:188,0
-DA:189,0
-DA:190,0
-DA:192,0
-DA:193,0
-DA:194,0
-DA:195,0
-DA:196,0
-DA:197,0
-DA:198,0
-DA:199,0
-DA:200,0
-DA:201,0
-DA:203,0
-DA:204,0
-DA:205,0
-BRDA:178,138,1,0
-BRDA:178,119,0,0
-BRDA:178,119,1,0
-BRDA:178,138,0,0
-BRDA:182,153,0,0
-BRDA:182,153,1,0
-BRDA:187,437,1,0
-BRDA:189,265,0,0
-BRDA:189,265,1,0
-BRDA:189,288,0,0
-BRDA:189,288,1,0
-BRDA:200,424,0,0
-BRDA:200,424,1,0
-BRDA:187,437,0,0
-FN:211,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetCambridgeDictionaryReplyMessages(System.String)
-FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetCambridgeDictionaryReplyMessages(System.String)
-DA:212,0
-DA:213,0
-DA:215,0
-DA:217,0
-DA:218,0
-DA:219,0
-DA:220,0
-DA:221,0
-DA:222,0
-BRDA:217,65,1,0
-BRDA:217,65,0,0
-FN:228,System.Collections.Generic.List`1<System.String> BL.Services.LineWebhookService::GetCambridgeDictionaryTexts(System.String)
-FNDA:0,System.Collections.Generic.List`1<System.String> BL.Services.LineWebhookService::GetCambridgeDictionaryTexts(System.String)
-DA:229,0
+DA:184,0
+BRDA:157,138,1,0
+BRDA:157,119,0,0
+BRDA:157,119,1,0
+BRDA:157,138,0,0
+BRDA:161,153,0,0
+BRDA:161,153,1,0
+BRDA:166,437,1,0
+BRDA:168,265,0,0
+BRDA:168,265,1,0
+BRDA:168,288,0,0
+BRDA:168,288,1,0
+BRDA:179,424,0,0
+BRDA:179,424,1,0
+BRDA:166,437,0,0
+FN:190,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetCambridgeDictionaryReplyMessages(System.String)
+FNDA:2,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetCambridgeDictionaryReplyMessages(System.String)
+DA:191,2
+DA:192,2
+DA:194,2
+DA:196,12
+DA:197,2
+DA:198,2
+DA:199,2
+DA:200,2
+DA:201,2
+BRDA:196,65,1,2
+BRDA:196,65,0,2
+FN:207,System.Collections.Generic.List`1<System.String> BL.Services.LineWebhookService::GetCambridgeDictionaryTexts(System.String)
+FNDA:2,System.Collections.Generic.List`1<System.String> BL.Services.LineWebhookService::GetCambridgeDictionaryTexts(System.String)
+DA:208,2
+DA:209,2
+DA:210,2
+DA:211,2
+DA:212,2
+DA:213,2
+DA:215,3
+DA:216,1
+DA:217,1
+DA:221,6
+DA:222,1
+DA:224,1
+DA:225,0
+DA:226,0
+DA:227,1
+DA:228,1
+DA:229,1
 DA:230,0
 DA:231,0
 DA:232,0
-DA:233,0
-DA:234,0
-DA:236,0
-DA:237,0
-DA:238,0
-DA:242,0
-DA:243,0
-DA:245,0
-DA:246,0
-DA:247,0
-DA:248,0
-DA:249,0
-DA:250,0
-DA:251,0
-DA:252,0
-DA:253,0
-DA:255,0
-BRDA:236,43,0,0
-BRDA:236,43,1,0
-BRDA:242,165,1,0
-BRDA:245,119,0,0
-BRDA:245,119,1,0
-BRDA:242,165,0,0
-FN:261,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetCangjieReplyMessages(System.String)
-FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetCangjieReplyMessages(System.String)
-DA:262,0
-DA:264,0
-DA:266,0
-DA:268,0
-DA:269,0
-FN:275,System.String BL.Services.LineWebhookService::GetCangjieReplyText(System.String)
+DA:234,2
+BRDA:215,43,0,1
+BRDA:215,43,1,1
+BRDA:221,165,1,1
+BRDA:224,119,0,0
+BRDA:224,119,1,1
+BRDA:221,165,0,1
+FN:240,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetCangjieReplyMessages(System.String)
+FNDA:1,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetCangjieReplyMessages(System.String)
+DA:241,1
+DA:243,1
+DA:245,1
+DA:247,1
+DA:248,1
+FN:254,System.String BL.Services.LineWebhookService::GetCangjieReplyText(System.String)
 FNDA:1,System.String BL.Services.LineWebhookService::GetCangjieReplyText(System.String)
-DA:276,1
+DA:255,1
+DA:256,1
+DA:257,1
+DA:258,1
+DA:260,1
+DA:261,9
+DA:262,2
+DA:263,0
+DA:266,2
+DA:267,2
+DA:268,2
+DA:269,2
+DA:270,1
+DA:271,1
+DA:272,0
+DA:273,0
+DA:274,0
+DA:275,0
 DA:277,1
-DA:278,1
-DA:279,1
-DA:281,1
-DA:282,9
-DA:283,2
-DA:284,0
-DA:287,2
-DA:288,2
-DA:289,2
-DA:290,2
-DA:291,1
-DA:292,0
-DA:293,0
-DA:294,0
-DA:295,0
-DA:297,1
-BRDA:282,166,1,2
-BRDA:283,54,0,0
-BRDA:283,54,1,2
-BRDA:282,166,0,1
-FN:302,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetExchangeRateReplyMessages()
-FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetExchangeRateReplyMessages()
-DA:303,0
-DA:304,0
-DA:305,0
-DA:306,0
-DA:308,0
-DA:309,0
-DA:310,0
-DA:312,0
-DA:314,0
-DA:315,0
-FN:325,System.String BL.Services.LineWebhookService::ConvertToExchangeRateTextMessage(System.Double,System.Double,System.DateTime)
+BRDA:261,169,1,2
+BRDA:262,56,0,0
+BRDA:262,56,1,2
+BRDA:261,169,0,1
+FN:282,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetExchangeRateReplyMessages()
+FNDA:1,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetExchangeRateReplyMessages()
+DA:283,1
+DA:284,1
+DA:285,1
+DA:286,1
+DA:288,1
+DA:289,1
+DA:290,1
+DA:292,1
+DA:294,1
+DA:295,1
+FN:305,System.String BL.Services.LineWebhookService::ConvertToExchangeRateTextMessage(System.Double,System.Double,System.DateTime)
 FNDA:1,System.String BL.Services.LineWebhookService::ConvertToExchangeRateTextMessage(System.Double,System.Double,System.DateTime)
-DA:326,1
-DA:328,1
-DA:329,1
+DA:306,1
+DA:308,1
+DA:309,1
+DA:310,1
+DA:311,1
+DA:312,1
+DA:313,1
+DA:315,1
+DA:317,1
+DA:318,1
+FN:324,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetStickerReplyMessages(System.String[])
+FNDA:2,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetStickerReplyMessages(System.String[])
+DA:325,2
+DA:327,2
+DA:328,3
 DA:330,1
 DA:331,1
 DA:332,1
 DA:333,1
-DA:335,1
-DA:337,1
+DA:336,1
 DA:338,1
-FN:344,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetStickerReplyMessages(System.String[])
-FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetStickerReplyMessages(System.String[])
-DA:345,0
-DA:347,0
-DA:348,0
-DA:350,0
-DA:351,0
-DA:352,0
+DA:339,2
+BRDA:327,11,0,2
+BRDA:327,11,1,0
+BRDA:327,31,0,1
+BRDA:327,31,1,1
+FN:350,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetStickerReplyMessages(System.Int32,System.Int32,System.Int32)
+FNDA:1,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetStickerReplyMessages(System.Int32,System.Int32,System.Int32)
+DA:351,1
+DA:352,1
 DA:353,0
-DA:356,0
+DA:354,0
+DA:357,1
 DA:358,0
-DA:359,0
-BRDA:347,11,0,0
-BRDA:347,11,1,0
-BRDA:347,31,0,0
-BRDA:347,31,1,0
-FN:370,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetStickerReplyMessages(System.Int32,System.Int32,System.Int32)
-FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetStickerReplyMessages(System.Int32,System.Int32,System.Int32)
-DA:371,0
-DA:372,0
-DA:373,0
-DA:374,0
+DA:361,1
+DA:363,17
+DA:364,5
+DA:365,5
+DA:366,5
+DA:368,1
+DA:369,1
+BRDA:352,7,0,0
+BRDA:352,7,1,1
+BRDA:357,44,0,1
+BRDA:357,44,1,0
+BRDA:357,57,0,0
+BRDA:357,57,1,1
+BRDA:363,127,1,5
+BRDA:363,127,0,1
+FN:376,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetReplyMessagesBySticker(isRock.LineBot.StickerMessage)
+FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetReplyMessagesBySticker(isRock.LineBot.StickerMessage)
 DA:377,0
 DA:378,0
+DA:379,0
+DA:380,0
 DA:381,0
-DA:383,0
+DA:382,0
 DA:384,0
 DA:385,0
-DA:386,0
+DA:387,0
 DA:388,0
-DA:389,0
-BRDA:372,7,0,0
-BRDA:372,7,1,0
-BRDA:377,44,0,0
-BRDA:377,44,1,0
-BRDA:377,57,0,0
-BRDA:377,57,1,0
-BRDA:383,126,1,0
-BRDA:383,126,0,0
-FN:396,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetReplyMessagesBySticker(isRock.LineBot.StickerMessage)
-FNDA:0,System.Collections.Generic.List`1<isRock.LineBot.MessageBase> BL.Services.LineWebhookService::GetReplyMessagesBySticker(isRock.LineBot.StickerMessage)
+FN:395,System.Void BL.Services.LineWebhookService::GetIdsBySticker(isRock.LineBot.StickerMessage,System.Int32&,System.Int32&)
+FNDA:0,System.Void BL.Services.LineWebhookService::GetIdsBySticker(isRock.LineBot.StickerMessage,System.Int32&,System.Int32&)
+DA:396,0
 DA:397,0
 DA:398,0
 DA:399,0
-DA:400,0
-DA:401,0
-DA:402,0
-DA:404,0
-DA:405,0
-DA:407,0
-DA:408,0
-FN:415,System.Void BL.Services.LineWebhookService::GetIdsBySticker(isRock.LineBot.StickerMessage,System.Int32&,System.Int32&)
-FNDA:0,System.Void BL.Services.LineWebhookService::GetIdsBySticker(isRock.LineBot.StickerMessage,System.Int32&,System.Int32&)
-DA:416,0
-DA:417,0
-DA:418,0
-DA:419,0
 FN:25,System.Void BL.Services.LineWebhookService::.ctor(BL.Services.Interfaces.IExchangeRateService,BL.Services.Interfaces.IMapHereService,BL.Services.Interfaces.ITradingVolumeService)
-FNDA:3,System.Void BL.Services.LineWebhookService::.ctor(BL.Services.Interfaces.IExchangeRateService,BL.Services.Interfaces.IMapHereService,BL.Services.Interfaces.ITradingVolumeService)
-DA:26,3
-DA:27,3
-DA:28,6
-DA:30,3
-DA:31,3
-DA:32,3
-DA:33,3
-DA:34,3
-DA:35,3
-DA:36,3
-FN:422,System.String BL.Services.LineHttpPostException::get_message()
+FNDA:7,System.Void BL.Services.LineWebhookService::.ctor(BL.Services.Interfaces.IExchangeRateService,BL.Services.Interfaces.IMapHereService,BL.Services.Interfaces.ITradingVolumeService)
+DA:26,7
+DA:27,7
+DA:28,14
+DA:30,7
+DA:31,7
+DA:32,7
+DA:33,7
+DA:34,7
+DA:35,7
+DA:36,7
+FN:402,System.String BL.Services.LineHttpPostException::get_message()
 FNDA:0,System.String BL.Services.LineHttpPostException::get_message()
-DA:423,0
-FN:423,System.Collections.Generic.List`1<BL.Services.Detail> BL.Services.LineHttpPostException::get_details()
+DA:403,0
+FN:403,System.Collections.Generic.List`1<BL.Services.Detail> BL.Services.LineHttpPostException::get_details()
 FNDA:0,System.Collections.Generic.List`1<BL.Services.Detail> BL.Services.LineHttpPostException::get_details()
-DA:424,0
-FN:427,System.String BL.Services.Detail::get_message()
+DA:404,0
+FN:407,System.String BL.Services.Detail::get_message()
 FNDA:0,System.String BL.Services.Detail::get_message()
-DA:428,0
-FN:428,System.String BL.Services.Detail::get_property()
+DA:408,0
+FN:408,System.String BL.Services.Detail::get_property()
 FNDA:0,System.String BL.Services.Detail::get_property()
-DA:429,0
-LF:238
-LH:46
-BRF:86
-BRH:7
-FNF:19
-FNH:4
+DA:409,0
+LF:226
+LH:116
+BRF:82
+BRH:30
+FNF:18
+FNH:11
 end_of_record
 SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/MaskInstitution/MaskInstitutionService.cs
 FN:20,System.Collections.Generic.List`1<Core.Domain.DTO.MaskInstitution> BL.Services.MaskInstitutionService::GetMaskInstitutions(System.String)
@@ -3202,9 +3308,9 @@ BRDA:93,87,1,0
 BRDA:97,138,0,0
 BRDA:97,138,1,0
 FN:11,System.Void BL.Services.MaskInstitutionService::.ctor()
-FNDA:6,System.Void BL.Services.MaskInstitutionService::.ctor()
-DA:12,6
-DA:14,3
+FNDA:14,System.Void BL.Services.MaskInstitutionService::.ctor()
+DA:12,14
+DA:14,7
 FN:72,System.Boolean BL.Services.MaskInstitutionService/<GetMaskInstitutions>d__4::MoveNext()
 FNDA:0,System.Boolean BL.Services.MaskInstitutionService/<GetMaskInstitutions>d__4::MoveNext()
 DA:73,0
@@ -3621,10 +3727,10 @@ BRDA:256,6,3,0
 BRDA:256,6,1,0
 BRDA:256,6,0,0
 FN:54,System.Void BL.Services.TWSE_Stock.TradingVolumeService::.ctor()
-FNDA:6,System.Void BL.Services.TWSE_Stock.TradingVolumeService::.ctor()
-DA:55,6
-DA:56,3
-DA:57,3
+FNDA:14,System.Void BL.Services.TWSE_Stock.TradingVolumeService::.ctor()
+DA:55,14
+DA:56,7
+DA:57,7
 FN:58,System.Void BL.Services.TWSE_Stock.TradingVolumeService::.ctor(Microsoft.Extensions.Configuration.IConfiguration)
 FNDA:0,System.Void BL.Services.TWSE_Stock.TradingVolumeService::.ctor(Microsoft.Extensions.Configuration.IConfiguration)
 DA:59,0
@@ -4191,17 +4297,17 @@ FNH:0
 end_of_record
 SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/Line/LineMessageService.cs
 FN:20,isRock.LineBot.TextMessage BL.Services.Line.LineMessageService::GetTextMessage(System.String)
-FNDA:0,isRock.LineBot.TextMessage BL.Services.Line.LineMessageService::GetTextMessage(System.String)
-DA:21,0
-DA:22,0
-DA:23,0
-DA:24,0
+FNDA:6,isRock.LineBot.TextMessage BL.Services.Line.LineMessageService::GetTextMessage(System.String)
+DA:21,6
+DA:22,6
+DA:23,6
+DA:24,6
 DA:25,0
 DA:26,0
 DA:27,0
 DA:28,0
 DA:29,0
-DA:31,0
+DA:31,6
 FN:39,isRock.LineBot.MessageBase BL.Services.Line.LineMessageService::GetCarouselTemplateMessage(Core.Domain.Enums.QuerySortTypeEnum)
 FNDA:0,isRock.LineBot.MessageBase BL.Services.Line.LineMessageService::GetCarouselTemplateMessage(Core.Domain.Enums.QuerySortTypeEnum)
 DA:40,0
@@ -4294,22 +4400,22 @@ DA:125,0
 DA:126,0
 DA:127,0
 FN:138,System.Boolean BL.Services.Line.LineMessageService::TryGetStickerMessage(System.Int32,System.Int32,isRock.LineBot.MessageBase&)
-FNDA:0,System.Boolean BL.Services.Line.LineMessageService::TryGetStickerMessage(System.Int32,System.Int32,isRock.LineBot.MessageBase&)
-DA:139,0
-DA:140,0
+FNDA:5,System.Boolean BL.Services.Line.LineMessageService::TryGetStickerMessage(System.Int32,System.Int32,isRock.LineBot.MessageBase&)
+DA:139,5
+DA:140,5
 DA:141,0
 DA:142,0
-DA:143,0
-DA:144,0
-DA:145,0
-DA:147,0
+DA:143,5
+DA:144,5
+DA:145,5
+DA:147,5
 BRDA:140,14,0,0
-BRDA:140,14,1,0
+BRDA:140,14,1,5
 FN:166,System.Boolean BL.Services.Line.LineMessageService::IsValidPackageAndStickerId(System.Int32,System.Int32)
-FNDA:0,System.Boolean BL.Services.Line.LineMessageService::IsValidPackageAndStickerId(System.Int32,System.Int32)
-DA:167,0
-DA:168,0
-DA:170,0
+FNDA:5,System.Boolean BL.Services.Line.LineMessageService::IsValidPackageAndStickerId(System.Int32,System.Int32)
+DA:167,5
+DA:168,5
+DA:170,10
 DA:171,0
 DA:172,0
 DA:173,0
@@ -4331,12 +4437,12 @@ DA:193,0
 DA:195,0
 DA:196,0
 DA:198,0
-DA:200,0
+DA:200,5
 BRDA:168,8,0,0
-BRDA:168,8,1,0
-BRDA:170,62,0,0
+BRDA:168,8,1,5
+BRDA:170,62,0,5
 BRDA:170,62,1,0
-BRDA:170,77,0,0
+BRDA:170,77,0,5
 BRDA:170,77,1,0
 BRDA:171,95,0,0
 BRDA:171,95,1,0
@@ -4396,11 +4502,11 @@ BRDA:195,524,0,0
 BRDA:195,524,1,0
 BRDA:168,38,0,0
 LF:124
-LH:0
+LH:15
 BRF:69
-BRH:0
+BRH:4
 FNF:6
-FNH:0
+FNH:3
 end_of_record
 SF:/Users/tsaimengche/Documents/ASP.NET_Core_Web_App(MVC)/LineWebhook/2.BusinessLogicLayer/BL/BL.Services/Line/LineNotifyBotService.cs
 FN:26,System.Boolean BL.Services.Line.LineNotifyBotService::PushMessage_Group(System.String)

@@ -52,7 +52,7 @@ namespace Website.Controllers {
                 Log.Information($"{JsonUtility.Serialize(receivedMessage, isIndented: true)}");
                 Log.Information($"====================");
 
-                List<MessageBase> messages = _lineWebhookService.GetReplyMessages(receivedMessage);
+                List<MessageBase> messages = _lineWebhookService.GetReplyMessages(receivedMessage.events[0]);
 
                 // Add 紀錄發至LineServer的requestBody
                 Log.Information($"========== TO LINE SERVER ==========");
@@ -99,7 +99,7 @@ namespace Website.Controllers {
                 sb.Append($"{JsonUtility.Serialize(receivedMessage, isIndented: true, isIgnorezNullValue: true)}\n");
                 sb.Append($"====================\n");
 
-                List<MessageBase> messages = _lineWebhookService.GetReplyMessages(receivedMessage);
+                List<MessageBase> messages = _lineWebhookService.GetReplyMessages(receivedMessage.events[0]);
 
                 // Add 紀錄發至LineServer的requestBody
                 sb.Append($"========== TO LINE SERVER ==========\n");

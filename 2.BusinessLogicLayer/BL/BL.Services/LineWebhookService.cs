@@ -36,43 +36,43 @@ namespace BL.Services {
         }
 
         /// <summary>
-        /// 依照RequestModel 判讀訊息並傳回Line回應訊息
+        /// 依照事件取得Line回應訊息
         /// </summary>
-        /// <param name="receivedMessage">從line接收到的訊息字串</param>
+        /// <param name="@event">事件</param>
         /// <returns>Line回應訊息</returns>
-        public List<MessageBase> GetReplyMessages(ReceivedMessage receivedMessage) {
-            List<MessageBase> messages;
-            string type = receivedMessage.events[0].type;
+        public List<MessageBase> GetReplyMessages(Event @event) {
+            List<MessageBase> replyMessages;
+            string type = @event.type;
             if (type == "message") {
-                Message message = receivedMessage.events[0].message;
+                Message message = @event.message;
                 switch (message.type) {
                     case "text":
-                        messages = GetMessagesByText(message.text);
+                        replyMessages = GetMessagesByText(message.text);
                         break;
                     case "location":
-                        messages = GetMaskInstitutions(message.address);
+                        replyMessages = GetMaskInstitutions(message.address);
                         break;
                     case "sticker":
                         StickerMessage stickerMessage = _lineMessageService.GetStickerMessage(message);
-                        messages = GetReplyMessagesBySticker(stickerMessage);
+                        replyMessages = GetReplyMessagesBySticker(stickerMessage);
                         break;
                     default:
-                        messages = new List<MessageBase> { new TextMessage("目前未支援此資料格式: " + message.type) };
+                        replyMessages = new List<MessageBase> { new TextMessage("目前未支援此資料格式: " + message.type) };
                         break;
                 }
             } else if (type == "postback") {
-                Postback postback = receivedMessage.events[0].postback;
+                Postback postback = @event.postback;
                 Params @params = postback.Params;
                 if (postback.Params != null) {
-                    messages = GetMessagesByText(postback.data + " " + @params.datetime + @params.date + @params.time);
+                    replyMessages = GetMessagesByText(postback.data + " " + @params.datetime + @params.date + @params.time);
                 } else {
-                    messages = GetMessagesByText(postback.data);
+                    replyMessages = GetMessagesByText(postback.data);
                 }
             } else {
                 string errorMsg = $"[GetReplyMessages] 判讀訊息並傳回Line回應訊息 錯誤";
                 throw new ArgumentException(errorMsg);
             }
-            return messages;
+            return replyMessages;
         }
 
         /// <summary>
@@ -138,27 +138,6 @@ namespace BL.Services {
                 string errorMsg = $"[GetMessagesByText] text: {text}, ex: {ex}";
                 Log.Error(errorMsg);
                 return new List<MessageBase> { _lineMessageService.GetTextMessage(errorMsg) };
-            }
-        }
-
-        public string GetReplyTextByText(string text) {
-            string textStr;
-            switch (text.Split(' ')[0]) {
-                case "cj":
-                    textStr = GetCangjieReplyText(text.Substring(3));
-                    return textStr;
-                case "sp":
-                    _exchangeRateService.GetExchangeRate(
-                        out double buyingRate, out double sellingRate,
-                        out DateTime quotedDateTime);
-
-                    textStr = ConvertToExchangeRateTextMessage(
-                        buyingRate, sellingRate, quotedDateTime
-                    );
-
-                    return textStr;
-                default:
-                    return text;
             }
         }
 
@@ -288,7 +267,8 @@ namespace BL.Services {
                     string big5Str = BitConverter.ToString(big5Bytes).Replace("-", string.Empty);
                     sb.AppendLine(word + ": " + cjDomain + big5Str + ".JPG");
                 }
-                return sb.ToString();
+                string cangjieReplyText = sb.ToString();
+                return cangjieReplyText;
             } catch (Exception ex) {
                 string errorMsg = $"GetCangjieReplyText 發生錯誤, 字詞：{words}, ex: {ex}";
                 Log.Error(errorMsg);
@@ -381,7 +361,7 @@ namespace BL.Services {
             List<MessageBase> messages = new List<MessageBase>();
 
             for (int i = stickerId; i < stickerId + count; ++i) {
-                _lineMessageService.TryGetStickerMessage(packageId, stickerId, out MessageBase messageBase);
+                _lineMessageService.TryGetStickerMessage(packageId, i, out MessageBase messageBase);
                 messages.Add(messageBase);
             }
 
