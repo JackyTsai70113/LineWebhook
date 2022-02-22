@@ -126,7 +126,7 @@ namespace BL.Services.Line {
             return new StickerMessage(packageId, stickerId);
         }
 
-        
+
 
 
         /// <summary>
@@ -136,9 +136,9 @@ namespace BL.Services.Line {
         /// <param name="stickerId">貼圖Id</param>
         /// <param name="stickerMessage">Line 貼圖訊息</param>
         /// <returns>Id是否有效</returns>
-        public bool TryGetStickerMessage(int packageId, int stickerId, out MessageBase messageBase){
-            if(!IsValidPackageAndStickerId(packageId, stickerId)){
-                messageBase = new TextMessage($"此貼圖無法顯示, {packageId}, {stickerId}");
+        public bool TryGetStickerMessage(int packageId, int stickerId, out MessageBase messageBase) {
+            if (!IsValidPackageAndStickerId(packageId, stickerId)) {
+                messageBase = new TextMessage($"此貼圖目前不支援輸出, packageId: {packageId}, stickerId: {stickerId}");
                 return false;
             } else {
                 messageBase = new StickerMessage(packageId, stickerId);
@@ -153,8 +153,7 @@ namespace BL.Services.Line {
         /// <param name="stickerId"></param>
         /// <returns>是否有效</returns>
         /// <remarks>
-        /// https://developers.line.biz/media/messaging-api/sticker_list.pdf <br/>
-        /// https://devdocs.line.me/files/sticker_list.pdf <br/>
+        /// https://developers.line.biz/zh-hant/docs/messaging-api/sticker-list/#sticker-definitions <br/>
         /// 範圍包含： <br/>
         /// Moon James: {packageId: 1, stickerIds: 1-17, 21, 100-139, 401-430} <br/>
         /// Brown Cony: {packageId: 2, stickerIds: 18-20, 22-47, 140-179, 501-527} <br/>

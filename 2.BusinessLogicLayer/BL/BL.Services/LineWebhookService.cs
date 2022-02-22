@@ -93,8 +93,8 @@ namespace BL.Services {
                     case "er":
                         return GetExchangeRateReplyMessages();
                     case "st":
-                        string[] commandArgs = text.Substring(3).Split(' ');
-                        return GetStickerReplyMessages(commandArgs);
+                        string commandArg = text.Substring(3);
+                        return GetStickerReplyMessages(commandArg);
                     case "tv":
                         if (text == "tv") {
                             return new List<MessageBase> { _lineMessageService.GetCarouselTemplateMessage(QuerySortTypeEnum.Descending) };
@@ -320,16 +320,21 @@ namespace BL.Services {
         /// <summary>
         /// 取得貼圖(st)指令 的 回覆訊息列表
         /// </summary>
-        /// <param name="commandArgs">指令參數矩陣</param>
+        /// <param name="commandArg">指令參數</param>
         /// <returns>訊息列表</returns>
-        private List<MessageBase> GetStickerReplyMessages(string[] commandArgs) {
+        private List<MessageBase> GetStickerReplyMessages(string commandArg) {
+            if (commandArg.Split(' ').Length != 2 ||
+                int.TryParse(commandArg.Split(' ')[0], out int packageId) == false ||
+                int.TryParse(commandArg.Split(' ')[1], out int stickerId) == false) {
 
-            if (int.TryParse(commandArgs[0], out int packageId) == false ||
-                int.TryParse(commandArgs[1], out int stickerId) == false) {
-
-                Log.Information("GetStickerMessages 解析st指令錯誤，格式錯誤"
-                    + $"，commandArgs: {commandArgs[0]}, {commandArgs[1]}");
-                TextMessage textMessage = _lineMessageService.GetTextMessage("格式錯誤");
+                Log.Information("GetStickerReplyMessages 解析指令錯誤，格式錯誤"
+                    + $"，commandArg: {commandArg}");
+                TextMessage textMessage =
+                    _lineMessageService.GetTextMessage(
+                        "此指令用來輸出最多五個的貼圖，\n" +
+                        "用法：st {貼圖包Id} {貼圖Id}\n" +
+                        "範例：st 1 1\n" +
+                        "貼圖包/貼圖 如官方文件所定義：https://developers.line.biz/zh-hant/docs/messaging-api/sticker-list/#sticker-definitions");
                 return new List<MessageBase> { textMessage };
             }
 
@@ -349,11 +354,6 @@ namespace BL.Services {
         /// count 必須介於 1 和 5
         /// </exception>
         private List<MessageBase> GetStickerReplyMessages(int packageId, int stickerId, int count) {
-            if (count == 1) {
-                _lineMessageService.TryGetStickerMessage(packageId, stickerId, out MessageBase messageBase);
-                return new List<MessageBase> { messageBase };
-            }
-
             if (count < 1 || count > 5) {
                 throw new ArgumentException("參數錯誤！個數必須介於 1 和 5。");
             }
