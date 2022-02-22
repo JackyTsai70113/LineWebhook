@@ -145,7 +145,9 @@ namespace BL.Services.Tests {
                         }
                     },
                     new List<MessageBase>{
-                        new TextMessage("格式錯誤")
+                        new TextMessage("此指令用來輸出最多五個的貼圖，\n" + 
+                        "用法：st {貼圖包Id} {貼圖Id}\n範例：st 1 1\n" + 
+                        "貼圖包/貼圖 如官方文件所定義：https://developers.line.biz/zh-hant/docs/messaging-api/sticker-list/#sticker-definitions")
                     }
                 );
             }
