@@ -6,7 +6,7 @@ project.lock.json
 nupkg/
 
 # Tests
-lcov.info
+**/lcov.info
 
 # Visual Studio Code
 .vscode
