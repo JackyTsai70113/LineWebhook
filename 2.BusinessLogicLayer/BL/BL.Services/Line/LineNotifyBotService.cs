@@ -2,18 +2,20 @@
 using System.Net.Http;
 using System.Web;
 using BL.Services.Line.Interfaces;
-using Serilog;
+using Microsoft.Extensions.Logging;
 
 namespace BL.Services.Line {
 
     public class LineNotifyBotService : ILineNotifyBotService {
+        private readonly ILogger<LineNotifyBotService> logger;
         private readonly string _bearerToken_Group;
         private readonly string _bearerToken_Jacky;
         private readonly string _bearerToken_Jessi;
 
         private readonly string _notifyUri = "https://notify-api.line.me/api/notify";
 
-        public LineNotifyBotService() {
+        public LineNotifyBotService(ILogger<LineNotifyBotService> logger) {
+            this.logger = logger;
             _bearerToken_Group = ConfigService.Line_NotifyBearerToken_Group;
             _bearerToken_Jacky = ConfigService.Line_NotifyBearerToken_Jacky;
             _bearerToken_Jessi = ConfigService.Line_NotifyBearerToken_Jessi;
@@ -63,10 +65,10 @@ namespace BL.Services.Line {
                     result = httpClient.PostAsync(uri, new StringContent("")).Result.ToString();
                 }
 
-                Log.Information($"[PushMessage] text: {text}, PostAsync.Result: {result}");
+                logger.LogInformation($"[PushMessage] text: {text}, PostAsync.Result: {result}");
                 return true;
             } catch (Exception ex) {
-                Log.Error($"[PushMessage] text: {text}, ex: {ex}");
+                logger.LogError($"[PushMessage] text: {text}, ex: {ex}");
                 return false;
             }
         }

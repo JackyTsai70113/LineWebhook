@@ -8,7 +8,6 @@ using BL.Services.Line.Interfaces;
 using isRock.LineBot;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Serilog;
 using Core.Domain.Utilities;
 using System.Text;
 
@@ -21,7 +20,7 @@ namespace Website.Controllers {
     [Route("[controller]")]
     public class LineWebhookController : ControllerBase {
         private readonly Bot Bot;
-        private readonly ILogger<LineWebhookController> _logger;
+        private readonly ILogger<LineWebhookController> logger;
         private readonly ILineNotifyBotService _lineNotifyBotService;
         private readonly ILineWebhookService _lineWebhookService;
 
@@ -30,7 +29,7 @@ namespace Website.Controllers {
             , ILineWebhookService LineWebhookService
             ) {
             Bot = new Bot(ConfigService.Line_ChannelAccessToken);
-            _logger = logger;
+            this.logger = logger;
             _lineNotifyBotService = LineNotifyBotService;
             _lineWebhookService = LineWebhookService;
         }
@@ -47,18 +46,18 @@ namespace Website.Controllers {
                 //處理requestModel
                 ReceivedMessage receivedMessage = Utility.Parsing(requestBody.ToString());
 
-                Log.Information($"========== From LINE SERVER ==========");
-                Log.Information($"requestModel:");
-                Log.Information($"{JsonUtility.Serialize(receivedMessage, isIndented: true)}");
-                Log.Information($"====================");
+                logger.LogInformation($"========== From LINE SERVER ==========");
+                logger.LogInformation($"requestModel:");
+                logger.LogInformation($"{JsonUtility.Serialize(receivedMessage, isIndented: true)}");
+                logger.LogInformation($"====================");
 
                 List<MessageBase> messages = _lineWebhookService.GetReplyMessages(receivedMessage.events[0]);
 
                 // Add 紀錄發至LineServer的requestBody
-                Log.Information($"========== TO LINE SERVER ==========");
-                Log.Information($"messages:");
-                Log.Information($"{JsonUtility.Serialize(messages, isIndented: true)}");
-                Log.Information($"====================");
+                logger.LogInformation($"========== TO LINE SERVER ==========");
+                logger.LogInformation($"messages:");
+                logger.LogInformation($"{JsonUtility.Serialize(messages, isIndented: true)}");
+                logger.LogInformation($"====================");
 
                 string replyToken = receivedMessage.events[0].replyToken;
                 try {
@@ -70,7 +69,7 @@ namespace Website.Controllers {
                         int responseEndIndex = ex.ToString().IndexOf("Endpoint");
                         string responseStr = ex.ToString()[responseStartIndex..responseEndIndex].Trim();
                         LineHttpPostException response = JsonUtility.Deserialize<LineHttpPostException>(responseStr);
-                        Log.Error(
+                        logger.LogError(
                             $"LineWebhookService.ResponseToLineServer 錯誤, replyToken: {replyToken},\n" +
                             $"messages: {JsonUtility.Serialize(messages, isIndented: true)},\n" +
                             $"response: {JsonUtility.Serialize(response, isIndented: true)}");
@@ -81,7 +80,7 @@ namespace Website.Controllers {
                     throw;
                 }
             } catch (Exception ex) {
-                Log.Error($"[Index] requestBody: {requestBody}, ex: {ex}");
+                logger.LogError($"[Index] requestBody: {requestBody}, ex: {ex}");
                 return Content($"Index 發生錯誤，requestBody: {requestBody}, ex: {ex}");
             }
         }
@@ -108,7 +107,7 @@ namespace Website.Controllers {
                 sb.Append($"====================");
                 return Ok(sb.ToString());
             } catch (Exception ex) {
-                Log.Error($"[Index] requestBody: {requestBody}, ex: {ex}");
+                logger.LogError($"[Index] requestBody: {requestBody}, ex: {ex}");
                 return Content($"Index 發生錯誤，requestBody: {requestBody}, ex: {ex}");
             }
         }
@@ -123,13 +122,13 @@ namespace Website.Controllers {
         [HttpGet]
         [Route("test")]
         public IActionResult Test() {
-            _logger.LogInformation("Hello, {Name}!", Environment.UserName);
-            _logger.LogInformation("Info!");
-            _logger.LogWarning("Warning!");
-            _logger.LogTrace("Trace!");
-            _logger.LogDebug("Debug");
-            _logger.LogCritical("Critical");
-            _logger.LogError("Error");
+            logger.LogInformation("Hello, {Name}!", Environment.UserName);
+            logger.LogInformation("Info!");
+            logger.LogWarning("Warning!");
+            logger.LogTrace("Trace!");
+            logger.LogDebug("Debug");
+            logger.LogCritical("Critical");
+            logger.LogError("Error");
             return Ok("test");
         }
     }

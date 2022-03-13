@@ -14,7 +14,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Serilog;
 using Website.Data;
 
 namespace Website {
@@ -43,30 +42,22 @@ namespace Website {
             services.AddMyService();
 
             // Register the Swagger services
-            services.AddSwaggerDocument(config =>
-            {
-                config.PostProcess = document =>
-                {
+            services.AddSwaggerDocument(config => {
+                config.PostProcess = document => {
                     document.Info.Version = "v1";
                     document.Info.Title = "LineWebhook API";
                     document.Info.Description = "A simple ASP.NET Core web API";
                     document.Info.TermsOfService = "None";
-                    document.Info.Contact = new NSwag.OpenApiContact
-                    {
+                    document.Info.Contact = new NSwag.OpenApiContact {
                         Name = "Jacky Tsai",
                         Email = string.Empty,
                         Url = string.Empty
                     };
-                    document.Info.License = new NSwag.OpenApiLicense
-                    {
+                    document.Info.License = new NSwag.OpenApiLicense {
                         Name = string.Empty,
                         Url = string.Empty
                     };
                 };
-            });
-
-            services.AddLogging(builder => {
-                builder.AddSerilog();
             });
         }
 
@@ -87,7 +78,6 @@ namespace Website {
 
             // 強迫將 HTTP 全部轉向 HTTPS
             app.UseHttpsRedirection();
-            app.UseSerilogRequestLogging();
             // 服務靜態檔案傳輸
             app.UseStaticFiles();
 

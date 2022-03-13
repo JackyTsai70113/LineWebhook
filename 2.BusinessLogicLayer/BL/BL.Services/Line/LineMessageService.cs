@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using BL.Services.Holiday;
 using Core.Domain.Enums;
 using isRock.LineBot;
-using Serilog;
+using Microsoft.Extensions.Logging;
 
 namespace BL.Services.Line {
 
@@ -24,7 +23,6 @@ namespace BL.Services.Line {
                 return new TextMessage(text);
             } catch (Exception ex) {
                 string errorMsg = $"[GetTextMessage] text: {text}, ex: {ex}";
-                Log.Error(errorMsg);
                 errorMsg = errorMsg.Replace('\'', '’').Trim();
                 return new TextMessage(errorMsg);
             }
@@ -125,9 +123,6 @@ namespace BL.Services.Line {
             int stickerId = stickerMessage.stickerId;
             return new StickerMessage(packageId, stickerId);
         }
-
-
-
 
         /// <summary>
         /// 嘗試取得 Line貼圖訊息

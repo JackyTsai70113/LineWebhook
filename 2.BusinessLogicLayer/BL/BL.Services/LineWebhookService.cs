@@ -12,7 +12,6 @@ using Core.Domain.Enums;
 using DA.Managers.CambridgeDictionary;
 using DA.Managers.Interfaces;
 using isRock.LineBot;
-using Serilog;
 
 namespace BL.Services {
     public class LineWebhookService : BaseService, ILineWebhookService {
@@ -136,7 +135,6 @@ namespace BL.Services {
                 }
             } catch (Exception ex) {
                 string errorMsg = $"[GetMessagesByText] text: {text}, ex: {ex}";
-                Log.Error(errorMsg);
                 return new List<MessageBase> { _lineMessageService.GetTextMessage(errorMsg) };
             }
         }
@@ -207,30 +205,24 @@ namespace BL.Services {
         /// <returns>訊息列表</returns>
         private List<string> GetCambridgeDictionaryTexts(string vocabulary) {
             List<string> texts = new List<string>();
-            try {
-                List<Translation> translations =
-                    _cambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary)
-                                               .Take(5).ToList();
+            List<Translation> translations =
+                    _cambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary).Take(5).ToList();
 
-                if (translations.Count == 0) {
-                    texts.Add($"未能找到符合字詞: {vocabulary}");
-                    return texts;
-                }
-
-                // 設定發送的訊息
-                foreach (Translation translation in translations) {
-                    string translationStr = translation.TranslationStr;
-                    // 防呆: 超過5000字數
-                    if (translationStr.Length > 5000) {
-                        translationStr = translationStr.Substring(0, 4996) + "...";
-                    }
-                    texts.Add(translationStr);
-                }
-                return texts;
-            } catch (Exception ex) {
-                Log.Error($"取得撈取劍橋辭典網站的訊息列表 錯誤, vocabulary: {vocabulary}, ex: {ex}");
+            if (translations.Count == 0) {
+                texts.Add($"未能找到符合字詞: {vocabulary}");
                 return texts;
             }
+
+            // 設定發送的訊息
+            foreach (Translation translation in translations) {
+                string translationStr = translation.TranslationStr;
+                // 防呆: 超過5000字數
+                if (translationStr.Length > 5000) {
+                    translationStr = translationStr.Substring(0, 4996) + "...";
+                }
+                texts.Add(translationStr);
+            }
+            return texts;
         }
 
         /// <summary>
@@ -270,9 +262,7 @@ namespace BL.Services {
                 string cangjieReplyText = sb.ToString();
                 return cangjieReplyText;
             } catch (Exception ex) {
-                string errorMsg = $"GetCangjieReplyText 發生錯誤, 字詞：{words}, ex: {ex}";
-                Log.Error(errorMsg);
-                return errorMsg;
+                return $"GetCangjieReplyText 發生錯誤, 字詞：{words}, ex: {ex}";
             }
         }
 
@@ -327,8 +317,6 @@ namespace BL.Services {
                 int.TryParse(commandArg.Split(' ')[0], out int packageId) == false ||
                 int.TryParse(commandArg.Split(' ')[1], out int stickerId) == false) {
 
-                Log.Information("GetStickerReplyMessages 解析指令錯誤，格式錯誤"
-                    + $"，commandArg: {commandArg}");
                 TextMessage textMessage =
                     _lineMessageService.GetTextMessage(
                         "此指令用來輸出最多五個的貼圖，\n" +

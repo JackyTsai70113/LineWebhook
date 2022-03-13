@@ -4,7 +4,7 @@ using Core.Domain.Enums;
 using Core.Domain.Utilities;
 using isRock.LineBot;
 using Microsoft.Extensions.Configuration;
-using Serilog;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -55,9 +55,12 @@ namespace BL.Services.TWSE_Stock {
         public TradingVolumeService() {
             _topNumber = 100;
         }
+        private readonly ILogger<TradingVolumeService> logger;
 
-        public TradingVolumeService(IConfiguration configuration) {
+        public TradingVolumeService(IConfiguration configuration, ILogger<TradingVolumeService> logger) {
+            this.logger = logger;
             _topNumber = int.Parse(configuration.GetSection("TWSE").GetSection("TradingVolumeNumber").Value);
+
         }
 
         public List<MessageBase> GetTradingVolumeStrOverDays(QuerySortTypeEnum querySortType, int days) {
@@ -222,7 +225,7 @@ namespace BL.Services.TWSE_Stock {
                 if (!dict.ContainsKey(name)) {
                     dict.Add(name, difference);
                 } else {
-                    Log.Error($"[GetTradingVolumeDictionary] 證券名稱重複, " +
+                    logger.LogError($"[GetTradingVolumeDictionary] 證券名稱重複, " +
                         $"date: {tradingVolume.date}" +
                         $"name: {datas[i][2]}");
                 }
@@ -239,7 +242,7 @@ namespace BL.Services.TWSE_Stock {
             tradingVolume = JsonUtility.Deserialize<TradingVolume>(responseBody);
 
             if (tradingVolume.stat != "OK") {
-                Serilog.Log.Debug(
+                logger.LogError(
                     $"[GetTradingVolumeDict_ForeignInvestorsByJson] 報表未順利取得()，dateTime: {dateTime}");
                 return false;
             }
