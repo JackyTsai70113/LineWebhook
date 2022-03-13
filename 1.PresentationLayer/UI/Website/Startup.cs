@@ -27,13 +27,6 @@ namespace Website {
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
             Configuration = builder.Build();
             ConfigService.Configuration = Configuration;
-            // Task task = Task.Run(() => {
-            //     while (DateTime.UtcNow.AddHours(8).Day > 22) {
-            //         var content = RequestUtility.GetStringFromGetRequest("https://linewebhookapp.herokuapp.com/Home/Test");
-            //         new LineNotifyBotService().PushMessage_Jacky($"[Startup] {content} {DateTime.UtcNow.AddHours(8)}");
-            //         Thread.Sleep(1000 * 60 * 20);
-            //     }
-            // });
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
