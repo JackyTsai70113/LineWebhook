@@ -23,13 +23,17 @@ namespace BL.Services {
         private readonly ITradingVolumeService _tradingVolumeService;
 
         public LineWebhookService(
+            ICambridgeDictionaryManager cambridgeDictionaryManager,
             IExchangeRateService exchangeRateService,
-            IMapHereService mapHereService, ITradingVolumeService tradingVolumeService) {
+            LineMessageService lineMessageService,
+            IMaskInstitutionService maskInstitutionService,
+            IMapHereService mapHereService, 
+            ITradingVolumeService tradingVolumeService) {
 
-            _cambridgeDictionaryManager = new CambridgeDictionaryManager();
+            _cambridgeDictionaryManager = cambridgeDictionaryManager;
             _exchangeRateService = exchangeRateService;
-            _lineMessageService = new LineMessageService();
-            _maskInstitutionService = new MaskInstitutionService();
+            _lineMessageService = lineMessageService;
+            _maskInstitutionService = maskInstitutionService;
             _tradingVolumeService = tradingVolumeService;
             _mapHereService = mapHereService;
         }

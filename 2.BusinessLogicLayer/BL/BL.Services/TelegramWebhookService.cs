@@ -1,10 +1,8 @@
 using BL.Services.Base;
 using BL.Services.Interfaces;
 using Core.Domain.Utilities;
-using Newtonsoft.Json;
 using System;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Text.Json;
 using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types;
@@ -72,7 +70,7 @@ namespace BL.Services {
         private string GetMe() {
             var botClient = new TelegramBotClient("1253249749:AAEhPVK8fvahMGCKee_ZtG8fOivf4CjKYsY");
             var me = botClient.GetMeAsync().Result;
-            string result = JsonConvert.SerializeObject(me);
+            string result = JsonSerializer.Serialize(me);
             Console.WriteLine(result);
             return result;
         }

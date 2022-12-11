@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 
 namespace BL.Services.TWSE_Stock {
 
@@ -239,7 +240,7 @@ namespace BL.Services.TWSE_Stock {
             string dateStr = dateTime.ToString("yyyyMMdd");
             string uri = twseUri + "?response=json&date=" + dateStr;
             string responseBody = RequestUtility.GetStringFromGetRequest(uri);
-            tradingVolume = JsonUtility.Deserialize<TradingVolume>(responseBody);
+            tradingVolume = JsonSerializer.Deserialize<TradingVolume>(responseBody);
 
             if (tradingVolume.stat != "OK") {
                 logger.LogError(

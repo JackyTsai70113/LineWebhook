@@ -1,4 +1,4 @@
-﻿@using Newtonsoft.Json
+﻿@using System.Text.Json
 @model List<object[]>
 @{
     ViewData["Title"] = "StockKD";
@@ -19,7 +19,7 @@
 </body>
 
 <script>
-    var subCandles = @Html.Raw(JsonConvert.SerializeObject(Model));
+    var subCandles = @Html.Raw(JsonSerializer.Serialize(Model));
     anychart.onDocumentReady(function () {
         // The data used in this sample can be obtained from the CDN
         // https://cdn.anychart.com/csv-data/csco-daily.js

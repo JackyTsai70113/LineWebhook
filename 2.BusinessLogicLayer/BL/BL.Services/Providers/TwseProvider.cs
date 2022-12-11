@@ -3,6 +3,7 @@ using Core.Domain.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace BL.Services.Providers {
     public static class TwseProvider {
@@ -20,7 +21,7 @@ namespace BL.Services.Providers {
             string apiResult = RequestUtility.GetStringFromGetRequest(uri);
 
             List<HolidaySchedule> holidaySchedules = 
-                JsonUtility.Deserialize<List<HolidaySchedule>>(apiResult);
+                JsonSerializer.Deserialize<List<HolidaySchedule>>(apiResult);
 
             List<DateTime> holidayDates =
                 holidaySchedules.Select(s => 

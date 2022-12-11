@@ -7,8 +7,7 @@ namespace BL.Services.YahooFinance {
     public class StockService {
 
         public List<object[]> GetSubCandles() {
-            try
-            {
+            try {
                 IReadOnlyList<Candle> candles = Yahoo.GetHistoricalAsync(
                     "2884.TW", new DateTime(2019, 7, 20), new DateTime(2020, 8, 31), Period.Daily).Result;
                 List<object[]> arr = new List<object[]>();
@@ -23,13 +22,13 @@ namespace BL.Services.YahooFinance {
                             c.Volume,
                         };
                         arr.Add(objArr);
-                    } catch (System.Exception ex) {
-                        throw ex;
+                    } catch (Exception) {
+                        throw;
                     }
                 }
                 return arr;
-            } catch (System.Exception ex2) {
-                throw ex2;
+            } catch (System.Exception) {
+                throw;
             }
         }
     }

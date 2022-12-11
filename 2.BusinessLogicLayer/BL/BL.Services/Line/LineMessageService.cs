@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using BL.Services.Holiday;
 using Core.Domain.Enums;
 using isRock.LineBot;
-using Microsoft.Extensions.Logging;
 
 namespace BL.Services.Line {
 

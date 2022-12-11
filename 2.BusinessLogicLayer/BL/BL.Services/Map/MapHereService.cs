@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using BL.Services.Interfaces;
 using Core.Domain.DTO.Map;
 using Core.Domain.Utilities;
-using Newtonsoft.Json;
+using Microsoft.Extensions.Configuration;
 
 namespace BL.Services.Map {
 
@@ -18,16 +19,16 @@ namespace BL.Services.Map {
     public class MapHereService : IMapHereService {
 
         /// <summary>
-        /// 建構子，設定Api Key
-        /// </summary>
-        public MapHereService() {
-            _apiKey = ConfigService.HereApi_Key;
-        }
-
-        /// <summary>
         /// here 的 Api key
         /// </summary>
         private readonly string _apiKey;
+
+        /// <summary>
+        /// 建構子，設定Api Key
+        /// </summary>
+        public MapHereService(IConfiguration config) {
+            _apiKey = config["HereApi_Key"];
+        }
 
         /// <summary>
         /// 將 目標地址列表 依 來源地址的遠近 排序，越近越前面
@@ -57,7 +58,7 @@ namespace BL.Services.Map {
                 "&waypoint1=geo!" + l2.lat + "," + l2.lng +
                 "&mode=fastest;pedestrian";
             string responseStr = RequestUtility.GetStringFromGetRequest(uri);
-            var calculateRouteRootobject = JsonConvert.DeserializeObject<CalculateRouteRootobject>(responseStr);
+            var calculateRouteRootobject = JsonSerializer.Deserialize<CalculateRouteRootobject>(responseStr);
             return calculateRouteRootobject.response.route[0].summary.distance;
         }
 
@@ -74,7 +75,7 @@ namespace BL.Services.Map {
                 "&waypoint1=geo!" + l2.lat + "," + l2.lng +
                 "&mode=fastest;pedestrian";
             string responseStr = RequestUtility.GetStringFromGetRequest(uri);
-            var calculateRouteRootobject = JsonConvert.DeserializeObject<CalculateRouteRootobject>(responseStr);
+            var calculateRouteRootobject = JsonSerializer.Deserialize<CalculateRouteRootobject>(responseStr);
             return calculateRouteRootobject.response.route[0].summary.travelTime;
         }
 
@@ -91,7 +92,7 @@ namespace BL.Services.Map {
                 "&searchtext=" + addressWithCountry +
                 "&gen=9";
             string responseStr = RequestUtility.GetStringFromGetRequest(uri);
-            RootObject rootObject = JsonConvert.DeserializeObject<RootObject>(responseStr);
+            RootObject rootObject = JsonSerializer.Deserialize<RootObject>(responseStr);
 
             LatLng latLng = new LatLng {
                 lat = rootObject.Response.View[0].Result[0].Location.DisplayPosition.Latitude,

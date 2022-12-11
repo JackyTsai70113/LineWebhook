@@ -75,8 +75,8 @@ namespace DA.Repositories.TWSE_Stock {
                 OpenSqlConnection();
                 affectedRowNumber = Execute(IF_NOT_EXISTS_THEN_INSERT_ALL, dailyQuoteList);
                 return affectedRowNumber;
-            } catch (Exception ex) {
-                throw ex;
+            } catch (Exception) {
+                throw;
             }
         }
 
@@ -167,8 +167,8 @@ namespace DA.Repositories.TWSE_Stock {
                 OpenSqlConnection();
                 affectedRowNumber = Execute(SAVE_ALL, dailyQuoteList);
                 return affectedRowNumber;
-            } catch (Exception ex) {
-                throw ex;
+            } catch (Exception) {
+                throw;
             }
         }
 
@@ -229,23 +229,5 @@ namespace DA.Repositories.TWSE_Stock {
             dailyQuoteList = QueryEnumerable(cmdText, new { date }).ToList();
             return dailyQuoteList;
         }
-
-        ///// <summary>
-        ///// Insert每日收盤行情列表
-        ///// </summary>
-        ///// <param name="dailyQuoteList">每日收盤行情列表</param>
-        ///// <returns>成功數量</returns>
-        //public DailyQuote GetDailyQuoteListByDateAnd(List<DailyQuote> dailyQuoteList = null) {
-        //    try {
-        //        int affectedRowNumber = -1;
-        //        using (SqlConnection sqlConnection = GetSqlConnection()) {
-        //            sqlConnection.Open();
-        //            affectedRowNumber = sqlConnection.Execute(IF_NOT_EXISTS_THEN_INSERT_ALL, dailyQuoteList);
-        //            return affectedRowNumber;
-        //        }
-        //    } catch (Exception ex) {
-        //        throw ex;
-        //    }
-        //}
     }
 }

@@ -1,32 +1,37 @@
-using Newtonsoft.Json;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text.Json;
 
 namespace BL.Services.Cache.Redis {
 
     public class RedisCacheService : ICacheService {
-        private static readonly string endpoint = ConfigService.Redis_Endpoint;
-        private static readonly string password = ConfigService.Redis_Password;
-        private static readonly ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(endpoint + ",password=" + password);
-        private static readonly IDatabase db = redis.GetDatabase();
-        private static readonly IServer server = redis.GetServer(endpoint);
+        private readonly string _endpoint;
+        private readonly string _password;
+        private readonly ConnectionMultiplexer _redis;
+        private readonly IDatabase _db;
+        private readonly IServer _server;
 
-        public RedisCacheService() {
+        public RedisCacheService(string endpoint, string password) {
+            _endpoint = endpoint;
+            _password = password;
+            _redis = ConnectionMultiplexer.Connect(_endpoint + ",password=" + _password);
+            _db = _redis.GetDatabase();
+            _server = _redis.GetServer(_endpoint);
         }
 
         public bool Set<T>(string key, T value) {
-            string valueStr = JsonConvert.SerializeObject(value);
+            string valueStr = JsonSerializer.Serialize(value);
             RedisValue redisValue = new RedisValue(valueStr);
-            return db.StringSet(key, redisValue);
+            return _db.StringSet(key, redisValue);
         }
 
         public bool Set<T>(string key, T value, TimeSpan timeout) {
-            string valueStr = JsonConvert.SerializeObject(value);
+            string valueStr = JsonSerializer.Serialize(value);
             RedisValue redisValue = new RedisValue(valueStr);
-            return db.StringSet(key, redisValue, timeout);
+            return _db.StringSet(key, redisValue, timeout);
         }
 
         /// <summary>
@@ -35,18 +40,18 @@ namespace BL.Services.Cache.Redis {
         /// <param name="pattern">欲符合的pattern</param>
         /// <returns>key列表</returns>
         public List<string> GetKeys(string pattern) {
-            return server.Keys(pattern: pattern).Select(k => k.ToString()).ToList();
+            return _server.Keys(pattern: pattern).Select(k => k.ToString()).ToList();
         }
 
         public T Get<T>(string key) {
-            RedisValue redisValue = db.StringGet(key);
-            return JsonConvert.DeserializeObject<T>(redisValue.ToString());
+            RedisValue redisValue = _db.StringGet(key);
+            return JsonSerializer.Deserialize<T>(redisValue.ToString());
         }
 
         public bool TryGet<T>(string key, out T value) {
             if (ExistKeyValue(key)) {
-                RedisValue redisValue = db.StringGet(key);
-                value = JsonConvert.DeserializeObject<T>(redisValue.ToString());
+                RedisValue redisValue = _db.StringGet(key);
+                value = JsonSerializer.Deserialize<T>(redisValue.ToString());
                 return true;
             }
 
@@ -55,7 +60,7 @@ namespace BL.Services.Cache.Redis {
         }
 
         public bool Delete(string key) {
-            return db.KeyDelete(key);
+            return _db.KeyDelete(key);
         }
 
         /// <summary>
@@ -64,19 +69,19 @@ namespace BL.Services.Cache.Redis {
         /// <param name="key">key</param>
         /// <returns>是否存在</returns>
         public bool ExistKeyValue(string key) {
-            return db.StringGet(key).HasValue;
+            return _db.StringGet(key).HasValue;
         }
 
         public EndPoint[] GetEndPoints() {
-            return redis.GetEndPoints();
+            return _redis.GetEndPoints();
         }
 
         public HashEntry[] GetHashEntrys(string pattern) {
-            return db.HashGetAll(pattern);
+            return _db.HashGetAll(pattern);
         }
 
         public IServer GetEndPoints(EndPoint endPoint) {
-            return redis.GetServer(endPoint);
+            return _redis.GetServer(endPoint);
         }
     }
 }

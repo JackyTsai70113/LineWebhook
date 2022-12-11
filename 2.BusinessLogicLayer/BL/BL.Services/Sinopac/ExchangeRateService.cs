@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Text.Json;
 using BL.Services.Interfaces;
 using Core.Domain.DTO.Sinopac;
 using Core.Domain.Utilities;
-using isRock.LineBot;
 
 namespace BL.Services.Sinopac {
 
@@ -37,7 +36,7 @@ namespace BL.Services.Sinopac {
         private List<ExchangeRate> GetExchangeRate() {
             string url = $"https://mma.sinopac.com/ws/share/rate/ws_exchange.ashx?exchangeType=REMIT";
             string response = RequestUtility.GetStringFromGetRequest(url);
-            List<ExchangeRate> exchangeRates = JsonUtility.Deserialize<List<ExchangeRate>>(response);
+            List<ExchangeRate> exchangeRates = JsonSerializer.Deserialize<List<ExchangeRate>>(response);
             return exchangeRates;
         }
     }

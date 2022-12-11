@@ -6,13 +6,16 @@ using BL.Services.YahooFinance;
 using Microsoft.AspNetCore.Mvc;
 using Website.Models;
 using Core.Domain.DTO;
+using Microsoft.Extensions.Configuration;
 
 namespace Website.Controllers {
 
     public class HomeController : Controller {
+        private readonly IConfigurationRoot _configRoot;
         private readonly IMaskInstitutionService _maskInstitutionService;
 
-        public HomeController(IMaskInstitutionService maskInstitutionService) {
+        public HomeController(IConfiguration config, IMaskInstitutionService maskInstitutionService) {
+            _configRoot = (IConfigurationRoot)config;
             _maskInstitutionService = maskInstitutionService;
         }
 

@@ -168,7 +168,7 @@ namespace DA.Managers.TWSE_Stock {
                 $"&date=" + dateStr +
                 $"&type=" + typeStr;
             try {
-                HttpClient client = RequestUtility.GetNewHttpClient();
+                HttpClient client = new HttpClient();
                 //發送請求
                 HttpResponseMessage httpResponseMessage = client.GetAsync(uri).Result;
 
@@ -217,7 +217,7 @@ namespace DA.Managers.TWSE_Stock {
 
             byte[] bytes;
             try {
-                HttpClient client = RequestUtility.GetNewHttpClient();
+                HttpClient client = new HttpClient();
                 HttpResponseMessage httpResponseMessage = await client.GetAsync(uri);
                 if (httpResponseMessage.StatusCode == HttpStatusCode.OK) {
                     //取得內容

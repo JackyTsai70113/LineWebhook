@@ -68,8 +68,8 @@ namespace DA.Repositories.TWSE_Stock {
                 OpenSqlConnection();
                 affectedRowNumber = Execute(SAVE_ALL, dividendDistributionList);
                 return affectedRowNumber;
-            } catch (Exception ex) {
-                throw ex;
+            } catch (Exception) {
+                throw;
             }
         }
     }

@@ -112,8 +112,8 @@ namespace DA.Repositories.TWSE_Stock {
                 OpenSqlConnection();
                 affectedRowNumber = Execute(SAVE_ALL, stockValueEstimation);
                 return affectedRowNumber;
-            } catch (Exception ex) {
-                throw ex;
+            } catch (Exception) {
+                throw;
             }
         }
     }

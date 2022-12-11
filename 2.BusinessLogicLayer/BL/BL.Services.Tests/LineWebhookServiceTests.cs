@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
+using BL.Services.Line;
 using BL.Services.Sinopac;
 using BL.Services.Tests.Map;
 using BL.Services.TWSE_Stock;
-using Core.Domain.Utilities;
+using DA.Managers.CambridgeDictionary;
 using isRock.LineBot;
 using NUnit.Framework;
 
@@ -15,7 +17,10 @@ namespace BL.Services.Tests {
         [SetUp]
         public void Setup() {
             LineWebhookService = new LineWebhookService(
+                new CambridgeDictionaryManager(),
                 new FakeExchangeRateService(),
+                new LineMessageService(),
+                new MaskInstitutionService(),
                 new FakeMapHereService(),
                 new TradingVolumeService()
                 );
@@ -35,8 +40,8 @@ namespace BL.Services.Tests {
             List<MessageBase> actual = LineWebhookService.GetReplyMessages(@event);
 
             // Assert
-            Assert.AreEqual(JsonUtility.Serialize(messages), JsonUtility.Serialize(actual),
-                JsonUtility.Serialize(messages) + "\n" + JsonUtility.Serialize(actual));
+            Assert.AreEqual(JsonSerializer.Serialize(messages), JsonSerializer.Serialize(actual),
+                JsonSerializer.Serialize(messages) + "\n" + JsonSerializer.Serialize(actual));
         }
 
         public static IEnumerable ValidTextInputs {
@@ -117,8 +122,8 @@ namespace BL.Services.Tests {
             List<MessageBase> actual = LineWebhookService.GetReplyMessages(@event);
 
             // Assert
-            Assert.AreEqual(JsonUtility.Serialize(messages), JsonUtility.Serialize(actual),
-                JsonUtility.Serialize(messages) + "\n" + JsonUtility.Serialize(actual));
+            Assert.AreEqual(JsonSerializer.Serialize(messages), JsonSerializer.Serialize(actual),
+                JsonSerializer.Serialize(messages) + "\n" + JsonSerializer.Serialize(actual));
         }
 
         public static IEnumerable InvalidTextInputs {
@@ -144,8 +149,8 @@ namespace BL.Services.Tests {
                         }
                     },
                     new List<MessageBase>{
-                        new TextMessage("此指令用來輸出最多五個的貼圖，\n" + 
-                        "用法：st {貼圖包Id} {貼圖Id}\n範例：st 1 1\n" + 
+                        new TextMessage("此指令用來輸出最多五個的貼圖，\n" +
+                        "用法：st {貼圖包Id} {貼圖Id}\n範例：st 1 1\n" +
                         "貼圖包/貼圖 如官方文件所定義：https://developers.line.biz/zh-hant/docs/messaging-api/sticker-list/#sticker-definitions")
                     }
                 );

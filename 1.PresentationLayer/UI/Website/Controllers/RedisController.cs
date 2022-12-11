@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using BL.Services.Cache;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using Website.Models;
 
 namespace Website.Controllers {
@@ -40,14 +40,14 @@ namespace Website.Controllers {
                 responseModel = new BaseResponseModel<List<KeyValue>, string>() {
                     isSuccess = true,
                     data = keyValues,
-                    error = $"noExistKey: {JsonConvert.SerializeObject(noExistKeys)}"
+                    error = $"noExistKey: {JsonSerializer.Serialize(noExistKeys)}"
                 };
                 return responseModel;
             } catch (Exception ex) {
                 responseModel = new BaseResponseModel<List<KeyValue>, string>() {
                     isSuccess = false,
                     data = null,
-                    error = $"keys: {JsonConvert.SerializeObject(keys)}, ex: {ex}"
+                    error = $"keys: {JsonSerializer.Serialize(keys)}, ex: {ex}"
                 };
                 return responseModel;
             }
@@ -90,7 +90,7 @@ namespace Website.Controllers {
                 return responseModel;
             }
         }
-        
+
         /// <summary>
         /// 取得KeyValues By <paramref name="keys"/>
         /// </summary>
@@ -106,7 +106,7 @@ namespace Website.Controllers {
                 foreach (string key in keys) {
                     if (!_redisCacheService.ExistKeyValue(key)) {
                         noExistKeys.Add(key);
-                    } else{
+                    } else {
                         string value = _redisCacheService.Get<string>(key);
                         keyValues.Add(new KeyValue() {
                             key = key,
@@ -117,14 +117,14 @@ namespace Website.Controllers {
                 responseModel = new BaseResponseModel<List<KeyValue>, string>() {
                     isSuccess = true,
                     data = keyValues,
-                    error = $"noExistKeys: {JsonConvert.SerializeObject(noExistKeys)}"
+                    error = $"noExistKeys: {JsonSerializer.Serialize(noExistKeys)}"
                 };
                 return responseModel;
             } catch (Exception ex) {
                 responseModel = new BaseResponseModel<List<KeyValue>, string>() {
                     isSuccess = false,
                     data = null,
-                    error = $"keys: {JsonConvert.SerializeObject(keys)}, ex: {ex}"
+                    error = $"keys: {JsonSerializer.Serialize(keys)}, ex: {ex}"
                 };
                 return responseModel;
             }
@@ -225,7 +225,7 @@ namespace Website.Controllers {
         /// <returns>結果</returns>
         [HttpDelete]
         [Route("redis/keyValues/{key}")]
-        public BaseResponseModel<string, string> DeleteKeyValueByKey(string key){
+        public BaseResponseModel<string, string> DeleteKeyValueByKey(string key) {
             BaseResponseModel<string, string> responseModel;
             bool deleteResult;
             try {
@@ -272,8 +272,7 @@ namespace Website.Controllers {
         [Route("redis/GetKeysByPattern")]
         public BaseResponseModel<List<string>, string> GetKeysByPattern(string pattern) {
             BaseResponseModel<List<string>, string> responseModel;
-            try
-            {
+            try {
                 List<string> keys = _redisCacheService.GetKeys(pattern);
                 responseModel = new BaseResponseModel<List<string>, string>() {
                     isSuccess = true,
@@ -281,9 +280,7 @@ namespace Website.Controllers {
                     error = null
                 };
                 return responseModel;
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 responseModel = new BaseResponseModel<List<string>, string>() {
                     isSuccess = false,
                     data = null,
@@ -297,7 +294,7 @@ namespace Website.Controllers {
     /// <summary>
     /// KeyValue
     /// </summary>
-    public class KeyValue{
+    public class KeyValue {
         /// <summary>
         /// 鍵
         /// </summary>

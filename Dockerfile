@@ -1,6 +1,6 @@
-ARG VERSION=3.1-alpine
+ARG VERSION=6.0
 
-FROM mcr.microsoft.com/dotnet/core/sdk:$VERSION AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:$VERSION AS build-env
 WORKDIR /app
 
 # Copy csproj and restore as distinct layers

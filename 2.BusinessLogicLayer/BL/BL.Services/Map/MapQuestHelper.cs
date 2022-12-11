@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 using System.Web;
 using Core.Domain.Utilities;
-using Newtonsoft.Json;
+using Microsoft.Extensions.Configuration;
 
 namespace BL.Services.Map {
 
@@ -10,30 +11,34 @@ namespace BL.Services.Map {
     /// MapQuest服務的Map API，15000 transactions per month for free
     /// https://developer.mapquest.com/documentation/
     /// </summary>
-    public static class MapQuestHelper {
+    public class MapQuestService {
 
         /// <summary>
         /// mapQuest 的 Api key
         /// </summary>
-        private static readonly string mapQuest_Key = ConfigService.MapQuest_Key;
+        private readonly string _apiKey;
+
+        public MapQuestService(IConfiguration config) {
+            _apiKey = config["MapQuest_Key"];
+        }
 
         /// <summary>
         /// 透過地址取得經緯度
         /// </summary>
         /// <param name="address">地址</param>
         /// <returns>經緯度</returns>
-        public static Core.Domain.DTO.Map.LatLng GetLatLngFromAddress(string address) {
+        public Core.Domain.DTO.Map.LatLng GetLatLngFromAddress(string address) {
             LatLng latLng = new LatLng();
             address = "臺灣" + address;
             var encodedAddress = HttpUtility.UrlEncode(address, Encoding.GetEncoding("UTF-8"));
             string uri = "http://www.mapquestapi.com/geocoding/v1/address?" +
-                "key=" + mapQuest_Key + "&" +
+                "key=" + _apiKey + "&" +
                 "inFormat=kvp&" +
                 "outFormat=json&" +
                 "location=" + encodedAddress + "&" +
                 "thumbMaps=false";
             string responseStr = RequestUtility.GetStringFromGetRequest(uri);
-            var response = JsonConvert.DeserializeObject<Response>(responseStr);
+            var response = JsonSerializer.Deserialize<Response>(responseStr);
 
             List<Location> locations = response.results[0].locations;
             foreach (Location location in locations) {
