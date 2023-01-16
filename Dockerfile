@@ -7,15 +7,15 @@ WORKDIR /app
 COPY *.sln .
 COPY 0.CoreLayer/Core.Domain/*.csproj 0.CoreLayer/Core.Domain/
 COPY 1.PresentationLayer/UI/Website/*.csproj 1.PresentationLayer/UI/Website/
-COPY 2.BusinessLogicLayer/BL/BL.Services/*.csproj 2.BusinessLogicLayer/BL/BL.Services/
-COPY 2.BusinessLogicLayer/BL/BL.Services.Tests/*.csproj 2.BusinessLogicLayer/BL/BL.Services.Tests/
+COPY 2.BusinessLogicLayer/BL.Service/*.csproj 2.BusinessLogicLayer/BL.Service/
+COPY 2.BusinessLogicLayer/BL.Service.Tests/*.csproj 2.BusinessLogicLayer/BL.Service.Tests/
 COPY 3.DataAccessLayer/DA/DA.Managers/*.csproj 3.DataAccessLayer/DA/DA.Managers/
 COPY 3.DataAccessLayer/DA/DA.Repositories/*.csproj 3.DataAccessLayer/DA/DA.Repositories/
 RUN dotnet restore
 
 # Copy everything else and build
 COPY . ./
-RUN dotnet test 2.BusinessLogicLayer/BL/BL.Services.Tests -c Release
+RUN dotnet test 2.BusinessLogicLayer/BL.Service.Tests -c Release
 RUN dotnet publish 1.PresentationLayer/UI/Website -c Release -o /app/out
 
 # Build runtime image
