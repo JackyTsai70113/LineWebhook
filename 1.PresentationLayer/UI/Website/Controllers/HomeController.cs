@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using BL.Services.Interfaces;
-using BL.Services.YahooFinance;
+using BL.Service.YahooFinance;
 using Microsoft.AspNetCore.Mvc;
 using Website.Models;
 using Core.Domain.DTO;
 using Microsoft.Extensions.Configuration;
+
+using BL.Service.Interface;
 
 namespace Website.Controllers {
 

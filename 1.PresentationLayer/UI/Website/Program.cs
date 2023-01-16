@@ -1,20 +1,19 @@
-﻿using BL.Services;
-using BL.Services.Cache;
-using BL.Services.Cache.Redis;
-using BL.Services.Interfaces;
-using BL.Services.Line;
-using BL.Services.Line.Interfaces;
-using BL.Services.Map;
-using BL.Services.Sinopac;
-using BL.Services.TWSE_Stock;
+﻿using BL.Service;
+using BL.Service.Cache;
+using BL.Service.Cache.Redis;
+using BL.Service.Interface;
+using BL.Service.Line;
+using BL.Service.Line.Interface;
+using BL.Service.Map;
+using BL.Service.Sinopac;
+using BL.Service.TWSE_Stock;
 using DA.Managers.CambridgeDictionary;
 using DA.Managers.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Website.Controllers;
 using Website.Data;
 
 namespace Website;
@@ -28,8 +27,8 @@ public class Program {
         builder.Services.AddMvc();
         // Add services to the container.
         builder.Services.AddControllersWithViews();
-        // builder.Services.AddDbContext<LineWebhookContext>(options =>
-        //                 options.UseSqlServer(Configuration.GetConnectionString("LineWebhookContext")));
+        builder.Services.AddDbContext<LineWebhookContext>(options =>
+            options.UseSqlServer("Server=localhost;Database=TestDB;User Id=sa;Password=Passw0rd1"));
         builder.Services.AddMyService();
 
         var app = builder.Build();
@@ -76,9 +75,7 @@ static class ServiceExtensions {
         services.AddScoped<IMaskInstitutionService, MaskInstitutionService>();
         services.AddScoped<ITradingVolumeService, TradingVolumeService>();
 
-        services.AddSingleton<Config, Config>();
         services.AddSingleton<IMapHereService, MapHereService>();
-        services.AddSingleton<ICacheService, RedisCacheService>(
-            p => new RedisCacheService(Config.Redis_Endpoint, Config.Redis_Password));
+        services.AddSingleton<ICacheService, RedisCacheService>();
     }
 }

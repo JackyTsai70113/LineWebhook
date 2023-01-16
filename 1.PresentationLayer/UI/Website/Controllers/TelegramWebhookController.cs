@@ -1,8 +1,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using BL.Services;
-using BL.Services.Interfaces;
+using BL.Service;
+using BL.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Website.Controllers {

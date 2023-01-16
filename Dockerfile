@@ -19,7 +19,7 @@ RUN dotnet test 2.BusinessLogicLayer/BL/BL.Services.Tests -c Release
 RUN dotnet publish 1.PresentationLayer/UI/Website -c Release -o /app/out
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/core/aspnet:$VERSION AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:$VERSION AS runtime
 WORKDIR /app
 COPY --from=build-env /app/out ./
 #ENV DOTNET_RUNNING_IN_CONTAINER=true ASPNETCORE_URLS=http://+:8080

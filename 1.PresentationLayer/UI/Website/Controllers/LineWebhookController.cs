@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using BL.Services;
-using BL.Services.Interfaces;
-using BL.Services.Line.Interfaces;
+using BL.Service;
+using BL.Service.Interface;
+using BL.Service.Line.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Text;
@@ -20,7 +20,7 @@ namespace Website.Controllers {
     [ApiController]
     [Route("[controller]")]
     public class LineWebhookController : ControllerBase {
-        private IConfigurationRoot _configRoot;
+        private IConfiguration _config;
         private readonly ILogger<LineWebhookController> _logger;
         private readonly ILineNotifyBotService _lineNotifyBotService;
         private readonly ILineWebhookService _lineWebhookService;
@@ -31,7 +31,7 @@ namespace Website.Controllers {
             , ILineNotifyBotService LineNotifyBotService
             , ILineWebhookService LineWebhookService) {
             // Bot = new Bot(ConfigService.Line_ChannelAccessToken);
-            _configRoot = (IConfigurationRoot)config;
+            _config = config;
             _logger = logger;
             _lineNotifyBotService = LineNotifyBotService;
             _lineWebhookService = LineWebhookService;
@@ -64,7 +64,7 @@ namespace Website.Controllers {
 
                 string replyToken = receivedMessage.events[0].replyToken;
                 try {
-                    var Bot = new Bot(_configRoot.GetSection("Line").GetSection("NotifyBearerToken_Group").Value);
+                    var Bot = new Bot(_config["Line:NotifyBearerToken_Group"]);
                     string result = Bot.ReplyMessage(replyToken, messages);
                     return Content(requestBody + "\n" + result);
                 } catch (Exception ex) {
@@ -85,7 +85,7 @@ namespace Website.Controllers {
                 }
             } catch (Exception ex) {
                 _logger.LogError($"[Index] requestBody: {requestBody}, ex: {ex}");
-                return Content($"Index 發生錯誤，requestBody: {requestBody}, ex: {ex}");
+                return Content($"Index 發生錯誤, requestBody: {requestBody}, ex: {ex}");
             }
         }
 
@@ -112,7 +112,7 @@ namespace Website.Controllers {
                 return Ok(sb.ToString());
             } catch (Exception ex) {
                 _logger.LogError($"[Index] requestBody: {requestBody}, ex: {ex}");
-                return Content($"Index 發生錯誤，requestBody: {requestBody}, ex: {ex}");
+                return Content($"Index 發生錯誤, requestBody: {requestBody}, ex: {ex}");
             }
         }
 
@@ -127,9 +127,6 @@ namespace Website.Controllers {
         [Route("test")]
         public IActionResult Test() {
             string str = "";
-            foreach (var provider in _configRoot.Providers.ToList()) {
-                str += provider.ToString() + "\n";
-            }
 
             _logger.LogInformation("Hello, {Name}!", Environment.UserName);
             _logger.LogInformation("Info!");

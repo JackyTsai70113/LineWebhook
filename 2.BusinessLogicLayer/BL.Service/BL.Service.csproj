@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\0.CoreLayer\Core.Domain\Core.Domain.csproj" />
+    <ProjectReference Include="..\..\3.DataAccessLayer\DA\DA.Managers\DA.Managers.csproj" />
+    <ProjectReference Include="..\..\3.DataAccessLayer\DA\DA.Repositories\DA.Repositories.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LineBotSDK" Version="2.9.36" />
+    <PackageReference Include="StackExchange.Redis" Version="2.6.90" />
+    <PackageReference Include="YahooFinanceApi" Version="2.1.2" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+</Project>

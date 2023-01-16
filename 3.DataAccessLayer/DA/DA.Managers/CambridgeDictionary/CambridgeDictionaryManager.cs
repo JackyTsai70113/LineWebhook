@@ -3,12 +3,8 @@ using AngleSharp.Dom;
 using Core.Domain.DTO.RequestDTO.CambridgeDictionary;
 using Core.Domain.Utilities;
 using DA.Managers.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DA.Managers.CambridgeDictionary {
 

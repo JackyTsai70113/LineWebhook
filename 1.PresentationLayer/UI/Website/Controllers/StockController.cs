@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BL.Services;
-using BL.Services.Interfaces.TWSE_Stock;
+using BL.Service;
+using BL.Service.Interface.TWSE_Stock;
 using Core.Domain.Entities.TWSE_Stock;
 using Core.Domain.Entities.TWSE_Stock.Exchange;
 using Core.Domain.Enums;
