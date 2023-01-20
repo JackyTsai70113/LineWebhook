@@ -1,9 +1,12 @@
-ARG VERSION=6.0
-
-FROM mcr.microsoft.com/dotnet/sdk:$VERSION AS build-env
+# specifies the base image on which we want our image to be built.
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+# sets the working directory or context inside the image
 WORKDIR /app
+EXPOSE 80
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /src
 
-# Copy csproj and restore as distinct layers
+# Copy content and restore as distinct layers
 COPY *.sln .
 COPY 0.CoreLayer/Core.Domain/*.csproj 0.CoreLayer/Core.Domain/
 COPY 1.PresentationLayer/UI/Website/*.csproj 1.PresentationLayer/UI/Website/
@@ -13,22 +16,16 @@ COPY 3.DataAccessLayer/DA/DA.Managers/*.csproj 3.DataAccessLayer/DA/DA.Managers/
 COPY 3.DataAccessLayer/DA/DA.Repositories/*.csproj 3.DataAccessLayer/DA/DA.Repositories/
 RUN dotnet restore
 
-# Copy everything else and build
-COPY . ./
-RUN dotnet test 2.BusinessLogicLayer/BL.Service.Tests -c Release
-RUN dotnet publish 1.PresentationLayer/UI/Website -c Release -o /app/out
+# copy and publish app and libraries
+COPY . .
+WORKDIR "/src/."
+RUN dotnet build "1.PresentationLayer/UI/Website/Website.csproj" -c Release -o /app/build
+RUN dotnet test "2.BusinessLogicLayer/BL.Service.Tests" -c Release
+RUN dotnet publish "1.PresentationLayer/UI/Website/Website.csproj" -c Release -o /app/publish
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:$VERSION AS runtime
+FROM base AS final
 WORKDIR /app
-COPY --from=build-env /app/out ./
-#ENV DOTNET_RUNNING_IN_CONTAINER=true ASPNETCORE_URLS=http://+:8080
-
-###  
-#EXPOSE 8080
-#ENTRYPOINT ["dotnet", "Website.dll"]
-#
-
-### heroku uses the following
-CMD ASPNETCORE_URLS=http://*:$PORT dotnet Website.dll
-#
+EXPOSE 80
+COPY --from=build /app/publish .
+ENTRYPOINT ["dotnet", "Website.dll"]
