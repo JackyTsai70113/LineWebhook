@@ -48,7 +48,7 @@ namespace Website.Controllers {
             try {
                 //處理requestModel
                 ReceivedMessage receivedMessage = Utility.Parsing(requestBody.ToString());
-
+                if (receivedMessage.events.Count == 0) return Ok();
                 _logger.LogInformation($"========== From LINE SERVER ==========");
                 _logger.LogInformation($"requestModel:");
                 _logger.LogInformation($"{JsonSerializer.Serialize(receivedMessage)}");
@@ -64,7 +64,8 @@ namespace Website.Controllers {
 
                 string replyToken = receivedMessage.events[0].replyToken;
                 try {
-                    var Bot = new Bot(_config["Line:NotifyBearerToken_Group"]);
+                    Console.WriteLine(_config["Line:ChannelAccessToken"]);
+                    var Bot = new Bot(_config["Line:ChannelAccessToken"]);
                     string result = Bot.ReplyMessage(replyToken, messages);
                     return Content(requestBody + "\n" + result);
                 } catch (Exception ex) {
