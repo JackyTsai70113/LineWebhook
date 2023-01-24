@@ -70,7 +70,7 @@ static class ServiceExtensions {
         services.AddScoped<IMaskInstitutionService, MaskInstitutionService>();
         services.AddScoped<LineMessageService, LineMessageService>();
         services.AddScoped<IExchangeRateService, ExchangeRateService>();
-        services.AddScoped<ILineNotifyBotService, LineNotifyBotService>();
+        services.AddScoped<ILineBotService, LineBotService>();
         services.AddScoped<ILineWebhookService, LineWebhookService>();
         services.AddScoped<IMaskInstitutionService, MaskInstitutionService>();
         services.AddScoped<ITradingVolumeService, TradingVolumeService>();

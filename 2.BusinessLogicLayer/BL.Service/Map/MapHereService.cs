@@ -112,7 +112,7 @@ namespace BL.Service.Map {
         }
 
         private class Metainfo {
-            public DateTime Timestamp { get; set; }
+            public string Timestamp { get; set; }
         }
 
         private class View {
