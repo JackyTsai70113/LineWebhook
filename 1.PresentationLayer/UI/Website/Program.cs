@@ -22,6 +22,9 @@ public class Program {
     public static void Main(string[] args) {
 
         var builder = WebApplication.CreateBuilder(args);
+        builder.WebHost.ConfigureKestrel(options => {
+            options.ListenAnyIP(5000, configure => configure.UseHttps());
+        });
 
         // register Mvc service
         builder.Services.AddMvc();
