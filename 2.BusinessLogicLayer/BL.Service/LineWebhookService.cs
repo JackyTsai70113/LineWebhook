@@ -342,9 +342,8 @@ namespace BL.Service {
         /// count 必須介於 1 和 5
         /// </exception>
         private List<MessageBase> GetStickerReplyMessages(int packageId, int stickerId, int count) {
-            if (count < 1 || count > 5) {
+            if (count < 1 || count > 5)
                 throw new ArgumentException("參數錯誤！個數必須介於 1 和 5。");
-            }
 
             List<MessageBase> messages = new List<MessageBase>();
 

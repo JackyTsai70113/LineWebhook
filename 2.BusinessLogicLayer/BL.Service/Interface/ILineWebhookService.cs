@@ -1,5 +1,4 @@
 ﻿using isRock.LineBot;
-using System.Collections.Generic;
 
 namespace BL.Service.Interface {
 

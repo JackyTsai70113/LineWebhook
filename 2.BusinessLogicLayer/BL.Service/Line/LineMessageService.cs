@@ -176,6 +176,30 @@ namespace BL.Service.Line {
                     if (260 <= stickerId && stickerId <= 307) return true;
                     else if (601 <= stickerId && stickerId <= 632) return true;
                     else return false;
+                case 446:
+                    if (1988 <= stickerId && stickerId <= 2027) return true;
+                    return false;
+                case 789:
+                    if (10855 <= stickerId && stickerId <= 10894) return true;
+                    return false;
+                case 1070:
+                    if (17839 <= stickerId && stickerId <= 17878) return true;
+                    return false;
+                case 6136:
+                    if (10551376 <= stickerId && stickerId <= 10551399) return true;
+                    return false;
+                case 6325:
+                    if (10979904 <= stickerId && stickerId <= 10979927) return true;
+                    return false;
+                case 6359:
+                    if (11069848 <= stickerId && stickerId <= 11069871) return true;
+                    return false;
+                case 6362:
+                    if (11087920 <= stickerId && stickerId <= 11087943) return true;
+                    return false;
+                    case 8525:
+                    if (16581290 <= stickerId && stickerId <= 16581313) return true;
+                    return false;
                 case 11537:
                     if (52002734 <= stickerId && stickerId <= 52002773) return true;
                     else return false;
