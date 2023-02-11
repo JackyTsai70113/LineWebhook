@@ -5,14 +5,17 @@ using isRock.LineBot;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace BL.Service.Line {
+namespace BL.Service.Line
+{
 
-    public class LineBotService : ILineBotService {
+    public class LineBotService : ILineBotService
+    {
         private readonly ILogger<LineBotService> logger;
         private readonly IConfiguration config;
         private readonly Bot bot;
 
-        public LineBotService(ILogger<LineBotService> logger, IConfiguration config) {
+        public LineBotService(ILogger<LineBotService> logger, IConfiguration config)
+        {
             this.logger = logger;
             this.config = config;
             this.bot = new Bot(config["Line:ChannelAccessToken"]);
@@ -23,7 +26,8 @@ namespace BL.Service.Line {
         /// </summary>
         /// <param name="msg">推播字串</param>
         /// <returns>是否推播成功</returns>
-        public bool PushMessage_Group(string msg) {
+        public bool PushMessage_Group(string msg)
+        {
             return SendNotify(config["Line:NotifyBearerToken_Group"], msg);
         }
 
@@ -32,15 +36,22 @@ namespace BL.Service.Line {
         /// </summary>
         /// <param name="msg">推播字串</param>
         /// <returns>是否推播成功</returns>
-        public bool Notify_Jacky(string msg) {
-            bot.SendNotify(config["Line:NotifyBearerToken_Jacky"]
-            , "Hi"
+        public bool Notify_Jacky(string msg)
+        {
+            var result = bot.SendNotify(config["Line:NotifyBearerToken_Jacky"]
+            , msg
             , new Uri("https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/240px-Cat03.jpg")
             , new Uri("https://images.hdqwalls.com/download/cat-4k-po-2048x2048.jpg")
             , 6362
             , 11087927
             , false);
-            return SendNotify(config["Line:NotifyBearerToken_Jacky"], msg);
+
+            if (result.status != 200)
+            {
+                logger.LogError("{message}", result.message);
+                return false;
+            }
+            return true;
         }
 
         /// <summary>
@@ -48,37 +59,45 @@ namespace BL.Service.Line {
         /// </summary>
         /// <param name="msg">推播字串</param>
         /// <returns>是否推播成功</returns>
-        public bool PushMessage_Jessi(string msg) {
+        public bool PushMessage_Jessi(string msg)
+        {
             return SendNotify(config["Line:NotifyBearerToken_Jessi"], msg);
         }
 
-        public bool ReplyMessage(string token, List<MessageBase> messages) {
-            try {
+        public bool ReplyMessage(string token, List<MessageBase> messages)
+        {
+            try
+            {
                 string res = bot.ReplyMessage(token, messages);
-                logger.LogInformation("ReplyMessage result: " + res);
+                logger.LogInformation("ReplyMessage result: {res}", res);
                 return true;
-            } catch (Exception ex) {
-                if (ex.InnerException is WebException) {
-                    int responseStartIndex = ex.ToString().IndexOf("Response") + "Response:".Count();
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException is WebException)
+                {
+                    int responseStartIndex = ex.ToString().IndexOf("Response") + "Response:".Length;
                     int responseEndIndex = ex.ToString().IndexOf("Endpoint");
                     string responseStr = ex.ToString()[responseStartIndex..responseEndIndex].Trim();
                     LineHttpPostException response = JsonSerializer.Deserialize<LineHttpPostException>(responseStr);
                     logger.LogError(
-                        $"LineWebhookService.ResponseToLineServer 錯誤, replyToken: {token},\n" +
-                        $"messages: {JsonSerializer.Serialize(messages)},\n" +
-                        $"response: {JsonSerializer.Serialize(response)},\n" +
-                        $"ex: {ex}");
-                    Notify_Jacky($"message: {response.message},\n" +
-                        $"details: {JsonSerializer.Serialize(response.details)}");
+                        "LineWebhookService.ResponseToLineServer 錯誤, replyToken: {token},\n" +
+                        "messages: {messages},\n" +
+                        "response: {response},\n" +
+                        "ex: {ex}", token, JsonSerializer.Serialize(messages), JsonSerializer.Serialize(response), ex);
+                    Notify_Jacky($"message: {response.Message},\n" +
+                        $"details: {JsonSerializer.Serialize(response.Details)}");
                 }
                 return false;
             }
         }
 
-        private bool SendNotify(string token, string msg) {
+        private bool SendNotify(string token, string msg)
+        {
             var result = bot.SendNotify(token, msg);
-            if (result.status != 200) {
-                logger.LogError(result.message);
+            if (result.status != 200)
+            {
+                logger.LogError("{message}", result.message);
                 return false;
             }
             return true;

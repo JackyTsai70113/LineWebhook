@@ -32,13 +32,13 @@ namespace Core.Domain.DTO {
         /// 成人口罩剩餘數
         /// </summary>
         [DisplayName("成人口罩數")]
-        public int numberOfAdultMasks { get; set; }
+        public int NumberOfAdultMasks { get; set; }
 
         /// <summary>
         /// 兒童口罩剩餘數
         /// </summary>
         [DisplayName("兒童口罩數")]
-        public int numberOfChildMasks { set; get; }
+        public int NumberOfChildMasks { set; get; }
 
         /// <summary>
         /// 來源資料時間

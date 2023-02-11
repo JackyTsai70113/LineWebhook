@@ -9,7 +9,8 @@
   <ItemGroup>
     <PackageReference Include="LineBotSDK" Version="2.9.36" />
     <PackageReference Include="StackExchange.Redis" Version="2.6.90" />
-    <PackageReference Include="YahooFinanceApi" Version="2.1.2" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="7.0.0" />
+    <PackageReference Include="YahooQuotesApi" Version="5.3.1" />
   </ItemGroup>
 
   <PropertyGroup>

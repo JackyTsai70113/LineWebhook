@@ -1,17 +1,17 @@
-﻿using BL.Service.Base;
-using BL.Service.Interface.TWSE_Stock;
+﻿using BL.Service.Interface.TWSE_Stock;
 using Core.Domain.Entities.TWSE_Stock;
 using Core.Domain.Enums;
 using DA.Managers.Interfaces.TWSE_Stock;
 using DA.Managers.TWSE_Stock;
-using System;
-using System.Collections.Generic;
 
-namespace BL.Service {
+namespace BL.Service
+{
 
-    public class DividendDistributionService : BaseService, IDividendDistributionService {
+    public class DividendDistributionService : IDividendDistributionService
+    {
 
-        public DividendDistributionService() {
+        public DividendDistributionService()
+        {
             DividendDistributionManager = new DividendDistributionManager();
         }
 
@@ -20,7 +20,8 @@ namespace BL.Service {
         /// </summary>
         public IDividendDistributionManager DividendDistributionManager { get; set; }
 
-        public List<DividendDistribution> CrawlDividendDistributionListByStockCodeEnumArray(Array stockCodeEnums = null) {
+        public List<DividendDistribution> CrawlDividendDistributionListByStockCodeEnumArray(Array stockCodeEnums = null)
+        {
             List<DividendDistribution> dividendDistributionList = DividendDistributionManager.CrawlDividendDistribution(
                 new StockCodeEnum[] {
                     StockCodeEnum._2884

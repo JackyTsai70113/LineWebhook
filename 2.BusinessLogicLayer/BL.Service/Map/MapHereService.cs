@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
+﻿using System.Text.Json;
 using BL.Service.Interface;
 using Core.Domain.DTO.Map;
 using Core.Domain.Utilities;
 using Microsoft.Extensions.Configuration;
 
-namespace BL.Service.Map {
+namespace BL.Service.Map
+{
 
     /// <summary>
     /// here服務的 API [Project Name: Freemium 2020-09-19]
@@ -16,7 +14,8 @@ namespace BL.Service.Map {
     /// 5GB studio and data hub database storage per month for free
     /// https://developer.here.com/documentation
     /// </summary>
-    public class MapHereService : IMapHereService {
+    public class MapHereService : IMapHereService
+    {
 
         /// <summary>
         /// here 的 Api key
@@ -26,7 +25,8 @@ namespace BL.Service.Map {
         /// <summary>
         /// 建構子，設定Api Key
         /// </summary>
-        public MapHereService(IConfiguration config) {
+        public MapHereService(IConfiguration config)
+        {
             _apiKey = config["HereApi_Key"];
         }
 
@@ -36,9 +36,11 @@ namespace BL.Service.Map {
         /// <param name="sourceAddress">來源地址</param>
         /// <param name="targetAddresses">目標地址列表</param>
         /// <returns>地址列表</returns>
-        public List<string> GetAddressInOrder(string sourceAddress, List<string> targetAddresses) {
+        public List<string> GetAddressInOrder(string sourceAddress, List<string> targetAddresses)
+        {
             LatLng sourceLatLng = GetLatLngFromAddress(sourceAddress);
-            List<string> orderedAddresses = targetAddresses.OrderBy(target => {
+            List<string> orderedAddresses = targetAddresses.OrderBy(target =>
+            {
                 LatLng targetLatLng = GetLatLngFromAddress(target);
                 return GetTravelTimeFromTwoLatLngs(sourceLatLng, targetLatLng);
             }).ToList();
@@ -51,15 +53,16 @@ namespace BL.Service.Map {
         /// <param name="l1">經緯度</param>
         /// <param name="l2">經緯度</param>
         /// <returns>距離</returns>
-        public int GetDistanceFromTwoLatLngs(LatLng l1, LatLng l2) {
+        public int GetDistanceFromTwoLatLngs(LatLng l1, LatLng l2)
+        {
             string uri = "https://route.ls.hereapi.com/routing/7.2/calculateroute.json" +
                 "?apiKey=" + _apiKey +
-                "&waypoint0=geo!" + l1.lat + "," + l1.lng +
-                "&waypoint1=geo!" + l2.lat + "," + l2.lng +
+                "&waypoint0=geo!" + l1.Lat + "," + l1.Lng +
+                "&waypoint1=geo!" + l2.Lat + "," + l2.Lng +
                 "&mode=fastest;pedestrian";
             string responseStr = RequestUtility.GetStringFromGetRequest(uri);
             var calculateRouteRootobject = JsonSerializer.Deserialize<CalculateRouteRootobject>(responseStr);
-            return calculateRouteRootobject.response.route[0].summary.distance;
+            return calculateRouteRootobject.Response.Route[0].Summary.Distance;
         }
 
         /// <summary>
@@ -68,15 +71,16 @@ namespace BL.Service.Map {
         /// <param name="l1">經緯度</param>
         /// <param name="l2">經緯度</param>
         /// <returns>旅程時間(分)</returns>
-        public int GetTravelTimeFromTwoLatLngs(LatLng l1, LatLng l2) {
+        public int GetTravelTimeFromTwoLatLngs(LatLng l1, LatLng l2)
+        {
             string uri = "https://route.ls.hereapi.com/routing/7.2/calculateroute.json" +
                 "?apiKey=" + _apiKey +
-                "&waypoint0=geo!" + l1.lat + "," + l1.lng +
-                "&waypoint1=geo!" + l2.lat + "," + l2.lng +
+                "&waypoint0=geo!" + l1.Lat + "," + l1.Lng +
+                "&waypoint1=geo!" + l2.Lat + "," + l2.Lng +
                 "&mode=fastest;pedestrian";
             string responseStr = RequestUtility.GetStringFromGetRequest(uri);
             var calculateRouteRootobject = JsonSerializer.Deserialize<CalculateRouteRootobject>(responseStr);
-            return calculateRouteRootobject.response.route[0].summary.travelTime;
+            return calculateRouteRootobject.Response.Route[0].Summary.TravelTime;
         }
 
         /// <summary>
@@ -84,7 +88,8 @@ namespace BL.Service.Map {
         /// </summary>
         /// <param name="address">地址</param>
         /// <returns>經緯度</returns>
-        public LatLng GetLatLngFromAddress(string address) {
+        public LatLng GetLatLngFromAddress(string address)
+        {
             string addressWithCountry = "臺灣" + address;
 
             string uri = "https://geocoder.ls.hereapi.com/6.2/geocode.json" +
@@ -94,34 +99,40 @@ namespace BL.Service.Map {
             string responseStr = RequestUtility.GetStringFromGetRequest(uri);
             RootObject rootObject = JsonSerializer.Deserialize<RootObject>(responseStr);
 
-            LatLng latLng = new LatLng {
-                lat = rootObject.Response.View[0].Result[0].Location.DisplayPosition.Latitude,
-                lng = rootObject.Response.View[0].Result[0].Location.DisplayPosition.Longitude
+            LatLng latLng = new()
+            {
+                Lat = rootObject.Response.View[0].Result[0].Location.DisplayPosition.Latitude,
+                Lng = rootObject.Response.View[0].Result[0].Location.DisplayPosition.Longitude
             };
 
             return latLng;
         }
 
-        private class RootObject {
+        private class RootObject
+        {
             public Response Response { get; set; }
         }
 
-        private class Response {
+        private class Response
+        {
             public Metainfo MetaInfo { get; set; }
             public View[] View { get; set; }
         }
 
-        private class Metainfo {
+        private class Metainfo
+        {
             public string Timestamp { get; set; }
         }
 
-        private class View {
-            public string _type { get; set; }
+        private class View
+        {
+            public string Type { get; set; }
             public int ViewId { get; set; }
             public Result[] Result { get; set; }
         }
 
-        private class Result {
+        private class Result
+        {
             public float Relevance { get; set; }
             public string MatchLevel { get; set; }
             public Matchquality MatchQuality { get; set; }
@@ -129,7 +140,8 @@ namespace BL.Service.Map {
             public Location Location { get; set; }
         }
 
-        private class Matchquality {
+        private class Matchquality
+        {
             public float Country { get; set; }
             public float City { get; set; }
             public float District { get; set; }
@@ -138,7 +150,8 @@ namespace BL.Service.Map {
             public float PostalCode { get; set; }
         }
 
-        private class Location {
+        private class Location
+        {
             public string LocationId { get; set; }
             public string LocationType { get; set; }
             public Displayposition DisplayPosition { get; set; }
@@ -147,27 +160,32 @@ namespace BL.Service.Map {
             public Address Address { get; set; }
         }
 
-        private class Displayposition {
+        private class Displayposition
+        {
             public float Latitude { get; set; }
             public float Longitude { get; set; }
         }
 
-        private class Mapview {
+        private class Mapview
+        {
             public Topleft TopLeft { get; set; }
             public Bottomright BottomRight { get; set; }
         }
 
-        private class Topleft {
+        private class Topleft
+        {
             public float Latitude { get; set; }
             public float Longitude { get; set; }
         }
 
-        private class Bottomright {
+        private class Bottomright
+        {
             public float Latitude { get; set; }
             public float Longitude { get; set; }
         }
 
-        private class Address {
+        private class Address
+        {
             public string Label { get; set; }
             public string Country { get; set; }
             public string County { get; set; }
@@ -179,12 +197,14 @@ namespace BL.Service.Map {
             public Additionaldata[] AdditionalData { get; set; }
         }
 
-        private class Additionaldata {
-            public string value { get; set; }
-            public string key { get; set; }
+        private class Additionaldata
+        {
+            public string Value { get; set; }
+            public string Key { get; set; }
         }
 
-        private class Navigationposition {
+        private class Navigationposition
+        {
             public float Latitude { get; set; }
             public float Longitude { get; set; }
         }

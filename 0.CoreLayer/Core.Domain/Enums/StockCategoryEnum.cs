@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Core.Domain.Enums {
-
+﻿namespace Core.Domain.Enums
+{
     /// <summary>
     /// 股票分類
     /// </summary>
-    public enum StockCategoryEnum {
-
+    public enum StockCategoryEnum
+    {
         /// <summary>
         /// 金融保險
         /// </summary>

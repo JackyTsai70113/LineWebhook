@@ -22,7 +22,7 @@ namespace BL.Service.Provider {
 
             List<DateTime> holidayDates =
                 holidaySchedules.Select(s =>
-                    new DateTime(1911 + int.Parse(s.Date.Substring(0, 3)),
+                    new DateTime(1911 + int.Parse(s.Date[..3]),
                                 int.Parse(s.Date.Substring(3, 2)),
                                 int.Parse(s.Date.Substring(5, 2))))
                                 .ToList();

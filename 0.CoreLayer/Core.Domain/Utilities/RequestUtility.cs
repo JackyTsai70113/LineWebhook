@@ -3,11 +3,12 @@ using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Core.Domain.Utilities {
+namespace Core.Domain.Utilities
+{
 
-    public static class RequestUtility {
+    public static class RequestUtility
+    {
 
-        private static int uriIndex = 0;
         private static readonly object lockObj = new object();
 
         /// <summary>
@@ -15,8 +16,10 @@ namespace Core.Domain.Utilities {
         /// </summary>
         /// <param name="uri">Request網址</param>
         /// <returns>byte array</returns>
-        public static byte[] GetByteArrayFromGetRequest(string uri) {
-            try {
+        public static byte[] GetByteArrayFromGetRequest(string uri)
+        {
+            try
+            {
                 HttpClient client = new HttpClient();
 
                 //發送請求
@@ -27,7 +30,9 @@ namespace Core.Domain.Utilities {
 
                 byte[] result = httpResponseMessage.Content.ReadAsByteArrayAsync().Result;
                 return result;
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 Console.WriteLine(ex.ToString());
                 throw;
             }
@@ -38,8 +43,10 @@ namespace Core.Domain.Utilities {
         /// </summary>
         /// <param name="uri">Request網址</param>
         /// <returns>字串</returns>
-        public static string GetStringFromGetRequest(string uri) {
-            try {
+        public static string GetStringFromGetRequest(string uri)
+        {
+            try
+            {
                 HttpClient client = new HttpClient();
 
                 //發送請求
@@ -50,7 +57,9 @@ namespace Core.Domain.Utilities {
 
                 string result = httpResponseMessage.Content.ReadAsStringAsync().Result;//取得內容
                 return result;
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 Console.WriteLine(ex.ToString());
                 throw;
             }
@@ -61,8 +70,10 @@ namespace Core.Domain.Utilities {
         /// </summary>
         /// <param name="uri">Request網址</param>
         /// <returns>stream</returns>
-        public static Stream GetStreamFromGetRequest(string uri) {
-            try {
+        public static Stream GetStreamFromGetRequest(string uri)
+        {
+            try
+            {
                 HttpClient client = new HttpClient();
 
                 //發送請求
@@ -72,7 +83,9 @@ namespace Core.Domain.Utilities {
                 httpResponseMessage.EnsureSuccessStatusCode();
 
                 return httpResponseMessage.Content.ReadAsStreamAsync().Result;
-            } catch (Exception) {
+            }
+            catch (Exception)
+            {
                 return GetStreamFromGetRequest(uri);
             }
         }
@@ -82,8 +95,10 @@ namespace Core.Domain.Utilities {
         /// </summary>
         /// <param name="url">Request網址</param>
         /// <returns>資料流</returns>
-        public static async Task<Stream> GetStreamFromGetRequestAsync(string url) {
-            try {
+        public static async Task<Stream> GetStreamFromGetRequestAsync(string url)
+        {
+            try
+            {
                 HttpClient client = new HttpClient();
 
                 //發送請求
@@ -94,7 +109,9 @@ namespace Core.Domain.Utilities {
 
                 Stream stream = await httpResponseMessage.Content.ReadAsStreamAsync();
                 return stream;
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 Console.WriteLine(ex.ToString());
             }
             return null;
@@ -102,10 +119,10 @@ namespace Core.Domain.Utilities {
 
         #region Lock
 
-        public static void AddUriIndex() {
-            lock (lockObj) {
-                uriIndex++;
-                uriIndex %= 240;
+        public static void AddUriIndex()
+        {
+            lock (lockObj)
+            {
             }
         }
 

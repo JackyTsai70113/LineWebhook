@@ -14,7 +14,7 @@ namespace BL.Service.Holiday {
         /// <returns>營業日列表</returns>
         public static List<DateTime> GetTheMostRecentBusinessDay(
             int count, DateTime? startDateTime = null) {
-            List<DateTime> theMostRecentBusinessDays = new List<DateTime>();
+            List<DateTime> theMostRecentBusinessDays = new();
             DateTime currentDateTime;
             if (startDateTime == null) {
                 currentDateTime = DateTime.UtcNow.AddHours(8);

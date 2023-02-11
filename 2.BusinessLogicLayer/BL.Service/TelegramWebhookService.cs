@@ -1,19 +1,14 @@
-using BL.Service.Base;
 using BL.Service.Interface;
 using Core.Domain.Utilities;
-using System;
 using System.Text.Json;
 using Telegram.Bot;
-using Telegram.Bot.Args;
-using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
 
-namespace BL.Service {
-
-    public class TelegramWebhookService : BaseService, ITelegramWebhookService {
-        //readonly TelegramBotClient botClient;
-
-        public TelegramWebhookService() {
+namespace BL.Service
+{
+    public class TelegramWebhookService : ITelegramWebhookService
+    {
+        public TelegramWebhookService()
+        {
         }
 
         /// <summary>
@@ -21,7 +16,8 @@ namespace BL.Service {
         /// </summary>
         /// <param name="requestBody">TelegramServer來的請求物件</param>
         /// <returns>LOG紀錄</returns>
-        public string Response() {
+        public string Response()
+        {
             return GetMe();
         }
 
@@ -29,7 +25,8 @@ namespace BL.Service {
         /// 通知
         /// </summary>
         /// <param name="message">通知訊息</param>
-        public void NotifyByMessage(string message) {
+        public void NotifyByMessage(string message)
+        {
             string uri = "https://api.telegram.org/bot1253249749:AAEhPVK8fvahMGCKee_ZtG8fOivf4CjKYsY/sendMessage?chat_id=1017180008&text=" + message;
             RequestUtility.GetStringFromGetRequest(uri);
         }
@@ -37,7 +34,8 @@ namespace BL.Service {
         /// <summary>
         /// 測試
         /// </summary>
-        public void Test() {
+        public void Test()
+        {
             //botClient = new TelegramBotClient("1253249749:AAEhPVK8fvahMGCKee_ZtG8fOivf4CjKYsY");
             //ChatId chatId = new ChatId(1017180008);
             //var me = botClient.SendDiceAsync(chatId);
@@ -67,7 +65,8 @@ namespace BL.Service {
         //    }
         //}
 
-        private string GetMe() {
+        private static string GetMe()
+        {
             var botClient = new TelegramBotClient("1253249749:AAEhPVK8fvahMGCKee_ZtG8fOivf4CjKYsY");
             var me = botClient.GetMeAsync().Result;
             string result = JsonSerializer.Serialize(me);

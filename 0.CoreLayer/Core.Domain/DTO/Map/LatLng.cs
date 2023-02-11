@@ -8,11 +8,11 @@
         /// <summary>
         /// 緯度
         /// </summary>
-        public float lat { get; set; }
+        public float Lat { get; set; }
 
         /// <summary>
         /// 經度
         /// </summary>
-        public float lng { get; set; }
+        public float Lng { get; set; }
     }
 }

@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using Core.Domain.DTO;
+﻿using Core.Domain.DTO;
 
-namespace BL.Service.Interface {
-
-    public interface IMaskInstitutionService {
+namespace BL.Service.Interface
+{
+    public interface IMaskInstitutionService
+    {
         /// <summary>
         /// 取得 口罩機構列表
         /// </summary>

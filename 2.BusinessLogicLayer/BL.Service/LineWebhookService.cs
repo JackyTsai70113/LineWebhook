@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using BL.Service.Base;
 using BL.Service.Interface;
 using BL.Service.Line;
 using Core.Domain.DTO;
@@ -9,29 +8,28 @@ using Core.Domain.Enums;
 using DA.Managers.Interfaces;
 using isRock.LineBot;
 
-namespace BL.Service {
-    public class LineWebhookService : BaseService, ILineWebhookService {
-        private readonly ICambridgeDictionaryManager _cambridgeDictionaryManager;
-        private readonly IExchangeRateService _exchangeRateService;
-        private readonly IMapHereService _mapHereService;
-        private readonly IMaskInstitutionService _maskInstitutionService;
-        private readonly LineMessageService _lineMessageService;
-        private readonly ITradingVolumeService _tradingVolumeService;
+namespace BL.Service
+{
+    public class LineWebhookService : ILineWebhookService
+    {
+        private readonly ICambridgeDictionaryManager cambridgeDictionaryManager;
+        private readonly IExchangeRateService exchangeRateService;
+        private readonly IMapHereService mapHereService;
+        private readonly IMaskInstitutionService maskInstitutionService;
+        private readonly ITradingVolumeService tradingVolumeService;
 
         public LineWebhookService(
             ICambridgeDictionaryManager cambridgeDictionaryManager,
             IExchangeRateService exchangeRateService,
-            LineMessageService lineMessageService,
             IMaskInstitutionService maskInstitutionService,
             IMapHereService mapHereService,
-            ITradingVolumeService tradingVolumeService) {
-
-            _cambridgeDictionaryManager = cambridgeDictionaryManager;
-            _exchangeRateService = exchangeRateService;
-            _lineMessageService = lineMessageService;
-            _maskInstitutionService = maskInstitutionService;
-            _tradingVolumeService = tradingVolumeService;
-            _mapHereService = mapHereService;
+            ITradingVolumeService tradingVolumeService)
+        {
+            this.cambridgeDictionaryManager = cambridgeDictionaryManager;
+            this.exchangeRateService = exchangeRateService;
+            this.maskInstitutionService = maskInstitutionService;
+            this.tradingVolumeService = tradingVolumeService;
+            this.mapHereService = mapHereService;
         }
 
         /// <summary>
@@ -39,12 +37,15 @@ namespace BL.Service {
         /// </summary>
         /// <param name="@event">事件</param>
         /// <returns>Line回應訊息</returns>
-        public List<MessageBase> GetReplyMessages(Event @event) {
+        public List<MessageBase> GetReplyMessages(Event @event)
+        {
             List<MessageBase> replyMessages;
             string type = @event.type;
-            if (type == "message") {
+            if (type == "message")
+            {
                 Message message = @event.message;
-                switch (message.type) {
+                switch (message.type)
+                {
                     case "text":
                         replyMessages = GetMessagesByText(message.text);
                         break;
@@ -52,22 +53,29 @@ namespace BL.Service {
                         replyMessages = GetMaskInstitutions(message.address);
                         break;
                     case "sticker":
-                        StickerMessage stickerMessage = _lineMessageService.GetStickerMessage(message);
+                        StickerMessage stickerMessage = LineMessageService.GetStickerMessage(message);
                         replyMessages = GetReplyMessagesBySticker(stickerMessage);
                         break;
                     default:
                         replyMessages = new List<MessageBase> { new TextMessage("目前未支援此資料格式: " + message.type) };
                         break;
                 }
-            } else if (type == "postback") {
+            }
+            else if (type == "postback")
+            {
                 Postback postback = @event.postback;
                 Params @params = postback.Params;
-                if (postback.Params != null) {
+                if (postback.Params != null)
+                {
                     replyMessages = GetMessagesByText(postback.data + " " + @params.datetime + @params.date + @params.time);
-                } else {
+                }
+                else
+                {
                     replyMessages = GetMessagesByText(postback.data);
                 }
-            } else {
+            }
+            else
+            {
                 string errorMsg = $"[GetReplyMessages] 判讀訊息並傳回Line回應訊息 錯誤";
                 throw new ArgumentException(errorMsg);
             }
@@ -79,63 +87,86 @@ namespace BL.Service {
         /// </summary>
         /// <param name="text">字串內容</param>
         /// <returns>回應結果</returns>
-        public List<MessageBase> GetMessagesByText(string text) {
+        public List<MessageBase> GetMessagesByText(string text)
+        {
             string textStr;
-            try {
-                switch (text.Split(' ')[0]) {
+            try
+            {
+                switch (text.Split(' ')[0])
+                {
                     case "cd":
                         string vocabulary = text.Split(' ')[1];
                         return GetCambridgeDictionaryReplyMessages(vocabulary);
                     case "cj":
-                        string words = text.Substring(3);
+                        string words = text[3..];
                         return GetCangjieReplyMessages(words);
                     case "er":
                         return GetExchangeRateReplyMessages();
                     case "st":
-                        string commandArg = text.Substring(3);
+                        string commandArg = text[3..];
                         return GetStickerReplyMessages(commandArg);
                     case "tv":
-                        if (text == "tv") {
-                            return new List<MessageBase> { _lineMessageService.GetCarouselTemplateMessage(QuerySortTypeEnum.Descending) };
+                        if (text == "tv")
+                        {
+                            return new List<MessageBase> { LineMessageService.GetCarouselTemplateMessage(QuerySortTypeEnum.Descending) };
                         }
-                        if (text.Split(' ')[1].Count() == 1) {
+                        if (text.Split(' ')[1].Length == 1)
+                        {
                             int days = int.Parse(text.Split(' ')[1]);
-                            if (days < 1 || days > 5) {
+                            if (days < 1 || days > 5)
+                            {
                                 textStr = "交易天數需為 1-5";
-                            } else {
-                                return _tradingVolumeService.GetTradingVolumeStrOverDays(QuerySortTypeEnum.Descending, days);
                             }
-                        } else if (text.Split(' ')[1].Count() == 10) {
+                            else
+                            {
+                                return tradingVolumeService.GetTradingVolumeStrOverDays(QuerySortTypeEnum.Descending, days);
+                            }
+                        }
+                        else if (text.Split(' ')[1].Length == 10)
+                        {
                             DateTime dateTime = DateTime.Parse(text.Split(' ')[1]);
-                            return _tradingVolumeService.GetTradingVolumeStr(dateTime, QuerySortTypeEnum.Descending);
-                        } else {
+                            return tradingVolumeService.GetTradingVolumeStr(dateTime, QuerySortTypeEnum.Descending);
+                        }
+                        else
+                        {
                             textStr = $"請重新輸入! 參數錯誤({text.Split(' ')[1]})";
                         }
-                        return new List<MessageBase> { _lineMessageService.GetTextMessage(textStr) };
+                        return new List<MessageBase> { LineMessageService.GetTextMessage(textStr) };
                     case "tvv":
-                        if (text == "tvv") {
-                            return new List<MessageBase> { _lineMessageService.GetCarouselTemplateMessage(QuerySortTypeEnum.Ascending) };
+                        if (text == "tvv")
+                        {
+                            return new List<MessageBase> { LineMessageService.GetCarouselTemplateMessage(QuerySortTypeEnum.Ascending) };
                         }
-                        if (text.Split(' ')[1].Count() == 1) {
+                        if (text.Split(' ')[1].Length == 1)
+                        {
                             int days = int.Parse(text.Split(' ')[1]);
-                            if (days < 1 || days > 5) {
+                            if (days < 1 || days > 5)
+                            {
                                 textStr = "交易天數需為 1-5";
-                            } else {
-                                return _tradingVolumeService.GetTradingVolumeStrOverDays(QuerySortTypeEnum.Ascending, days);
                             }
-                        } else if (text.Split(' ')[1].Count() == 10) {
+                            else
+                            {
+                                return tradingVolumeService.GetTradingVolumeStrOverDays(QuerySortTypeEnum.Ascending, days);
+                            }
+                        }
+                        else if (text.Split(' ')[1].Length == 10)
+                        {
                             DateTime dateTime = DateTime.Parse(text.Split(' ')[1]);
-                            return _tradingVolumeService.GetTradingVolumeStr(dateTime, QuerySortTypeEnum.Ascending);
-                        } else {
+                            return tradingVolumeService.GetTradingVolumeStr(dateTime, QuerySortTypeEnum.Ascending);
+                        }
+                        else
+                        {
                             textStr = $"請重新輸入! 參數錯誤({text.Split(' ')[1]})";
                         }
-                        return new List<MessageBase> { _lineMessageService.GetTextMessage(textStr) };
+                        return new List<MessageBase> { LineMessageService.GetTextMessage(textStr) };
                     default:
-                        return new List<MessageBase> { _lineMessageService.GetTextMessage(text) };
+                        return new List<MessageBase> { LineMessageService.GetTextMessage(text) };
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 string errorMsg = $"[GetMessagesByText] text: {text}, ex: {ex}";
-                return new List<MessageBase> { _lineMessageService.GetTextMessage(errorMsg) };
+                return new List<MessageBase> { LineMessageService.GetTextMessage(errorMsg) };
             }
         }
 
@@ -144,37 +175,43 @@ namespace BL.Service {
         /// </summary>
         /// <param name="address">指定地址</param>
         /// <returns>LOG紀錄</returns>
-        private List<MessageBase> GetMaskInstitutions(string address) {
-            List<MaskInstitution> maskInstitutions = _maskInstitutionService.GetMaskInstitutions(address);
+        private List<MessageBase> GetMaskInstitutions(string address)
+        {
+            List<MaskInstitution> maskInstitutions = maskInstitutionService.GetMaskInstitutions(address);
 
             Dictionary<string, MaskInstitution> maskInstitutionDict = maskInstitutions.ToDictionary(m => m.Address);
 
-            List<string> orderedAddress = _mapHereService.GetAddressInOrder(address, maskInstitutionDict.Keys.ToList());
+            List<string> orderedAddress = mapHereService.GetAddressInOrder(address, maskInstitutionDict.Keys.ToList());
 
-            List<MaskInstitution> topFiveMaskInstitutions = new List<MaskInstitution>();
-            for (int i = 0; i < 5 && i < orderedAddress.Count(); i++) {
+            List<MaskInstitution> topFiveMaskInstitutions = new();
+            for (int i = 0; i < 5 && i < orderedAddress.Count; i++)
+            {
                 topFiveMaskInstitutions.Add(maskInstitutionDict[orderedAddress[i]]);
             }
 
-            if (topFiveMaskInstitutions.Count == 0) {
-                return new List<MessageBase> { _lineMessageService.GetTextMessage($"所在位置({address})沒有相關藥局") };
+            if (topFiveMaskInstitutions.Count == 0)
+            {
+                return new List<MessageBase> { LineMessageService.GetTextMessage($"所在位置({address})沒有相關藥局") };
             }
 
-            List<MessageBase> messages = new List<MessageBase>();
-            foreach (MaskInstitution maskInstitution in topFiveMaskInstitutions) {
-                LatLng latLng = _mapHereService.GetLatLngFromAddress(maskInstitution.Address);
-                if (latLng.lat == default || latLng.lng == default) {
+            List<MessageBase> messages = new();
+            foreach (MaskInstitution maskInstitution in topFiveMaskInstitutions)
+            {
+                LatLng latLng = mapHereService.GetLatLngFromAddress(maskInstitution.Address);
+                if (latLng.Lat == default || latLng.Lng == default)
+                {
                     continue;
                 }
                 messages.Add(new LocationMessage(
                     maskInstitution.Name + "\n" +
-                    "成人: " + maskInstitution.numberOfAdultMasks + "\n" +
-                    "兒童: " + maskInstitution.numberOfChildMasks,
+                    "成人: " + maskInstitution.NumberOfAdultMasks + "\n" +
+                    "兒童: " + maskInstitution.NumberOfChildMasks,
                     maskInstitution.Address,
-                    latLng.lat,
-                    latLng.lng
+                    latLng.Lat,
+                    latLng.Lng
                 ));
-                if (messages.Count >= 5) {
+                if (messages.Count >= 5)
+                {
                     break;
                 }
             }
@@ -186,13 +223,15 @@ namespace BL.Service {
         /// </summary>
         /// <param name="vocabulary">單字</param>
         /// <returns>訊息列表</returns>
-        private List<MessageBase> GetCambridgeDictionaryReplyMessages(string vocabulary) {
+        private List<MessageBase> GetCambridgeDictionaryReplyMessages(string vocabulary)
+        {
             List<string> texts = GetCambridgeDictionaryTexts(vocabulary);
 
-            List<MessageBase> messageBases = new List<MessageBase>();
+            List<MessageBase> messageBases = new();
 
-            foreach (string text in texts) {
-                MessageBase messageBase = _lineMessageService.GetTextMessage(text);
+            foreach (string text in texts)
+            {
+                MessageBase messageBase = LineMessageService.GetTextMessage(text);
                 messageBases.Add(messageBase);
             }
             return messageBases;
@@ -203,22 +242,25 @@ namespace BL.Service {
         /// </summary>
         /// <param name="vocabulary">單字</param>
         /// <returns>訊息列表</returns>
-        private List<string> GetCambridgeDictionaryTexts(string vocabulary) {
-            List<string> texts = new List<string>();
+        private List<string> GetCambridgeDictionaryTexts(string vocabulary)
+        {
+            List<string> texts = new();
             List<Translation> translations =
-                    _cambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary).Take(5).ToList();
+                    cambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary).Take(5).ToList();
 
-            if (translations.Count == 0) {
+            if (translations.Count == 0)
+            {
                 texts.Add($"未能找到符合字詞: {vocabulary}");
                 return texts;
             }
 
             // 設定發送的訊息
-            foreach (Translation translation in translations) {
+            foreach (Translation translation in translations)
+            {
                 string translationStr = translation.TranslationStr;
-                // 防呆: 超過5000字數
-                if (translationStr.Length > 5000) {
-                    translationStr = translationStr.Substring(0, 4996) + "...";
+                if (translationStr.Length > 5000) // 防呆: 超過5000字數
+                {
+                    translationStr = string.Concat(translationStr.AsSpan(0, 4996), "...");
                 }
                 texts.Add(translationStr);
             }
@@ -230,11 +272,11 @@ namespace BL.Service {
         /// </summary>
         /// <param name="words">文字列表</param>
         /// <returns>訊息列表</returns>
-        private List<MessageBase> GetCangjieReplyMessages(string words) {
-
+        private static List<MessageBase> GetCangjieReplyMessages(string words)
+        {
             string replyTextStr = GetCangjieReplyText(words);
 
-            TextMessage textMessage = _lineMessageService.GetTextMessage(replyTextStr);
+            TextMessage textMessage = LineMessageService.GetTextMessage(replyTextStr);
 
             return new List<MessageBase> { textMessage };
         }
@@ -244,24 +286,31 @@ namespace BL.Service {
         /// </summary>
         /// <param name="words">倉頡文字列表</param>
         /// <returns>文字</returns>
-        private string GetCangjieReplyText(string words) {
-            try {
+        private static string GetCangjieReplyText(string words)
+        {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            try
+            {
                 Encoding big5 = Encoding.GetEncoding("big5");
-                string cjDomain = "http://input.foruto.com/cjdict/Images/CJZD_JPG/";
+                string domain = "http://input.foruto.com/cjdict/Images/CJZD_JPG/";
 
-                StringBuilder sb = new StringBuilder();
-                foreach (char word in words) {
-                    if (word == ' ') {
+                StringBuilder sb = new();
+                foreach (char word in words)
+                {
+                    if (word == ' ')
+                    {
                         continue;
                     }
                     // convert string to bytes
                     byte[] big5Bytes = big5.GetBytes(word.ToString());
                     string big5Str = BitConverter.ToString(big5Bytes).Replace("-", string.Empty);
-                    sb.AppendLine(word + ": " + cjDomain + big5Str + ".JPG");
+                    sb.AppendLine(word + ": " + domain + big5Str + ".JPG");
                 }
                 string cangjieReplyText = sb.ToString();
                 return cangjieReplyText;
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 return $"GetCangjieReplyText 發生錯誤, 字詞：{words}, ex: {ex}";
             }
         }
@@ -270,8 +319,9 @@ namespace BL.Service {
         /// 取得換匯(er)指令 的 回覆訊息列表
         /// </summary>
         /// <returns>訊息列表</returns>
-        private List<MessageBase> GetExchangeRateReplyMessages() {
-            _exchangeRateService.GetExchangeRate(
+        private List<MessageBase> GetExchangeRateReplyMessages()
+        {
+            exchangeRateService.GetExchangeRate(
                 out double buyingRate, out double sellingRate,
                 out DateTime quotedDateTime);
 
@@ -279,7 +329,7 @@ namespace BL.Service {
                 buyingRate, sellingRate, quotedDateTime
             );
 
-            TextMessage textMessage = _lineMessageService.GetTextMessage(textStr);
+            TextMessage textMessage = LineMessageService.GetTextMessage(textStr);
 
             return new List<MessageBase> { textMessage };
         }
@@ -292,10 +342,11 @@ namespace BL.Service {
         /// <param name="bankSellingRate">銀行賣出匯率</param>
         /// <param name="quotedDateTime">報價時間</param>
         /// <returns>字串</returns>
-        private string ConvertToExchangeRateTextMessage(double bankBuyingRate, double bankSellingRate,
-            DateTime quotedDateTime) {
+        private static string ConvertToExchangeRateTextMessage(double bankBuyingRate, double bankSellingRate,
+            DateTime quotedDateTime)
+        {
 
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.Append("美金報價\n");
             sb.Append("---------------------\n");
             sb.Append($"銀行買入：{bankBuyingRate: 0.0000}\n");
@@ -312,13 +363,15 @@ namespace BL.Service {
         /// </summary>
         /// <param name="commandArg">指令參數</param>
         /// <returns>訊息列表</returns>
-        private List<MessageBase> GetStickerReplyMessages(string commandArg) {
+        private static List<MessageBase> GetStickerReplyMessages(string commandArg)
+        {
             if (commandArg.Split(' ').Length != 2 ||
                 int.TryParse(commandArg.Split(' ')[0], out int packageId) == false ||
-                int.TryParse(commandArg.Split(' ')[1], out int stickerId) == false) {
+                int.TryParse(commandArg.Split(' ')[1], out int stickerId) == false)
+            {
 
                 TextMessage textMessage =
-                    _lineMessageService.GetTextMessage(
+                    LineMessageService.GetTextMessage(
                         "此指令用來輸出最多五個的貼圖，\n" +
                         "用法：st {貼圖包Id} {貼圖Id}\n" +
                         "範例：st 1 1\n" +
@@ -341,14 +394,16 @@ namespace BL.Service {
         /// <exception cref="ArgumentOutOfRangeException">
         /// count 必須介於 1 和 5
         /// </exception>
-        private List<MessageBase> GetStickerReplyMessages(int packageId, int stickerId, int count) {
+        private static List<MessageBase> GetStickerReplyMessages(int packageId, int stickerId, int count)
+        {
             if (count < 1 || count > 5)
                 throw new ArgumentException("參數錯誤！個數必須介於 1 和 5。");
 
-            List<MessageBase> messages = new List<MessageBase>();
+            List<MessageBase> messages = new();
 
-            for (int i = stickerId; i < stickerId + count; ++i) {
-                _lineMessageService.TryGetStickerMessage(packageId, i, out MessageBase messageBase);
+            for (int i = stickerId; i < stickerId + count; ++i)
+            {
+                LineMessageService.TryGetStickerMessage(packageId, i, out MessageBase messageBase);
                 messages.Add(messageBase);
             }
 
@@ -361,10 +416,12 @@ namespace BL.Service {
         /// </summary>
         /// <param name="stickerMessage">貼圖訊息</param>
         /// <returns>訊息列表</returns>
-        private List<MessageBase> GetReplyMessagesBySticker(StickerMessage stickerMessage) {
+        private static List<MessageBase> GetReplyMessagesBySticker(StickerMessage stickerMessage)
+        {
             GetIdsBySticker(stickerMessage, out int packageId, out int stickerId);
             string text = $"[StickerMessage] packageId: {packageId}, stickerId: {stickerId}";
-            List<MessageBase> messages = new List<MessageBase>{
+            List<MessageBase> messages = new()
+            {
                 new TextMessage(text)
             };
 
@@ -380,19 +437,22 @@ namespace BL.Service {
         /// <param name="stickerMessage">Line貼圖訊息</param>
         /// <param name="packageId">貼圖包Id</param>
         /// <param name="stickerId">貼圖Id</param>
-        private void GetIdsBySticker(StickerMessage stickerMessage, out int packageId, out int stickerId) {
+        private static void GetIdsBySticker(StickerMessage stickerMessage, out int packageId, out int stickerId)
+        {
             packageId = int.Parse(stickerMessage.packageId);
             stickerId = int.Parse(stickerMessage.stickerId);
         }
     }
 
-    public class LineHttpPostException {
-        public string message { get; set; }
-        public List<Detail> details { get; set; }
+    public class LineHttpPostException
+    {
+        public string Message { get; set; }
+        public List<Detail> Details { get; set; }
     }
 
-    public class Detail {
-        public string message { get; set; }
-        public string property { get; set; }
+    public class Detail
+    {
+        public string Message { get; set; }
+        public string Property { get; set; }
     }
 }

@@ -20,13 +20,13 @@ namespace BL.Service.Cache.Redis {
 
         public bool Set<T>(string key, T value) {
             string valueStr = JsonSerializer.Serialize(value);
-            RedisValue redisValue = new RedisValue(valueStr);
+            RedisValue redisValue = new(valueStr);
             return _db.StringSet(key, redisValue);
         }
 
         public bool Set<T>(string key, T value, TimeSpan timeout) {
             string valueStr = JsonSerializer.Serialize(value);
-            RedisValue redisValue = new RedisValue(valueStr);
+            RedisValue redisValue = new(valueStr);
             return _db.StringSet(key, redisValue, timeout);
         }
 

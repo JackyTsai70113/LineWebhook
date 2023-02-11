@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.Json;
+﻿using System.Text.Json;
 using BL.Service.Interface;
 using Core.Domain.DTO.Sinopac;
 using Core.Domain.Utilities;
 
-namespace BL.Service.Sinopac {
+namespace BL.Service.Sinopac
+{
 
     public class ExchangeRateService : IExchangeRateService {
 
@@ -33,7 +32,7 @@ namespace BL.Service.Sinopac {
         /// 取得匯率列表
         /// </summary>
         /// <returns>匯率列表</returns>
-        private List<ExchangeRate> GetExchangeRate() {
+        private static List<ExchangeRate> GetExchangeRate() {
             string url = $"https://mma.sinopac.com/ws/share/rate/ws_exchange.ashx?exchangeType=REMIT";
             string response = RequestUtility.GetStringFromGetRequest(url);
             List<ExchangeRate> exchangeRates = JsonSerializer.Deserialize<List<ExchangeRate>>(response);

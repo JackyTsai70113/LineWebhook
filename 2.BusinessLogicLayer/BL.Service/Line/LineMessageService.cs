@@ -2,23 +2,29 @@
 using Core.Domain.Enums;
 using isRock.LineBot;
 
-namespace BL.Service.Line {
+namespace BL.Service.Line
+{
 
     /// <summary>
     /// 產生需使用的Line Message
     /// </summary>
-    public class LineMessageService {
+    public class LineMessageService
+    {
 
         /// <summary>
         /// 將文字轉成 Line文字訊息
         /// </summary>
         /// <param name="text">文字</param>
         /// <returns>Line文字訊息</returns>
-        public TextMessage GetTextMessage(string text) {
-            try {
+        public static TextMessage GetTextMessage(string text)
+        {
+            try
+            {
                 text = text.Replace('\'', '’').Trim();
                 return new TextMessage(text);
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 string errorMsg = $"[GetTextMessage] text: {text}, ex: {ex}";
                 errorMsg = errorMsg.Replace('\'', '’').Trim();
                 return new TextMessage(errorMsg);
@@ -32,9 +38,11 @@ namespace BL.Service.Line {
         /// <returns>Line滑動訊息</returns>
         /// <exception cref="ArgumentException">搜尋排序類型錯誤</exception>
         /// <remarks>所有Column必須數量相同</remarks>
-        public MessageBase GetCarouselTemplateMessage(QuerySortTypeEnum querySortType) {
+        public static MessageBase GetCarouselTemplateMessage(QuerySortTypeEnum querySortType)
+        {
             string chineseWord, command;
-            switch (querySortType) {
+            switch (querySortType)
+            {
                 case QuerySortTypeEnum.Ascending:
                     chineseWord = "賣超";
                     command = "tvv";
@@ -47,7 +55,8 @@ namespace BL.Service.Line {
                     throw new ArgumentException($"[GetCarouselTemplateMessage] 排序類型錯誤! (querySortType: {querySortType})");
             }
             List<DateTime> dates = HolidayHelper.GetTheMostRecentBusinessDay(2);
-            List<Column> columns = new List<Column> {
+            List<Column> columns = new()
+            {
                 new Column() {
                     thumbnailImageUrl = new Uri("https://i.imgur.com/n82BOcq.png"),
                     title = $"計算外資及陸資，投信綜合{chineseWord}股數",
@@ -99,9 +108,11 @@ namespace BL.Service.Line {
             return new TemplateMessage(new CarouselTemplate() { columns = columns });
         }
 
-        public MessageBase GetTextMessageWithQuickReply() {
+        public static MessageBase GetTextMessageWithQuickReply()
+        {
             var quickReply = new QuickReply();
-            var quickReplyMessageAction = new QuickReplyMessageAction("qr", "QuickReplyButton") {
+            var quickReplyMessageAction = new QuickReplyMessageAction("qr", "QuickReplyButton")
+            {
                 imageUrl = new Uri("https://imgur.com/ZQVKq9T.png"),
             };
             quickReply.items = new List<QuickReplyItemBase>{
@@ -115,7 +126,8 @@ namespace BL.Service.Line {
             return new TextMessage("Please Select One.") { quickReply = quickReply };
         }
 
-        public StickerMessage GetStickerMessage(Message stickerMessage) {
+        public static StickerMessage GetStickerMessage(Message stickerMessage)
+        {
             int packageId = stickerMessage.packageId;
             int stickerId = stickerMessage.stickerId;
             return new StickerMessage(packageId, stickerId);
@@ -128,11 +140,15 @@ namespace BL.Service.Line {
         /// <param name="stickerId">貼圖Id</param>
         /// <param name="stickerMessage">Line 貼圖訊息</param>
         /// <returns>Id是否有效</returns>
-        public bool TryGetStickerMessage(int packageId, int stickerId, out MessageBase messageBase) {
-            if (!IsValidPackageAndStickerId(packageId, stickerId)) {
+        public static bool TryGetStickerMessage(int packageId, int stickerId, out MessageBase messageBase)
+        {
+            if (!IsValidPackageAndStickerId(packageId, stickerId))
+            {
                 messageBase = new TextMessage($"此貼圖目前不支援輸出, packageId: {packageId}, stickerId: {stickerId}");
                 return false;
-            } else {
+            }
+            else
+            {
                 messageBase = new StickerMessage(packageId, stickerId);
                 return true;
             }
@@ -155,8 +171,10 @@ namespace BL.Service.Line {
         /// CHOCO &amp; Friends: {packageId: 11538, stickerIds: 51626494-51626533} <br/>
         /// UNIVERSTAR BT21: {packageId: 11539, stickerIds: 52114110-52114149} <br/>
         /// </remarks>
-        private bool IsValidPackageAndStickerId(int packageId, int stickerId) {
-            switch (packageId) {
+        private static bool IsValidPackageAndStickerId(int packageId, int stickerId)
+        {
+            switch (packageId)
+            {
                 case 1:
                     if (1 <= stickerId && stickerId <= 17) return true;
                     else if (stickerId == 21) return true;
@@ -197,7 +215,7 @@ namespace BL.Service.Line {
                 case 6362:
                     if (11087920 <= stickerId && stickerId <= 11087943) return true;
                     return false;
-                    case 8525:
+                case 8525:
                     if (16581290 <= stickerId && stickerId <= 16581313) return true;
                     return false;
                 case 11537:

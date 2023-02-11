@@ -1,41 +1,32 @@
-﻿using BL.Service.Base;
+﻿using System.Text.Json;
 using BL.Service.Interface.TWSE_Stock;
 using Core.Domain.Entities.TWSE_Stock;
 using Core.Domain.Entities.TWSE_Stock.Exchange;
 using Core.Domain.Enums;
 using DA.Managers.Interfaces.TWSE_Stock;
 using DA.Managers.TWSE_Stock;
-using DA.Repositories.Interfaces.TWSE_Stock;
-using DA.Repositories.TWSE_Stock;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.Extensions.Logging;
 
-namespace BL.Service {
+namespace BL.Service
+{
 
-    public class StockValueEstimationService : BaseService, IStockValueEstimationService {
-        #region IOC
-
-        public StockValueEstimationService() {
-            // 抓取股利分派
-            DividendDistributionManager = new DividendDistributionManager();
-            // 抓取年度交易資訊
-            YearlyTradingInformationManager = new YearlyTradingInformationManager();
-            // 儲存或更新股利
-            DividendDistributionRepository = new DividendDistributionRepository();
-            // 儲存或更新股價估計表
-            StockValueEstimationRepository = new StockValueEstimationRepository();
-            // 儲存或更新年度交易資訊
-            YearlyTradingInformationRepository = new YearlyTradingInformationRepository();
-        }
+    public class StockValueEstimationService : IStockValueEstimationService
+    {
+        private readonly ILogger<StockValueEstimationService> logger;
 
         public IDividendDistributionManager DividendDistributionManager { get; set; }
 
         public IYearlyTradingInformationManager YearlyTradingInformationManager { get; set; }
+        #region IOC
 
-        public IDividendDistributionRepository DividendDistributionRepository { get; set; }
-
-        public IStockValueEstimationRepository StockValueEstimationRepository { get; set; }
-        public IYearlyTradingInformationRepository YearlyTradingInformationRepository { get; set; }
+        public StockValueEstimationService(ILogger<StockValueEstimationService> logger)
+        {
+            // 抓取股利分派
+            DividendDistributionManager = new DividendDistributionManager();
+            // 抓取年度交易資訊
+            YearlyTradingInformationManager = new YearlyTradingInformationManager();
+            this.logger = logger;
+        }
 
         #endregion IOC
 
@@ -44,25 +35,21 @@ namespace BL.Service {
         /// </summary>
         /// <param name="stockCodeEnum">股票代號</param>
         /// <returns>儲存數量</returns>
-        public int CrawlForStockValueEstimationIn10YearsAndSave(StockCodeEnum stockCodeEnum) {
+        public int CrawlForStockValueEstimationIn10YearsAndSave(StockCodeEnum stockCodeEnum)
+        {
             int successNumber = 0;
 
             //根據 股票代號 抓取股利分派列表
             List<DividendDistribution> dividendDistributionList = DividendDistributionManager.CrawlDividendDistribution(stockCodeEnum);
-            //儲存 股利分派資料
-            DividendDistributionRepository.SetSqlConnection(LineWebhookContextConnectionString);
-            successNumber += DividendDistributionRepository.SaveDividendDistributionList(dividendDistributionList);
+            logger.LogInformation("dividendDistributionList:{dividendDistributionList}", JsonSerializer.Serialize(dividendDistributionList));
 
             //根據 年度交易資訊 抓取股利分派列表
             List<YearlyTradingInformation> yearlyTradingInformationList = YearlyTradingInformationManager.CrawlYearlyTradingInformation(stockCodeEnum);
-            //儲存 年度交易資訊列表
-            YearlyTradingInformationRepository.SetSqlConnection(LineWebhookContextConnectionString);
-            successNumber += YearlyTradingInformationRepository.SaveYearlyTradingInformationList(yearlyTradingInformationList);
+            logger.LogInformation("yearlyTradingInformationList:{yearlyTradingInformationList}", JsonSerializer.Serialize(yearlyTradingInformationList));
+
 
             StockValueEstimation stockValueEstimation = GetStockValueEstimationList(dividendDistributionList, yearlyTradingInformationList);
-            StockValueEstimationRepository.SetSqlConnection(LineWebhookContextConnectionString);
-            successNumber += StockValueEstimationRepository.SaveStockValueEstimation(stockValueEstimation);
-
+            logger.LogInformation("stockValueEstimation:{stockValueEstimation}", JsonSerializer.Serialize(stockValueEstimation));
             return successNumber;
         }
 
@@ -71,18 +58,20 @@ namespace BL.Service {
         /// </summary>
         /// <param name="stockCodeEnums">股票代號列表</param>
         /// <returns>儲存數量</returns>
-        public int CrawlForStockValueEstimationIn10YearsAndSave(IEnumerable<StockCodeEnum> stockCodeEnums) {
+        public int CrawlForStockValueEstimationIn10YearsAndSave(IEnumerable<StockCodeEnum> stockCodeEnums)
+        {
             int successNumber = 0;
-            foreach (StockCodeEnum stockCodeEnum in stockCodeEnums) {
+            foreach (StockCodeEnum stockCodeEnum in stockCodeEnums)
+            {
                 successNumber += CrawlForStockValueEstimationIn10YearsAndSave(stockCodeEnum);
             }
 
             return successNumber;
         }
 
-        protected StockValueEstimation GetStockValueEstimationList(List<DividendDistribution> dividendDistributionList,
-                                                                       List<YearlyTradingInformation> yearlyTradingInformationList) {
-            StockValueEstimation stockValueEstimation = new StockValueEstimation();
+        protected static StockValueEstimation GetStockValueEstimationList(List<DividendDistribution> dividendDistributionList, List<YearlyTradingInformation> yearlyTradingInformationList)
+        {
+            StockValueEstimation stockValueEstimation = new();
 
             //先排序
             IOrderedEnumerable<DividendDistribution> DividendDistributionEnumerable = dividendDistributionList.OrderByDescending(x => x.Year);
