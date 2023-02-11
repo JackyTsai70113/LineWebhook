@@ -10,16 +10,18 @@ using DA.Managers.CambridgeDictionary;
 using isRock.LineBot;
 using NUnit.Framework;
 
-namespace BL.Service.Tests {
-    public class LineWebhookServiceTests {
+namespace BL.Service.Tests
+{
+    public class LineWebhookServiceTests
+    {
         private LineWebhookService LineWebhookService { set; get; }
 
         [SetUp]
-        public void Setup() {
+        public void Setup()
+        {
             LineWebhookService = new LineWebhookService(
                 new CambridgeDictionaryManager(),
                 new FakeExchangeRateService(),
-                new LineMessageService(),
                 new MaskInstitutionService(),
                 new FakeMapHereService(),
                 new TradingVolumeService()
@@ -31,8 +33,9 @@ namespace BL.Service.Tests {
         /// </summary>
         /// <param name="event">事件</param>
         /// <param name="messages">回應訊息</param>
-        [Test, TestCaseSource("ValidTextInputs")]
-        public void TestForValidTextInput(Event @event, List<MessageBase> messages) {
+        [Test, TestCaseSource(nameof(ValidTextInputs))]
+        public void TestForValidTextInput(Event @event, List<MessageBase> messages)
+        {
             // Arrange
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
@@ -40,16 +43,20 @@ namespace BL.Service.Tests {
             List<MessageBase> actual = LineWebhookService.GetReplyMessages(@event);
 
             // Assert
-            Assert.AreEqual(JsonSerializer.Serialize(messages), JsonSerializer.Serialize(actual),
+            Assert.That(JsonSerializer.Serialize(actual), Is.EqualTo(JsonSerializer.Serialize(messages)),
                 JsonSerializer.Serialize(messages) + "\n" + JsonSerializer.Serialize(actual));
         }
 
-        public static IEnumerable ValidTextInputs {
-            get {
+        public static IEnumerable ValidTextInputs
+        {
+            get
+            {
                 yield return new TestCaseData(
-                    new Event {
+                    new Event
+                    {
                         type = "message",
-                        message = new Message {
+                        message = new Message
+                        {
                             type = "text",
                             text = "cd cat"
                         }
@@ -59,9 +66,11 @@ namespace BL.Service.Tests {
                     }
                 );
                 yield return new TestCaseData(
-                    new Event {
+                    new Event
+                    {
                         type = "message",
-                        message = new Message {
+                        message = new Message
+                        {
                             type = "text",
                             text = "cj 倉頡"
                         }
@@ -71,9 +80,11 @@ namespace BL.Service.Tests {
                     }
                 );
                 yield return new TestCaseData(
-                    new Event {
+                    new Event
+                    {
                         type = "message",
-                        message = new Message {
+                        message = new Message
+                        {
                             type = "text",
                             text = "er"
                         }
@@ -83,9 +94,11 @@ namespace BL.Service.Tests {
                     }
                 );
                 yield return new TestCaseData(
-                    new Event {
+                    new Event
+                    {
                         type = "message",
-                        message = new Message {
+                        message = new Message
+                        {
                             type = "text",
                             text = "st 1 1"
                         }
@@ -99,9 +112,11 @@ namespace BL.Service.Tests {
                     }
                 );
                 yield return new TestCaseData(
-                    new Event {
+                    new Event
+                    {
                         type = "message",
-                        message = new Message {
+                        message = new Message
+                        {
                             type = "text",
                             text = "sp"
                         }
@@ -113,8 +128,9 @@ namespace BL.Service.Tests {
             }
         }
 
-        [Test, TestCaseSource("InvalidTextInputs")]
-        public void InvalidTextInput(Event @event, List<MessageBase> messages) {
+        [Test, TestCaseSource(nameof(InvalidTextInputs))]
+        public void InvalidTextInput(Event @event, List<MessageBase> messages)
+        {
             // Arrange
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
@@ -122,16 +138,20 @@ namespace BL.Service.Tests {
             List<MessageBase> actual = LineWebhookService.GetReplyMessages(@event);
 
             // Assert
-            Assert.AreEqual(JsonSerializer.Serialize(messages), JsonSerializer.Serialize(actual),
+            Assert.That(JsonSerializer.Serialize(actual), Is.EqualTo(JsonSerializer.Serialize(messages)),
                 JsonSerializer.Serialize(messages) + "\n" + JsonSerializer.Serialize(actual));
         }
 
-        public static IEnumerable InvalidTextInputs {
-            get {
+        public static IEnumerable InvalidTextInputs
+        {
+            get
+            {
                 yield return new TestCaseData(
-                    new Event {
+                    new Event
+                    {
                         type = "message",
-                        message = new Message {
+                        message = new Message
+                        {
                             type = "text",
                             text = "cd 123"
                         }
@@ -141,9 +161,11 @@ namespace BL.Service.Tests {
                     }
                 );
                 yield return new TestCaseData(
-                    new Event {
+                    new Event
+                    {
                         type = "message",
-                        message = new Message {
+                        message = new Message
+                        {
                             type = "text",
                             text = "st 1 a"
                         }

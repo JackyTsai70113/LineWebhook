@@ -7,12 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Website.Controllers
 {
-
-    /// <summary>
-    /// TelegramWebhook控制器，Line Server 的 I/O
-    /// </summary>
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class TelegramWebhookController : ControllerBase
     {
         private readonly ITelegramWebhookService TelegramWebhookService;

@@ -12,8 +12,8 @@ using YahooQuotesApi;
 namespace Website.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class StockController : Controller
+    [Route("api/[controller]")]
+    public class StockController : ControllerBase
     {
         private readonly IDailyQuoteService DailyQuoteService;
         private readonly IDividendDistributionService DividendDistributionService;

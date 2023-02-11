@@ -28,6 +28,7 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.Services.AddMyService();
         builder.Services.AddControllers();
         builder.Services.AddRouting(options => options.LowercaseUrls = true);
         builder.Services.AddEndpointsApiExplorer();
@@ -44,7 +45,6 @@ public class Program
         });
         // builder.Services.AddDbContext<LineWebhookContext>(options =>
         //     options.UseSqlServer("Server=localhost;Database=TestDB;User Id=sa;Password=Passw0rd1"));
-        builder.Services.AddMyService();
 
         var app = builder.Build();
 

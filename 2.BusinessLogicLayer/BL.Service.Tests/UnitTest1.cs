@@ -18,7 +18,7 @@ namespace BL.Service.Tests {
             int actual = source;
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
     }
 }

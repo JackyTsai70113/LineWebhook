@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Website.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class MaskController : ControllerBase
     {
         private readonly IMaskInstitutionService MaskInstitutionService;

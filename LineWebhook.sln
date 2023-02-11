@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BL.Service.Tests", "2.Busin
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.PresentationLayer", "1.PresentationLayer", "{03B92F14-BD08-489D-8FEC-2487B33F37E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "website", "1.PresentationLayer\Website\website.csproj", "{2A4BCFCA-4B3D-4435-81B8-497944DDC8D2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Website", "1.PresentationLayer\Website\Website.csproj", "{2A4BCFCA-4B3D-4435-81B8-497944DDC8D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

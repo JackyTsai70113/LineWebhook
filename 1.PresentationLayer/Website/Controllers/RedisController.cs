@@ -7,6 +7,8 @@ using Website.Models;
 
 namespace Website.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class RedisController : ControllerBase
     {
         private readonly ICacheService RedisCacheService;

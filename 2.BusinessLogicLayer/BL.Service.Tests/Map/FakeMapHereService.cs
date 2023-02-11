@@ -1,9 +1,8 @@
 using BL.Service.Interface;
 using Core.Domain.DTO.Map;
-using System.Collections.Generic;
 
-namespace BL.Service.Tests.Map {
-
+namespace BL.Service.Tests.Map
+{
     /// <summary>
     /// here服務的 API [Project Name: Freemium 2020-09-19]
     /// 25000 transactions per month for free
@@ -11,21 +10,16 @@ namespace BL.Service.Tests.Map {
     /// 5GB studio and data hub database storage per month for free
     /// https://developer.here.com/documentation
     /// </summary>
-    public class FakeMapHereService : IMapHereService {
-
-        /// <summary>
-        /// 建構子，設定Api Key
-        /// </summary>
-        public FakeMapHereService() {
-        }
-
+    public class FakeMapHereService : IMapHereService
+    {
         /// <summary>
         /// 將 目標地址列表 依 來源地址的遠近 排序，越近越前面
         /// </summary>
         /// <param name="sourceAddress">來源地址</param>
         /// <param name="targetAddresses">目標地址列表</param>
         /// <returns>地址列表</returns>
-        public List<string> GetAddressInOrder(string sourceAddress, List<string> targetAddresses) {
+        public List<string> GetAddressInOrder(string sourceAddress, List<string> targetAddresses)
+        {
             return targetAddresses;
         }
 
@@ -35,7 +29,8 @@ namespace BL.Service.Tests.Map {
         /// <param name="l1">經緯度</param>
         /// <param name="l2">經緯度</param>
         /// <returns>旅程時間(分)</returns>
-        public int GetTravelTimeFromTwoLatLngs(LatLng l1, LatLng l2) {
+        public int GetTravelTimeFromTwoLatLngs(LatLng l1, LatLng l2)
+        {
             return 0;
         }
 
@@ -44,11 +39,13 @@ namespace BL.Service.Tests.Map {
         /// </summary>
         /// <param name="address">地址</param>
         /// <returns>經緯度</returns>
-        public LatLng GetLatLngFromAddress(string address) {
+        public LatLng GetLatLngFromAddress(string address)
+        {
 
-            LatLng latLng = new LatLng() {
-                lat = 0,
-                lng = 0
+            LatLng latLng = new()
+            {
+                Lat = 0,
+                Lng = 0
             };
 
             return latLng;
