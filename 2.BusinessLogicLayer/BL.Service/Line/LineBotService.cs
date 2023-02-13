@@ -10,15 +10,15 @@ namespace BL.Service.Line
 
     public class LineBotService : ILineBotService
     {
-        private readonly ILogger<LineBotService> logger;
-        private readonly IConfiguration config;
-        private readonly Bot bot;
+        private readonly ILogger<LineBotService> Logger;
+        private readonly IConfiguration Config;
+        private readonly Bot Bot;
 
         public LineBotService(ILogger<LineBotService> logger, IConfiguration config)
         {
-            this.logger = logger;
-            this.config = config;
-            this.bot = new Bot(config["Line:ChannelAccessToken"]);
+            Logger = logger;
+            Config = config;
+            Bot = new Bot(config["Line:ChannelAccessToken"]);
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace BL.Service.Line
         /// <returns>是否推播成功</returns>
         public bool PushMessage_Group(string msg)
         {
-            return SendNotify(config["Line:NotifyBearerToken_Group"], msg);
+            return SendNotify(Config["Line:NotifyBearerToken_Group"], msg);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace BL.Service.Line
         /// <returns>是否推播成功</returns>
         public bool Notify_Jacky(string msg)
         {
-            var result = bot.SendNotify(config["Line:NotifyBearerToken_Jacky"]
+            var result = Bot.SendNotify(Config["Line:NotifyBearerToken_Jacky"]
             , msg
             , new Uri("https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/240px-Cat03.jpg")
             , new Uri("https://images.hdqwalls.com/download/cat-4k-po-2048x2048.jpg")
@@ -48,7 +48,7 @@ namespace BL.Service.Line
 
             if (result.status != 200)
             {
-                logger.LogError("{message}", result.message);
+                Logger.LogError("{message}", result.message);
                 return false;
             }
             return true;
@@ -61,15 +61,15 @@ namespace BL.Service.Line
         /// <returns>是否推播成功</returns>
         public bool PushMessage_Jessi(string msg)
         {
-            return SendNotify(config["Line:NotifyBearerToken_Jessi"], msg);
+            return SendNotify(Config["Line:NotifyBearerToken_Jessi"], msg);
         }
 
         public bool ReplyMessage(string token, List<MessageBase> messages)
         {
             try
             {
-                string res = bot.ReplyMessage(token, messages);
-                logger.LogInformation("ReplyMessage result: {res}", res);
+                string res = Bot.ReplyMessage(token, messages);
+                Logger.LogInformation("ReplyMessage result: {res}", res);
                 return true;
             }
             catch (Exception ex)
@@ -80,7 +80,7 @@ namespace BL.Service.Line
                     int responseEndIndex = ex.ToString().IndexOf("Endpoint");
                     string responseStr = ex.ToString()[responseStartIndex..responseEndIndex].Trim();
                     LineHttpPostException response = JsonSerializer.Deserialize<LineHttpPostException>(responseStr);
-                    logger.LogError(
+                    Logger.LogError(
                         "LineWebhookService.ResponseToLineServer 錯誤, replyToken: {token},\n" +
                         "messages: {messages},\n" +
                         "response: {response},\n" +
@@ -94,10 +94,10 @@ namespace BL.Service.Line
 
         private bool SendNotify(string token, string msg)
         {
-            var result = bot.SendNotify(token, msg);
+            var result = Bot.SendNotify(token, msg);
             if (result.status != 200)
             {
-                logger.LogError("{message}", result.message);
+                Logger.LogError("{message}", result.message);
                 return false;
             }
             return true;

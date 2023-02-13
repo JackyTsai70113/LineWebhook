@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using System.Text.Json;
 using isRock.LineBot;
 using System.Collections.Generic;
+using isRock.LineBot.Extensions;
 
 namespace Website.Controllers
 {
@@ -37,43 +38,41 @@ namespace Website.Controllers
         /// <returns>API 結果</returns>
         [HttpPost]
         [Route("index")]
-        public IActionResult Index(ReceivedMessage receivedMessage)
+        public void Index(ReceivedMessage receivedMessage)
         {
             var req = JsonSerializer.Serialize(receivedMessage);
             try
             {
-                if (receivedMessage.events.Count == 0) return Ok();
+                if (receivedMessage.events.Count == 0) return;
                 Logger.LogDebug("request: {req}", req);
 
                 var messages = LineWebhookService.GetReplyMessages(receivedMessage.events[0]);
 
                 // Add 紀錄發至LineServer的requestBody
-                Logger.LogDebug("response: {messages}", JsonSerializer.Serialize(messages));
+                Logger.LogDebug("response: {messages}", messages.ToJson());
 
                 LineBotService.ReplyMessage(receivedMessage.events[0].replyToken, messages);
-                return Ok();
             }
             catch (Exception ex)
             {
                 Logger.LogError("[Index] request: {req}, ex: {ex}", req, ex);
-                return Ok();
             }
         }
 
         [HttpPost]
         [Route("test_response")]
-        public IActionResult TestForResponse(ReceivedMessage receivedMessage)
+        public string TestForResponse(ReceivedMessage receivedMessage)
         {
             var req = JsonSerializer.Serialize(receivedMessage);
             try
             {
                 var messages = LineWebhookService.GetReplyMessages(receivedMessage.events[0]);
-                return Ok($"request: {JsonSerializer.Serialize(receivedMessage)}\nresponse: {JsonSerializer.Serialize(messages)}");
+                return $"request: {JsonSerializer.Serialize(receivedMessage)}\nresponse: {JsonSerializer.Serialize(messages)}";
             }
             catch (Exception ex)
             {
-                Logger.LogError("[TestForResponse] req: {req}, ex: {ex}", req, ex);
-                return Content($"error, req: {req}, ex: {ex}");
+                Logger.LogError("req: {req}, ex: {ex}", req, ex);
+                return $"error, req: {req}, ex: {ex}";
             }
         }
 
@@ -83,7 +82,7 @@ namespace Website.Controllers
         /// <remarks>
         /// Sample request:
         ///
-        ///     PUT /SetToken?token=new_token
+        ///     PUT linewebhook/test_request?cmd=cd%20123
         ///
         /// </remarks>
         /// <param name="cmd">can't be null or empty</param>
@@ -102,7 +101,7 @@ namespace Website.Controllers
                 }
             };
             var messages = LineWebhookService.GetReplyMessages(@event);
-            return Ok(JsonSerializer.Serialize(messages));
+            return Ok(messages.ToJson());
         }
 
         /// <summary>

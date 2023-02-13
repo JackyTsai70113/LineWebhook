@@ -27,19 +27,13 @@ namespace Website.Controllers
         public BaseResponseModel<List<KeyValue>, string> GetAllKeyValues()
         {
             BaseResponseModel<List<KeyValue>, string> responseModel;
-            List<string> keys = new();
             try
             {
-                keys = RedisCacheService.GetKeys("");
+                IEnumerable<string> keys = RedisCacheService.GetKeys("");
                 List<string> noExistKeys = new();
                 List<KeyValue> keyValues = new();
                 foreach (string key in keys)
                 {
-                    if (!RedisCacheService.ExistKeyValue(key))
-                    {
-                        noExistKeys.Add(key);
-                    }
-
                     string value = RedisCacheService.Get<string>(key);
                     keyValues.Add(new KeyValue()
                     {
@@ -51,7 +45,7 @@ namespace Website.Controllers
                 {
                     IsSuccess = true,
                     Data = keyValues,
-                    Error = $"noExistKey: {JsonSerializer.Serialize(noExistKeys)}"
+                    Error = null
                 };
                 return responseModel;
             }
@@ -61,7 +55,7 @@ namespace Website.Controllers
                 {
                     IsSuccess = false,
                     Data = null,
-                    Error = $"keys: {JsonSerializer.Serialize(keys)}, ex: {ex}"
+                    Error = $"ex: {ex}"
                 };
                 return responseModel;
             }
@@ -340,13 +334,13 @@ namespace Website.Controllers
         /// <returns>Keys</returns>
         [HttpGet]
         [Route("redis/GetKeysByPattern")]
-        public BaseResponseModel<List<string>, string> GetKeysByPattern(string pattern)
+        public BaseResponseModel<IEnumerable<string>, string> GetKeysByPattern(string pattern)
         {
-            BaseResponseModel<List<string>, string> responseModel;
+            BaseResponseModel<IEnumerable<string>, string> responseModel;
             try
             {
-                List<string> keys = RedisCacheService.GetKeys(pattern);
-                responseModel = new BaseResponseModel<List<string>, string>()
+                var keys = RedisCacheService.GetKeys(pattern);
+                responseModel = new BaseResponseModel<IEnumerable<string>, string>()
                 {
                     IsSuccess = true,
                     Data = keys,
@@ -356,7 +350,7 @@ namespace Website.Controllers
             }
             catch (Exception ex)
             {
-                responseModel = new BaseResponseModel<List<string>, string>()
+                responseModel = new BaseResponseModel<IEnumerable<string>, string>()
                 {
                     IsSuccess = false,
                     Data = null,
