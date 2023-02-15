@@ -7,6 +7,8 @@ using System.Text.Json;
 using isRock.LineBot;
 using System.Collections.Generic;
 using isRock.LineBot.Extensions;
+using Core.Domain.Utilities;
+using BL.Service.Map;
 
 namespace Website.Controllers
 {
@@ -113,7 +115,7 @@ namespace Website.Controllers
         /// <response code="500">Oops! Can't lookup your product right now</response>
         [HttpGet]
         [Route("test")]
-        public ActionResult<Product> Test()
+        public IActionResult Test()
         {
             Logger.LogInformation("Info!");
             Logger.LogWarning("Warning!");
@@ -121,7 +123,6 @@ namespace Website.Controllers
             Logger.LogDebug("Debug");
             Logger.LogCritical("Critical");
             Logger.LogError("Error");
-            // bool res = lineNotifyBotService.Notify_Jacky("Test line notify");
             List<string> sizes = new()
             {
                 "123"

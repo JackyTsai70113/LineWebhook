@@ -76,10 +76,8 @@ namespace Core.Domain.Utilities
             {
                 HttpClient client = new HttpClient();
 
-                //發送請求
                 HttpResponseMessage httpResponseMessage = client.GetAsync(uri).Result;
 
-                //檢查回應的伺服器狀態StatusCode是否是200 OK
                 httpResponseMessage.EnsureSuccessStatusCode();
 
                 return httpResponseMessage.Content.ReadAsStreamAsync().Result;
