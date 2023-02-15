@@ -6,6 +6,7 @@ using BL.Service.Interface.TWSE_Stock;
 using BL.Service.Line;
 using BL.Service.Line.Interface;
 using BL.Service.Map;
+using BL.Service.MapQuest;
 using BL.Service.Sinopac;
 using BL.Service.TWSE_Stock;
 using DA.Managers.CambridgeDictionary;
@@ -48,5 +49,6 @@ public static class DependencyInjection
         services.AddScoped<IDailyQuoteManager, DailyQuoteManager>();
 
         services.AddSingleton<IMapHereService, MapHereService>();
+        services.AddSingleton<IMapQuestService, MapQuestService>();
     }
 }

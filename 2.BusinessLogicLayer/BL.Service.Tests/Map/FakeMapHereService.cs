@@ -24,12 +24,12 @@ namespace BL.Service.Tests.Map
         }
 
         /// <summary>
-        /// 透過兩經緯度取得旅程時間(分)
+        /// 透過兩經緯度取得旅程時間(秒)
         /// </summary>
         /// <param name="l1">經緯度</param>
         /// <param name="l2">經緯度</param>
         /// <returns>旅程時間(分)</returns>
-        public int GetTravelTimeFromTwoLatLngs(LatLng l1, LatLng l2)
+        public int GetDurationFromTwoLatLngs(LatLng l1, LatLng l2)
         {
             return 0;
         }

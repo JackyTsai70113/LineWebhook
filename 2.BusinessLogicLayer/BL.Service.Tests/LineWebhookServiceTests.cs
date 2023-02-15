@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using BL.Service.Line;
+using BL.Service.MapQuest;
 using BL.Service.Sinopac;
 using BL.Service.Tests.Map;
 using BL.Service.TWSE_Stock;
@@ -24,6 +25,7 @@ namespace BL.Service.Tests
                 new FakeExchangeRateService(),
                 new MaskInstitutionService(),
                 new FakeMapHereService(),
+                new FakeMapQuestService(),
                 new TradingVolumeService()
                 );
         }

@@ -2,6 +2,7 @@
 using BL.Service.Interface;
 using BL.Service.Line;
 using BL.Service.Map;
+using BL.Service.MapQuest;
 using Core.Domain.DTO;
 using Core.Domain.DTO.Map;
 using Core.Domain.DTO.RequestDTO.CambridgeDictionary;
@@ -13,24 +14,27 @@ namespace BL.Service
 {
     public class LineWebhookService : ILineWebhookService
     {
-        private readonly ICambridgeDictionaryManager cambridgeDictionaryManager;
-        private readonly IExchangeRateService exchangeRateService;
-        private readonly IMapHereService mapHereService;
-        private readonly IMaskInstitutionService maskInstitutionService;
-        private readonly ITradingVolumeService tradingVolumeService;
+        private readonly ICambridgeDictionaryManager _cambridgeDictionaryManager;
+        private readonly IExchangeRateService _exchangeRateService;
+        private readonly IMapHereService _mapHereService;
+        private readonly IMapQuestService _mapQuestService;
+        private readonly IMaskInstitutionService _maskInstitutionService;
+        private readonly ITradingVolumeService _tradingVolumeService;
 
         public LineWebhookService(
             ICambridgeDictionaryManager cambridgeDictionaryManager,
             IExchangeRateService exchangeRateService,
             IMaskInstitutionService maskInstitutionService,
             IMapHereService mapHereService,
+            IMapQuestService mapQuestService,
             ITradingVolumeService tradingVolumeService)
         {
-            this.cambridgeDictionaryManager = cambridgeDictionaryManager;
-            this.exchangeRateService = exchangeRateService;
-            this.maskInstitutionService = maskInstitutionService;
-            this.tradingVolumeService = tradingVolumeService;
-            this.mapHereService = mapHereService;
+            _cambridgeDictionaryManager = cambridgeDictionaryManager;
+            _exchangeRateService = exchangeRateService;
+            _maskInstitutionService = maskInstitutionService;
+            _mapHereService = mapHereService;
+            _mapQuestService = mapQuestService;
+            _tradingVolumeService = tradingVolumeService;
         }
 
         /// <summary>
@@ -120,13 +124,13 @@ namespace BL.Service
                             }
                             else
                             {
-                                return tradingVolumeService.GetTradingVolumeStrOverDays(QuerySortTypeEnum.Descending, days);
+                                return _tradingVolumeService.GetTradingVolumeStrOverDays(QuerySortTypeEnum.Descending, days);
                             }
                         }
                         else if (text.Split(' ')[1].Length == 10)
                         {
                             DateTime dateTime = DateTime.Parse(text.Split(' ')[1]);
-                            return tradingVolumeService.GetTradingVolumeStr(dateTime, QuerySortTypeEnum.Descending);
+                            return _tradingVolumeService.GetTradingVolumeStr(dateTime, QuerySortTypeEnum.Descending);
                         }
                         else
                         {
@@ -147,13 +151,13 @@ namespace BL.Service
                             }
                             else
                             {
-                                return tradingVolumeService.GetTradingVolumeStrOverDays(QuerySortTypeEnum.Ascending, days);
+                                return _tradingVolumeService.GetTradingVolumeStrOverDays(QuerySortTypeEnum.Ascending, days);
                             }
                         }
                         else if (text.Split(' ')[1].Length == 10)
                         {
                             DateTime dateTime = DateTime.Parse(text.Split(' ')[1]);
-                            return tradingVolumeService.GetTradingVolumeStr(dateTime, QuerySortTypeEnum.Ascending);
+                            return _tradingVolumeService.GetTradingVolumeStr(dateTime, QuerySortTypeEnum.Ascending);
                         }
                         else
                         {
@@ -178,11 +182,12 @@ namespace BL.Service
         /// <returns>LOG紀錄</returns>
         private List<MessageBase> GetMaskInstitutions(string address)
         {
-            List<MaskInstitution> maskInstitutions = maskInstitutionService.GetMaskInstitutions(address);
+            List<MaskInstitution> maskInstitutions = _maskInstitutionService.GetMaskInstitutions(address);
 
             Dictionary<string, MaskInstitution> maskInstitutionDict = maskInstitutions.ToDictionary(m => m.Address);
 
-            List<string> orderedAddress = mapHereService.GetAddressInOrder(address, maskInstitutionDict.Keys.ToList());
+            List<string> orderedAddress = _mapHereService.GetAddressInOrder(address, maskInstitutionDict.Keys.ToList());
+            List<string> orderedAddress2 = _mapQuestService.GetAddressInOrder(address, maskInstitutionDict.Keys.ToList());
 
             List<MaskInstitution> topFiveMaskInstitutions = new();
             for (int i = 0; i < 5 && i < orderedAddress.Count; i++)
@@ -198,7 +203,7 @@ namespace BL.Service
             List<MessageBase> messages = new();
             foreach (MaskInstitution maskInstitution in topFiveMaskInstitutions)
             {
-                LatLng latLng = mapHereService.GetLatLngFromAddress(maskInstitution.Address);
+                Core.Domain.DTO.Map.LatLng latLng = _mapHereService.GetLatLngFromAddress(maskInstitution.Address);
                 if (latLng.Lat == default || latLng.Lng == default)
                 {
                     continue;
@@ -246,7 +251,7 @@ namespace BL.Service
         {
             List<string> texts = new();
             List<Translation> translations =
-                    cambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary).Take(5).ToList();
+                    _cambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary).Take(5).ToList();
 
             if (translations.Count == 0)
             {
@@ -321,7 +326,7 @@ namespace BL.Service
         /// <returns>訊息列表</returns>
         private List<MessageBase> GetExchangeRateReplyMessages()
         {
-            exchangeRateService.GetExchangeRate(
+            _exchangeRateService.GetExchangeRate(
                 out double buyingRate, out double sellingRate,
                 out DateTime quotedDateTime);
 

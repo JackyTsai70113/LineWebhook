@@ -1,7 +1,6 @@
 ﻿using System.Text;
 using System.Text.Json;
 using System.Web;
-using Core.Domain.Utilities;
 using Microsoft.Extensions.Configuration;
 
 namespace BL.Service.MapQuest
@@ -10,7 +9,7 @@ namespace BL.Service.MapQuest
     /// MapQuest服務的Map API，15000 transactions per month for free
     /// https://developer.mapquest.com/documentation/
     /// </summary>
-    public class MapQuestService
+    public class MapQuestService : IMapQuestService
     {
         /// <summary>
         /// mapQuest 的 Api key
@@ -84,6 +83,24 @@ namespace BL.Service.MapQuest
                 Lat = latLng.Lat,
                 Lng = latLng.Lng
             };
+        }
+
+
+        /// <summary>
+        /// 將 目標地址列表 依 來源地址的遠近 排序，越近越前面
+        /// </summary>
+        /// <param name="sourceAddress">來源地址</param>
+        /// <param name="targetAddresses">目標地址列表</param>
+        /// <returns>地址列表</returns>
+        public List<string> GetAddressInOrder(string sourceAddress, List<string> targetAddresses)
+        {
+            Core.Domain.DTO.Map.LatLng sourceLatLng = GetLatLngFromAddress(sourceAddress);
+            List<string> orderedAddresses = targetAddresses.OrderBy(target =>
+            {
+                Core.Domain.DTO.Map.LatLng targetLatLng = GetLatLngFromAddress(target);
+                return GetDuration(sourceLatLng, targetLatLng);
+            }).ToList();
+            return orderedAddresses;
         }
 
         private class Response
