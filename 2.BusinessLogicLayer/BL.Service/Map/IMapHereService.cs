@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using Core.Domain.DTO.Map;
+﻿using Core.Domain.DTO.Map;
 
-namespace BL.Service.Interface {
-
-    public interface IMapHereService {
+namespace BL.Service.Map
+{
+    public interface IMapHereService
+    {
         /// <summary>
         /// 將 目標地址列表 依 來源地址的遠近 排序，越近越前面
         /// </summary>
@@ -18,7 +18,7 @@ namespace BL.Service.Interface {
         /// <param name="l1">經緯度</param>
         /// <param name="l2">經緯度</param>
         /// <returns>旅程時間(分)</returns>
-        int GetTravelTimeFromTwoLatLngs(LatLng l1, LatLng l2);
+        int GetDurationFromTwoLatLngs(LatLng l1, LatLng l2);
 
         /// <summary>
         /// 透過地址取得經緯度

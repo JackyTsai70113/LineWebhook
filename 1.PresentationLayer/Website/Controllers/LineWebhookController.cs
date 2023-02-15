@@ -7,7 +7,6 @@ using System.Text.Json;
 using isRock.LineBot;
 using System.Collections.Generic;
 using isRock.LineBot.Extensions;
-using Core.Domain.Utilities;
 using BL.Service.Map;
 
 namespace Website.Controllers

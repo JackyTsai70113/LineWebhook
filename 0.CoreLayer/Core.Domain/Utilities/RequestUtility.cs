@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 
 namespace Core.Domain.Utilities
 {
-
     public static class RequestUtility
     {
-
         private static readonly object lockObj = new object();
 
         /// <summary>

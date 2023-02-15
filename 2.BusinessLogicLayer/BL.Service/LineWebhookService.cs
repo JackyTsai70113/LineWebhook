@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using BL.Service.Interface;
 using BL.Service.Line;
+using BL.Service.Map;
 using Core.Domain.DTO;
 using Core.Domain.DTO.Map;
 using Core.Domain.DTO.RequestDTO.CambridgeDictionary;
@@ -203,9 +204,8 @@ namespace BL.Service
                     continue;
                 }
                 messages.Add(new LocationMessage(
-                    maskInstitution.Name + "\n" +
-                    "成人: " + maskInstitution.NumberOfAdultMasks + "\n" +
-                    "兒童: " + maskInstitution.NumberOfChildMasks,
+                    maskInstitution.Name + "(成人: " + maskInstitution.NumberOfAdultMasks + "," +
+                    "兒童: " + maskInstitution.NumberOfChildMasks + ")",
                     maskInstitution.Address,
                     latLng.Lat,
                     latLng.Lng

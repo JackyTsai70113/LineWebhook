@@ -1,4 +1,4 @@
-using BL.Service.Interface;
+using BL.Service.Map;
 using Core.Domain.DTO.Map;
 
 namespace BL.Service.Tests.Map

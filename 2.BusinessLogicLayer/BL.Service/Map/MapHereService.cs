@@ -1,5 +1,4 @@
 ﻿using System.Text.Json;
-using BL.Service.Interface;
 using Core.Domain.DTO.Map;
 using Core.Domain.Utilities;
 using Microsoft.Extensions.Configuration;
@@ -42,7 +41,7 @@ namespace BL.Service.Map
             List<string> orderedAddresses = targetAddresses.OrderBy(target =>
             {
                 LatLng targetLatLng = GetLatLngFromAddress(target);
-                return GetTravelTimeFromTwoLatLngs(sourceLatLng, targetLatLng);
+                return GetDurationFromTwoLatLngs(sourceLatLng, targetLatLng);
             }).ToList();
             return orderedAddresses;
         }
@@ -66,12 +65,12 @@ namespace BL.Service.Map
         }
 
         /// <summary>
-        /// 透過兩經緯度取得旅程時間(分)
+        /// 透過兩經緯度取得旅程時間(秒)
         /// </summary>
         /// <param name="l1">經緯度</param>
         /// <param name="l2">經緯度</param>
         /// <returns>旅程時間(分)</returns>
-        public int GetTravelTimeFromTwoLatLngs(LatLng l1, LatLng l2)
+        public int GetDurationFromTwoLatLngs(LatLng l1, LatLng l2)
         {
             string uri = "https://route.ls.hereapi.com/routing/7.2/calculateroute.json" +
                 "?apiKey=" + _apiKey +
@@ -96,6 +95,7 @@ namespace BL.Service.Map
                 "?apiKey=" + _apiKey +
                 "&searchtext=" + addressWithCountry +
                 "&gen=9";
+
             string responseStr = RequestUtility.GetStringFromGetRequest(uri);
             RootObject rootObject = JsonSerializer.Deserialize<RootObject>(responseStr);
 

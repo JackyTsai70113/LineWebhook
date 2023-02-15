@@ -68,8 +68,7 @@ namespace BL.Service.Line
         {
             try
             {
-                string res = Bot.ReplyMessage(token, messages);
-                Logger.LogInformation("ReplyMessage result: {res}", res);
+                Bot.ReplyMessage(token, messages);
                 return true;
             }
             catch (Exception ex)
