@@ -6,7 +6,7 @@
 /// </summary>
 public interface IMapQuestService
 {
-    public Task<int> GetDuration(Core.Domain.DTO.Map.LatLng l1, Core.Domain.DTO.Map.LatLng l2);
+    public int GetDuration(Core.Domain.DTO.Map.LatLng l1, Core.Domain.DTO.Map.LatLng l2);
     /// <summary>
     /// 透過地址取得經緯度
     /// </summary>

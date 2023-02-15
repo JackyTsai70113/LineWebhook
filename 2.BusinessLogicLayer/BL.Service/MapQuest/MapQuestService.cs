@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Web;
 using Microsoft.Extensions.Configuration;
 
@@ -23,7 +24,7 @@ namespace BL.Service.MapQuest
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<int> GetDuration(Core.Domain.DTO.Map.LatLng l1, Core.Domain.DTO.Map.LatLng l2)
+        public int GetDuration(Core.Domain.DTO.Map.LatLng l1, Core.Domain.DTO.Map.LatLng l2)
         {
             HttpRequestMessage httpRequestMessage = new(
                 HttpMethod.Get,
@@ -34,12 +35,12 @@ namespace BL.Service.MapQuest
                 $"routeType=pedestrian");
 
             var httpClient = _httpClientFactory.CreateClient();
-            var httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
+            var httpResponseMessage = httpClient.SendAsync(httpRequestMessage).Result;
             httpResponseMessage.EnsureSuccessStatusCode();
-            using var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync();
+            using var contentStream = httpResponseMessage.Content.ReadAsStreamAsync().Result;
 
-            var getRouteResponse = await JsonSerializer.DeserializeAsync<GetRouteResponse>(contentStream);
-            return getRouteResponse.Route.Time;
+            var getRouteResponse = JsonSerializer.DeserializeAsync<GetRouteResponse>(contentStream);
+            return getRouteResponse.Result.Route.Time;
         }
 
         /// <summary>
@@ -64,7 +65,7 @@ namespace BL.Service.MapQuest
             var httpClient = _httpClientFactory.CreateClient();
             var httpResponseMessage = httpClient.SendAsync(httpRequestMessage).Result;
             httpResponseMessage.EnsureSuccessStatusCode();
-            using var contentStream = httpResponseMessage.Content.ReadAsStreamAsync().Result;
+            var contentStream = httpResponseMessage.Content.ReadAsStreamAsync().Result;
             var response = JsonSerializer.Deserialize<Response>(contentStream);
 
             List<Location> locations = response.Results[0].Locations;
@@ -105,11 +106,13 @@ namespace BL.Service.MapQuest
 
         private class Response
         {
+            [JsonPropertyName("results")]
             public List<Result> Results { get; set; }
         }
 
         private class Result
         {
+            [JsonPropertyName("locations")]
             public List<Location> Locations { get; set; }
         }
 
@@ -119,6 +122,7 @@ namespace BL.Service.MapQuest
         private class Location
         {
             public string AdminArea1 { get; set; }
+            [JsonPropertyName("latLng")]
             public LatLng LatLng { get; set; }
         }
 
@@ -128,11 +132,13 @@ namespace BL.Service.MapQuest
             /// <summary>
             /// 緯度
             /// </summary>
+            [JsonPropertyName("lat")]
             public float Lat { get; set; }
 
             /// <summary>
             /// 經度
             /// </summary>
+            [JsonPropertyName("lng")]
             public float Lng { get; set; }
         }
     }
