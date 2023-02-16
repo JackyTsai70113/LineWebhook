@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-
-namespace Core.Domain.DTO.Sinopac {
-
+﻿namespace BL.Service.Sinopac.Sinopac
+{
     /// <summary>
     /// 匯率
     /// </summary>
-    public class ExchangeRate {
+    public class ExchangeRate
+    {
         public string TitleInfo { get; set; }
         public string QueryDate { get; set; }
         public List<Info> SubInfo { get; set; }
@@ -18,7 +17,8 @@ namespace Core.Domain.DTO.Sinopac {
     /// <summary>
     /// 匯率資訊
     /// </summary>
-    public class Info {
+    public class Info
+    {
         public string DataValue1 { get; set; }
         public string DataValue1Img { get; set; }
         public string DataValue2 { get; set; }

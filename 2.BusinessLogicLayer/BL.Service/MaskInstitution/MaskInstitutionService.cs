@@ -1,21 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using BL.Service.Interface;
+﻿using BL.Service.Interface;
 using Core.Domain.DTO;
 using Core.Domain.Utilities;
 
 namespace BL.Service
 {
-
     public class MaskInstitutionService : IMaskInstitutionService
     {
-
-        public MaskInstitutionService()
-        {
-
-        }
-
         /// <summary>
         /// 取得 口罩機構列表
         /// </summary>

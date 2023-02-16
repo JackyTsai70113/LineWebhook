@@ -1,7 +1,9 @@
-﻿using System.Text;
+﻿using System.Net.Sockets;
+using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Web;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 
 namespace BL.Service.MapQuest
@@ -17,6 +19,7 @@ namespace BL.Service.MapQuest
         /// </summary>
         private readonly string _apiKey;
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly string _apiDomain = "http://www.mapquestapi.com";
 
         public MapQuestService(IConfiguration config, IHttpClientFactory httpClientFactory)
         {
@@ -24,23 +27,51 @@ namespace BL.Service.MapQuest
             _httpClientFactory = httpClientFactory;
         }
 
-        public int GetDuration(Core.Domain.DTO.Map.LatLng l1, Core.Domain.DTO.Map.LatLng l2)
+        /// <summary>
+        /// 將 目標地址列表 依 來源地址的遠近 排序，越近越前面
+        /// </summary>
+        /// <param name="sourceAddress">來源地址</param>
+        /// <param name="targetAddresses">目標地址列表</param>
+        /// <returns>地址列表</returns>
+        public async Task<List<string>> GetAddressInOrderAsync(string sourceAddress, List<string> targetAddresses)
         {
+            LatLng sourceLatLng = await GetLatLngAsync(sourceAddress);
+            var res = targetAddresses.OrderBy(address =>
+            {
+                Thread.Sleep(100);
+                LatLng targetLatLng = GetLatLngAsync(address).Result;
+                return GetDurationAsync(sourceLatLng, targetLatLng).Result;
+            }).ToList();
+            return res;
+        }
+
+        public async Task<int> GetDurationAsync(LatLng l1, LatLng l2)
+        {
+            // var uriBuilder = new UriBuilder(_apiDomain)
+            // {
+            //     Path = "/directions/v2/route",
+            //     Port = -1
+            // };
+            // var nvc = new Dictionary<string, string>
+            // {
+            //     { "key", _apiKey },
+            //     { "from", $"{l1.Lat},{l1.Lng}"},
+            //     { "to", $"{l2.Lat},{l2.Lng}"},
+            //     { "routeType", "pedestrian" },
+            // };
+            var uri = _apiDomain + "/directions/v2/route?" +
+            "key" + _apiKey +
+            "from" + l1.Lat + "," + l1.Lng +
+            "to" + l2.Lat + "," + l2.Lng +
+            "routeType=pedestrian";
             HttpRequestMessage httpRequestMessage = new(
-                HttpMethod.Get,
-                $"http://www.mapquestapi.com/directions/v2/route?" +
-                $"key={_apiKey}&" +
-                $"from={l1.Lat},{l1.Lng}&" +
-                $"to={l2.Lat},{l2.Lng}&" +
-                $"routeType=pedestrian");
-
+                HttpMethod.Get, uri);
             var httpClient = _httpClientFactory.CreateClient();
-            var httpResponseMessage = httpClient.SendAsync(httpRequestMessage).Result;
+            var httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
             httpResponseMessage.EnsureSuccessStatusCode();
-            using var contentStream = httpResponseMessage.Content.ReadAsStreamAsync().Result;
-
-            var getRouteResponse = JsonSerializer.DeserializeAsync<GetRouteResponse>(contentStream);
-            return getRouteResponse.Result.Route.Time;
+            var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync();
+            var getRouteResponse = await JsonSerializer.DeserializeAsync<GetRouteResponse>(contentStream);
+            return getRouteResponse.Route.Time;
         }
 
         /// <summary>
@@ -48,14 +79,12 @@ namespace BL.Service.MapQuest
         /// </summary>
         /// <param name="address">地址</param>
         /// <returns>經緯度</returns>
-        public Core.Domain.DTO.Map.LatLng GetLatLngFromAddress(string address)
+        public async Task<LatLng> GetLatLngAsync(string address)
         {
-            LatLng latLng = new();
-            address = "臺灣" + address;
-            var encodedAddress = HttpUtility.UrlEncode(address, Encoding.GetEncoding("UTF-8"));
+            var encodedAddress = HttpUtility.UrlEncode("臺灣" + address, Encoding.GetEncoding("UTF-8"));
             HttpRequestMessage httpRequestMessage = new(
                 HttpMethod.Get,
-                "http://www.mapquestapi.com/geocoding/v1/address?" +
+                _apiDomain + "/geocoding/v1/address?" +
                 "key=" + _apiKey + "&" +
                 "inFormat=kvp&" +
                 "outFormat=json&" +
@@ -63,83 +92,20 @@ namespace BL.Service.MapQuest
                 "thumbMaps=false");
 
             var httpClient = _httpClientFactory.CreateClient();
-            var httpResponseMessage = httpClient.SendAsync(httpRequestMessage).Result;
+            var httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
             httpResponseMessage.EnsureSuccessStatusCode();
-            var contentStream = httpResponseMessage.Content.ReadAsStreamAsync().Result;
-            var response = JsonSerializer.Deserialize<Response>(contentStream);
+            var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync();
+            var getAddressResponse = await JsonSerializer.DeserializeAsync<GetAddressResponse>(contentStream);
 
-            List<Location> locations = response.Results[0].Locations;
+            var locations = getAddressResponse.Results[0].Locations;
             foreach (Location location in locations)
             {
                 if (location.LatLng.Lat != default && location.LatLng.Lng != default)
                 {
-                    latLng.Lat = location.LatLng.Lat;
-                    latLng.Lng = location.LatLng.Lng;
-                    break;
+                    return location.LatLng;
                 }
             }
-
-            return new Core.Domain.DTO.Map.LatLng
-            {
-                Lat = latLng.Lat,
-                Lng = latLng.Lng
-            };
-        }
-
-
-        /// <summary>
-        /// 將 目標地址列表 依 來源地址的遠近 排序，越近越前面
-        /// </summary>
-        /// <param name="sourceAddress">來源地址</param>
-        /// <param name="targetAddresses">目標地址列表</param>
-        /// <returns>地址列表</returns>
-        public List<string> GetAddressInOrder(string sourceAddress, List<string> targetAddresses)
-        {
-            Core.Domain.DTO.Map.LatLng sourceLatLng = GetLatLngFromAddress(sourceAddress);
-            List<string> orderedAddresses = targetAddresses.OrderBy(target =>
-            {
-                Core.Domain.DTO.Map.LatLng targetLatLng = GetLatLngFromAddress(target);
-                return GetDuration(sourceLatLng, targetLatLng);
-            }).ToList();
-            return orderedAddresses;
-        }
-
-        private class Response
-        {
-            [JsonPropertyName("results")]
-            public List<Result> Results { get; set; }
-        }
-
-        private class Result
-        {
-            [JsonPropertyName("locations")]
-            public List<Location> Locations { get; set; }
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        private class Location
-        {
-            public string AdminArea1 { get; set; }
-            [JsonPropertyName("latLng")]
-            public LatLng LatLng { get; set; }
-        }
-
-        private class LatLng
-        {
-
-            /// <summary>
-            /// 緯度
-            /// </summary>
-            [JsonPropertyName("lat")]
-            public float Lat { get; set; }
-
-            /// <summary>
-            /// 經度
-            /// </summary>
-            [JsonPropertyName("lng")]
-            public float Lng { get; set; }
+            throw new Exception("address not found:" + address);
         }
     }
 }

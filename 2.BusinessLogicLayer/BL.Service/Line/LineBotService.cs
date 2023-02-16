@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Text.Json;
-using BL.Service.Line.Interface;
 using isRock.LineBot;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;

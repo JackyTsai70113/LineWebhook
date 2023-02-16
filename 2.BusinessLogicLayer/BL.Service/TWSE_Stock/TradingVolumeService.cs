@@ -1,5 +1,4 @@
 ﻿using BL.Service.Interface;
-using Core.Domain.DTO.TWSE;
 using Core.Domain.Enums;
 using Core.Domain.Utilities;
 using isRock.LineBot;
@@ -11,7 +10,6 @@ using System.Text.Json;
 
 namespace BL.Service.TWSE_Stock
 {
-
     public class TradingVolumeService : ITradingVolumeService
     {
         /*
@@ -56,11 +54,11 @@ namespace BL.Service.TWSE_Stock
         {
             _topNumber = 100;
         }
-        private readonly ILogger<TradingVolumeService> logger;
+        private readonly ILogger<TradingVolumeService> _logger;
 
         public TradingVolumeService(IConfiguration configuration, ILogger<TradingVolumeService> logger)
         {
-            this.logger = logger;
+            _logger = logger;
             _topNumber = int.Parse(configuration.GetSection("TWSE").GetSection("TradingVolumeNumber").Value);
 
         }
@@ -264,7 +262,7 @@ namespace BL.Service.TWSE_Stock
 
             if (tradingVolume.Stat != "OK")
             {
-                logger.LogError("[GetTradingVolumeDict_ForeignInvestorsByJson] 報表未順利取得(), dateTime: {dateTime}", dateTime);
+                _logger.LogError("[GetTradingVolumeDict_ForeignInvestorsByJson] 報表未順利取得(), dateTime: {dateTime}", dateTime);
                 return false;
             }
             return true;

@@ -4,13 +4,11 @@ using isRock.LineBot;
 
 namespace BL.Service.Line
 {
-
     /// <summary>
     /// 產生需使用的Line Message
     /// </summary>
     public class LineMessageService
     {
-
         /// <summary>
         /// 將文字轉成 Line文字訊息
         /// </summary>

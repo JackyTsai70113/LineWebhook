@@ -22,7 +22,7 @@ public class Route
     [JsonPropertyName("time")]
     public int Time { get; set; }
     [JsonPropertyName("formattedTime")]
-    public int FormattedTime { get; set; }
+    public string FormattedTime { get; set; }
     [JsonPropertyName("hasHighway")]
     public bool HasHighway { get; set; }
     [JsonPropertyName("hasTollRoad")]

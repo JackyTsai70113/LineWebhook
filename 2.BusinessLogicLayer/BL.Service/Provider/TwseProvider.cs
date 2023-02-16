@@ -1,8 +1,8 @@
-using Core.Domain.DTO.TWSE;
 using Core.Domain.Utilities;
 using System.Text.Json;
 
-namespace BL.Service.Provider {
+namespace BL.Service.Provider
+{
     public static class TwseProvider {
 
         /// <summary>

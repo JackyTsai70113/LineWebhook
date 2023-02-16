@@ -2,16 +2,17 @@
 using System.Text.RegularExpressions;
 using System.Web;
 
-namespace Core.Domain.Utilities {
-
-    public static class StringUtility {
-
+namespace Core.Domain.Utilities
+{
+    public static class StringUtility
+    {
         /// <summary>
         /// 去除 html string 的 Tag
         /// </summary>
         /// <param name="htmlStr">來源字串</param>
         /// <returns>字串</returns>
-        public static string StripHtmlTag(string htmlStr) {
+        public static string StripHtmlTag(string htmlStr)
+        {
             return Regex.Replace(htmlStr, "<.*?>", string.Empty);
         }
 
@@ -20,7 +21,8 @@ namespace Core.Domain.Utilities {
         /// </summary>
         /// <param name="htmlStr">字串</param>
         /// <returns>字串</returns>
-        public static string StripHtmlSpace(this string htmlStr) {
+        public static string StripHtmlSpace(this string htmlStr)
+        {
             string htmlDecodeStr = htmlStr.HtmlDecode();
             return htmlDecodeStr.Trim();
         }
@@ -31,7 +33,8 @@ namespace Core.Domain.Utilities {
         /// <param name="htmlStr">來源字串</param>
         /// <returns>字串</returns>
         /// <remarks>例如: (&nbsp;) 轉為 ( ) 的不換行空格字符</remarks>
-        public static string HtmlEncode(this string htmlStr) {
+        public static string HtmlEncode(this string htmlStr)
+        {
             return HttpUtility.HtmlEncode(htmlStr);
         }
 
@@ -41,13 +44,15 @@ namespace Core.Domain.Utilities {
         /// <param name="htmlStr">來源字串</param>
         /// <returns>字串</returns>
         /// <remarks>例如: (&nbsp;) 轉為 ( ) 的不換行空格字符</remarks>
-        public static string HtmlDecode(this string htmlStr) {
+        public static string HtmlDecode(this string htmlStr)
+        {
             StringWriter stringWriter = new StringWriter();
             HttpUtility.HtmlDecode(htmlStr, stringWriter);
             return stringWriter.ToString();
         }
 
-        public static string TrimEnd(this string str, string trimStr) {
+        public static string TrimEnd(this string str, string trimStr)
+        {
             int yearIndex = str.IndexOf(trimStr);
             return str.Substring(0, yearIndex);
         }

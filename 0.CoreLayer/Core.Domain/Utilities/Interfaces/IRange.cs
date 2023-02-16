@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Core.Domain.Utilities.Interfaces {
-
-    public interface IRange<T> {
-
+namespace Core.Domain.Utilities.Interfaces
+{
+    public interface IRange<T>
+    {
         /// <summary>
         /// 開始
         /// </summary>

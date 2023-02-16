@@ -1,11 +1,11 @@
-﻿using Core.Domain.DTO.RequestDTO.CambridgeDictionary;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using DA.Managers.CambridgeDictionary;
 
-namespace DA.Managers.Interfaces {
+namespace DA.Managers.Interfaces
+{
 
-    public interface ICambridgeDictionaryManager {
+    public interface ICambridgeDictionaryManager
+    {
 
         List<Translation> CrawlCambridgeDictionary(string vocabulary);
     }

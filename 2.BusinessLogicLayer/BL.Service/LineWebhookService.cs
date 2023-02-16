@@ -1,12 +1,10 @@
 ﻿using System.Text;
 using BL.Service.Interface;
 using BL.Service.Line;
-using BL.Service.Map;
 using BL.Service.MapQuest;
 using Core.Domain.DTO;
-using Core.Domain.DTO.Map;
-using Core.Domain.DTO.RequestDTO.CambridgeDictionary;
 using Core.Domain.Enums;
+using DA.Managers.CambridgeDictionary;
 using DA.Managers.Interfaces;
 using isRock.LineBot;
 
@@ -16,7 +14,6 @@ namespace BL.Service
     {
         private readonly ICambridgeDictionaryManager _cambridgeDictionaryManager;
         private readonly IExchangeRateService _exchangeRateService;
-        private readonly IMapHereService _mapHereService;
         private readonly IMapQuestService _mapQuestService;
         private readonly IMaskInstitutionService _maskInstitutionService;
         private readonly ITradingVolumeService _tradingVolumeService;
@@ -25,14 +22,12 @@ namespace BL.Service
             ICambridgeDictionaryManager cambridgeDictionaryManager,
             IExchangeRateService exchangeRateService,
             IMaskInstitutionService maskInstitutionService,
-            IMapHereService mapHereService,
             IMapQuestService mapQuestService,
             ITradingVolumeService tradingVolumeService)
         {
             _cambridgeDictionaryManager = cambridgeDictionaryManager;
             _exchangeRateService = exchangeRateService;
             _maskInstitutionService = maskInstitutionService;
-            _mapHereService = mapHereService;
             _mapQuestService = mapQuestService;
             _tradingVolumeService = tradingVolumeService;
         }
@@ -186,8 +181,7 @@ namespace BL.Service
 
             Dictionary<string, MaskInstitution> maskInstitutionDict = maskInstitutions.ToDictionary(m => m.Address);
 
-            List<string> orderedAddress = _mapHereService.GetAddressInOrder(address, maskInstitutionDict.Keys.ToList());
-            List<string> orderedAddress2 = _mapQuestService.GetAddressInOrder(address, maskInstitutionDict.Keys.ToList());
+            List<string> orderedAddress = _mapQuestService.GetAddressInOrderAsync(address, maskInstitutionDict.Keys.ToList()).Result;
 
             List<MaskInstitution> topFiveMaskInstitutions = new();
             for (int i = 0; i < 5 && i < orderedAddress.Count; i++)
@@ -203,7 +197,7 @@ namespace BL.Service
             List<MessageBase> messages = new();
             foreach (MaskInstitution maskInstitution in topFiveMaskInstitutions)
             {
-                Core.Domain.DTO.Map.LatLng latLng = _mapHereService.GetLatLngFromAddress(maskInstitution.Address);
+                var latLng = _mapQuestService.GetLatLngAsync(maskInstitution.Address).Result;
                 if (latLng.Lat == default || latLng.Lng == default)
                 {
                     continue;

@@ -1,13 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text.Json;
 using BL.Service.Interface;
-using BL.Service.Line.Interface;
+using BL.Service.Line;
+using isRock.LineBot;
+using isRock.LineBot.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Text.Json;
-using isRock.LineBot;
-using System.Collections.Generic;
-using isRock.LineBot.Extensions;
-using BL.Service.Map;
 
 namespace Website.Controllers
 {
@@ -68,7 +67,7 @@ namespace Website.Controllers
             try
             {
                 var messages = LineWebhookService.GetReplyMessages(receivedMessage.events[0]);
-                return $"request: {JsonSerializer.Serialize(receivedMessage)}\nresponse: {JsonSerializer.Serialize(messages)}";
+                return $"request: {receivedMessage.ToJson()}\nresponse: {messages.ToJson()}";
             }
             catch (Exception ex)
             {
@@ -126,6 +125,7 @@ namespace Website.Controllers
             {
                 "123"
             };
+
             var p = new Product { Name = "name123", AvailableStock = 123, Sizes = sizes };
             return Ok(p);
         }

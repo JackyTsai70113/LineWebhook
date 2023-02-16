@@ -9,10 +9,9 @@ using Microsoft.Extensions.Logging;
 
 namespace BL.Service
 {
-
     public class StockValueEstimationService : IStockValueEstimationService
     {
-        private readonly ILogger<StockValueEstimationService> logger;
+        private readonly ILogger<StockValueEstimationService> _logger;
 
         public IDividendDistributionManager DividendDistributionManager { get; set; }
 
@@ -25,7 +24,7 @@ namespace BL.Service
             DividendDistributionManager = new DividendDistributionManager();
             // 抓取年度交易資訊
             YearlyTradingInformationManager = new YearlyTradingInformationManager();
-            this.logger = logger;
+            this._logger = logger;
         }
 
         #endregion IOC
@@ -41,15 +40,15 @@ namespace BL.Service
 
             //根據 股票代號 抓取股利分派列表
             List<DividendDistribution> dividendDistributionList = DividendDistributionManager.CrawlDividendDistribution(stockCodeEnum);
-            logger.LogInformation("dividendDistributionList:{dividendDistributionList}", JsonSerializer.Serialize(dividendDistributionList));
+            _logger.LogInformation("dividendDistributionList:{dividendDistributionList}", JsonSerializer.Serialize(dividendDistributionList));
 
             //根據 年度交易資訊 抓取股利分派列表
             List<YearlyTradingInformation> yearlyTradingInformationList = YearlyTradingInformationManager.CrawlYearlyTradingInformation(stockCodeEnum);
-            logger.LogInformation("yearlyTradingInformationList:{yearlyTradingInformationList}", JsonSerializer.Serialize(yearlyTradingInformationList));
+            _logger.LogInformation("yearlyTradingInformationList:{yearlyTradingInformationList}", JsonSerializer.Serialize(yearlyTradingInformationList));
 
 
             StockValueEstimation stockValueEstimation = GetStockValueEstimationList(dividendDistributionList, yearlyTradingInformationList);
-            logger.LogInformation("stockValueEstimation:{stockValueEstimation}", JsonSerializer.Serialize(stockValueEstimation));
+            _logger.LogInformation("stockValueEstimation:{stockValueEstimation}", JsonSerializer.Serialize(stockValueEstimation));
             return successNumber;
         }
 

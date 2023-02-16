@@ -1,6 +1,6 @@
 ﻿using isRock.LineBot;
 
-namespace BL.Service.Line.Interface {
+namespace BL.Service.Line {
 
     public interface ILineBotService {
 

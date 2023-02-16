@@ -1,11 +1,13 @@
-namespace Core.Domain.DTO.TWSE {
+namespace BL.Service.Provider
+{
     /// <summary>
     /// Twse Open Api 的回傳Model
     /// </summary>
     /// <remarks>
     /// https://openapi.twse.com.tw/#/%E8%AD%89%E5%88%B8%E4%BA%A4%E6%98%93/get_holidaySchedule_holidaySchedule
     /// </remarks>
-    public class HolidaySchedule {
+    public class HolidaySchedule
+    {
         /// <summary>
         /// 名稱
         /// </summary>

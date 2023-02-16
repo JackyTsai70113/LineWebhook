@@ -1,4 +1,4 @@
-﻿namespace Core.Domain.DTO.TWSE
+﻿namespace BL.Service.TWSE_Stock
 {
 
     public class TradingVolume

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace Core.Domain.DTO {
-
-    public class MaskInstitution {
-
+namespace Core.Domain.DTO
+{
+    public class MaskInstitution
+    {
         /// <summary>
         /// 醫事機構代碼
         /// </summary>
