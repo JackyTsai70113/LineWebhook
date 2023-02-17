@@ -43,10 +43,8 @@ jobs:
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          images: ${{ secrets.DOCKER_USERNAME }}/$DOCKER_REPOSITORY
-          
-      - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+          images: ${{ secrets.DOCKER_USERNAME }}/$DOCKER_REPOSITORY:latest
+  
       - name: Build and push Docker images
         uses: docker/build-push-action@v4.0.0
         with:
