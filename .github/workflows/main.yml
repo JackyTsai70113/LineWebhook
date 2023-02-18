@@ -51,12 +51,12 @@ jobs:
       #       - name: Push to Docker Hub
       #         run: docker push $DOCKER_USERNAME/$REPOSITORY_NAME:$IMAGE_TAG
 
-      - id: 'auth'
-        uses: 'google-github-actions/auth@v1'
+      - name: Log in to gcloud
+        id: auth
+        uses: google-github-actions/auth@v1
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
-    # Setup gcloud CLI
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
 
