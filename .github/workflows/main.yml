@@ -36,8 +36,8 @@ jobs:
       
       - name: echo tags, labels
         run: |
-          echo "${{ steps.meta.outputs.tags }}"
-          echo "${{ steps.meta.outputs.labels }}"
+          echo "tags == ${{ steps.meta.outputs.tags }} =="
+          echo "labels == ${{ steps.meta.outputs.labels }} =="
       #- name: Build and push Docker images
       #  uses: docker/build-push-action@v4.0.0
       #  with:
