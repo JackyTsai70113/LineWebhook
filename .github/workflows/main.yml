@@ -63,8 +63,8 @@ jobs:
       - id: 'deploy'
         uses: 'google-github-actions/deploy-cloudrun@v1'
         with:
-          service: 'hello-cloud-run'
-          image: 'image registry.hub.docker.com/$DOCKER_USERNAME/$REPOSITORY_NAME:IMAGE_TAG'
+          service: linewebhook-cloud-run
+          image: registry.hub.docker.com/$DOCKER_USERNAME/$REPOSITORY_NAME:IMAGE_TAG
 
       # - name: Deploy to cloud run
       #   run: |
@@ -84,7 +84,7 @@ jobs:
 
       - name: echo tags, labels
         run: |
-          echo "DOCKER_USERNAME = $DOCKER_USERNAME/$REPOSITORY_NAME:$IMAGE_TAG =="
+          echo "DOCKER_USERNAME = ${{ $DOCKER_USERNAME }}/${{ $REPOSITORY_NAME }}:${{ $IMAGE_TAG }} =="
           echo "DOCKER_HUB_REPOSITORY = $DOCKER_USERNAME/$REPOSITORY_NAME:$IMAGE_TAG =="
       #       - name: Build Docker image
       #         run: |
