@@ -60,13 +60,19 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
 
-      - name: Deploy to cloud run
-        run: |
-          gcloud run deploy linewebhook-cloud-run \
-          --region $REGION \
-          --image registry.hub.docker.com/$DOCKER_USERNAME/$REPOSITORY_NAME:IMAGE_TAG \
-          --platform "managed" \
-          --quiet
+      - id: 'deploy'
+        uses: 'google-github-actions/deploy-cloudrun@v1'
+        with:
+          service: 'hello-cloud-run'
+          image: 'image registry.hub.docker.com/$DOCKER_USERNAME/$REPOSITORY_NAME:IMAGE_TAG'
+
+      # - name: Deploy to cloud run
+      #   run: |
+      #     gcloud run deploy linewebhook-cloud-run \
+      #     --region $REGION \
+      #     --image registry.hub.docker.com/$DOCKER_USERNAME/$REPOSITORY_NAME:IMAGE_TAG \
+      #     --platform "managed" \
+      #     --quiet
 
   deploy_to_cloud_run:
     name: Deploy to cloud run
