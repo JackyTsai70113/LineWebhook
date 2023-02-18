@@ -55,27 +55,18 @@ jobs:
         id: auth
         uses: google-github-actions/auth@v1
         with:
-          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
-
-#       - name: Log in to gcloud
-#         id: auth
-#         uses: google-github-actions/auth@v1
-#         with:
-#           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
-# 
-#       - name: Set up Cloud SDK
-#         run: google-github-actions/setup-gcloud@v1
 
       - name: Deploy to cloud run
         run: |
           gcloud run deploy linewebhook-cloud-run \
           --region $REGION \
           --image registry.hub.docker.com/$DOCKER_USERNAME/$REPOSITORY_NAME:IMAGE_TAG \
-          --playform "managed" \
-          -- quiet
+          --platform "managed" \
+          --quiet
 
   deploy_to_cloud_run:
     name: Deploy to cloud run
