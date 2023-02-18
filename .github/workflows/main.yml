@@ -52,7 +52,7 @@ jobs:
       #         run: docker push $DOCKER_USERNAME/$REPOSITORY_NAME:$IMAGE_TAG
 
       - name: Log in to gcloud
-        id: "gcloud-auth"
+        id: auth
         uses: google-github-actions/auth@v1
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
