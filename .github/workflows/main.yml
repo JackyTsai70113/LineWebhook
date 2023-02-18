@@ -6,8 +6,6 @@ on:
       - master
 
 env:
-  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-  APP_NAME: ${{ 'linewebhookapp' }}
   DOCKER_REPOSITORY: ${{ 'linewebhook' }}
   LINE_NOTIFY: ${{ secrets.LINE_NOTIFY_BEARER_TOKEN }}
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -28,16 +26,18 @@ jobs:
       - name: Log in to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
       
+      - name: echo tags, labels
+        run: |
+          echo "DOCKER_USERNAME == ${{ secrets.DOCKER_USERNAME }} =="
+          echo "DOCKER_HUB_REPOSITORY == ${{ DOCKER_HUB_REPOSITORY }} =="
+
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
           images: j10926jacky/linewebhook
       
-      - name: echo tags, labels
-        run: |
-          echo "tags == ${{ steps.meta.outputs.tags }} =="
-          echo "labels == ${{ steps.meta.outputs.labels }} =="
+
           
       - name: Build and push Docker images
         uses: docker/build-push-action@v4.0.0
