@@ -6,6 +6,7 @@ on:
       - master
 
 env:
+  DOCKER_USERNAME: ${{ 'linewebhook' }}
   DOCKER_HUB_REPOSITORY: ${{ 'linewebhook' }}
   LINE_NOTIFY: ${{ secrets.LINE_NOTIFY_BEARER_TOKEN }}
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -22,10 +23,10 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
-      
+
       - name: Log in to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-      
+
       - name: echo tags, labels
         run: |
           echo "DOCKER_USERNAME = ${{ secrets.DOCKER_USERNAME }} =="
@@ -35,10 +36,8 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4.3.0
         with:
-          images: j10926jacky/linewebhook
-      
+          images: ${{ secrets.DOCKER_USERNAME }}/$DOCKER_HUB_REPOSITORY
 
-          
       - name: Build and push Docker images
         uses: docker/build-push-action@v4.0.0
         with:
@@ -46,6 +45,7 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
   gcp-setup-build-deploy:
     name: Setup, Build, and Deploy
     runs-on: ubuntu-latest
@@ -98,6 +98,5 @@ jobs:
       #    curl -H "Authorization: Bearer $LINE_NOTIFY" \
       #         -d "message=[$NOW] [${GITHUB_SHA::8}] $TOP_COMMIT_MESSAGE" \
       #         https://notify-api.line.me/api/notify
-
 #          curl -X GET "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage?chat_id=$TELEGRAM_JACKY_CHAT_ID&text=佈版完成 ($NOW) $TOP_COMMIT_MESSAGE"
 #          curl -H "Authorization: Bearer $LINE_NOTIFY" -d "message=佈版完成 ($NOW) $TOP_COMMIT_MESSAGE" https://notify-api.line.me/api/notify

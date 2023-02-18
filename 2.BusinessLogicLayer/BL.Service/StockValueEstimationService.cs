@@ -12,22 +12,15 @@ namespace BL.Service
     public class StockValueEstimationService : IStockValueEstimationService
     {
         private readonly ILogger<StockValueEstimationService> _logger;
-
-        public IDividendDistributionManager DividendDistributionManager { get; set; }
-
-        public IYearlyTradingInformationManager YearlyTradingInformationManager { get; set; }
-        #region IOC
+        private readonly IDividendDistributionManager _dividendDistributionManager;
+        private readonly IYearlyTradingInformationManager _yearlyTradingInformationManager;
 
         public StockValueEstimationService(ILogger<StockValueEstimationService> logger)
         {
-            // 抓取股利分派
-            DividendDistributionManager = new DividendDistributionManager();
-            // 抓取年度交易資訊
-            YearlyTradingInformationManager = new YearlyTradingInformationManager();
-            this._logger = logger;
+            _logger = logger;
+            _yearlyTradingInformationManager = new YearlyTradingInformationManager();
+            _dividendDistributionManager = new DividendDistributionManager();
         }
-
-        #endregion IOC
 
         /// <summary>
         /// 根據 股票代號 抓取股利分派後計算，並分別更新DB: DividendDistribution, YearlyTradingInformation, StockValueEstimation。
@@ -39,11 +32,11 @@ namespace BL.Service
             int successNumber = 0;
 
             //根據 股票代號 抓取股利分派列表
-            List<DividendDistribution> dividendDistributionList = DividendDistributionManager.CrawlDividendDistribution(stockCodeEnum);
+            List<DividendDistribution> dividendDistributionList = _dividendDistributionManager.CrawlDividendDistribution(stockCodeEnum);
             _logger.LogInformation("dividendDistributionList:{dividendDistributionList}", JsonSerializer.Serialize(dividendDistributionList));
 
             //根據 年度交易資訊 抓取股利分派列表
-            List<YearlyTradingInformation> yearlyTradingInformationList = YearlyTradingInformationManager.CrawlYearlyTradingInformation(stockCodeEnum);
+            List<YearlyTradingInformation> yearlyTradingInformationList = _yearlyTradingInformationManager.CrawlYearlyTradingInformation(stockCodeEnum);
             _logger.LogInformation("yearlyTradingInformationList:{yearlyTradingInformationList}", JsonSerializer.Serialize(yearlyTradingInformationList));
 
 

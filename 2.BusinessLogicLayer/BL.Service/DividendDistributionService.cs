@@ -6,10 +6,8 @@ using DA.Managers.TWSE_Stock;
 
 namespace BL.Service
 {
-
     public class DividendDistributionService : IDividendDistributionService
     {
-
         public DividendDistributionService()
         {
             DividendDistributionManager = new DividendDistributionManager();
