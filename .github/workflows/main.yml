@@ -8,7 +8,7 @@ on:
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}"
+  GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
   # PROJECT_ID: ${{ secrets.}}
   LINE_NOTIFY: ${{ secrets.LINE_NOTIFY_BEARER_TOKEN }}
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -47,7 +47,7 @@ jobs:
         id: 'gcloud-auth'
         uses: google-github-actions/auth@v1
         with:
-          credentials_json: "$GCP_CREDENTIALS"
+          credentials_json: $GCP_CREDENTIALS
       
       - name: Seet up Cloud SDK
         run: google-github-actions/setup-gcloud@v1
