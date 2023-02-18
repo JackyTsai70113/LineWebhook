@@ -38,13 +38,14 @@ jobs:
         run: |
           echo "tags == ${{ steps.meta.outputs.tags }} =="
           echo "labels == ${{ steps.meta.outputs.labels }} =="
-      #- name: Build and push Docker images
-      #  uses: docker/build-push-action@v4.0.0
-      #  with:
-      #    context: .
-      #    push: true
-      #    tags: ${{ steps.meta.outputs.tags }}
-      #    labels: ${{ steps.meta.outputs.labels }}
+          
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v4.0.0
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
   gcp-setup-build-deploy:
     name: Setup, Build, and Deploy
     runs-on: ubuntu-latest
