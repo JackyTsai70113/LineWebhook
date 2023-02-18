@@ -7,8 +7,8 @@ on:
 
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-  DOCKER_REPOSITORY: ${{ linewebhook }}
-  IMAGE_TAG: ${{ latest }}
+  DOCKER_REPOSITORY: ${{ 'linewebhook' }}
+  IMAGE_TAG: ${{ 'latest' }}
   LINE_NOTIFY: ${{ secrets.LINE_NOTIFY_BEARER_TOKEN }}
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
   TELEGRAM_JACKY_CHAT_ID: ${{secrets.TELEGRAM_JACKY_CHAT_ID}}
