@@ -13,6 +13,8 @@ env:
   LINE_NOTIFY: ${{ secrets.LINE_NOTIFY_BEARER_TOKEN }}
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
   TELEGRAM_JACKY_CHAT_ID: ${{secrets.TELEGRAM_JACKY_CHAT_ID}}
+  PROJECT_ID: linewebhook-proj
+  #
   REGION: asia-east1
   REPOSITORY_NAME: linewebhook
   IMAGE_TAG: latest
