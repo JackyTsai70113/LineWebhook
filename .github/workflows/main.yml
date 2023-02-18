@@ -34,14 +34,14 @@ jobs:
       #  uses: docker/metadata-action@v4.3.0
       #  with:
       #    images: ${{ secrets.DOCKER_USERNAME }}/linewebhook
-      - name: Build image
-        run: docker build --tag $DOCKER_USERNAME/$REPOSITORY_NAME:$IMAGE_TAG .
-
-      - name: Log in to Docker Hub
-        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-
-      - name: Push to Docker Hub
-        run: docker push $DOCKER_USERNAME/$REPOSITORY_NAME:$IMAGE_TAG
+#       - name: Build image
+#         run: docker build --tag $DOCKER_USERNAME/$REPOSITORY_NAME:$IMAGE_TAG .
+# 
+#       - name: Log in to Docker Hub
+#         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+# 
+#       - name: Push to Docker Hub
+#         run: docker push $DOCKER_USERNAME/$REPOSITORY_NAME:$IMAGE_TAG
 
       - name: Log in to gcloud
         id: 'gcloud-auth'
