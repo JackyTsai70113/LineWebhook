@@ -47,9 +47,9 @@ jobs:
         id: 'gcloud-auth'
         uses: google-github-actions/auth@v1
         with:
-          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+          credentials_json: "$CREDENTIALS"
       
-      - name: Seet up Cloud SDK
+      - name: Set up Cloud SDK
         run: google-github-actions/setup-gcloud@v1
 
       - name: Deploy to cloud run
