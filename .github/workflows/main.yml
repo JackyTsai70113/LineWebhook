@@ -60,11 +60,11 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
 
-      - id: 'deploy'
-        uses: 'google-github-actions/deploy-cloudrun@v1'
-        with:
-          service: linewebhook-cloud-run
-          image: registry.hub.docker.com/j10926jacky/linewebhook/latest
+      # - id: 'deploy'
+      #   uses: 'google-github-actions/deploy-cloudrun@v1'
+      #   with:
+      #     service: linewebhook-cloud-run
+      #     image: registry.hub.docker.com/j10926jacky/linewebhook/latest
 
       # - name: Deploy to cloud run
       #   run: |
@@ -74,17 +74,20 @@ jobs:
       #     --platform "managed" \
       #     --quiet
 
-  deploy_to_cloud_run:
-    name: Deploy to cloud run
-    runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-
-      - name: echo tags, labels
-        run: |
-          echo "DOCKER_HUB_REPOSITORY = $DOCKER_USERNAME/$REPOSITORY_NAME:$IMAGE_TAG =="
+      - name: Info
+        run: gcloud info
+#   deploy_to_cloud_run:
+#     name: Deploy to cloud run
+#     runs-on: ubuntu-latest
+# 
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v1
+# 
+#       - name: echo tags, labels
+#         run: |
+#           echo "DOCKER_HUB_REPOSITORY = $DOCKER_USERNAME/$REPOSITORY_NAME:$IMAGE_TAG =="
       #       - name: Build Docker image
       #         run: |
       #           docker build . --tag gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
@@ -111,11 +114,11 @@ jobs:
       #             --platform "managed" \
       #             --allow-unauthenticated
 
-      - name: Set current date as env variable
-        run: echo "NOW=$(date +'%Y/%m/%d %H:%M')" >> $GITHUB_ENV
-
-      - name: Set top commit message as env variable
-        run: echo "TOP_COMMIT_MESSAGE=$(git log --pretty=format:"%s" -1)" >> $GITHUB_ENV
+#       - name: Set current date as env variable
+#         run: echo "NOW=$(date +'%Y/%m/%d %H:%M')" >> $GITHUB_ENV
+# 
+#       - name: Set top commit message as env variable
+#         run: echo "TOP_COMMIT_MESSAGE=$(git log --pretty=format:"%s" -1)" >> $GITHUB_ENV
 
       #     - name: Build and deploy the Docker image
       #       run: |
