@@ -60,14 +60,18 @@ jobs:
 #             --allow-unauthenticated
 # 
 #       - name: Set current date as env variable
-#         run: echo "NOW=$(date +'%Y/%m/%d %H:%M')" >> $GITHUB_ENV
+#         run: echo "NOW=$(date +'%m/%d %H:%M')" >> $GITHUB_ENV
 # 
 #       - name: Set top commit message as env variable
 #         run: echo "TOP_COMMIT_MESSAGE=$(git log --pretty=format:"%s" -1)" >> $GITHUB_ENV
 
+          # curl -H "Authorization: Bearer $LINE_NOTIFY" \
+          #   -d "message=[$NOW] [${GITHUB_SHA::8}] $TOP_COMMIT_MESSAGE" \
+          #   https://notify-api.line.me/api/notify
+
+          # curl https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage?chat_id=$TELEGRAM_JACKY_CHAT_ID&text=佈版完成 ($NOW) $TOP_COMMIT_MESSAGE
       - name: Notice to line and telegram
         run: |-
-          curl -H "Authorization: Bearer $LINE_NOTIFY" \
-            -d "message=[$NOW] [${GITHUB_SHA::8}] $TOP_COMMIT_MESSAGE" \
-            https://notify-api.line.me/api/notify
-          curl -X GET https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage?chat_id=$TELEGRAM_JACKY_CHAT_ID&text=佈版完成 ($NOW) $TOP_COMMIT_MESSAGE
+          echo "https://api.telegram.org/bot${ TELEGRAM_BOT_TOKEN }/sendMessage?chat_id=${ TELEGRAM_JACKY_CHAT_ID }&text=[${ NOW }]${ TOP_ COMMIT_MESSAGE }"
+
+
