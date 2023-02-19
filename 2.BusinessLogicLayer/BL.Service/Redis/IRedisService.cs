@@ -1,6 +1,6 @@
-﻿namespace BL.Service.Cache;
+﻿namespace BL.Service.Redis;
 
-public interface ICacheService
+public interface IRedisService
 {
     bool Set<T>(string key, T value);
 

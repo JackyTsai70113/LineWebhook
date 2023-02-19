@@ -2,31 +2,31 @@ using System.Net;
 using System.Text.Json;
 using StackExchange.Redis;
 
-namespace BL.Service.Cache.Redis;
+namespace BL.Service.Redis;
 
-public class RedisCacheService : ICacheService
+public class RedisService : IRedisService
 {
-    private readonly IConnectionMultiplexer Redis;
-    private readonly IDatabase db;
+    private readonly IDatabase _db;
+    private readonly IConnectionMultiplexer _redis;
 
-    public RedisCacheService(IConnectionMultiplexer redis)
+    public RedisService(IConnectionMultiplexer redis)
     {
-        Redis = redis;
-        db = redis.GetDatabase();
+        _redis = redis;
+        _db = redis.GetDatabase();
     }
 
     public bool Set<T>(string key, T value)
     {
         string valueStr = JsonSerializer.Serialize(value);
         RedisValue redisValue = new(valueStr);
-        return db.StringSet(key, redisValue);
+        return _db.StringSet(key, redisValue);
     }
 
     public bool Set<T>(string key, T value, TimeSpan timeout)
     {
         string valueStr = JsonSerializer.Serialize(value);
         RedisValue redisValue = new(valueStr);
-        return db.StringSet(key, redisValue, timeout);
+        return _db.StringSet(key, redisValue, timeout);
     }
 
     /// <summary>
@@ -36,10 +36,10 @@ public class RedisCacheService : ICacheService
     /// <returns>key列表</returns>
     public IEnumerable<string> GetKeys(string pattern)
     {
-        var endPoints = Redis.GetEndPoints();
+        var endPoints = _redis.GetEndPoints();
         foreach (var endPoint in endPoints)
         {
-            var server = Redis.GetServer(endPoint);
+            var server = _redis.GetServer(endPoint);
             var keys = server.Keys(pattern: pattern);
             foreach (var key in keys)
             {
@@ -50,7 +50,7 @@ public class RedisCacheService : ICacheService
 
     public T Get<T>(string key)
     {
-        RedisValue redisValue = db.StringGet(key);
+        RedisValue redisValue = _db.StringGet(key);
         return JsonSerializer.Deserialize<T>(redisValue.ToString());
     }
 
@@ -58,7 +58,7 @@ public class RedisCacheService : ICacheService
     {
         if (ExistKeyValue(key))
         {
-            RedisValue redisValue = db.StringGet(key);
+            RedisValue redisValue = _db.StringGet(key);
             value = JsonSerializer.Deserialize<T>(redisValue.ToString());
             return true;
         }
@@ -69,7 +69,7 @@ public class RedisCacheService : ICacheService
 
     public bool Delete(string key)
     {
-        return db.KeyDelete(key);
+        return _db.KeyDelete(key);
     }
 
     /// <summary>
@@ -79,21 +79,21 @@ public class RedisCacheService : ICacheService
     /// <returns>是否存在</returns>
     public bool ExistKeyValue(string key)
     {
-        return db.StringGet(key).HasValue;
+        return _db.StringGet(key).HasValue;
     }
 
     public EndPoint[] GetEndPoints()
     {
-        return Redis.GetEndPoints();
+        return _redis.GetEndPoints();
     }
 
     public HashEntry[] GetHashEntrys(string pattern)
     {
-        return db.HashGetAll(pattern);
+        return _db.HashGetAll(pattern);
     }
 
     public IServer GetEndPoints(EndPoint endPoint)
     {
-        return Redis.GetServer(endPoint);
+        return _redis.GetServer(endPoint);
     }
 }

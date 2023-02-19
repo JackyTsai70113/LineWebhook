@@ -6,18 +6,23 @@ using Microsoft.Extensions.Logging;
 
 namespace BL.Service.Line
 {
-
     public class LineBotService : ILineBotService
     {
-        private readonly ILogger<LineBotService> Logger;
-        private readonly IConfiguration Config;
-        private readonly Bot Bot;
+        private readonly ILogger<LineBotService> _logger;
+        private readonly IConfiguration _config;
+        private readonly Bot _bot;
 
+        /// <summary>
+        /// sss
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="config"></param>
+        /// <remarks>API doc: https://notify-bot.line.me/doc/en/</remarks>
         public LineBotService(ILogger<LineBotService> logger, IConfiguration config)
         {
-            Logger = logger;
-            Config = config;
-            Bot = new Bot(config["Line:ChannelAccessToken"]);
+            _logger = logger;
+            _config = config;
+            _bot = new Bot(config["Line:ChannelAccessToken"]);
         }
 
         /// <summary>
@@ -27,7 +32,7 @@ namespace BL.Service.Line
         /// <returns>是否推播成功</returns>
         public bool PushMessage_Group(string msg)
         {
-            return SendNotify(Config["Line:NotifyBearerToken_Group"], msg);
+            return SendNotify(_config["Line:NotifyBearerToken_Group"], msg);
         }
 
         /// <summary>
@@ -37,17 +42,18 @@ namespace BL.Service.Line
         /// <returns>是否推播成功</returns>
         public bool Notify_Jacky(string msg)
         {
-            var result = Bot.SendNotify(Config["Line:NotifyBearerToken_Jacky"]
-            , msg
-            , new Uri("https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/240px-Cat03.jpg")
-            , new Uri("https://images.hdqwalls.com/download/cat-4k-po-2048x2048.jpg")
-            , 6362
-            , 11087927
-            , false);
+            var result = _bot.SendNotify(_config["Line:NotifyBearerToken_Jacky"]
+                , msg
+                , new Uri("https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/240px-Cat03.jpg")
+                , new Uri("https://images.hdqwalls.com/download/cat-4k-po-2048x2048.jpg")
+                , 6362
+                , 11087927
+                , false
+            );
 
             if (result.status != 200)
             {
-                Logger.LogError("{message}", result.message);
+                _logger.LogError("{message}", result.message);
                 return false;
             }
             return true;
@@ -60,14 +66,14 @@ namespace BL.Service.Line
         /// <returns>是否推播成功</returns>
         public bool PushMessage_Jessi(string msg)
         {
-            return SendNotify(Config["Line:NotifyBearerToken_Jessi"], msg);
+            return SendNotify(_config["Line:NotifyBearerToken_Jessi"], msg);
         }
 
         public bool ReplyMessage(string token, List<MessageBase> messages)
         {
             try
             {
-                Bot.ReplyMessage(token, messages);
+                _bot.ReplyMessage(token, messages);
                 return true;
             }
             catch (Exception ex)
@@ -78,8 +84,8 @@ namespace BL.Service.Line
                     int responseEndIndex = ex.ToString().IndexOf("Endpoint");
                     string responseStr = ex.ToString()[responseStartIndex..responseEndIndex].Trim();
                     LineHttpPostException response = JsonSerializer.Deserialize<LineHttpPostException>(responseStr);
-                    Logger.LogError(
-                        "LineWebhookService.ResponseToLineServer 錯誤, replyToken: {token},\n" +
+                    _logger.LogError(
+                        "ReplyMessage 錯誤, replyToken: {token},\n" +
                         "messages: {messages},\n" +
                         "response: {response},\n" +
                         "ex: {ex}", token, JsonSerializer.Serialize(messages), JsonSerializer.Serialize(response), ex);
@@ -92,10 +98,10 @@ namespace BL.Service.Line
 
         private bool SendNotify(string token, string msg)
         {
-            var result = Bot.SendNotify(token, msg);
+            var result = _bot.SendNotify(token, msg);
             if (result.status != 200)
             {
-                Logger.LogError("{message}", result.message);
+                _logger.LogError("{message}", result.message);
                 return false;
             }
             return true;

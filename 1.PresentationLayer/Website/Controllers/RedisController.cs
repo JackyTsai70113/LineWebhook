@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using BL.Service.Cache;
+using BL.Service.Redis;
 using Microsoft.AspNetCore.Mvc;
 using Website.Models;
 
@@ -11,9 +11,9 @@ namespace Website.Controllers
     [Route("api/[controller]")]
     public class RedisController : ControllerBase
     {
-        private readonly ICacheService RedisCacheService;
+        private readonly IRedisService RedisCacheService;
 
-        public RedisController(ICacheService cacheService)
+        public RedisController(IRedisService cacheService)
         {
             RedisCacheService = cacheService;
         }

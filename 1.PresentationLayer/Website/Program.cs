@@ -16,6 +16,7 @@ public class Program
         builder.Services.AddHttpClient();
         builder.Services
             .AddCaching(builder.Configuration)
+            .AddChatBot(builder.Configuration)
             .AddMyService();
         builder.Services.AddControllers();
         builder.Services.AddRouting(options => options.LowercaseUrls = true);

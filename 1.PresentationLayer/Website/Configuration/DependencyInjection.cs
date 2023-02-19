@@ -1,11 +1,11 @@
 using BL.Service;
-using BL.Service.Cache;
-using BL.Service.Cache.Redis;
 using BL.Service.Interface;
 using BL.Service.Interface.TWSE_Stock;
 using BL.Service.Line;
 using BL.Service.MapQuest;
+using BL.Service.Redis;
 using BL.Service.Sinopac;
+using BL.Service.Telegram;
 using BL.Service.TWSE_Stock;
 using DA.Managers.CambridgeDictionary;
 using DA.Managers.Interfaces;
@@ -13,7 +13,9 @@ using DA.Managers.Interfaces.TWSE_Stock;
 using DA.Managers.TWSE_Stock;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using StackExchange.Redis;
+using Telegram.Bot;
 
 namespace Website.Configuration;
 
@@ -23,9 +25,18 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration config)
     {
-        services.AddSingleton<ICacheService, RedisCacheService>();
+        services.AddSingleton<IRedisService, RedisService>();
         services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(config["RedisConnection"]));
         return services;
+    }
+
+    public static IServiceCollection AddChatBot(
+        this IServiceCollection services,
+        IConfiguration config)
+    {
+        return services
+            .AddSingleton<ITelegramService, TelegramService>()
+            .AddSingleton<ITelegramBotClient, TelegramBotClient>(x => new TelegramBotClient(config["Telegram:Token"]));
     }
 
     /// <summary>

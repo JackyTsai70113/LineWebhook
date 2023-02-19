@@ -1,35 +1,34 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using BL.Service;
-using BL.Service.Interface;
+using BL.Service.Telegram;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Website.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class TelegramWebhookController : ControllerBase
+    public class TelegramController : ControllerBase
     {
-        private readonly ITelegramWebhookService TelegramWebhookService;
+        private readonly ITelegramService _telegramWebhookService;
 
-        public TelegramWebhookController()
+        public TelegramController(ITelegramService telegramWebhookService)
         {
-            TelegramWebhookService = new TelegramWebhookService();
+            _telegramWebhookService = telegramWebhookService;
         }
 
         /// <summary>
-        /// TelegramWebhook的入口，負責解讀line的訊息。
+        /// get me
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("index2")]
-        public IActionResult Index2()
+        [Route("get_me")]
+        public IActionResult GetMe()
         {
             try
             {
-                string result = TelegramWebhookService.Response();
-                return Content(result);
+                var user = _telegramWebhookService.GetMe();
+                return Ok(user);
             }
             catch (Exception ex)
             {
@@ -50,7 +49,7 @@ namespace Website.Controllers
             }
             catch (Exception ex)
             {
-                return Content($"Index 發生錯誤，requestBody: ex: {ex}");
+                return Content($"Index 發生錯誤, requestBody: ex: {ex}");
             }
         }
 
@@ -67,19 +66,19 @@ namespace Website.Controllers
                 for (int i = 0; i < 3; i++)
                 {
                     DateTime now = DateTime.Now;
-                    TelegramWebhookService.NotifyByMessage("現在時間： " + now.ToString());
-                    Thread.Sleep(20000);
+                    _telegramWebhookService.NotifyByMessage("現在時間： " + now.ToString());
+                    Thread.Sleep(1000);
                 }
             });
             return Ok();
         }
 
         [HttpGet]
-        [Route("test")]
-        public ActionResult Test()
+        [Route("send_dice")]
+        public ActionResult SendDice()
         {
-            TelegramWebhookService.Test();
-            return Ok();
+            var msgs = _telegramWebhookService.SendDice();
+            return Ok(msgs);
         }
     }
 

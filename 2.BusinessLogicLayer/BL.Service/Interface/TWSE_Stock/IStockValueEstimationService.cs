@@ -1,10 +1,9 @@
 ﻿using Core.Domain.Enums;
-using System.Collections.Generic;
 
-namespace BL.Service.Interface.TWSE_Stock {
-
-    public interface IStockValueEstimationService {
-
+namespace BL.Service.Interface.TWSE_Stock
+{
+    public interface IStockValueEstimationService
+    {
         /// <summary>
         /// 根據 股票代號 抓取股利分派後計算，並分別更新DB: DividendDistribution, YearlyTradingInformation, StockValueEstimation。
         /// </summary>

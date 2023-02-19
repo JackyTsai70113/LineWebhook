@@ -5,10 +5,8 @@ using Core.Domain.Utilities;
 
 namespace BL.Service.Sinopac
 {
-
     public class ExchangeRateService : IExchangeRateService
     {
-
         /// <summary>
         /// 取得換匯資訊
         /// </summary>

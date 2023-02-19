@@ -6,7 +6,6 @@ on:
       - master
 
 env:
-  LINE_NOTIFY: ${{ secrets.LINE_NOTIFY_BEARER_TOKEN }}
   DOCKER_USER: ${{ vars.DOCKER_USER }}
   DOCKER_REPOSITORY: ${{ vars.DOCKER_REPOSITORY }}
   CLOUD_RUN_SERVICE: ${{ vars.CLOUD_RUN_SERVICE }}
@@ -29,50 +28,47 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v3
 
-#       - name: Build image
-#         run: docker build --tag ${{ env.DOCKER_USER}}/${{ env.DOCKER_REPOSITORY }}:$IMAGE_TAG .
-# 
-#       - name: Log in to Docker Hub
-#         run: docker login -u ${{ env.DOCKER_USER}} -p ${{ secrets.DOCKER_PASSWORD }}
-# 
-#       - name: Push to Docker Hub
-#         run: docker push ${{ env.DOCKER_USER}}/${{ env.DOCKER_REPOSITORY }}:$IMAGE_TAG
-# 
-#       - name: Log in to gcloud
-#         id: auth
-#         uses: google-github-actions/auth@v1
-#         with:
-#           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
-# 
-#       - name: Set up Cloud SDK
-#         uses: google-github-actions/setup-gcloud@v1
-# 
-#       - name: Deploy to Cloud Run
-#         run: |-
-#           gcloud run deploy ${{ env.CLOUD_RUN_SERVICE }} \
-#             --region=asia-east1 \
-#             --image=docker.io/${{ env.DOCKER_USER }}/${{ env.DOCKER_REPOSITORY }}:$IMAGE_TAG \
-#             --platform=managed \
-#             --quiet \
-#             --port=80 \
-#             --allow-unauthenticated
-# 
+      - name: Build image
+        run: docker build --tag ${{ env.DOCKER_USER}}/${{ env.DOCKER_REPOSITORY }}:$IMAGE_TAG .
+
+      - name: Log in to Docker Hub
+        run: docker login -u ${{ env.DOCKER_USER}} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Push to Docker Hub
+        run: docker push ${{ env.DOCKER_USER}}/${{ env.DOCKER_REPOSITORY }}:$IMAGE_TAG
+
+      - name: Log in to gcloud
+        id: auth
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+
+      - name: Deploy to Cloud Run
+        run: |-
+          gcloud run deploy ${{ env.CLOUD_RUN_SERVICE }} \
+            --region=asia-east1 \
+            --image=docker.io/${{ env.DOCKER_USER }}/${{ env.DOCKER_REPOSITORY }}:$IMAGE_TAG \
+            --platform=managed \
+            --quiet \
+            --port=80 \
+            --allow-unauthenticated
+
       - name: Set current date as env variable
         run: echo "NOW=$(date +'%m/%d %H:%M')" >> $GITHUB_ENV
 
       - name: Set top commit message as env variable
         run: echo "TOP_COMMIT_MESSAGE=$(git log --pretty=format:"%s" -1)" >> $GITHUB_ENV
 
-          # curl -H "Authorization: Bearer $LINE_NOTIFY" \
-          #   -d "message=[$NOW] [${GITHUB_SHA::8}] $TOP_COMMIT_MESSAGE" \
-          #   https://notify-api.line.me/api/notify
-
-          # curl https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage?chat_id=$TELEGRAM_JACKY_CHAT_ID&text=佈版完成 ($NOW) $TOP_COMMIT_MESSAGE
-
-          # echo "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage?chat_id=${{secrets.TELEGRAM_JACKY_CHAT_ID}}&text=[$NOW]$TOP_COMMIT_MESSAGE"
-      - name: Notice to line and telegram
+      - name: Notice to line
         run: |-
-          curl -d "chat_id=${{secrets.TELEGRAM_JACKY_CHAT_ID}}&text=[$NOW]$TOP_COMMIT_MESSAGE" \
+          curl -H "Authorization: Bearer ${{ secrets.LINE_NOTIFY_BEARER_TOKEN }}" \
+            -d "message=[$NOW] [${GITHUB_SHA::8}] $TOP_COMMIT_MESSAGE" \
+            https://notify-api.line.me/api/notify
+
+      - name: Notice to telegram
+        run: |-
+          curl -d "chat_id=${{secrets.TELEGRAM_JACKY_CHAT_ID}}&text=[$NOW] $TOP_COMMIT_MESSAGE" \
             https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage
-
-

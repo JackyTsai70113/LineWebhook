@@ -2,10 +2,8 @@
 
 namespace BL.Service.Interface.TWSE_Stock
 {
-
     public interface IDailyQuoteService
     {
-
         /// <summary>
         /// 根據 日期 以及 股票分類 抓取每日收盤情形列表，並且更新資料庫。
         /// </summary>
