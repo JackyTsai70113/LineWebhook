@@ -60,11 +60,15 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
 
-      # - id: 'deploy'
-      #   uses: 'google-github-actions/deploy-cloudrun@v1'
-      #   with:
-      #     service: linewebhook-cloud-run
-      #     image: registry.hub.docker.com/j10926jacky/linewebhook/latest
+      - id: 'deploy'
+        uses: 'google-github-actions/deploy-cloudrun@v1'
+        with:
+          service: linewebhook-cloud-run
+          image: docker.io/j10926jacky/linewebhook
+
+      - name: Info
+        run: gcloud info
+
 
       # - name: Deploy to cloud run
       #   run: |
@@ -75,8 +79,6 @@ jobs:
       #     --quiet
 
 
-      - name: Info
-        run: gcloud info
 #   deploy_to_cloud_run:
 #     name: Deploy to cloud run
 #     runs-on: ubuntu-latest
