@@ -72,6 +72,6 @@ jobs:
           # curl https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage?chat_id=$TELEGRAM_JACKY_CHAT_ID&text=佈版完成 ($NOW) $TOP_COMMIT_MESSAGE
       - name: Notice to line and telegram
         run: |-
-          echo "https://api.telegram.org/bot${ TELEGRAM_BOT_TOKEN }/sendMessage?chat_id=${ TELEGRAM_JACKY_CHAT_ID }&text=[${ NOW }]${ TOP_ COMMIT_MESSAGE }"
+          echo "https://api.telegram.org/bot${{ TELEGRAM_BOT_TOKEN }}/sendMessage?chat_id=${{ TELEGRAM_JACKY_CHAT_ID }}&text=[${{ NOW }}]${{ TOP_COMMIT_MESSAGE }}"
 
 
