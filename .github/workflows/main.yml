@@ -7,8 +7,6 @@ on:
 
 env:
   LINE_NOTIFY: ${{ secrets.LINE_NOTIFY_BEARER_TOKEN }}
-  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-  TELEGRAM_JACKY_CHAT_ID: ${{secrets.TELEGRAM_JACKY_CHAT_ID}}
   DOCKER_USER: ${{ vars.DOCKER_USER }}
   DOCKER_REPOSITORY: ${{ vars.DOCKER_REPOSITORY }}
   CLOUD_RUN_SERVICE: ${{ vars.CLOUD_RUN_SERVICE }}
@@ -72,6 +70,6 @@ jobs:
           # curl https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage?chat_id=$TELEGRAM_JACKY_CHAT_ID&text=佈版完成 ($NOW) $TOP_COMMIT_MESSAGE
       - name: Notice to line and telegram
         run: |-
-          echo "https://api.telegram.org/bot${{ TELEGRAM_BOT_TOKEN }}/sendMessage?chat_id=${{ TELEGRAM_JACKY_CHAT_ID }}&text=[${{ NOW }}]${{ TOP_COMMIT_MESSAGE }}"
+          echo "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage?chat_id=${{secrets.TELEGRAM_JACKY_CHAT_ID}}&text=[${{ NOW }}]${{ TOP_COMMIT_MESSAGE }}"
 
 
