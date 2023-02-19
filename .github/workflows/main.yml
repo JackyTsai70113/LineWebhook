@@ -9,25 +9,27 @@ env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
   GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
-  # PROJECT_ID: ${{ secrets.}}
+
   LINE_NOTIFY: ${{ secrets.LINE_NOTIFY_BEARER_TOKEN }}
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
   TELEGRAM_JACKY_CHAT_ID: ${{secrets.TELEGRAM_JACKY_CHAT_ID}}
   PROJECT_ID: linewebhook-proj
   #
-  REGION: asia-east1
+  DOCKER_USER: ${{ env.DOCKER_USER}} 
+  DOCKER_REPOSITORY: ${{ env.DOCKER_REPOSITORY}}
+  CLOUD_RUN_SERVICE_NAME: ${{ env.CLOUD_RUN_SERVICE_NAME}}
+  REGION: ${{ env.REGION}}
   REPOSITORY_NAME: linewebhook
   IMAGE_TAG: latest
-
-#   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-#   RUN_REGION: us-west1
-#   SERVICE_NAME: ${{ secrets.GCP_SERVICE_NAME }}
+  URL2: ${{ env.URL}}
 
 jobs:
   push_image_to_docker_hub:
     name: Push image to Docker Hub
     runs-on: ubuntu-latest
-
+    environment: 
+      name: production
+      url: ${{ env.URL}}
     # Add "id-token" with the intended permissions.
     permissions:
       contents: "read"
@@ -41,24 +43,24 @@ jobs:
       #  id: meta
       #  uses: docker/metadata-action@v4.3.0
       #  with:
-      #    images: ${{ secrets.DOCKER_USERNAME }}/linewebhook
+      #    images: ${{ secrets.DOCKER_USER }}/linewebhook
       #       - name: Build image
-      #         run: docker build --tag $DOCKER_USERNAME/$REPOSITORY_NAME:$IMAGE_TAG .
+      #         run: docker build --tag $DOCKER_USER/$REPOSITORY_NAME:$IMAGE_TAG .
       #
       #       - name: Log in to Docker Hub
-      #         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      #         run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       #
       #       - name: Push to Docker Hub
       #         run: docker push $DOCKER_USERNAME/$REPOSITORY_NAME:$IMAGE_TAG
 
-      - name: Log in to gcloud
-        id: auth
-        uses: google-github-actions/auth@v1
-        with:
-          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
-
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v1
+#       - name: Log in to gcloud
+#         id: auth
+#         uses: google-github-actions/auth@v1
+#         with:
+#           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+# 
+#       - name: Set up Cloud SDK
+#         uses: google-github-actions/setup-gcloud@v1
 
       # - id: 'deploy'
       #   uses: 'google-github-actions/deploy-cloudrun@v1'
@@ -66,31 +68,25 @@ jobs:
       #     service: linewebhook-cloud-run
       #     image: docker.io/j10926jacky/linewebhook
 
-      - name: Info
-        run: gcloud info
+      # - name: Info
+      #   run: gcloud info
 
       - name: echo tags, labels
         run: |
-          echo "DOCKER_HUB_REPOSITORY = ${{ env.PROJECT_ID }}/${{ env.DOCKER_USERNAME }}:$IMAGE_TAG =="
+          echo "CLOUD_RUN_SERVICE_NAME = $CLOUD_RUN_SERVICE_NAME =="
+          echo "URL = ${{ env.URL}} =="
+          echo "URL = ${{ env.URL2}} =="
+          echo "URL2 = $URL2 =="
 
       # - name: Deploy to Cloud Run
       #   run: |-
-      #     gcloud run deploy ${{ env.SERVICE }} \
-      #       --region ${{ env.REGION }} \
-      #       --image registry.hub.docker.com/j10926jacky/linewebhook/latest \
-      #       --platform "managed" \
-      #       --quiet
-
-
-      - name: Deploy to Cloud Run
-        run: |-
-          gcloud run deploy linewebhook-cloud-run \
-            --region=asia-east1 \
-            --image=docker.io/j10926jacky/linewebhook \
-            --platform=managed \
-            --quiet \
-            --port=80 \
-            --allow-unauthenticated
+      #     gcloud run deploy $CLOUD_RUN_SERVICE_NAME \
+      #       --region=asia-east1 \
+      #       --image=docker.io/${{ env.DOCKER_USERNAME }}/linewebhook \
+      #       --platform=managed \
+      #       --quiet \
+      #       --port=80 \
+      #       --allow-unauthenticated
 #   deploy_to_cloud_run:
 #     name: Deploy to cloud run
 #     runs-on: ubuntu-latest
@@ -105,13 +101,6 @@ jobs:
       #       - name: Build Docker image
       #         run: |
       #           docker build . --tag gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
-
-      #       - name: Setup gcloud CLI
-      #         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
-      #         with:
-      #           service_account_email: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
-      #           service_account_key: ${{ secrets.GCP_SERVICE_APPLICATION_CREDENTIALS }}
-      #           project_id: ${{ secrets.GCP_PROJECT_ID }}
 
       #       - name: Configure Docker to use Google Cloud Platform
       #         run: 'gcloud auth configure-docker --quiet'
