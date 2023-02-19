@@ -6,8 +6,6 @@ on:
       - master
 
 env:
-  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
   LINE_NOTIFY: ${{ secrets.LINE_NOTIFY_BEARER_TOKEN }}
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
   TELEGRAM_JACKY_CHAT_ID: ${{secrets.TELEGRAM_JACKY_CHAT_ID}}
@@ -29,20 +27,14 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v3
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v4.3.0
-        with:
-          images: ${{ env.DOCKER_USER }}/linewebhook
-
       - name: Build image
-        run: docker build --tag $DOCKER_USER/$REPOSITORY_NAME:$IMAGE_TAG.
+        run: docker build --tag ${{ env.DOCKER_USER}}/${{ env.REPOSITORY_NAME }}:$IMAGE_TAG.
 
       - name: Log in to Docker Hub
-        run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+        run: docker login -u ${{ env.DOCKER_USER}} -p $DOCKER_PASSWORD
 
       - name: Push to Docker Hub
-        run: docker push $DOCKER_USERNAME/$REPOSITORY_NAME:$IMAGE_TAG
+        run: docker push ${{ env.DOCKER_USER}}/${{ env.REPOSITORY_NAME }}:$IMAGE_TAG
 
       - name: Log in to gcloud
         id: auth
