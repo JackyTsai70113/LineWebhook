@@ -73,15 +73,24 @@ jobs:
         run: |
           echo "DOCKER_HUB_REPOSITORY = ${{ env.PROJECT_ID }}/${{ env.DOCKER_USERNAME }}:$IMAGE_TAG =="
 
+      # - name: Deploy to Cloud Run
+      #   run: |-
+      #     gcloud run deploy ${{ env.SERVICE }} \
+      #       --region ${{ env.REGION }} \
+      #       --image registry.hub.docker.com/j10926jacky/linewebhook/latest \
+      #       --platform "managed" \
+      #       --quiet
+
+
       - name: Deploy to Cloud Run
         run: |-
-          gcloud run deploy ${{ env.SERVICE }} \
-            --region ${{ env.REGION }} \
-            --image registry.hub.docker.com/j10926jacky/linewebhook/latest \
-            --platform "managed" \
-            --quiet
-
-
+          gcloud run deploy linewebhook-cloud-run \
+            --region=asia-east1 \
+            --image=docker.io/j10926jacky/linewebhook \
+            --platform=managed \
+            --quiet \
+            --port=80 \
+            --allow-unauthenticated
 #   deploy_to_cloud_run:
 #     name: Deploy to cloud run
 #     runs-on: ubuntu-latest
