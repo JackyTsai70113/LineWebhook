@@ -51,7 +51,7 @@ jobs:
 
       - name: Deploy to Cloud Run
         run: |-
-          gcloud run deploy ${{ env.CLOUD_RUN_SERVICE_NAME }} \
+          gcloud run deploy ${{ env.CLOUD_RUN_SERVICE }} \
             --region=asia-east1 \
             --image=docker.io/${{ env.DOCKER_USERNAME }}/${{ env.DOCKER_REPOSITORY}}:$IMAGE_TAG \
             --platform=managed \
