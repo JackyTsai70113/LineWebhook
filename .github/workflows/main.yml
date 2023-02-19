@@ -60,23 +60,26 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
 
-      - id: 'deploy'
-        uses: 'google-github-actions/deploy-cloudrun@v1'
-        with:
-          service: linewebhook-cloud-run
-          image: docker.io/j10926jacky/linewebhook
+      # - id: 'deploy'
+      #   uses: 'google-github-actions/deploy-cloudrun@v1'
+      #   with:
+      #     service: linewebhook-cloud-run
+      #     image: docker.io/j10926jacky/linewebhook
 
       - name: Info
         run: gcloud info
 
+      - name: echo tags, labels
+        run: |
+          echo "DOCKER_HUB_REPOSITORY = ${{ env.PROJECT_ID }}/${{ env.DOCKER_USERNAME }}:$IMAGE_TAG =="
 
-      # - name: Deploy to cloud run
-      #   run: |
-      #     gcloud run deploy linewebhook-cloud-run \
-      #     --region $REGION \
-      #     --image registry.hub.docker.com/$DOCKER_USERNAME/$REPOSITORY_NAME:IMAGE_TAG \
-      #     --platform "managed" \
-      #     --quiet
+      - name: Deploy to Cloud Run
+        run: |-
+          gcloud run deploy ${{ env.SERVICE }} \
+            --region ${{ env.REGION }} \
+            --image registry.hub.docker.com/j10926jacky/linewebhook/latest \
+            --platform "managed" \
+            --quiet
 
 
 #   deploy_to_cloud_run:
