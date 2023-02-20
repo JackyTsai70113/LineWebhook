@@ -22,17 +22,18 @@ namespace Website.Controllers
         }
 
         [HttpPost("")]
-        public async Task<IActionResult> IndexAsync([FromBody] Update update)
+        public async Task<IActionResult> IndexAsync([FromBody] dynamic update)
         {
-            _logger.LogDebug("update: {update}", update);
-            try
-            {
-                return Ok(await _telegramWebhookService.UpdateWebhook(update));
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Index 發生錯誤, update: {update}, ex: {ex}", update, ex);
-            }
+            var s = update.ToString();
+            _logger.LogDebug($"s: {s}");
+            // try
+            // {
+            //     return Ok(await _telegramWebhookService.UpdateWebhook(update));
+            // }
+            // catch (Exception ex)
+            // {
+            //     _logger.LogError("Index 發生錯誤, update: {update}, ex: {ex}", update, ex);
+            // }
             return Ok();
         }
     }
