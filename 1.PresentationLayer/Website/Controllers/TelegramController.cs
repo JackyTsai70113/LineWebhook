@@ -55,18 +55,18 @@ namespace Website.Controllers
 
         [HttpPost]
         [Route("notify")]
-        public ActionResult Notify(NotifyModel notifyModel)
+        public ActionResult Notify([FromBody] string message)
         {
-            if (string.IsNullOrWhiteSpace(notifyModel.Message))
+            if (string.IsNullOrWhiteSpace(message))
             {
-                return BadRequest();
+                return BadRequest("invalid message");
             }
             Task.Run(() =>
             {
                 for (int i = 0; i < 3; i++)
                 {
                     DateTime now = DateTime.Now;
-                    _telegramWebhookService.NotifyByMessage("現在時間： " + now.ToString());
+                    _telegramWebhookService.NotifyByMessage("[" + now.ToString() + "] " + message);
                     Thread.Sleep(1000);
                 }
             });
@@ -80,10 +80,5 @@ namespace Website.Controllers
             var msgs = _telegramWebhookService.SendDice();
             return Ok(msgs);
         }
-    }
-
-    public class NotifyModel
-    {
-        public string Message { get; set; }
     }
 }

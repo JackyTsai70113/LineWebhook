@@ -1,4 +1,5 @@
 using Telegram.Bot;
+using Telegram.Bot.Args;
 using Telegram.Bot.Types;
 
 namespace BL.Service.Telegram
@@ -25,38 +26,28 @@ namespace BL.Service.Telegram
         /// <summary>
         /// 測試
         /// </summary>
-        public List<Message> SendDice()
+        public async Task<IEnumerable<Message>> SendDiceAsync()
         {
             ChatId chatId = new(1017180008);
-            var msg1 = _bot.SendDiceAsync(chatId).Result;
-            var msg2 = _bot.SendTextMessageAsync(
-             chatId: 1017180008, // or a chat id: 123456789
-             text: "Trying *all the parameters* of `sendMessage` method"
-            // parseMode: ParseMode.Markdown,
-            // disableNotification: true,
-            // replyToMessageId: e.Message.MessageId,
-            // replyMarkup: new InlineKeyboardMarkup(InlineKeyboardButton.WithUrl(
-            //  "Check sendMessage method",
-            //  "https://core.telegram.org/bots/api#sendmessage"
-            ).Result;
-            return new List<Message> { msg1, msg2 };
+            var msg1 = await _bot.SendDiceAsync(chatId);
+            var msg2 = await _bot.SendTextMessageAsync(
+                chatId: 1017180008,
+                text: "Trying *all the parameters* of `sendMessage` method"
+            );
+            return new Message[] { msg1, msg2 };
         }
-
-        //private async void Bot_OnMessage(object sender, MessageEventArgs e) {
-        //    if (e.Message.Text != null) {
-        //        Console.WriteLine($"Received a text message in chat {e.Message.Chat.Id}.");
-
-        //        await botClient.SendTextMessageAsync(
-        //          chatId: e.Message.Chat,
-        //          text: "You said:\n" + e.Message.Text
-        //        );
-        //    }
-        //}
 
         public User GetMe()
         {
             var user = _bot.GetMeAsync().Result;
             return user;
+        }
+
+        public async void UpdateWebhook(MessageEventArgs messageEventArgs) {
+            await _bot.SendTextMessageAsync(
+                chatId: messageEventArgs.Message.Chat.Id,
+                text: "You said: " + messageEventArgs.Message.Text
+            );
         }
     }
 }
