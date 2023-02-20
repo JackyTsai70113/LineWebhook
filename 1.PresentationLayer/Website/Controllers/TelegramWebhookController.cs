@@ -22,7 +22,7 @@ namespace Website.Controllers
         }
 
         [HttpPost("")]
-        public async Task<IActionResult> IndexAsync([FromBody] dynamic update)
+        public IActionResult Index([FromBody] dynamic update)
         {
             var s = update.ToString();
             _logger.LogDebug($"s: {s}");
