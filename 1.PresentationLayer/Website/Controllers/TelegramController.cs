@@ -75,10 +75,9 @@ namespace Website.Controllers
 
         [HttpGet]
         [Route("send_dice")]
-        public ActionResult SendDice()
+        public async Task<IActionResult> SendDiceAsync()
         {
-            var msgs = _telegramWebhookService.SendDiceAsync();
-            return Ok(msgs);
+            return Ok(await _telegramWebhookService.SendDiceAsync());
         }
     }
 }

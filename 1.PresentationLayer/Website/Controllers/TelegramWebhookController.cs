@@ -1,9 +1,10 @@
 using System;
-using System.Text.Json;
+using System.Threading.Tasks;
 using BL.Service.Telegram;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Telegram.Bot.Args;
+using Telegram.Bot.Types;
 
 namespace Website.Controllers
 {
@@ -11,26 +12,26 @@ namespace Website.Controllers
     [Route("api/webhook/telegram")]
     public class TelegramWebhookController : ControllerBase
     {
-        private readonly Logger<TelegramWebhookController> _logger;
+        private readonly ILogger<TelegramWebhookController> _logger;
         private readonly ITelegramService _telegramWebhookService;
 
-        public TelegramWebhookController(Logger<TelegramWebhookController> logger, ITelegramService telegramWebhookService)
+        public TelegramWebhookController(ILogger<TelegramWebhookController> logger, ITelegramService telegramWebhookService)
         {
             _logger = logger;
             _telegramWebhookService = telegramWebhookService;
         }
 
-        [HttpPost]
-        public IActionResult Index([FromBody] MessageEventArgs messageEventArgs)
+        [HttpPost("")]
+        public async Task<IActionResult> IndexAsync([FromBody] Update update)
         {
-            _logger.LogDebug("messageEventArgs: {messageEventArgs}", messageEventArgs);
+            _logger.LogDebug("update: {update}", update);
             try
             {
-                _telegramWebhookService.UpdateWebhook(messageEventArgs);
+                return Ok(await _telegramWebhookService.UpdateWebhook(update));
             }
             catch (Exception ex)
             {
-                _logger.LogError("Index 發生錯誤, messageEventArgs: {messageEventArgs}, ex: {ex}", messageEventArgs, ex);
+                _logger.LogError("Index 發生錯誤, update: {update}, ex: {ex}", update, ex);
             }
             return Ok();
         }

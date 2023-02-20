@@ -1,5 +1,4 @@
 using Telegram.Bot;
-using Telegram.Bot.Args;
 using Telegram.Bot.Types;
 
 namespace BL.Service.Telegram
@@ -43,10 +42,11 @@ namespace BL.Service.Telegram
             return user;
         }
 
-        public async void UpdateWebhook(MessageEventArgs messageEventArgs) {
-            await _bot.SendTextMessageAsync(
-                chatId: messageEventArgs.Message.Chat.Id,
-                text: "You said: " + messageEventArgs.Message.Text
+        public async Task<Message> UpdateWebhook(Update update)
+        {
+            return await _bot.SendTextMessageAsync(
+                chatId: update.Message.Chat.Id,
+                text: "You said: " + update.Message.Text
             );
         }
     }
