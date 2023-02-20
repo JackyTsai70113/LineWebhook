@@ -77,7 +77,7 @@ namespace Website.Controllers
         [Route("send_dice")]
         public ActionResult SendDice()
         {
-            var msgs = _telegramWebhookService.SendDice();
+            var msgs = _telegramWebhookService.SendDiceAsync();
             return Ok(msgs);
         }
     }
