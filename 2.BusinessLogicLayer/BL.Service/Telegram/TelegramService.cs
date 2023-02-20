@@ -42,12 +42,12 @@ namespace BL.Service.Telegram
             return user;
         }
 
-        public async Task<Message> UpdateWebhook(Update update)
+        public Message UpdateWebhook(Update update)
         {
-            return await _bot.SendTextMessageAsync(
+            return _bot.SendTextMessageAsync(
                 chatId: update.Message.Chat.Id,
                 text: "You said: " + update.Message.Text
-            );
+            ).Result;
         }
     }
 }

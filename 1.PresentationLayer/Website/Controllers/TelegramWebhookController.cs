@@ -24,17 +24,17 @@ namespace Website.Controllers
         [HttpPost("")]
         public IActionResult Index([FromBody] dynamic update)
         {
-            var s = update.ToString();
-            _logger.LogDebug($"s: {s}");
+            // var s = update.ToString();
+            // _logger.LogDebug($"s: {s}");
             // try
             // {
-            //     return Ok(await _telegramWebhookService.UpdateWebhook(update));
+            return Ok(_telegramWebhookService.UpdateWebhook(update));
             // }
             // catch (Exception ex)
             // {
             //     _logger.LogError("Index 發生錯誤, update: {update}, ex: {ex}", update, ex);
             // }
-            return Ok();
+            // return Ok();
         }
     }
 }

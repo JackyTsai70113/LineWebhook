@@ -14,6 +14,6 @@ namespace BL.Service.Telegram
         /// <param name="message">通知訊息</param>
         void NotifyByMessage(string message);
 
-        Task<Message> UpdateWebhook(Update update);
+        Message UpdateWebhook(Update update);
     }
 }
