@@ -1,9 +1,10 @@
 using System;
-using System.Threading.Tasks;
 using BL.Service.Telegram;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
-using Telegram.Bot.Args;
+using Microsoft.Extensions.Options;
 using Telegram.Bot.Types;
 
 namespace Website.Controllers
@@ -22,13 +23,15 @@ namespace Website.Controllers
         }
 
         [HttpPost("")]
-        public IActionResult Index([FromBody] dynamic update)
+        public IActionResult Index([FromBody] Update update)
         {
             // var s = update.ToString();
             // _logger.LogDebug($"s: {s}");
             // try
             // {
-            return Ok(_telegramWebhookService.UpdateWebhook(update));
+            // Update update = JsonSerializer.Deserialize<Update>(d.ToString());
+            _telegramWebhookService.HandleUpdate(update);
+            return Ok();
             // }
             // catch (Exception ex)
             // {

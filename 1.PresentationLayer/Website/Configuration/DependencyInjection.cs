@@ -13,7 +13,6 @@ using DA.Managers.Interfaces.TWSE_Stock;
 using DA.Managers.TWSE_Stock;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using StackExchange.Redis;
 using Telegram.Bot;
 

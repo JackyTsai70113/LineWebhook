@@ -1,15 +1,20 @@
+using Microsoft.Extensions.Logging;
 using Telegram.Bot;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace BL.Service.Telegram
 {
     /// <remarks>telegram api doc: https://core.telegram.org/bots/api</remarks>
     public class TelegramService : ITelegramService
     {
+        private readonly ILogger<TelegramService> _logger;
         private readonly ITelegramBotClient _bot;
 
-        public TelegramService(ITelegramBotClient telegramBotClient)
+        public TelegramService(ILogger<TelegramService> logger, ITelegramBotClient telegramBotClient)
         {
+            _logger = logger;
             _bot = telegramBotClient;
         }
 
@@ -42,12 +47,63 @@ namespace BL.Service.Telegram
             return user;
         }
 
-        public Message UpdateWebhook(Update update)
+        public void HandleUpdate(Update update)
         {
-            return _bot.SendTextMessageAsync(
-                chatId: update.Message.Chat.Id,
-                text: "You said: " + update.Message.Text
-            ).Result;
+            if (update is { Message: { } message })
+            {
+                // BotOnMessageReceived(message);
+                _ = _bot.SendTextMessageAsync(
+                    chatId: message.Chat.Id,
+                    text: message.Text).Result;
+                return;
+
+            }
+
+            return;
+        }
+
+        public Message BotOnMessageReceived(Message message)
+        {
+            _logger.LogInformation("Receive message type: {MessageType}", message.Type);
+            if (message.Text is not { } messageText)
+                Console.WriteLine("aaaa");
+            Message sentMessage = SendInlineKeyboard(_bot, message);
+            _logger.LogInformation("The message was sent with id: {SentMessageId}", sentMessage.MessageId);
+            return sentMessage;
+            // Send inline keyboard
+            // You can process responses in BotOnCallbackQueryReceived handler
+            static Message SendInlineKeyboard(ITelegramBotClient _bot, Message message)
+            {
+                _bot.SendChatActionAsync(
+                    chatId: message.Chat.Id,
+                    chatAction: ChatAction.Typing).Wait();
+
+                // Simulate longer running task
+                Task.Delay(500).Wait();
+
+                InlineKeyboardMarkup inlineKeyboard = new(
+                    new[]
+                    {
+                    // first row
+                    new []
+                    {
+                        InlineKeyboardButton.WithCallbackData("1.1", "11"),
+                        InlineKeyboardButton.WithCallbackData("1.2", "12"),
+                    },
+                    // second row
+                    new []
+                    {
+                        InlineKeyboardButton.WithCallbackData("2.1", "21"),
+                        InlineKeyboardButton.WithCallbackData("2.2", "22"),
+                    },
+                    });
+
+                var msg = _bot.SendTextMessageAsync(
+                    chatId: message.Chat.Id,
+                    text: "Choose",
+                    replyMarkup: inlineKeyboard).Result;
+                return msg;
+            }
         }
     }
 }
