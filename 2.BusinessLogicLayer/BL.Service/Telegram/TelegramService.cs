@@ -55,7 +55,6 @@ namespace BL.Service.Telegram
                 _ = _bot.SendTextMessageAsync(
                     chatId: message.Chat.Id,
                     text: message.Text).Result;
-                return;
 
             }
 
