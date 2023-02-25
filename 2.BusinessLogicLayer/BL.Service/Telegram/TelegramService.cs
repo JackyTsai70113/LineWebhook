@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Telegram.Bot;
 using Telegram.Bot.Types;
@@ -9,13 +10,13 @@ namespace BL.Service.Telegram
     /// <remarks>telegram api doc: https://core.telegram.org/bots/api</remarks>
     public class TelegramService : ITelegramService
     {
-        private readonly ILogger<TelegramService> _logger;
-        private readonly ITelegramBotClient _bot;
+        private readonly ITelegramBotClient Bot;
+        private readonly string AdminUserId;
 
-        public TelegramService(ILogger<TelegramService> logger, ITelegramBotClient telegramBotClient)
+        public TelegramService(IConfiguration config, ITelegramBotClient telegramBotClient)
         {
-            _logger = logger;
-            _bot = telegramBotClient;
+            Bot = telegramBotClient;
+            AdminUserId = config["Telegram:AdminUserId"];
         }
 
         /// <summary>
@@ -24,7 +25,7 @@ namespace BL.Service.Telegram
         /// <param name="message">通知訊息</param>
         public void NotifyByMessage(string message)
         {
-            _bot.SendTextMessageAsync(1017180008, message);
+            Bot.SendTextMessageAsync(1017180008, message);
         }
 
         /// <summary>
@@ -32,9 +33,9 @@ namespace BL.Service.Telegram
         /// </summary>
         public async Task<IEnumerable<Message>> SendDiceAsync()
         {
-            var msg1 = await _bot.SendDiceAsync(1017180008);
-            var msg2 = await _bot.SendTextMessageAsync(
-                chatId: 1017180008,
+            var msg1 = await Bot.SendDiceAsync(AdminUserId);
+            var msg2 = await Bot.SendTextMessageAsync(
+                chatId: AdminUserId,
                 text: "Trying *all the parameters* of `sendMessage` method"
             );
             return new Message[] { msg1, msg2 };
@@ -42,7 +43,7 @@ namespace BL.Service.Telegram
 
         public User GetMe()
         {
-            var user = _bot.GetMeAsync().Result;
+            var user = Bot.GetMeAsync().Result;
             return user;
         }
 
@@ -51,57 +52,13 @@ namespace BL.Service.Telegram
             Message result = new();
             if (update is { Message: { } message })
             {
-                result = _bot.SendTextMessageAsync(
+                result = Bot.SendTextMessageAsync(
                     chatId: message.Chat.Id,
                     text: message.Text).Result;
 
             }
 
             return result;
-        }
-
-        public Message BotOnMessageReceived(Message message)
-        {
-            _logger.LogInformation("Receive message type: {MessageType}", message.Type);
-            if (message.Text is not { } messageText)
-                Console.WriteLine("aaaa");
-            Message sentMessage = SendInlineKeyboard(_bot, message);
-            _logger.LogInformation("The message was sent with id: {SentMessageId}", sentMessage.MessageId);
-            return sentMessage;
-            // Send inline keyboard
-            // You can process responses in BotOnCallbackQueryReceived handler
-            static Message SendInlineKeyboard(ITelegramBotClient _bot, Message message)
-            {
-                _bot.SendChatActionAsync(
-                    chatId: message.Chat.Id,
-                    chatAction: ChatAction.Typing).Wait();
-
-                // Simulate longer running task
-                Task.Delay(500).Wait();
-
-                InlineKeyboardMarkup inlineKeyboard = new(
-                    new[]
-                    {
-                    // first row
-                    new []
-                    {
-                        InlineKeyboardButton.WithCallbackData("1.1", "11"),
-                        InlineKeyboardButton.WithCallbackData("1.2", "12"),
-                    },
-                    // second row
-                    new []
-                    {
-                        InlineKeyboardButton.WithCallbackData("2.1", "21"),
-                        InlineKeyboardButton.WithCallbackData("2.2", "22"),
-                    },
-                    });
-
-                var msg = _bot.SendTextMessageAsync(
-                    chatId: message.Chat.Id,
-                    text: "Choose",
-                    replyMarkup: inlineKeyboard).Result;
-                return msg;
-            }
         }
     }
 }

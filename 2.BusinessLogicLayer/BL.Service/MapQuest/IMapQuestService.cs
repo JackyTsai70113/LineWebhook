@@ -2,7 +2,7 @@
 
 public interface IMapQuestService
 {
-    public Task<int> GetDurationAsync(LatLng l1, LatLng l2);
+    public Task<GetRouteResponse> GetRouteAsync(LatLng l1, LatLng l2);
 
     /// <summary>
     /// 透過地址取得經緯度

@@ -11,9 +11,9 @@ namespace BL.Service.Tests.Map
     /// </summary>
     public class FakeMapQuestService : IMapQuestService
     {
-        public Task<int> GetDurationAsync(LatLng l1, LatLng l2)
+        public Task<GetRouteResponse> GetRouteAsync(LatLng l1, LatLng l2)
         {
-            return new Task<int>(() => 0);
+            return new Task<GetRouteResponse>(() => new GetRouteResponse());
         }
 
         /// <summary>

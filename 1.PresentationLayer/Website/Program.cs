@@ -17,8 +17,7 @@ public class Program
         builder.Services
             .AddCaching(builder.Configuration)
             .AddChatBot(builder.Configuration)
-            .AddMyService()
-            .AddHttpsRedirection(opt => opt.HttpsPort = 443);
+            .AddMyService();
         builder.Services.AddControllers();
         builder.Services.AddRouting(options => options.LowercaseUrls = true);
         builder.Services.AddEndpointsApiExplorer();
@@ -27,9 +26,7 @@ public class Program
             var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
         });
-        // builder.Services.AddDbContext<LineWebhookContext>(options =>
-        //     options.UseSqlServer("Server=localhost;Database=TestDB;User Id=sa;Password=Passw0rd1"));
-
+        
         var app = builder.Build();
 
         if (app.Environment.IsDevelopment())

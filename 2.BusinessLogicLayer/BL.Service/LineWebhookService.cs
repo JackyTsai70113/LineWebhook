@@ -97,9 +97,6 @@ namespace BL.Service
                     case "cd":
                         string vocabulary = text.Split(' ')[1];
                         return GetCambridgeDictionaryReplyMessages(vocabulary);
-                    case "cj":
-                        string words = text[3..];
-                        return GetCangjieReplyMessages(words);
                     case "er":
                         return GetExchangeRateReplyMessages();
                     case "st":
@@ -264,54 +261,6 @@ namespace BL.Service
                 texts.Add(translationStr);
             }
             return texts;
-        }
-
-        /// <summary>
-        /// 取得倉頡(cj)指令的 回覆訊息列表
-        /// </summary>
-        /// <param name="words">文字列表</param>
-        /// <returns>訊息列表</returns>
-        private static List<MessageBase> GetCangjieReplyMessages(string words)
-        {
-            string replyTextStr = GetCangjieReplyText(words);
-
-            TextMessage textMessage = LineMessageService.GetTextMessage(replyTextStr);
-
-            return new List<MessageBase> { textMessage };
-        }
-
-        /// <summary>
-        /// 整理倉頡文字的分解方法，並回傳整理好的文字
-        /// </summary>
-        /// <param name="words">倉頡文字列表</param>
-        /// <returns>文字</returns>
-        private static string GetCangjieReplyText(string words)
-        {
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            try
-            {
-                Encoding big5 = Encoding.GetEncoding("big5");
-                string domain = "http://input.foruto.com/cjdict/Images/CJZD_JPG/";
-
-                StringBuilder sb = new();
-                foreach (char word in words)
-                {
-                    if (word == ' ')
-                    {
-                        continue;
-                    }
-                    // convert string to bytes
-                    byte[] big5Bytes = big5.GetBytes(word.ToString());
-                    string big5Str = BitConverter.ToString(big5Bytes).Replace("-", string.Empty);
-                    sb.AppendLine(word + ": " + domain + big5Str + ".JPG");
-                }
-                string cangjieReplyText = sb.ToString();
-                return cangjieReplyText;
-            }
-            catch (Exception ex)
-            {
-                return $"GetCangjieReplyText 發生錯誤, 字詞：{words}, ex: {ex}";
-            }
         }
 
         /// <summary>

@@ -15,7 +15,5 @@ namespace BL.Service.Telegram
         void NotifyByMessage(string message);
 
         Message HandleUpdate(Update update);
-
-        Message BotOnMessageReceived(Message message);
     }
 }

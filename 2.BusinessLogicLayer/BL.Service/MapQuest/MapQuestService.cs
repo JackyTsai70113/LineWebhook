@@ -1,9 +1,6 @@
-﻿using System.Net.Sockets;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
 using System.Web;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 
 namespace BL.Service.MapQuest
@@ -38,40 +35,27 @@ namespace BL.Service.MapQuest
             LatLng sourceLatLng = await GetLatLngAsync(sourceAddress);
             var res = targetAddresses.OrderBy(address =>
             {
-                Thread.Sleep(100);
                 LatLng targetLatLng = GetLatLngAsync(address).Result;
-                return GetDurationAsync(sourceLatLng, targetLatLng).Result;
+                return GetRouteAsync(sourceLatLng, targetLatLng).Result.Route.Time;
             }).ToList();
             return res;
         }
 
-        public async Task<int> GetDurationAsync(LatLng l1, LatLng l2)
+        public async Task<GetRouteResponse> GetRouteAsync(LatLng l1, LatLng l2)
         {
-            // var uriBuilder = new UriBuilder(_apiDomain)
-            // {
-            //     Path = "/directions/v2/route",
-            //     Port = -1
-            // };
-            // var nvc = new Dictionary<string, string>
-            // {
-            //     { "key", _apiKey },
-            //     { "from", $"{l1.Lat},{l1.Lng}"},
-            //     { "to", $"{l2.Lat},{l2.Lng}"},
-            //     { "routeType", "pedestrian" },
-            // };
-            var uri = _apiDomain + "/directions/v2/route?" +
-            "key" + _apiKey +
-            "from" + l1.Lat + "," + l1.Lng +
-            "to" + l2.Lat + "," + l2.Lng +
-            "routeType=pedestrian";
             HttpRequestMessage httpRequestMessage = new(
-                HttpMethod.Get, uri);
+                HttpMethod.Get,
+                _apiDomain + "/directions/v2/route?" +
+                "key=" + _apiKey +
+                "&from=" + l1.Lat + "," + l1.Lng +
+                "&to=" + l2.Lat + "," + l2.Lng +
+                "&routeType=pedestrian"
+                );
             var httpClient = _httpClientFactory.CreateClient();
             var httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
             httpResponseMessage.EnsureSuccessStatusCode();
             var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync();
-            var getRouteResponse = await JsonSerializer.DeserializeAsync<GetRouteResponse>(contentStream);
-            return getRouteResponse.Route.Time;
+            return await JsonSerializer.DeserializeAsync<GetRouteResponse>(contentStream);
         }
 
         /// <summary>
@@ -85,11 +69,12 @@ namespace BL.Service.MapQuest
             HttpRequestMessage httpRequestMessage = new(
                 HttpMethod.Get,
                 _apiDomain + "/geocoding/v1/address?" +
-                "key=" + _apiKey + "&" +
-                "inFormat=kvp&" +
-                "outFormat=json&" +
-                "location=" + encodedAddress + "&" +
-                "thumbMaps=false");
+                    "key=" + _apiKey + "&" +
+                    "inFormat=kvp&" +
+                    "outFormat=json&" +
+                    "location=" + encodedAddress + "&" +
+                    "thumbMaps=false"
+                );
 
             var httpClient = _httpClientFactory.CreateClient();
             var httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);

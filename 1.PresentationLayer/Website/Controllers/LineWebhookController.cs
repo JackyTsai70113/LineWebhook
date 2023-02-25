@@ -61,18 +61,16 @@ namespace Website.Controllers
 
         [HttpPost]
         [Route("test_response")]
-        public string TestForResponse(ReceivedMessage receivedMessage)
+        public IActionResult TestForResponse(ReceivedMessage receivedMessage)
         {
-            var req = JsonSerializer.Serialize(receivedMessage);
             try
             {
                 var messages = LineWebhookService.GetReplyMessages(receivedMessage.events[0]);
-                return $"request: {receivedMessage.ToJson()}\nresponse: {messages.ToJson()}";
+                return Ok(messages.ToJson());
             }
             catch (Exception ex)
             {
-                Logger.LogError("req: {req}, ex: {ex}", req, ex);
-                return $"error, req: {req}, ex: {ex}";
+                return BadRequest(ex);
             }
         }
 
@@ -82,7 +80,7 @@ namespace Website.Controllers
         /// <remarks>
         /// Sample request:
         ///
-        ///     PUT linewebhook/test_request?cmd=cd%20123
+        ///     PUT api/linewebhook/test_request?cmd=cd%20123
         ///
         /// </remarks>
         /// <param name="cmd">can't be null or empty</param>
@@ -111,6 +109,7 @@ namespace Website.Controllers
         /// <response code="200">Product retrieved</response>
         /// <response code="404">Product not found</response>
         /// <response code="500">Oops! Can't lookup your product right now</response>
+        /// GET api/linewebhook/test
         [HttpGet]
         [Route("test")]
         public IActionResult Test()
