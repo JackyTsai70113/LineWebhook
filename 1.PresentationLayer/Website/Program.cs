@@ -17,7 +17,8 @@ public class Program
         builder.Services
             .AddCaching(builder.Configuration)
             .AddChatBot(builder.Configuration)
-            .AddMyService();
+            .AddMyService()
+            .AddHttpsRedirection(opt => opt.HttpsPort = 443);
         builder.Services.AddControllers();
         builder.Services.AddRouting(options => options.LowercaseUrls = true);
         builder.Services.AddEndpointsApiExplorer();

@@ -1,10 +1,6 @@
-using System;
 using BL.Service.Telegram;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Telegram.Bot.Types;
 
 namespace Website.Controllers
@@ -13,12 +9,12 @@ namespace Website.Controllers
     [Route("api/webhook/telegram")]
     public class TelegramWebhookController : ControllerBase
     {
-        private readonly ILogger<TelegramWebhookController> _logger;
+        private readonly ILogger<TelegramWebhookController> Logger;
         private readonly ITelegramService _telegramWebhookService;
 
         public TelegramWebhookController(ILogger<TelegramWebhookController> logger, ITelegramService telegramWebhookService)
         {
-            _logger = logger;
+            Logger = logger;
             _telegramWebhookService = telegramWebhookService;
         }
 
@@ -30,7 +26,13 @@ namespace Website.Controllers
             // try
             // {
             // Update update = JsonSerializer.Deserialize<Update>(d.ToString());
-            _telegramWebhookService.HandleUpdate(update);
+
+            Logger.LogDebug("request: {req}", update);
+
+            Message message = _telegramWebhookService.HandleUpdate(update);
+
+            // Add 紀錄發至LineServer的requestBody
+            Logger.LogDebug("response: {messages}", message);
             return Ok();
             // }
             // catch (Exception ex)

@@ -24,7 +24,7 @@ namespace BL.Service.Telegram
         /// <param name="message">通知訊息</param>
         public void NotifyByMessage(string message)
         {
-            _bot.SendTextMessageAsync("1017180008", message);
+            _bot.SendTextMessageAsync(1017180008, message);
         }
 
         /// <summary>
@@ -32,8 +32,7 @@ namespace BL.Service.Telegram
         /// </summary>
         public async Task<IEnumerable<Message>> SendDiceAsync()
         {
-            ChatId chatId = new(1017180008);
-            var msg1 = await _bot.SendDiceAsync(chatId);
+            var msg1 = await _bot.SendDiceAsync(1017180008);
             var msg2 = await _bot.SendTextMessageAsync(
                 chatId: 1017180008,
                 text: "Trying *all the parameters* of `sendMessage` method"
@@ -47,18 +46,18 @@ namespace BL.Service.Telegram
             return user;
         }
 
-        public void HandleUpdate(Update update)
+        public Message HandleUpdate(Update update)
         {
+            Message result = new();
             if (update is { Message: { } message })
             {
-                // BotOnMessageReceived(message);
-                _ = _bot.SendTextMessageAsync(
+                result = _bot.SendTextMessageAsync(
                     chatId: message.Chat.Id,
                     text: message.Text).Result;
 
             }
 
-            return;
+            return result;
         }
 
         public Message BotOnMessageReceived(Message message)

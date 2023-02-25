@@ -43,7 +43,7 @@ public static class DependencyInjection
     /// </summary>
     /// <param name="services">collection of service</param>
     /// <remarks>https://learn.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-6.0</remarks>
-    public static void AddMyService(this IServiceCollection services)
+    public static IServiceCollection AddMyService(this IServiceCollection services)
     {
         services.AddScoped<ICambridgeDictionaryManager, CambridgeDictionaryManager>();
         services.AddScoped<IMaskInstitutionService, MaskInstitutionService>();
@@ -57,5 +57,7 @@ public static class DependencyInjection
         services.AddScoped<IDailyQuoteManager, DailyQuoteManager>();
 
         services.AddSingleton<IMapQuestService, MapQuestService>();
+
+        return services;
     }
 }
