@@ -1,4 +1,4 @@
-name: Build, Deploy and Notice
+name: Build, Push, Deploy and Notice
 
 on:
   push:
