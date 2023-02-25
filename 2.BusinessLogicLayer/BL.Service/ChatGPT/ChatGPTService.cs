@@ -2,6 +2,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.Configuration;
+using Microsoft.VisualBasic;
 
 namespace BL.Service.Line
 {
@@ -27,7 +28,14 @@ namespace BL.Service.Line
             // Request headers.
             client.DefaultRequestHeaders.Add(
                 "Authorization", "Bearer " + API_KEY);
-
+            if (string.IsNullOrEmpty(API_KEY))
+            {
+                Console.WriteLine("Error, API_KEY is null or empty]");
+            }
+            else
+            {
+                Console.WriteLine(API_KEY[..5]);
+            }
             var JsonString = @"
             {
   ""model"": ""text-davinci-003"",
