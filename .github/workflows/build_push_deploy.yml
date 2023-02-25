@@ -13,7 +13,7 @@ env:
   IMAGE_TAG: latest
 
 jobs:
-  push_image_to_docker_hub:
+  build_push_deploy:
     name: Push image to Docker Hub
     runs-on: ubuntu-latest
     environment:
