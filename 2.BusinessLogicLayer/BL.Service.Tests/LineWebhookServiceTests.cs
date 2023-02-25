@@ -18,14 +18,14 @@ namespace BL.Service.Tests
         [SetUp]
         public void Setup()
         {
-            // LineWebhookService = new LineWebhookService(
-            //     new CambridgeDictionaryManager(),
-            //     new FakeExchangeRateService(),
-            //     new MaskInstitutionService(),
-            //     new FakeMapQuestService(),
-            //     new TradingVolumeService(),
-            //     new ChatGPTService(new Configuration())
-            //     );
+            LineWebhookService = new LineWebhookService(
+                new CambridgeDictionaryManager(),
+                new FakeExchangeRateService(),
+                new MaskInstitutionService(),
+                new FakeMapQuestService(),
+                new TradingVolumeService(),
+                new ChatGPTService()
+                );
         }
 
         /// <summary>

@@ -9,6 +9,10 @@ namespace BL.Service.Line
     {
         private readonly string API_KEY;
 
+        public ChatGPTService()
+        {
+        }
+
         public ChatGPTService(IConfiguration config)
         {
             API_KEY = config["ChatGPT:ApiKey"];
