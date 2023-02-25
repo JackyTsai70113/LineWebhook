@@ -34,6 +34,7 @@ public static class DependencyInjection
         IConfiguration config)
     {
         return services
+            .AddSingleton<IChatGPTService, ChatGPTService>()
             .AddSingleton<ITelegramService, TelegramService>()
             .AddSingleton<ITelegramBotClient, TelegramBotClient>(x => new TelegramBotClient(config["Telegram:Token"]));
     }

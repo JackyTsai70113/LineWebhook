@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using BL.Service.Interface;
 using BL.Service.Line;
@@ -20,15 +19,18 @@ namespace Website.Controllers
         private readonly ILogger<LineWebhookController> Logger;
         private readonly ILineBotService LineBotService;
         private readonly ILineWebhookService LineWebhookService;
+        private readonly IChatGPTService ChatGPTService;
 
         public LineWebhookController(
             ILogger<LineWebhookController> logger
             , ILineBotService lineBotService
-            , ILineWebhookService lineWebhookService)
+            , ILineWebhookService lineWebhookService
+            , IChatGPTService chatGPTService)
         {
             Logger = logger;
             LineBotService = lineBotService;
             LineWebhookService = lineWebhookService;
+            ChatGPTService = chatGPTService;
         }
 
         /// <summary>
@@ -44,12 +46,12 @@ namespace Website.Controllers
             try
             {
                 if (receivedMessage.events.Count == 0) return;
-                Logger.LogDebug("request: {req}", req);
+                Logger.LogInformation("request: {req}", req);
 
                 var messages = LineWebhookService.GetReplyMessages(receivedMessage.events[0]);
 
                 // Add 紀錄發至LineServer的requestBody
-                Logger.LogDebug("response: {messages}", messages.ToJson());
+                Logger.LogInformation("response: {messages}", messages.ToJson());
 
                 LineBotService.ReplyMessage(receivedMessage.events[0].replyToken, messages);
             }
@@ -120,34 +122,9 @@ namespace Website.Controllers
             Logger.LogDebug("Debug");
             Logger.LogCritical("Critical");
             Logger.LogError("Error");
-            List<string> sizes = new()
-            {
-                "123"
-            };
 
-            var p = new Product { Name = "name123", AvailableStock = 123, Sizes = sizes };
-            return Ok(p);
-        }
-
-        public class Product
-        {
-            /// <summary>
-            /// The name of the product
-            /// </summary>
-            /// <example>Men's basketball shoes</example>
-            public string Name { get; set; }
-
-            /// <summary>
-            /// Quantity left in stock
-            /// </summary>
-            /// <example>10</example>
-            public int AvailableStock { get; set; }
-
-            /// <summary>
-            /// The sizes the product is available in
-            /// </summary>
-            // <example>["Small", "Medium", "Large"]</example>
-            public List<string> Sizes { get; set; }
+            var result = ChatGPTService.CallChatGPT("你好嗎");
+            return Ok(result);
         }
     }
 }

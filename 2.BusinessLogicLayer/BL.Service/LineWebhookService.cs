@@ -12,24 +12,27 @@ namespace BL.Service
 {
     public class LineWebhookService : ILineWebhookService
     {
-        private readonly ICambridgeDictionaryManager _cambridgeDictionaryManager;
-        private readonly IExchangeRateService _exchangeRateService;
-        private readonly IMapQuestService _mapQuestService;
-        private readonly IMaskInstitutionService _maskInstitutionService;
-        private readonly ITradingVolumeService _tradingVolumeService;
+        private readonly ICambridgeDictionaryManager CambridgeDictionaryManager;
+        private readonly IExchangeRateService ExchangeRateService;
+        private readonly IMapQuestService MapQuestService;
+        private readonly IMaskInstitutionService MaskInstitutionService;
+        private readonly ITradingVolumeService TradingVolumeService;
+        private readonly IChatGPTService ChatGPTService;
 
         public LineWebhookService(
             ICambridgeDictionaryManager cambridgeDictionaryManager,
             IExchangeRateService exchangeRateService,
             IMaskInstitutionService maskInstitutionService,
             IMapQuestService mapQuestService,
-            ITradingVolumeService tradingVolumeService)
+            ITradingVolumeService tradingVolumeService,
+            IChatGPTService chatGPTService)
         {
-            _cambridgeDictionaryManager = cambridgeDictionaryManager;
-            _exchangeRateService = exchangeRateService;
-            _maskInstitutionService = maskInstitutionService;
-            _mapQuestService = mapQuestService;
-            _tradingVolumeService = tradingVolumeService;
+            CambridgeDictionaryManager = cambridgeDictionaryManager;
+            ExchangeRateService = exchangeRateService;
+            MaskInstitutionService = maskInstitutionService;
+            MapQuestService = mapQuestService;
+            TradingVolumeService = tradingVolumeService;
+            ChatGPTService = chatGPTService;
         }
 
         /// <summary>
@@ -116,13 +119,13 @@ namespace BL.Service
                             }
                             else
                             {
-                                return _tradingVolumeService.GetTradingVolumeStrOverDays(QuerySortTypeEnum.Descending, days);
+                                return TradingVolumeService.GetTradingVolumeStrOverDays(QuerySortTypeEnum.Descending, days);
                             }
                         }
                         else if (text.Split(' ')[1].Length == 10)
                         {
                             DateTime dateTime = DateTime.Parse(text.Split(' ')[1]);
-                            return _tradingVolumeService.GetTradingVolumeStr(dateTime, QuerySortTypeEnum.Descending);
+                            return TradingVolumeService.GetTradingVolumeStr(dateTime, QuerySortTypeEnum.Descending);
                         }
                         else
                         {
@@ -143,13 +146,13 @@ namespace BL.Service
                             }
                             else
                             {
-                                return _tradingVolumeService.GetTradingVolumeStrOverDays(QuerySortTypeEnum.Ascending, days);
+                                return TradingVolumeService.GetTradingVolumeStrOverDays(QuerySortTypeEnum.Ascending, days);
                             }
                         }
                         else if (text.Split(' ')[1].Length == 10)
                         {
                             DateTime dateTime = DateTime.Parse(text.Split(' ')[1]);
-                            return _tradingVolumeService.GetTradingVolumeStr(dateTime, QuerySortTypeEnum.Ascending);
+                            return TradingVolumeService.GetTradingVolumeStr(dateTime, QuerySortTypeEnum.Ascending);
                         }
                         else
                         {
@@ -157,7 +160,9 @@ namespace BL.Service
                         }
                         return new List<MessageBase> { LineMessageService.GetTextMessage(textStr) };
                     default:
-                        return new List<MessageBase> { LineMessageService.GetTextMessage(text) };
+                        var result = ChatGPTService.CallChatGPT(text);
+                        var responseText = result.Choices[0].Text;
+                        return new List<MessageBase> { LineMessageService.GetTextMessage(responseText) };
                 }
             }
             catch (Exception ex)
@@ -174,11 +179,11 @@ namespace BL.Service
         /// <returns>LOG紀錄</returns>
         private List<MessageBase> GetMaskInstitutions(string address)
         {
-            List<MaskInstitution> maskInstitutions = _maskInstitutionService.GetMaskInstitutions(address);
+            List<MaskInstitution> maskInstitutions = MaskInstitutionService.GetMaskInstitutions(address);
 
             Dictionary<string, MaskInstitution> maskInstitutionDict = maskInstitutions.ToDictionary(m => m.Address);
 
-            List<string> orderedAddress = _mapQuestService.GetAddressInOrderAsync(address, maskInstitutionDict.Keys.ToList()).Result;
+            List<string> orderedAddress = MapQuestService.GetAddressInOrderAsync(address, maskInstitutionDict.Keys.ToList()).Result;
 
             List<MaskInstitution> topFiveMaskInstitutions = new();
             for (int i = 0; i < 5 && i < orderedAddress.Count; i++)
@@ -194,7 +199,7 @@ namespace BL.Service
             List<MessageBase> messages = new();
             foreach (MaskInstitution maskInstitution in topFiveMaskInstitutions)
             {
-                var latLng = _mapQuestService.GetLatLngAsync(maskInstitution.Address).Result;
+                var latLng = MapQuestService.GetLatLngAsync(maskInstitution.Address).Result;
                 if (latLng.Lat == default || latLng.Lng == default)
                 {
                     continue;
@@ -242,7 +247,7 @@ namespace BL.Service
         {
             List<string> texts = new();
             List<Translation> translations =
-                    _cambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary).Take(5).ToList();
+                    CambridgeDictionaryManager.CrawlCambridgeDictionary(vocabulary).Take(5).ToList();
 
             if (translations.Count == 0)
             {
@@ -269,7 +274,7 @@ namespace BL.Service
         /// <returns>訊息列表</returns>
         private List<MessageBase> GetExchangeRateReplyMessages()
         {
-            _exchangeRateService.GetExchangeRate(
+            ExchangeRateService.GetExchangeRate(
                 out double buyingRate, out double sellingRate,
                 out DateTime quotedDateTime);
 
