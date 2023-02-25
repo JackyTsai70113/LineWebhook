@@ -1,6 +1,8 @@
 using System.Collections;
+using System.Configuration;
 using System.Text;
 using System.Text.Json;
+using BL.Service.Line;
 using BL.Service.Sinopac;
 using BL.Service.Tests.Map;
 using BL.Service.TWSE_Stock;
@@ -16,13 +18,14 @@ namespace BL.Service.Tests
         [SetUp]
         public void Setup()
         {
-            LineWebhookService = new LineWebhookService(
-                new CambridgeDictionaryManager(),
-                new FakeExchangeRateService(),
-                new MaskInstitutionService(),
-                new FakeMapQuestService(),
-                new TradingVolumeService()
-                );
+            // LineWebhookService = new LineWebhookService(
+            //     new CambridgeDictionaryManager(),
+            //     new FakeExchangeRateService(),
+            //     new MaskInstitutionService(),
+            //     new FakeMapQuestService(),
+            //     new TradingVolumeService(),
+            //     new ChatGPTService(new Configuration())
+            //     );
         }
 
         /// <summary>
