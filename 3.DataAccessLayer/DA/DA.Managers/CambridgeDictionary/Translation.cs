@@ -8,7 +8,6 @@ namespace DA.Managers.CambridgeDictionary
     /// </summary>
     public class Translation
     {
-
         public Translation()
         {
             Means = new List<Mean>();
@@ -68,7 +67,6 @@ namespace DA.Managers.CambridgeDictionary
     /// </summary>
     public class Mean
     {
-
         public Mean()
         {
             SentenceExamples = new List<SentenceExample>();
@@ -110,7 +108,6 @@ namespace DA.Managers.CambridgeDictionary
     /// </summary>
     public class SentenceExample
     {
-
         /// <summary>
         /// 例句英文
         /// </summary>

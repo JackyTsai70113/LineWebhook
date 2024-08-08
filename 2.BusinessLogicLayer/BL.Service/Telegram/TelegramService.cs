@@ -1,13 +1,10 @@
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
-using Telegram.Bot.Types.ReplyMarkups;
 
 namespace BL.Service.Telegram
 {
-    /// <remarks>telegram api doc: https://core.telegram.org/bots/api</remarks>
+    /// <remarks>telegram api doc: https://core.telegram.org/bots/api, https://github.com/TelegramBots</remarks>
     public class TelegramService : ITelegramService
     {
         private readonly ITelegramBotClient Bot;
