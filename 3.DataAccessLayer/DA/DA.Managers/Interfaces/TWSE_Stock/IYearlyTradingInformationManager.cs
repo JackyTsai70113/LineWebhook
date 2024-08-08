@@ -1,12 +1,12 @@
-﻿using Core.Domain.Entities.TWSE_Stock.Exchange;
+﻿using System.Collections.Generic;
+using Core.Domain.Entities.TWSE_Stock.Exchange;
 using Core.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace DA.Managers.Interfaces.TWSE_Stock {
+namespace DA.Managers.Interfaces.TWSE_Stock
+{
 
-    public interface IYearlyTradingInformationManager {
+    public interface IYearlyTradingInformationManager
+    {
 
         /// <summary>
         /// 根據 股票代號 抓取年度交易資訊列表
