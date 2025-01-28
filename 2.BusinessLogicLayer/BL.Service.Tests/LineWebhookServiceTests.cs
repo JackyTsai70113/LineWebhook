@@ -23,8 +23,7 @@ namespace BL.Service.Tests
                 new FakeExchangeRateService(),
                 new MaskInstitutionService(),
                 new FakeMapQuestService(),
-                new TradingVolumeService(),
-                new ChatGPTService()
+                new TradingVolumeService()
                 );
         }
 
