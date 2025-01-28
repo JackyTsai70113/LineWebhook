@@ -18,7 +18,8 @@ namespace Website.Controllers
             _telegramWebhookService = telegramWebhookService;
         }
 
-        [HttpPost("")]
+        [HttpPost]
+        [Route("")]
         public IActionResult Index([FromBody] Update update)
         {
             // var s = update.ToString();
