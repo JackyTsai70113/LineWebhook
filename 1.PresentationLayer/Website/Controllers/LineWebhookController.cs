@@ -19,18 +19,15 @@ namespace Website.Controllers
         private readonly ILogger<LineWebhookController> Logger;
         private readonly ILineBotService LineBotService;
         private readonly ILineWebhookService LineWebhookService;
-        private readonly IChatGPTService ChatGPTService;
 
         public LineWebhookController(
-            ILogger<LineWebhookController> logger
-            , ILineBotService lineBotService
-            , ILineWebhookService lineWebhookService
-            , IChatGPTService chatGPTService)
+            ILogger<LineWebhookController> logger,
+            ILineBotService lineBotService,
+            ILineWebhookService lineWebhookService)
         {
             Logger = logger;
             LineBotService = lineBotService;
             LineWebhookService = lineWebhookService;
-            ChatGPTService = chatGPTService;
         }
 
         /// <summary>
@@ -102,29 +99,6 @@ namespace Website.Controllers
             };
             var messages = LineWebhookService.GetReplyMessages(@event);
             return Ok(messages.ToJson());
-        }
-
-        /// <summary>
-        /// Retrieves a specific product by unique id
-        /// </summary>
-        /// <remarks>Awesomeness!</remarks>
-        /// <response code="200">Product retrieved</response>
-        /// <response code="404">Product not found</response>
-        /// <response code="500">Oops! Can't lookup your product right now</response>
-        /// GET api/linewebhook/test
-        [HttpGet]
-        [Route("test")]
-        public IActionResult Test()
-        {
-            Logger.LogInformation("Info!");
-            Logger.LogWarning("Warning!");
-            Logger.LogTrace("Trace!");
-            Logger.LogDebug("Debug");
-            Logger.LogCritical("Critical");
-            Logger.LogError("Error");
-
-            var result = ChatGPTService.CallChatGPT("你好嗎");
-            return Ok(result);
         }
     }
 }

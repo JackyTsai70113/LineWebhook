@@ -17,22 +17,19 @@ namespace BL.Service
         private readonly IMapQuestService MapQuestService;
         private readonly IMaskInstitutionService MaskInstitutionService;
         private readonly ITradingVolumeService TradingVolumeService;
-        private readonly IChatGPTService ChatGPTService;
 
         public LineWebhookService(
             ICambridgeDictionaryManager cambridgeDictionaryManager,
             IExchangeRateService exchangeRateService,
             IMaskInstitutionService maskInstitutionService,
             IMapQuestService mapQuestService,
-            ITradingVolumeService tradingVolumeService,
-            IChatGPTService chatGPTService)
+            ITradingVolumeService tradingVolumeService)
         {
             CambridgeDictionaryManager = cambridgeDictionaryManager;
             ExchangeRateService = exchangeRateService;
             MaskInstitutionService = maskInstitutionService;
             MapQuestService = mapQuestService;
             TradingVolumeService = tradingVolumeService;
-            ChatGPTService = chatGPTService;
         }
 
         /// <summary>
@@ -160,9 +157,7 @@ namespace BL.Service
                         }
                         return new List<MessageBase> { LineMessageService.GetTextMessage(textStr) };
                     default:
-                        var result = ChatGPTService.CallChatGPT(text);
-                        var responseText = result.Choices[0].Text;
-                        return new List<MessageBase> { LineMessageService.GetTextMessage(responseText) };
+                        return new List<MessageBase> { LineMessageService.GetTextMessage(text) };
                 }
             }
             catch (Exception ex)
