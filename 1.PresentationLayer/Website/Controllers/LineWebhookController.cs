@@ -39,7 +39,6 @@ namespace Website.Controllers
         [Route("index")]
         public void Index(ReceivedMessage receivedMessage)
         {
-            LineBotService.PushToJacky($"12377");
             var req = JsonSerializer.Serialize(receivedMessage);
             try
             {
@@ -51,7 +50,11 @@ namespace Website.Controllers
                 // Add 紀錄發至LineServer的requestBody
                 Logger.LogInformation("response: {messages}", messages.ToJson());
 
-                LineBotService.ReplyMessage(receivedMessage.events[0].replyToken, messages);
+                var result = LineBotService.ReplyMessage(receivedMessage.events[0].replyToken, messages);
+                if (!result)
+                {
+                    Logger.LogError("回覆訊息失敗, request: {req}, messages: {messages}", req, messages.ToJson());
+                }
             }
             catch (Exception ex)
             {
