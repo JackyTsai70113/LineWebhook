@@ -31,6 +31,7 @@ namespace BL.Service.Line
             {
                 logger.LogWarning("Line:ChannelAccessToken not found in Redis");
             }
+            _logger.LogInformation("LineBotService initialized");
             _bot = new Bot(token);
         }
 

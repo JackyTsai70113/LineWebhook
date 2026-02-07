@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using BL.Service.Telegram;
 using DotNetEnv;
 using DotNetEnv.Configuration;
 using Microsoft.AspNetCore.Builder;
@@ -26,7 +27,6 @@ public class Program
             .AddEnvironmentVariables();
         builder.Services.AddHttpClient();
         builder.Services.AddCaching(builder.Configuration)
-                        .AddChatBot(builder.Configuration)
                         .AddMyService();
         builder.Services.AddControllers();
         builder.Services.AddRouting(options => options.LowercaseUrls = true);

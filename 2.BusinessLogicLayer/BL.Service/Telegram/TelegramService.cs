@@ -1,4 +1,5 @@
 using BL.Service.Redis;
+using Microsoft.Extensions.Logging;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
@@ -7,13 +8,64 @@ namespace BL.Service.Telegram
     /// <remarks>telegram api doc: https://core.telegram.org/bots/api, https://github.com/TelegramBots</remarks>
     public class TelegramService : ITelegramService
     {
-        private readonly ITelegramBotClient Bot;
-        private readonly string AdminUserId;
+        private readonly IRedisConfigService _configService;
+        private readonly ILogger<TelegramService> _logger;
+        private TelegramSettings _settings;
+        private ITelegramBotClient _bot;
 
-        public TelegramService(IRedisConfigService configService, ITelegramBotClient telegramBotClient)
+        public TelegramService(
+            ILogger<TelegramService> logger,
+            IRedisConfigService configService)
         {
-            Bot = telegramBotClient;
-            AdminUserId = configService.Get("Telegram:AdminUserId");
+            _logger = logger;
+            _configService = configService;
+        }
+
+        private TelegramSettings GetSettings()
+        {
+            if (_settings != null)
+            {
+                return _settings;
+            }
+            try
+            {
+                _settings = _configService.Get<TelegramSettings>(nameof(TelegramSettings));
+                if (_settings == null)
+                {
+                    _logger.LogWarning("TelegramSettings not found in Redis");
+                    return null;
+                }
+                return _settings;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting TelegramSettings from Redis");
+                return null;
+            }
+        }
+
+        private ITelegramBotClient GetBot()
+        {
+            try
+            {
+                var settings = GetSettings();
+                if (settings == null)
+                {
+                    _logger.LogError("Cannot create TelegramBotClient because TelegramSettings is null");
+                    return null;
+                }
+                if (_bot == null)
+                {
+                    _bot = new TelegramBotClient(settings.Token);
+                    _logger.LogInformation("TelegramBotClient created, token prefix: {Prefix}...", settings.Token[..Math.Min(10, settings.Token.Length)]);
+                }
+                return _bot;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error creating TelegramBotClient");
+                return null;
+            }
         }
 
         /// <summary>
@@ -22,7 +74,26 @@ namespace BL.Service.Telegram
         /// <param name="message">通知訊息</param>
         public void NotifyByMessage(string message)
         {
-            Bot.SendTextMessageAsync(1017180008, message);
+            try
+            {
+                var settings = GetSettings();
+                if (settings == null)
+                {
+                    _logger.LogError("Cannot notify by message because TelegramSettings is null");
+                    return;
+                }
+                var bot = GetBot();
+                if (bot == null)
+                {
+                    _logger.LogError("Cannot notify by message because TelegramBotClient is null");
+                    return;
+                }
+                bot.SendMessage(settings.AdminChatId, message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error sending Telegram message");
+            }
         }
 
         /// <summary>
@@ -30,9 +101,11 @@ namespace BL.Service.Telegram
         /// </summary>
         public async Task<IEnumerable<Message>> SendDiceAsync()
         {
-            var msg1 = await Bot.SendDiceAsync(AdminUserId);
-            var msg2 = await Bot.SendTextMessageAsync(
-                chatId: AdminUserId,
+            var settings = GetSettings();
+            var bot = GetBot();
+            var msg1 = await bot.SendDice(settings.AdminChatId);
+            var msg2 = await bot.SendMessage(
+                chatId: settings.AdminChatId,
                 text: "Trying *all the parameters* of `sendMessage` method"
             );
             return new Message[] { msg1, msg2 };
@@ -40,7 +113,7 @@ namespace BL.Service.Telegram
 
         public User GetMe()
         {
-            var user = Bot.GetMeAsync().Result;
+            var user = GetBot().GetMe().Result;
             return user;
         }
 
@@ -49,10 +122,9 @@ namespace BL.Service.Telegram
             Message result = new();
             if (update is { Message: { } message })
             {
-                result = Bot.SendTextMessageAsync(
+                result = GetBot().SendMessage(
                     chatId: message.Chat.Id,
                     text: message.Text).Result;
-
             }
 
             return result;

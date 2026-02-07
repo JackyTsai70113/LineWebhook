@@ -15,7 +15,6 @@ using DA.Managers.TWSE_Stock;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
-using Telegram.Bot;
 
 namespace Website.Configuration;
 
@@ -29,21 +28,6 @@ public static class DependencyInjection
         services.AddSingleton<IRedisConfigService, RedisConfigService>();
         services.AddSingleton<IConnectionMultiplexer>(sp => ConnectionMultiplexer.Connect(config["RedisConnection"]));
         return services;
-    }
-
-    public static IServiceCollection AddChatBot(
-        this IServiceCollection services,
-        IConfiguration config)
-    {
-        return services
-            .AddSingleton<ITelegramService, TelegramService>()
-            .AddSingleton<ITelegramBotClient, TelegramBotClient>(sp =>
-            {
-                var configService = sp.GetRequiredService<IRedisConfigService>();
-                var token = configService.Get("Telegram:Token")
-                    ?? throw new InvalidOperationException("Redis key 'Telegram:Token' not found");
-                return new TelegramBotClient(token);
-            });
     }
 
     /// <summary>
@@ -64,6 +48,7 @@ public static class DependencyInjection
         services.AddScoped<IDailyQuoteManager, DailyQuoteManager>();
 
         services.AddSingleton<IMapQuestService, MapQuestService>();
+        services.AddSingleton<ITelegramService, TelegramService>();
 
         return services;
     }
