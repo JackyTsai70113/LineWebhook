@@ -12,7 +12,8 @@ namespace BL.Service.Line
         private readonly ILogger<LineBotService> _logger;
         private readonly IRedisConfigService _configService;
         private readonly ITelegramService _telegramService;
-        private readonly Bot _bot;
+
+        private Bot _bot;
 
         /// <summary>
         /// LineBotService 建構子
@@ -21,18 +22,15 @@ namespace BL.Service.Line
         /// <param name="configService"></param>
         /// <param name="telegramService"></param>
         /// <remarks>API doc: https://developers.line.biz/en/docs/messaging-api/</remarks>
-        public LineBotService(ILogger<LineBotService> logger, IRedisConfigService configService, ITelegramService telegramService)
+        public LineBotService(
+            ILogger<LineBotService> logger,
+            IRedisConfigService configService,
+            ITelegramService telegramService)
         {
             _logger = logger;
             _configService = configService;
             _telegramService = telegramService;
-            var token = configService.Get("Line:ChannelAccessToken");
-            if (string.IsNullOrEmpty(token))
-            {
-                logger.LogWarning("Line:ChannelAccessToken not found in Redis");
-            }
             _logger.LogInformation("LineBotService initialized");
-            _bot = new Bot(token);
         }
 
         public bool ReplyMessage(string token, List<MessageBase> messages)
@@ -45,7 +43,13 @@ namespace BL.Service.Line
 
             try
             {
-                _bot.ReplyMessage(token, messages);
+                var bot = GetBot();
+                if (bot == null)
+                {
+                    _logger.LogError("Cannot reply message because Line Bot is not initialized");
+                    return false;
+                }
+                bot.ReplyMessage(token, messages);
                 _logger.LogInformation("ReplyMessage 成功, replyToken: {Token}", token);
                 return true;
             }
@@ -76,6 +80,45 @@ namespace BL.Service.Line
             {
                 _logger.LogError(ex, "PushToJacky via Telegram 錯誤");
                 return false;
+            }
+        }
+
+        private LineSettings GetSettings()
+        {
+            var settings = _configService.Get<LineSettings>("LineSettings");
+            if (settings == null)
+            {
+                _logger.LogWarning("LineSettings not found in Redis");
+                return new LineSettings();
+            }
+            return settings;
+        }
+
+        private Bot GetBot()
+        {
+            if (_bot != null)
+            {
+                return _bot;
+            }
+            try
+            {
+                var settings = GetSettings();
+                if (string.IsNullOrEmpty(settings.ChannelAccessToken))
+                {
+                    throw new InvalidOperationException("Line ChannelAccessToken is empty");
+                }
+
+                if (_bot == null)
+                {
+                    _bot = new Bot(settings.ChannelAccessToken);
+                    _logger.LogInformation("Line Bot created, token prefix: {Prefix}...", settings.ChannelAccessToken[..Math.Min(10, settings.ChannelAccessToken.Length)]);
+                }
+                return _bot;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error initializing Line Bot");
+                return null;
             }
         }
     }
