@@ -36,26 +36,22 @@ namespace BL.Service.Line
 
         public bool ReplyMessage(string token, List<MessageBase> messages)
         {
+            _logger.LogInformation("ReplyMessage 開始, replyToken: {Token}, messages count: {Count}", token, messages.Count);
+            for (int i = 0; i < messages.Count; i++)
+            {
+                _logger.LogInformation("Message[{Index}] type: {Type}, content: {Content}", i, messages[i].GetType().Name, JsonSerializer.Serialize(messages[i]));
+            }
+
             try
             {
                 _bot.ReplyMessage(token, messages);
+                _logger.LogInformation("ReplyMessage 成功, replyToken: {Token}", token);
                 return true;
             }
             catch (Exception ex)
             {
-                if (ex.InnerException is WebException)
-                {
-                    int responseStartIndex = ex.ToString().IndexOf("Response") + "Response:".Length;
-                    int responseEndIndex = ex.ToString().IndexOf("Endpoint");
-                    string responseStr = ex.ToString()[responseStartIndex..responseEndIndex].Trim();
-                    LineHttpPostException response = JsonSerializer.Deserialize<LineHttpPostException>(responseStr);
-                    _logger.LogError(ex, "ReplyMessage 錯誤, replyToken: {Token}, response: {Response}", token, responseStr);
-                    PushToJacky($"ReplyMessage 錯誤, replyToken: {token}, response: {responseStr}");
-                }
-                else
-                {
-                    _logger.LogError(ex, "ReplyMessage 錯誤, replyToken: {token}, messages: {messages}, ex: {ex}", token, JsonSerializer.Serialize(messages), ex);
-                }
+                _logger.LogError(ex, "ReplyMessage 失敗, replyToken: {Token}, messages: {Messages}", token, JsonSerializer.Serialize(messages));
+                PushToJacky($"ReplyMessage 失敗, replyToken: {token}, ex: {ex.Message}");
                 return false;
             }
         }

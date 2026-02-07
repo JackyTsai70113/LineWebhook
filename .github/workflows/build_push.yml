@@ -24,24 +24,29 @@ jobs:
 
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Build image
-        run: docker build --tag ${{ env.DOCKER_USER}}/${{ env.DOCKER_REPOSITORY }}:$IMAGE_TAG .
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Log in to Docker Hub
-        run: docker login -u ${{ env.DOCKER_USER}} -p ${{ secrets.DOCKER_PASSWORD }}
+        uses: docker/login-action@v3
+        with:
+          username: ${{ env.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Push to Docker Hub
-        run: docker push ${{ env.DOCKER_USER}}/${{ env.DOCKER_REPOSITORY }}:$IMAGE_TAG
-
-      - name: Set current date as env variable
-        run: echo "NOW=$(date +'%m/%d %H:%M')" >> $GITHUB_ENV
-
-      - name: Set top commit message as env variable
-        run: echo "TOP_COMMIT_MESSAGE=$(git log --pretty=format:"%s" -1)" >> $GITHUB_ENV
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ env.DOCKER_USER }}/${{ env.DOCKER_REPOSITORY }}:${{ env.IMAGE_TAG }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Notice to telegram
         run: |-
-          curl -d "chat_id=${{secrets.TELEGRAM_JACKY_CHAT_ID}}&text=[$NOW] $TOP_COMMIT_MESSAGE" \
+          NOW=$(date +'%m/%d %H:%M')
+          MSG=$(git log --pretty=format:"%s" -1)
+          curl -s -d "chat_id=${{secrets.TELEGRAM_JACKY_CHAT_ID}}&text=[$NOW] [${GITHUB_SHA::8}] $MSG" \
             https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage
