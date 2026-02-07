@@ -38,15 +38,16 @@ public static class DependencyInjection
     {
         services.AddScoped<ICambridgeDictionaryManager, CambridgeDictionaryManager>();
         services.AddScoped<IMaskInstitutionService, MaskInstitutionService>();
-        services.AddScoped<LineMessageService, LineMessageService>();
         services.AddScoped<IExchangeRateService, ExchangeRateService>();
-        services.AddScoped<LineBotService>();
-        services.AddScoped<ILineWebhookService, LineWebhookService>();
+        
         services.AddScoped<IMaskInstitutionService, MaskInstitutionService>();
         services.AddScoped<ITradingVolumeService, TradingVolumeService>();
         services.AddScoped<IDailyQuoteService, DailyQuoteService>();
         services.AddScoped<IDailyQuoteManager, DailyQuoteManager>();
 
+        services.AddSingleton<LineWebhookService>();
+        services.AddSingleton<LineMessageService>();
+        services.AddSingleton<LineBotService>();
         services.AddSingleton<IMapQuestService, MapQuestService>();
         services.AddSingleton<ITelegramService, TelegramService>();
 

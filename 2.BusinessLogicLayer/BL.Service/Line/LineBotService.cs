@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BL.Service.Line
 {
-    public class LineBotService : ILineBotService
+    public class LineBotService
     {
         private readonly ILogger<LineBotService> _logger;
         private readonly IRedisConfigService _configService;
@@ -35,12 +35,6 @@ namespace BL.Service.Line
 
         public bool ReplyMessage(string token, List<MessageBase> messages)
         {
-            _logger.LogInformation("ReplyMessage 開始, replyToken: {Token}, messages count: {Count}", token, messages.Count);
-            for (int i = 0; i < messages.Count; i++)
-            {
-                _logger.LogInformation("Message[{Index}] type: {Type}, content: {Content}", i, messages[i].GetType().Name, JsonSerializer.Serialize(messages[i]));
-            }
-
             try
             {
                 var bot = GetBot();

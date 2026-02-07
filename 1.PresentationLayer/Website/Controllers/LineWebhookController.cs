@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.Json;
+using BL.Service;
 using BL.Service.Interface;
 using BL.Service.Line;
 using isRock.LineBot;
@@ -18,12 +19,12 @@ namespace Website.Controllers
     {
         private readonly ILogger<LineWebhookController> Logger;
         private readonly LineBotService LineBotService;
-        private readonly ILineWebhookService LineWebhookService;
+        private readonly LineWebhookService LineWebhookService;
 
         public LineWebhookController(
             ILogger<LineWebhookController> logger,
             LineBotService lineBotService,
-            ILineWebhookService lineWebhookService)
+            LineWebhookService lineWebhookService)
         {
             Logger = logger;
             LineBotService = lineBotService;

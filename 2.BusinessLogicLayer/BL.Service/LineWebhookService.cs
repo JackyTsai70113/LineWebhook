@@ -10,7 +10,7 @@ using isRock.LineBot;
 
 namespace BL.Service
 {
-    public class LineWebhookService : ILineWebhookService
+    public class LineWebhookService
     {
         private readonly ICambridgeDictionaryManager CambridgeDictionaryManager;
         private readonly IExchangeRateService ExchangeRateService;
