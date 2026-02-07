@@ -1,8 +1,8 @@
 ﻿using System.Net;
 using System.Text.Json;
 using BL.Service.Redis;
+using BL.Service.Telegram;
 using isRock.LineBot;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace BL.Service.Line
@@ -11,6 +11,7 @@ namespace BL.Service.Line
     {
         private readonly ILogger<LineBotService> _logger;
         private readonly IRedisConfigService _configService;
+        private readonly ITelegramService _telegramService;
         private readonly Bot _bot;
 
         /// <summary>
@@ -18,11 +19,13 @@ namespace BL.Service.Line
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="configService"></param>
+        /// <param name="telegramService"></param>
         /// <remarks>API doc: https://developers.line.biz/en/docs/messaging-api/</remarks>
-        public LineBotService(ILogger<LineBotService> logger, IRedisConfigService configService)
+        public LineBotService(ILogger<LineBotService> logger, IRedisConfigService configService, ITelegramService telegramService)
         {
             _logger = logger;
             _configService = configService;
+            _telegramService = telegramService;
             var token = configService.Get("Line:ChannelAccessToken");
             if (string.IsNullOrEmpty(token))
             {
@@ -58,75 +61,23 @@ namespace BL.Service.Line
         }
 
         /// <summary>
-        /// 推播訊息至 Jacky（使用 Messaging API PushMessage，Line Notify 已於 2025/3/31 停用）
+        /// 透過 Telegram 通知 Jacky
         /// </summary>
         public bool PushToJacky(string msg)
         {
             try
             {
-                var userId = _configService.Get("Line:Jacky_userId");
-                if (string.IsNullOrEmpty(userId))
+                if (msg.Length > 4096)
                 {
-                    _logger.LogWarning("Line:Jacky_userId is null or empty, skip sending message to Jacky");
-                    return false;
+                    _logger.LogWarning("Message length is greater than 4096, truncating");
+                    msg = msg[..4096];
                 }
-                if (msg.Length > 5000)
-                {
-                    _logger.LogWarning("Message length is greater than 5000, truncating");
-                    msg = msg[..5000];
-                }
-                _bot.PushMessage(userId, msg);
+                _telegramService.NotifyByMessage(msg);
                 return true;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Notify_Jacky 錯誤");
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 推播訊息至 Group
-        /// </summary>
-        public bool PushMessage_Group(string text)
-        {
-            try
-            {
-                var groupToken = _configService.Get("Line:NotifyBearerToken_Group");
-                if (string.IsNullOrEmpty(groupToken))
-                {
-                    _logger.LogWarning("Line:NotifyBearerToken_Group is null or empty, skip sending message to Group");
-                    return false;
-                }
-                _bot.PushMessage(groupToken, text);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("PushMessage_Group 錯誤: {ex}", ex);
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 推播訊息至 Jessi
-        /// </summary>
-        public bool PushMessage_Jessi(string text)
-        {
-            try
-            {
-                var userId = _configService.Get("Line:Jessi_userId");
-                if (string.IsNullOrEmpty(userId))
-                {
-                    _logger.LogWarning("Line:Jessi_userId is null or empty, skip sending message to Jessi");
-                    return false;
-                }
-                _bot.PushMessage(userId, text);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("PushMessage_Jessi 錯誤: {ex}", ex);
+                _logger.LogError(ex, "PushToJacky via Telegram 錯誤");
                 return false;
             }
         }

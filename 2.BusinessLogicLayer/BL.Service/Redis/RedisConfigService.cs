@@ -43,7 +43,7 @@ public class RedisConfigService : IRedisConfigService
             RedisValue value = _db.StringGet(redisKey);
             if (value.IsNullOrEmpty)
             {
-                _logger.LogDebug("Redis config key not found: {Key}", redisKey);
+                _logger.LogWarning("Redis config key not found: {Key}", redisKey);
                 return null;
             }
             return value.ToString();

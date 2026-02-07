@@ -1,3 +1,4 @@
+using System;
 using BL.Service;
 using BL.Service.Interface;
 using BL.Service.Interface.TWSE_Stock;
@@ -36,7 +37,13 @@ public static class DependencyInjection
     {
         return services
             .AddSingleton<ITelegramService, TelegramService>()
-            .AddSingleton<ITelegramBotClient, TelegramBotClient>(x => new TelegramBotClient(config["Telegram:Token"]));
+            .AddSingleton<ITelegramBotClient, TelegramBotClient>(sp =>
+            {
+                var configService = sp.GetRequiredService<IRedisConfigService>();
+                var token = configService.Get("Telegram:Token")
+                    ?? throw new InvalidOperationException("Redis key 'Telegram:Token' not found");
+                return new TelegramBotClient(token);
+            });
     }
 
     /// <summary>

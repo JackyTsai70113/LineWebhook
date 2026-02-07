@@ -1,4 +1,4 @@
-using Microsoft.Extensions.Configuration;
+using BL.Service.Redis;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
@@ -10,10 +10,10 @@ namespace BL.Service.Telegram
         private readonly ITelegramBotClient Bot;
         private readonly string AdminUserId;
 
-        public TelegramService(IConfiguration config, ITelegramBotClient telegramBotClient)
+        public TelegramService(IRedisConfigService configService, ITelegramBotClient telegramBotClient)
         {
             Bot = telegramBotClient;
-            AdminUserId = config["Telegram:AdminUserId"];
+            AdminUserId = configService.Get("Telegram:AdminUserId");
         }
 
         /// <summary>
