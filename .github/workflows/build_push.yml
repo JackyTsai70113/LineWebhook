@@ -50,3 +50,7 @@ jobs:
           MSG=$(git log --pretty=format:"%s" -1)
           curl -s -d "chat_id=${{secrets.TELEGRAM_JACKY_CHAT_ID}}&text=[$NOW] [${GITHUB_SHA::8}] $MSG" \
             https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage
+
+      - name: Deploy to Render
+        if: success()
+        run: curl -s "${{ secrets.RENDER_DEPLOY_HOOK }}"
