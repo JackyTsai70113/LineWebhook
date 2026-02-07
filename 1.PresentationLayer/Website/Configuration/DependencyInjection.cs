@@ -25,6 +25,7 @@ public static class DependencyInjection
         IConfiguration config)
     {
         services.AddSingleton<IRedisService, RedisService>();
+        services.AddSingleton<IRedisConfigService, RedisConfigService>();
         services.AddSingleton<IConnectionMultiplexer>(sp => ConnectionMultiplexer.Connect(config["RedisConnection"]));
         return services;
     }

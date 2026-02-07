@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Text.Json;
+using BL.Service.Redis;
 using isRock.LineBot;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -9,20 +10,25 @@ namespace BL.Service.Line
     public class LineBotService : ILineBotService
     {
         private readonly ILogger<LineBotService> _logger;
-        private readonly IConfiguration _config;
+        private readonly IRedisConfigService _configService;
         private readonly Bot _bot;
 
         /// <summary>
         /// LineBotService 建構子
         /// </summary>
         /// <param name="logger"></param>
-        /// <param name="config"></param>
+        /// <param name="configService"></param>
         /// <remarks>API doc: https://developers.line.biz/en/docs/messaging-api/</remarks>
-        public LineBotService(ILogger<LineBotService> logger, IConfiguration config)
+        public LineBotService(ILogger<LineBotService> logger, IRedisConfigService configService)
         {
             _logger = logger;
-            _config = config;
-            _bot = new Bot(config["Line:ChannelAccessToken"]);
+            _configService = configService;
+            var token = configService.Get("Line:ChannelAccessToken");
+            if (string.IsNullOrEmpty(token))
+            {
+                logger.LogWarning("Line:ChannelAccessToken not found in Redis");
+            }
+            _bot = new Bot(token);
         }
 
         public bool ReplyMessage(string token, List<MessageBase> messages)
@@ -40,9 +46,12 @@ namespace BL.Service.Line
                     int responseEndIndex = ex.ToString().IndexOf("Endpoint");
                     string responseStr = ex.ToString()[responseStartIndex..responseEndIndex].Trim();
                     LineHttpPostException response = JsonSerializer.Deserialize<LineHttpPostException>(responseStr);
-                    var msg = $"ReplyMessage 錯誤, replyToken: {token}, messages: {JsonSerializer.Serialize(messages)}, response: {responseStr}, ex: {ex}";
-                    _logger.LogError(ex, msg);
-                    PushToJacky(msg);
+                    _logger.LogError(ex, "ReplyMessage 錯誤, replyToken: {Token}, response: {Response}", token, responseStr);
+                    PushToJacky($"ReplyMessage 錯誤, replyToken: {token}, response: {responseStr}");
+                }
+                else
+                {
+                    _logger.LogError(ex, "ReplyMessage 錯誤, replyToken: {token}, messages: {messages}, ex: {ex}", token, JsonSerializer.Serialize(messages), ex);
                 }
                 return false;
             }
@@ -55,7 +64,7 @@ namespace BL.Service.Line
         {
             try
             {
-                var userId = _config["Line:Jacky_userId"];
+                var userId = _configService.Get("Line:Jacky_userId");
                 if (string.IsNullOrEmpty(userId))
                 {
                     _logger.LogWarning("Line:Jacky_userId is null or empty, skip sending message to Jacky");
@@ -71,7 +80,7 @@ namespace BL.Service.Line
             }
             catch (Exception ex)
             {
-                _logger.LogError("Notify_Jacky 錯誤: {ex}", ex);
+                _logger.LogError(ex, "Notify_Jacky 錯誤");
                 return false;
             }
         }
@@ -83,7 +92,7 @@ namespace BL.Service.Line
         {
             try
             {
-                var groupToken = _config["Line:NotifyBearerToken_Group"];
+                var groupToken = _configService.Get("Line:NotifyBearerToken_Group");
                 if (string.IsNullOrEmpty(groupToken))
                 {
                     _logger.LogWarning("Line:NotifyBearerToken_Group is null or empty, skip sending message to Group");
@@ -106,7 +115,7 @@ namespace BL.Service.Line
         {
             try
             {
-                var userId = _config["Line:Jessi_userId"];
+                var userId = _configService.Get("Line:Jessi_userId");
                 if (string.IsNullOrEmpty(userId))
                 {
                     _logger.LogWarning("Line:Jessi_userId is null or empty, skip sending message to Jessi");
