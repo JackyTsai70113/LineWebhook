@@ -15,10 +15,15 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        var configuration = new ConfigurationBuilder()
-            .AddDotNetEnv(".env", LoadOptions.TraversePath())
-            .Build();
         var builder = WebApplication.CreateBuilder(args);
+
+        // 設定優先順序（後者覆蓋前者）：
+        // 1. appsettings.json（非敏感預設值）
+        // 2. .env 檔（本機開發用）
+        // 3. 環境變數（Render.com / Docker 部署用）
+        builder.Configuration
+            .AddDotNetEnv(".env", LoadOptions.TraversePath())
+            .AddEnvironmentVariables();
         builder.Services.AddHttpClient();
         builder.Services.AddCaching(builder.Configuration)
                         .AddChatBot(builder.Configuration)

@@ -17,12 +17,12 @@ namespace Website.Controllers
     public class LineWebhookController : ControllerBase
     {
         private readonly ILogger<LineWebhookController> Logger;
-        private readonly ILineBotService LineBotService;
+        private readonly LineBotService LineBotService;
         private readonly ILineWebhookService LineWebhookService;
 
         public LineWebhookController(
             ILogger<LineWebhookController> logger,
-            ILineBotService lineBotService,
+            LineBotService lineBotService,
             ILineWebhookService lineWebhookService)
         {
             Logger = logger;
@@ -39,6 +39,7 @@ namespace Website.Controllers
         [Route("index")]
         public void Index(ReceivedMessage receivedMessage)
         {
+            LineBotService.PushToJacky($"12377");
             var req = JsonSerializer.Serialize(receivedMessage);
             try
             {

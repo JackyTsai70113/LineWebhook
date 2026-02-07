@@ -13,60 +13,16 @@ namespace BL.Service.Line
         private readonly Bot _bot;
 
         /// <summary>
-        /// sss
+        /// LineBotService 建構子
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="config"></param>
-        /// <remarks>API doc: https://notify-bot.line.me/doc/en/</remarks>
+        /// <remarks>API doc: https://developers.line.biz/en/docs/messaging-api/</remarks>
         public LineBotService(ILogger<LineBotService> logger, IConfiguration config)
         {
             _logger = logger;
             _config = config;
             _bot = new Bot(config["Line:ChannelAccessToken"]);
-        }
-
-        /// <summary>
-        /// 推播至Group
-        /// </summary>
-        /// <param name="msg">推播字串</param>
-        /// <returns>是否推播成功</returns>
-        public bool PushMessage_Group(string msg)
-        {
-            return SendNotify(_config["Line:NotifyBearerToken_Group"], msg);
-        }
-
-        /// <summary>
-        /// 推播至Jacky
-        /// </summary>
-        /// <param name="msg">推播字串</param>
-        /// <returns>是否推播成功</returns>
-        public bool Notify_Jacky(string msg)
-        {
-            var result = _bot.SendNotify(_config["Line:NotifyBearerToken_Jacky"]
-                , msg
-                , new Uri("https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/240px-Cat03.jpg")
-                , new Uri("https://images.hdqwalls.com/download/cat-4k-po-2048x2048.jpg")
-                , 6362
-                , 11087927
-                , false
-            );
-
-            if (result.status != 200)
-            {
-                _logger.LogError("{message}", result.message);
-                return false;
-            }
-            return true;
-        }
-
-        /// <summary>
-        /// 推播至Jessi
-        /// </summary>
-        /// <param name="msg">推播字串</param>
-        /// <returns>是否推播成功</returns>
-        public bool PushMessage_Jessi(string msg)
-        {
-            return SendNotify(_config["Line:NotifyBearerToken_Jessi"], msg);
         }
 
         public bool ReplyMessage(string token, List<MessageBase> messages)
@@ -84,27 +40,86 @@ namespace BL.Service.Line
                     int responseEndIndex = ex.ToString().IndexOf("Endpoint");
                     string responseStr = ex.ToString()[responseStartIndex..responseEndIndex].Trim();
                     LineHttpPostException response = JsonSerializer.Deserialize<LineHttpPostException>(responseStr);
-                    _logger.LogError(
-                        "ReplyMessage 錯誤, replyToken: {token},\n" +
-                        "messages: {messages},\n" +
-                        "response: {response},\n" +
-                        "ex: {ex}", token, JsonSerializer.Serialize(messages), JsonSerializer.Serialize(response), ex);
-                    Notify_Jacky($"message: {response.Message},\n" +
-                        $"details: {JsonSerializer.Serialize(response.Details)}");
+                    var msg = $"ReplyMessage 錯誤, replyToken: {token}, messages: {JsonSerializer.Serialize(messages)}, response: {responseStr}, ex: {ex}";
+                    _logger.LogError(ex, msg);
+                    PushToJacky(msg);
                 }
                 return false;
             }
         }
 
-        private bool SendNotify(string token, string msg)
+        /// <summary>
+        /// 推播訊息至 Jacky（使用 Messaging API PushMessage，Line Notify 已於 2025/3/31 停用）
+        /// </summary>
+        public bool PushToJacky(string msg)
         {
-            var result = _bot.SendNotify(token, msg);
-            if (result.status != 200)
+            try
             {
-                _logger.LogError("{message}", result.message);
+                var userId = _config["Line:Jacky_userId"];
+                if (string.IsNullOrEmpty(userId))
+                {
+                    _logger.LogWarning("Line:Jacky_userId is null or empty, skip sending message to Jacky");
+                    return false;
+                }
+                if (msg.Length > 5000)
+                {
+                    _logger.LogWarning("Message length is greater than 5000, truncating");
+                    msg = msg[..5000];
+                }
+                _bot.PushMessage(userId, msg);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Notify_Jacky 錯誤: {ex}", ex);
                 return false;
             }
-            return true;
+        }
+
+        /// <summary>
+        /// 推播訊息至 Group
+        /// </summary>
+        public bool PushMessage_Group(string text)
+        {
+            try
+            {
+                var groupToken = _config["Line:NotifyBearerToken_Group"];
+                if (string.IsNullOrEmpty(groupToken))
+                {
+                    _logger.LogWarning("Line:NotifyBearerToken_Group is null or empty, skip sending message to Group");
+                    return false;
+                }
+                _bot.PushMessage(groupToken, text);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("PushMessage_Group 錯誤: {ex}", ex);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 推播訊息至 Jessi
+        /// </summary>
+        public bool PushMessage_Jessi(string text)
+        {
+            try
+            {
+                var userId = _config["Line:Jessi_userId"];
+                if (string.IsNullOrEmpty(userId))
+                {
+                    _logger.LogWarning("Line:Jessi_userId is null or empty, skip sending message to Jessi");
+                    return false;
+                }
+                _bot.PushMessage(userId, text);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("PushMessage_Jessi 錯誤: {ex}", ex);
+                return false;
+            }
         }
     }
 }

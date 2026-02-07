@@ -25,7 +25,7 @@ public static class DependencyInjection
         IConfiguration config)
     {
         services.AddSingleton<IRedisService, RedisService>();
-        services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(config["RedisConnection"]));
+        services.AddSingleton<IConnectionMultiplexer>(sp => ConnectionMultiplexer.Connect(config["RedisConnection"]));
         return services;
     }
 
@@ -42,14 +42,13 @@ public static class DependencyInjection
     /// 將註冊服務獨立封裝出來
     /// </summary>
     /// <param name="services">collection of service</param>
-    /// <remarks>https://learn.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-6.0</remarks>
     public static IServiceCollection AddMyService(this IServiceCollection services)
     {
         services.AddScoped<ICambridgeDictionaryManager, CambridgeDictionaryManager>();
         services.AddScoped<IMaskInstitutionService, MaskInstitutionService>();
         services.AddScoped<LineMessageService, LineMessageService>();
         services.AddScoped<IExchangeRateService, ExchangeRateService>();
-        services.AddScoped<ILineBotService, LineBotService>();
+        services.AddScoped<LineBotService>();
         services.AddScoped<ILineWebhookService, LineWebhookService>();
         services.AddScoped<IMaskInstitutionService, MaskInstitutionService>();
         services.AddScoped<ITradingVolumeService, TradingVolumeService>();

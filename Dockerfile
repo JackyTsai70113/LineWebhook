@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build-env
 WORKDIR /src
 COPY *.sln .
 COPY 0.CoreLayer/Core.Domain/*.csproj 0.CoreLayer/Core.Domain/
@@ -14,7 +14,7 @@ RUN dotnet build "1.PresentationLayer/Website/Website.csproj" -c Release -o /bui
 RUN dotnet test "2.BusinessLogicLayer/BL.Service.Tests" -c Release
 RUN dotnet publish "1.PresentationLayer/Website/Website.csproj" -c Release -o /publish
 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 WORKDIR /publish
 COPY --from=build-env /publish .
 EXPOSE 80
