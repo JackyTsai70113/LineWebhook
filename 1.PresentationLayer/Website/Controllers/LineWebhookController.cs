@@ -39,9 +39,10 @@ namespace Website.Controllers
         [Route("index")]
         public void Index(ReceivedMessage receivedMessage)
         {
-            var req = JsonSerializer.Serialize(receivedMessage);
+            string req = "";
             try
             {
+                req = JsonSerializer.Serialize(receivedMessage);
                 if (receivedMessage.events.Count == 0) return;
                 Logger.LogInformation("request: {req}", req);
 
