@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Website.Configuration;
 
 namespace Website;
@@ -16,6 +17,8 @@ public class Program
 {
     public static void Main(string[] args)
     {
+        Console.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] Application starting...");
+
         var builder = WebApplication.CreateBuilder(args);
 
         // 設定優先順序（後者覆蓋前者）：
@@ -53,6 +56,12 @@ public class Program
 
         app.MapControllers();
         app.MapHealthChecks("/healthz");
+
+        var logger = app.Services.GetRequiredService<ILogger<Program>>();
+        var env = app.Environment.EnvironmentName;
+        Console.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] Application started successfully. Environment: {env}");
+        logger.LogInformation("[{now}] Application started successfully. Environment: {Env}",
+            DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), env);
 
         app.Run();
     }
